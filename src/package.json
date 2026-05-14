@@ -1,0 +1,18 @@
+{
+    "id": "as-upVersion",
+    "displayName": "APP升级提示功能",
+    "version": "1.0.0",
+    "description": "功能需要真机才能使用，此插件为APP升级弹窗 安卓在线升级/ios跳转AppStore",
+    "keywords": [
+        "升级",
+        "APP升级",
+        "提示"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    },
+    "name": "APP升级提示功能"
+}

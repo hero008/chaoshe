@@ -1,0 +1,392 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		// #ifndef MP-WEIXIN
+		{
+			"path": "pages/index/upgrade", //升级窗口页面
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom", //导航栏自定义
+				"app-plus": {
+					"bounce": "none",
+					"animationType": "none", //取消窗口动画
+					"background": "transparent" // 设置背景透明
+				}
+			}
+		},
+		{
+			"path": "pages/transaction/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/market/marketDetails",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/chaowan/gachasList",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		// #endif
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/login/sharePage",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/login/binding",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/yifanshang",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/chaosheshang",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/niudan",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/chaowanshang",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/dongle",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/allCaptured",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/rewardResult",
+			"style": { //"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/rewardResultDetails",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/shanggui",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shopping/commodity",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shopping/purchase",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shopping/exchange",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shipments/selectGoods",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shipments/addressList",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shipments/addressAdd",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/releaseRecord",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/releaseDetails",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/drawRecord",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/common/rulepop",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/agreementList",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/updateUser",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/loading",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/cardpack",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "components/autonym/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/modules/join",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/product/modules/allRecord",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "page-a",
+			"pages": [
+				// #ifndef MP-WEIXIN
+				{
+					"path": "balance/topUp",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "balance/rechargeRecord",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "balance/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				// #endif
+				{
+					"path": "luck/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "luck/playingMethod",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}
+			]
+		},
+		{
+			"root": "page-activity",
+			"pages": [
+				{
+					"path": "activity/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "addgroup/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "invite/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ticket/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ticketc/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "huigui/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "ocean/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "turntable/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "pyramid/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "newYear/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "activityDescription/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "friendReturn/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "welfare/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "conversion/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "egg/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "notice/notice-details",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "notice/notice-list",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "battleOrder/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}
+			]
+		}
+	],
+	"globalStyle": {
+		"navigationBarTitleText": "潮社赏",
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#fff",
+		// #ifdef MP-WEIXIN
+		"disableScroll": true,
+		// #endif
+		"app-plus": {
+			"bounce": "none"
+		}
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+}

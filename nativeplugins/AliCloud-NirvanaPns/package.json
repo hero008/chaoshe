@@ -1,0 +1,75 @@
+{
+    "name": "阿里云号码认证SDK",
+    "id": "AliCloud-NirvanaPns",
+    "version": "2.1.1",
+    "description": "阿里云号码认证SDK",
+    "_dp_type":"nativeplugin",
+    "_dp_nativeplugin":{
+        "android": {
+            "plugins": [
+                {
+                    "type": "module",
+                    "name": "AliCloud-NirvanaPns",
+                    "class": "com.nirvana.prd.auth.ALiLoginManager"
+                }
+            ],
+            "hooksClass": "",
+            "integrateType": "aar",
+            "dependencies": [],
+            "compileOptions": {  
+                "sourceCompatibility": "1.8",
+                "targetCompatibility": "1.8"
+            },
+            "abis": [
+                "armeabi-v7a","arm64-v8a","x86"
+            ],
+            "minSdkVersion": "21",
+            "useAndroidX": true,  
+            "permissions": [
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.CAMERA",
+                "android.permission.VIBRATE"
+            ],
+            "parameters": {
+            }
+        },
+        "ios": {
+            "plugins": [
+                {
+                    "type": "module",
+                    "name": "AliCloud-NirvanaPns",
+                    "class": "ATAuthSDKModule" 
+                }
+            ],
+            "integrateType": "framework",
+            "hooksClass": "",
+            "frameworks": [
+                "ATAuthSDK.framework", "YTXMonitor.framework", "YTXOperators.framework","Network.framework"
+            ],
+            "embedFrameworks": [   
+            ],
+            "capabilities": {    
+                "entitlements": {    
+                    "com.apple.developer.associated-domains":["applinks:mobile.chaoshewang.com"] 
+                },
+                "plists": {    
+                }
+            },
+            "plists": {    
+            },
+            "privacies": [
+                ""
+            ],
+            "embedSwift": false, 
+            "deploymentTarget": "9.0",
+            "validArchitectures": [ 
+                 "armv7","arm64","x86_64"
+            ],
+            "parameters": {
+            },
+            "resources": [
+                "ATAuthSDK.bundle"
+            ]
+        }
+    }
+}

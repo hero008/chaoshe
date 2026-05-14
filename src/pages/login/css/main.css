@@ -1,0 +1,129 @@
+.login {
+	height: 100vh;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-image: url("@/static/login/login_bg.png");
+	background-size: 100% 100%;
+	padding-bottom: 300rpx;
+}
+
+.img_close {
+	position: absolute;
+	top: 50rpx;
+	left: 30rpx;
+	width: 62rpx;
+	height: 62rpx;
+}
+
+/* 头部 logo */
+.header {
+	margin-bottom: 72rpx;
+	text-align: center;
+}
+
+.header image {
+	width: 213rpx;
+	height: 146rpx;
+}
+
+.header .c_text {
+	margin-top: 34rpx;
+	color: #DFD2FF;
+	font-size: 28rpx;
+}
+
+/* 主体 */
+.main {
+	display: flex;
+	flex-direction: column;
+	padding: 0 70rpx;
+}
+
+/* 其他登录方式 */
+.other_login {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-top: 256rpx;
+	text-align: center;
+	position: fixed;
+	bottom: 160rpx;
+	width: 100%;
+	left: 0;
+}
+
+.login_icon {
+	border: none;
+	font-size: 64rpx;
+	margin: 0 64rpx 0 64rpx;
+	color: rgba(0, 0, 0, 0.7)
+}
+
+.login_icon image {
+	width: 76rpx;
+	height: 76rpx;
+}
+
+.login_icon .login_name {
+	color: #DADADC;
+	font-size: 24rpx;
+}
+
+.wechat_color {
+	color: #83DC42;
+}
+
+.weibo_color {
+	color: #F9221D;
+}
+
+.github_color {
+	color: #24292E;
+}
+
+/* 底部 */
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-size: 28rpx;
+	color: #D9D9D9;
+	text-align: center;
+	height: 40rpx;
+	line-height: 40rpx;
+	position: fixed;
+	bottom: 80rpx;
+	width: 100%;
+	left: 0;
+}
+
+.footer text {
+	font-size: 24rpx;
+}
+
+.footer navigator {
+	color: #FFEA2A;
+	font-size: 24rpx;
+}
+
+.get_PhoneNum {
+	margin-top: 220rpx;
+}
+.get_PhoneNumwx {
+	margin-top: 40rpx;
+}
+
+.agree_ico {
+	width: 28rpx;
+	height: 28rpx;
+	border-radius: 50%;
+	border: 4rpx solid #fff;
+}
+
+.agree_ico.active {
+	background-color: #2ECC34;
+}

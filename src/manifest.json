@@ -1,0 +1,176 @@
+{
+    "name" : "潮社",
+    "appid" : "__UNI__C1D1FFA",
+    "description" : "",
+    "versionName" : "2.6.03",
+    "versionCode" : 2603,
+    "transformPx" : false,
+    "app-plus" : {
+        "usingComponents" : true,
+        "compatible" : {
+            "ignoreVersion" : true
+        },
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        "modules" : {
+            "Payment" : {},
+            "Share" : {},
+            "OAuth" : {},
+            "Camera" : {}
+        },
+        "distribute" : {
+            "android" : {
+                "permissions" : [
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_PROFILE\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
+                "targetSdkVersion" : 31
+            },
+            "ios" : {
+                "dSYMs" : false,
+                "idfa" : false,
+                "capabilities" : {
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [ "applinks:mobile.chaoshewang.com" ]
+                    }
+                },
+                "urlschemewhitelist" : "alipays,alipay,safepay,weixin,wechat",
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "我们需要获取访问您设备相册的权限，以便您能够选择并上传图片或视频到我们的应用中。",
+                    "NSPhotoLibraryAddUsageDescription" : "我们需要获取写入权限，以便我们能够将您通过应用程序拍摄的照片或视频保存到您的设备相册中。",
+                    "NSLocalNetworkUsageDescription" : "请允许访问本地网络"
+                }
+            },
+            "sdkConfigs" : {
+                "ad" : {},
+                "payment" : {
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "aphttps://mobile.chaoshewang.com/apple-app-site-association/https://mobile.chaoshewang.com/apple-app-site-association/pid" : "wx51affb3e907300e4",
+                        "UniversalLinks" : "https://mobile.chaoshewang.com/apple-app-site-association/",
+                        "appid" : "wxb7c9972b7dfcad05"
+                    },
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wxb7c9972b7dfcad05",
+                        "UniversalLinks" : "https://mobile.chaoshewang.com/apple-app-site-association/"
+                    }
+                },
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wxb7c9972b7dfcad05",
+                        "UniversalLinks" : "https://mobile.chaoshewang.com/apple-app-site-association/"
+                    }
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "unpackage/res/icons/1024x1024.png",
+                    "xhdpi" : "unpackage/res/icons/96x96.png",
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                },
+                "ios" : {
+                    "appstore" : "unpackage/res/icons/1024x1024.png",
+                    "ipad" : {
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png"
+                    },
+                    "iphone" : {
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                    }
+                }
+            },
+            "splashscreen" : {
+                "androidStyle" : "common",
+                "android" : {
+                    "hdpi" : ""
+                },
+                "iosStyle" : "storyboard",
+                "ios" : {
+                    "storyboard" : "public/CustomStoryboard.zip"
+                },
+                "useOriginalMsgbox" : true
+            }
+        },
+        "nativePlugins" : {
+            "AliCloud-NirvanaPns" : {
+                "__plugin_info__" : {
+                    "name" : "阿里云号码认证SDK",
+                    "description" : "阿里云号码认证SDK",
+                    "platforms" : "Android,iOS",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {}
+                }
+            }
+        }
+    },
+    "quickapp" : {},
+    "mp-weixin" : {
+        "appid" : "wx6797722bc05389f4",
+        "setting" : {
+            "urlCheck" : false,
+            "minified" : true
+        },
+        "usingComponents" : true,
+        "lazyCodeLoading" : "requiredComponents",
+        "__usePrivacyCheck__" : true
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "mp-qq" : {
+        "usingComponents" : true
+    },
+    "h5" : {
+        "router" : {
+            "mode" : "history"
+        }
+    },
+    "channel_list" : [
+        {
+            "id" : "honor",
+            "name" : "荣耀"
+        },
+        {
+            "id" : "baidu",
+            "name" : "百度"
+        }
+    ]
+}
