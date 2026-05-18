@@ -68,8 +68,8 @@ Vue.prototype.getReLaunch = (url) => {
 
 // 全局封装使用缓存
 import { setCache, getCache } from "@/utils/storage.js"
-Vue.prototype.$sl = setCache;
-Vue.prototype.$gl = getCache;
+Vue.prototype.$sl = setCache;  // 设置localstorage
+Vue.prototype.$gl = getCache;  //提取localstorage
 
 // 系统信息|设备信息
 let SystemInfo = uni.getSystemInfoSync();

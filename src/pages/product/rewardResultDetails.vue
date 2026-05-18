@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         loadAwards() {
-            this.Xdata = this.$gl("extractAwards");
+            this.Xdata = this.$gl("extractAwards"); // 获取本地存储
             this.awards = this.Xdata.da;
         },
         confirmBtn() {

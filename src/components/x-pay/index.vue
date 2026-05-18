@@ -128,6 +128,14 @@ import { integralPrice } from "@/utils/getData.js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { callPayment } from "@/utils/pay.js";
+
+//   GachaType_Nil = 0;
+//     GachaType_Kuji = 1;         // 一番赏
+//     GachaType_Gashapon = 2;     // 彩蛋机
+//     GachaType_ChaoPlay = 3;     // 潮玩赏
+//     GachaType_SurpriseBox = 4;  // 洞洞乐
+//     GachaType_ChaoShe = 5;      // 潮社赏
+//     GachaType_ShareBill = 6;    // 一网打尽
 export default {
     name: "x-pay",
     props: {
@@ -136,7 +144,7 @@ export default {
             default: "选择支付方式",
         },
         mtype: {
-            type: String, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 潮社赏
+            type: String, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 潮社赏  //游戏方式
             default: "",
         },
         probabilityShow: {
@@ -156,13 +164,13 @@ export default {
             source_id: 0, // GachaID, MarketOrder, MarketOffer, 0（钱包）
             pays: [
                 // #ifdef MP-WEIXIN
-                {
-                    name: "微信支付",
-                    type: 3,
-                    img: "WeChat",
-                    show: true,
-                    msg: "微信小程序支付",
-                },
+                // {
+                //     name: "微信支付",
+                //     type: 3,
+                //     img: "WeChat",
+                //     show: true,
+                //     msg: "微信小程序支付",
+                // },
                 // #endif
                 // #ifndef MP-WEIXIN
                 // {
@@ -210,14 +218,14 @@ export default {
             ],
             payss: [
                 // #ifdef MP-WEIXIN
-                {
-                    name: "微信支付",
-                    type: 3,
-                    img: "WeChat",
-                    show: true,
-                    msg: "微信小程序支付",
-                    randomShow: false,
-                },
+                // {
+                //     name: "微信支付",
+                //     type: 3,
+                //     img: "WeChat",
+                //     show: true,
+                //     msg: "微信小程序支付",
+                //     randomShow: false,
+                // },
                 // #endif
                 // #ifndef MP-WEIXIN
 
@@ -235,9 +243,9 @@ export default {
             paytypeList: [4],
             paytype: 0, // 0潮币 1支付宝 2微信 3微信小程序
             // #endif
-            // #ifdef MP-WEIXIN
-            paytypeList: [3],
-            paytype: 3, // 0潮币 1支付宝 2微信 3微信小程序
+            // // #ifdef MP-WEIXIN
+            // paytypeList: [3],
+            // paytype: 3, // 0潮币 1支付宝 2微信 3微信小程序
             // #endif
             providers: [],
             showAgree: false, //是否选择协议
@@ -294,7 +302,7 @@ export default {
                 this.goto("/pages/login/login");
                 return;
             }
-            this.goldNumber = this.userInfo.gold;
+            this.goldNumber = this.userInfo.gold; // 金币
             this.goMitigate = false;
             this.amount = amount;
             this.oldamount = amount;
@@ -309,16 +317,17 @@ export default {
             else this.discount = discount;
             this.pays.forEach((user) => {
                 user.consume = 0;
-                if (this.mtype !== "12" && this.userInfo.allowCoinBet && !user.type) user.show = true;
-                if (user.type == 4 && this.mtype !== "6") user.show = true;
-                if (user.type == 4) user.number = this.userInfo.gold;
-                if (user.type == 0) user.number = this.userInfo.coin;
+                if (this.mtype !== "12" && this.userInfo.allowCoinBet && !user.type) user.show = true; // 显示潮币支付
+                if (user.type == 4 && this.mtype !== "6") user.show = true;  //显示金币支付
+                if (user.type == 4) user.number = this.userInfo.gold;  // 赋值金币
+                if (user.type == 0) user.number = this.userInfo.coin; //赋值潮币
             });
+            // 游客 绑定邮箱
             if (this.userInfo.isGuest) {
                 // #ifdef MP-WEIXIN
-                this.$refs.mpPrivacy.open();
+                // this.$refs.mpPrivacy.open();
                 // #endif
-                // #ifndef MP-WEIXIN
+                // #ifndef MP-WEIXIN  可以不用
                 this.goto("/pages/login/binding");
                 // #endif
             } else {
@@ -396,11 +405,11 @@ export default {
         },
         async onPay() {
             // 是否支付宝支付1 其它支付0
-            // #ifndef MP-WEIXIN
+            // #小程序不需要ifndef MP-WEIXIN
             this.paytype = this.paytypeList.includes(1) ? 1 : 0;
             // #endif
             // #ifdef MP-WEIXIN
-            this.paytype = 1;
+            // this.paytype = 1;
             // #endif
             // 金币支付3 潮币支付1 支付宝支付3 支付宝金币合并支付3
             this.type_Coin = this.paytypeList.includes(0) ? 1 : 3;

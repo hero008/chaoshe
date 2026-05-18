@@ -73,6 +73,7 @@
                     </view>
                 </scroll-view>
             </view>
+            <!-- 按钮模式 -->
             <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
                 <view class="btn-item" @click="onpay(1)">抽奖</view>
             </view>
@@ -336,7 +337,7 @@ export default {
             this.newFilePath = await saveFileToLocal(
                 "capsuleToysSvga",
                 this.cartoonsrc
-            );
+            )
             // this.newGifPath = await saveFileToLocal(
             //     "chaowsGif",
             //     this.cartoonsrc2
@@ -404,6 +405,7 @@ export default {
                 });
             }
         },
+        // 支付成功
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
                 this.Winning = res.awards;
@@ -589,17 +591,21 @@ export default {
                 path: "pages/product/niudan",
                 id: this.gachaId,
             });
+            console.log(this.WinnInx, "试玩");
             setTimeout(() => {
                 let a = this.verdictBig([da]) ? 2 : 1;
                 playDede(a);
             }, 3000);
             setTimeout(() => {
-                this.inAdvance = true;
-            }, 2200);
-            setTimeout(() => {
-                this.show = false;
-                this.cartoonShow = true;
-            }, 3000);
+                  this.navigateToResultDetail();
+            },3000)
+            // setTimeout(() => {
+            //     this.inAdvance = true;
+            // }, 2200);
+            // setTimeout(() => {
+            //     this.show = false;
+            //     this.cartoonShow = true;
+            // }, 3000);
         },
         getRandomInt() {
             let arr = this.eggTwister.gachaAwards,
