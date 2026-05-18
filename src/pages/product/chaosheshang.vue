@@ -274,7 +274,7 @@
             </view>
         </u-popup>``
         <gachaDetails ref="gachaDetails" />
-        <!-- 支付 -->
+        <!-- 支付 潮社赏5 -->
         <x-pay @success="onClickDraw" ref="xPay" mtype="5" :probabilityShow="probabilityShow" />
         <!-- 抽赏动效 -->
         <dynamic-effect ref="animation" />

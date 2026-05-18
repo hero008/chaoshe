@@ -75,6 +75,7 @@
             <product-list :type="active_m + 1" :IsScroll.sync="IsScroll" ref="productList" />
         </scroll-view>
         <!-- <x-first :visible.sync="firstShow" /> -->
+         <!-- 没用到 -->
         <x-pay ref="xPay" :probabilityShow=[] />
         <!-- 下载app弹窗-->
         <x-modal :visible.sync="downShow" />
@@ -210,7 +211,8 @@ export default {
             let a = await activityLIst({
                 key: ["Task", "ShareBill", "Lottery", 'RandomDiscount'],
             });
-            a.activities.map((i) => {
+          
+            a?.activities?.map((i) => {
                 if (i.key == "ActivityKey_Task") this.activity = i;
                 if (i.key == "ActivityKey_ShareBill") this.allIn = i;
                 if (i.key == "ActivityKey_Lottery") this.egg = i;
@@ -392,7 +394,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(["mail", 'userInfo']),
+        ...mapState(["mail", 'userInfo','isMTVLogin']),
         boundW() {
             // #ifndef MP-WEIXIN
             this.asyncUpdateInfo();

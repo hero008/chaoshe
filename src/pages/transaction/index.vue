@@ -326,7 +326,7 @@
                 </div>
             </div>
         </u-popup>
-        <!-- 支付 -->
+        <!-- 支付  交易6-->
         <x-pay @success="confirmOrder" ref="xPay" mtype="6" :probabilityShow="[]" />
         <select-goods ref="addStock" @totalNums="
             (va) => {

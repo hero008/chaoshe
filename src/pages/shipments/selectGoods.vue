@@ -173,7 +173,7 @@
                 </div>
             </div>
         </div>
-        <!-- 支付 -->
+        <!-- 支付  付邮费12-->
         <x-pay @success="confirmOrder" ref="xPay" mtype="12" :probabilityShow=[]  />
         <select-goods ref="addStock" @confirmSelect="SelectIds" typeClass="1" />
     </view>

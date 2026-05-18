@@ -1,7 +1,9 @@
 
 <script>
-import { mapState } from "vuex";
+import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
+import { isMTVapp, mgTvIsLogin } from "./utils/mgtv";
+import store from "./store";
 export default {
     data() {
         return {
@@ -129,16 +131,23 @@ export default {
         }, 1000);
         // #endif
     },
+    methods: {
+        ...mapMutations(["updateMgTvLogin"]),
+    },
     onLoad() {},
     computed: { ...mapState(["popupWebSocket"]) },
     onShow: function () {
-        // console.log("App Show开启");
         if (
             !this.popupWebSocket &&
             this.SystemInfo.uniPlatform == "app" &&
             uni.getStorageSync("aToken")
         ) {
             getWebSocket(this);
+        }
+
+        if(isMTVapp()){
+            store.dispatch('asyncUpdateMgTvLogin');
+     
         }
 
     },

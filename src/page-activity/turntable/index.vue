@@ -1,3 +1,4 @@
+    <!-- 活动 -->
 <template>
     <view>
         <view

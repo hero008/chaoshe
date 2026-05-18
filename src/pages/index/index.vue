@@ -3,9 +3,9 @@
     <view>
         <view class="index_page">
             <chao-wan v-if="tbStyle.selectIndex == 0" :inx.sync="chaowanInx" />
-            <!-- #ifndef MP-WEIXIN -->
+            <!-- 微信小程序不需要 -->
             <market v-if="tbStyle.selectIndex == 1" ref="marketPage" />
-            <!-- #endif -->
+            <!-- 微信小程序不需要 -->
             <home v-if="tbStyle.selectIndex == 2" />
             <shang-gui v-if="tbStyle.selectIndex == 3" ref="shangGui" />
             <my v-if="tbStyle.selectIndex == 4" ref="tabmy" />
@@ -13,7 +13,7 @@
             <tabbar :tbStyle.sync="tbStyle" ref="xtabbar" @currentChange="currentChange" />
             <!-- 微信协议 -->
             <!-- #ifdef MP-WEIXIN  -->
-            <mp-privacy initiative />
+            <!-- <mp-privacy initiative /> -->
             <!-- #endif -->
         </view>
     </view>

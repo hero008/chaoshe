@@ -236,7 +236,7 @@
             </movable-view>
         </movable-area>
         <!-- #endif -->
-        <!-- 支付 -->
+        <!-- 支付 潮玩赏-->
         <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />

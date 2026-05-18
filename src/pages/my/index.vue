@@ -8,7 +8,7 @@
                     <div class="u_name">{{ userInfo.name }}</div>
                     <view class="user_name">
                         <div class="u_ID">潮社ID：{{ userInfo.id || "" }}</div>
-                        <!-- #ifndef MP-WEIXIN -->
+                        <!-- 先出现不需要 -->
                         <view class="vip_icon" @click="
                             goto('/pages/common/rulepop', {
                                 val: 'PayoutLevel',
@@ -32,7 +32,7 @@
         <div class="user_sugar" v-else>
             <div class="user_info flex_r flex_ac">
                 <image class="profile" mode="aspectFill" />
-                <div class="login_btn" @click="goto('/pages/login/login')">
+                <div class="login_btn" @click="login">
                     请登录
                 </div>
             </div>
@@ -104,6 +104,7 @@ import xModal from "@/components/modules/x-modal";
 import { getMsg } from "../../utils/webSocket";
 import { service } from '@/utils/fun.js';
 import autonym from "@/components/autonym/index.vue";
+import { mgTvLogin } from "../../utils/mgtv";
 let that;
 export default {
     data() {
@@ -206,7 +207,7 @@ export default {
         };
     },
     components: { xModal, autonym },
-    computed: { ...mapState(["userInfo", "popupWebSocket"]) },
+    computed: { ...mapState(["userInfo", "popupWebSocket","isMTVLogin"]) },
     created() {
         that = this;
         this.asyncUpdateInfo();
@@ -222,6 +223,13 @@ export default {
         ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
         tabload() {
             // this.asyncUpBalance();
+        },
+        login(){
+            if(!this.isMTVLogin){
+                mgTvLogin()
+                return;
+            }
+            goto('/pages/login/login')
         },
         async getAv() {
             let a = await activityLIst({ key: ["Task"] });
@@ -307,6 +315,10 @@ export default {
             });
         },
         updateUser() {
+            if(!this.isMTVLogin){
+                mgTvLogin()
+            }
+
             this.goto("/pages/my/updateUser");
         },
         async onAutonym() {

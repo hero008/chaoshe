@@ -143,7 +143,7 @@
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
             <div v-if="inAdvance" :class="['cartoon_con']">
                 <div class="svga_it">
-                    <c-svga ref="cSvgaRef" :src="newFilePath" :loops="1" :autoPlay="false" :isOnChange="true"
+                    <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
                         height="100%" />
                 </div>
@@ -194,7 +194,7 @@
         <u-popup :show="showDh" :overlay="cartoonShowDh" :safeAreaInsetBottom="false" bgColor="transparent">
             <div v-if="showDh" :class="['cartoon_con']">
                 <div class="svga_it">
-                    <c-svga ref="cSvgaRef" :src="newGifPath" :loops="1" :autoPlay="false" :isOnChange="true"
+                    <c-svga ref="cSvgaRef" :src="cartoonsrc2" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished1" @percentage="onPercentage1" width="100%" height="100%"
                         @loaded="onLoaded" />
                 </div>

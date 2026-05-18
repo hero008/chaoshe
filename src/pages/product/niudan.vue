@@ -73,7 +73,6 @@
                     </view>
                 </scroll-view>
             </view>
-            <!-- 按钮模式 -->
             <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
                 <view class="btn-item" @click="onpay(1)">抽奖</view>
             </view>
@@ -134,7 +133,7 @@
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
             <view :class="['cartoon_con', { opacity: !cartoonShow }]" v-if="inAdvance">
                 <view class="svga_it">
-                    <c-svga ref="cSvgaRef" :src="newFilePath" :loops="1" :autoPlay="false" :isOnChange="true"
+                    <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
                         height="100%" />
                 </view>
@@ -337,7 +336,7 @@ export default {
             this.newFilePath = await saveFileToLocal(
                 "capsuleToysSvga",
                 this.cartoonsrc
-            )
+            );
             // this.newGifPath = await saveFileToLocal(
             //     "chaowsGif",
             //     this.cartoonsrc2
@@ -405,7 +404,6 @@ export default {
                 });
             }
         },
-        // 支付成功
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
                 this.Winning = res.awards;
@@ -591,21 +589,17 @@ export default {
                 path: "pages/product/niudan",
                 id: this.gachaId,
             });
-            console.log(this.WinnInx, "试玩");
             setTimeout(() => {
                 let a = this.verdictBig([da]) ? 2 : 1;
                 playDede(a);
             }, 3000);
             setTimeout(() => {
-                  this.navigateToResultDetail();
-            },3000)
-            // setTimeout(() => {
-            //     this.inAdvance = true;
-            // }, 2200);
-            // setTimeout(() => {
-            //     this.show = false;
-            //     this.cartoonShow = true;
-            // }, 3000);
+                this.inAdvance = true;
+            }, 2200);
+            setTimeout(() => {
+                this.show = false;
+                this.cartoonShow = true;
+            }, 3000);
         },
         getRandomInt() {
             let arr = this.eggTwister.gachaAwards,
@@ -621,6 +615,7 @@ export default {
             return RateRandom.rate(obj);
         },
         onLoaded() {
+            alert('33333333')
             this.$refs.cSvgaRef.call("startAnimation");
             if (this.vibrat) vibratePhone(3000)
             // console.log("动画加载完成，播放时回调");

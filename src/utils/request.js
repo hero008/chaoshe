@@ -1,6 +1,7 @@
 import { post } from "@/utils/api.js"
 import { goto } from '@/utils/fun.js';
 import { setCache } from "@/utils/storage.js"
+import { isMTVapp } from "./mgtv";
 export default ({ url, method, params, header = {}, baseURL }) => {
     baseURL = baseURL ? baseURL : process.env.VUE_APP_BASE_URL;
     return new Promise((resolve, reject) => {
@@ -33,7 +34,7 @@ uni.addInterceptor('request', {
     success(args) {
         if ([401].includes(args.statusCode) && throttle401) {
             throttle401 = false
-            // #ifndef MP-WEIXIN
+          
             let rt = uni.getStorageSync("rToken");
             if (rt) {
                 post("v1/user/refresh_token", { refresh_token: rt }).then(res => {
@@ -47,10 +48,10 @@ uni.addInterceptor('request', {
                 })
             }
             else logout();
-            // #endif
-            // #ifdef MP-WEIXIN
-            logout();
-            // #endif
+          
+            // // #ifdef MP-WEIXIN
+            // logout();
+            // // #endif
             setTimeout(() => { throttle401 = true }, 3000)
         }
         if(args.statusCode==500&&args.data.message==''){
@@ -66,11 +67,16 @@ uni.addInterceptor('request', {
 
 let logout = () => {
     uni.removeStorageSync("rToken")
+    uni.removeStorageSync("aToken")
     uni.removeStorageSync("userInfo")
-    // #ifndef MP-WEIXIN
-    setTimeout(() => { goto("/pages/login/login") }, 0)
-    // #endif
-    // #ifdef MP-WEIXIN
-    setTimeout(() => { goto("/pages/my/loading") }, 0)
-    // #endif
+
+    // 登出,判断是否是 是芒果环境,如果过是芒果环境,
+    // 判断是否登录,如果没登录,不管他,如果登录了, 到pages/my/loading 调用 芒果登录.
+    // setTimeout(() => { goto("/pages/login/login") }, 0)
+    // // #ifdef MP-WEIXIN
+   
+    // // #endif
+        setTimeout(() => { goto("/pages/my/loading") }, 0)
+
+   
 }

@@ -49,13 +49,13 @@
         >
         <!-- #endif -->
         <!-- #ifdef MP-WEIXIN -->
-        <scroll-view
+        <!-- <scroll-view
             scroll-y="true"
             class="list"
             @scrolltolower="onReachScollBottom"
             :lower-threshold="400"
             v-if="showList"
-        >
+        > -->
          <!-- #endif -->
             <view
                 class="item flex_r flex_jb flex_ac"

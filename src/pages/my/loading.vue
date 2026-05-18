@@ -5,6 +5,8 @@
 </template>
 <script>
 import { post } from "@/utils/api.js"
+import { isMTVapp } from "../../utils/mgtv";
+import { mapState } from "vuex";
 let that;
 export default {
     data() {
@@ -17,24 +19,81 @@ export default {
     },
     onShow() {
         let user = this.$gl("userInfo") || {};
-        if(!user.id) this.wxlogin()
-        else this.backtrack()
+
+       if(user.id){
+        
+        this.backtrack()
+       }else{
+         this.mgTvLogin()
+       }
+        // if(!user.id) this.wxlogin()
+        // else this.backtrack()
     },
+    computed: { ...mapState(["isMTVLogin"]) },
     methods: {
+        mgTvLogin(){  
+            if(!isMTVapp()){
+                    post("v1/user/login", {
+                        phone_num: '13888888888',
+                        type: 0,
+                        code: '260106',
+                        login_platform: 0,
+                        device_id: this.SystemInfo.deviceId,
+                        invite_code: this.inviteCode,
+                        channel_id:1,
+                    }).then(res => {
+                      if (res.code) {
+                    uni.$u.toast(res.message);
+                     } else {
+                        uni.setStorageSync("aToken", res.accessToken)
+                        uni.setStorageSync("rToken", res.refreshToken)
+                        that.$store.commit('updateInfo', res)
+                        that.backtrack()
+                }
+                    })
+            }else{
+                if(this.isMTVLogin){
+                   post("v1/user/login", {
+                        phone_num: '13888888888',
+                        type: 0,
+                        code: '260106',
+                        login_platform: 0,
+                        device_id: this.SystemInfo.deviceId,
+                        invite_code: this.inviteCode,
+                        channel_id:1,
+                    }).then(res => {
+                      if (res.code) {
+                    uni.$u.toast(res.message);
+                     } else {
+                        uni.setStorageSync("aToken", res.accessToken)
+                        uni.setStorageSync("rToken", res.refreshToken)
+                        that.$store.commit('updateInfo', res)
+                        that.backtrack()
+                }
+                    })
+                }else{
+                    this.backtrack()
+                }
+            }    
+       
+        },
         backtrack(){
             let routes = uni.$u.pages();
             let rout = uni.$u.deepClone(routes).reverse();
             for (const i of rout) {
                 if (i.route !== "pages/my/loading") {
-                    uni.redirectTo({ url: i.$page.fullPath });
+                    uni.reLaunch({ url: i.$page.fullPath });
+                    return;
                 }
             }
+              uni.reLaunch({ url: "/pages/index/index" });
         },
         wxlogin(){
             
             // #ifdef MP-WEIXIN
             uni.login({
                 provider: 'weixin',
+
                 success(loginRes) {
                     post("v1/user/login", {
                         type: 2,
@@ -60,7 +119,7 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
-.my {
+  .my {
     width: 100vw;
     height: 100vh;
     position: relative;

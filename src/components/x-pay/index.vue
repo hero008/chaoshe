@@ -81,6 +81,7 @@
                             <div class="reduce"
                                 v-if="['1', '2', '3', '4', '5'].includes(mtype) && subtract && i.randomShow">随机立减</div>
                             <view class="consume" v-if="i.type && i.consume">支付￥{{ i.consume }}</view>
+                            <!-- 默认金币 -->
                             <div class="select" :class="{
                                 active: paytypeList.includes(i.type),
                             }"></div>
@@ -129,7 +130,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { callPayment } from "@/utils/pay.js";
 
-//   GachaType_Nil = 0;
+//     GachaType_Nil = 0;
 //     GachaType_Kuji = 1;         // 一番赏
 //     GachaType_Gashapon = 2;     // 彩蛋机
 //     GachaType_ChaoPlay = 3;     // 潮玩赏
@@ -179,7 +180,7 @@ export default {
                 //     img: "WeChat",
                 //     show: false,
                 //     msg: "微信APP支付",
-                // },
+                // },  // 是否金币和潮币支付
                 {
                     name: "潮币余额",
                     type: 0,
@@ -293,30 +294,31 @@ export default {
         },
         async open(amount, num, source_type, source_id, couponId, box_index, original = 0, discount = 0, theme_id
         ) {
-            // #ifndef MP-WEIXIN
+            // #ifndef MP-WEIXIN 微信小程序需要
             // 0潮币 1支付宝 2微信 3微信小程序 推荐使用this.mtype !== "12"
-            if (this.userInfo.allowCoinBet && !["12", "13"].includes(this.mtype)) this.paytype;
-            else this.paytype = this.mtype !== "6" ? 1 : 0;
-            // #endif
+            // if (this.userInfo.allowCoinBet && !["12", "13"].includes(this.mtype)) this.paytype;
+            // else this.paytype = this.mtype !== "6" ? 1 : 0;
+            // #endif  微信小程序需要
             if (!this.userInfo.id) {
                 this.goto("/pages/login/login");
                 return;
             }
             this.goldNumber = this.userInfo.gold; // 金币
             this.goMitigate = false;
-            this.amount = amount;
-            this.oldamount = amount;
-            this.payNum = num;
+            this.amount = amount; // 传过来的金额
+            this.oldamount = amount; // 传过来的金额
+            this.payNum = num; // 数量
             this.source_type = source_type;
             this.source_id = source_id;
-            this.couponId = couponId;
+            this.couponId = couponId; // 优惠券id
             this.show = true;
-            this.box_index = box_index;
-            this.theme_id = theme_id
-            if (this.mtype == "13") this.allDiscount = { discount: discount || 0, original: original, };
+            this.box_index = box_index;  // 传过来的
+            this.theme_id = theme_id  //
+            if (this.mtype == "13") this.allDiscount = { discount: discount || 0, original: original, }; // 一网打尽
             else this.discount = discount;
             this.pays.forEach((user) => {
                 user.consume = 0;
+                                              // 是否容许潮币抽
                 if (this.mtype !== "12" && this.userInfo.allowCoinBet && !user.type) user.show = true; // 显示潮币支付
                 if (user.type == 4 && this.mtype !== "6") user.show = true;  //显示金币支付
                 if (user.type == 4) user.number = this.userInfo.gold;  // 赋值金币
@@ -334,17 +336,21 @@ export default {
                 this.asyncUpBalance();//获取金币
                 if (["1", "2", "3", "4", "5"].includes(this.mtype)) {
                     if (!discount && this.payMessage.discount) {
+                        // 获取汇率
                         this.unitPrice = this.$h.Div(amount, num).toFixed(2)
                     }
+                    // 获取欧气值
                     this.integralAll = await integralPrice();//获取欧气值-
+                    // 活血
                     this.getBalance(); // 查优惠
                     this.getDiscounts(); //查看欧气值优惠金额
                 }
             }
             if (this.mtype == "6" && this.userInfo.allowCoinBet) {
+                // 可以潮币支付,默认潮币支付
                 this.paytypeList = [0];
             } else if (this.mtype == "6" && !this.userInfo.allowCoinBet) {
-                this.paytypeList = [1];
+                this.paytypeList = [1]; //集市不让潮币支付,默认支付宝
             } else {
                 // #ifndef MP-WEIXIN
                 this.paytypeList = [4];
@@ -361,6 +367,7 @@ export default {
             this.UppayMessage({ url: "", message: {}, discount: true });
             this.pays.forEach((i) => (i.consume = 0));
         },
+        // 获取优惠券
         async getBalance() {
 
             // 赏品详情
@@ -443,12 +450,22 @@ export default {
                 uni.$u.toast("金币不足，可与支付宝组合付款！");
                 return;
             } else {
+                // this.amount  == 0   免费抽
                 let res, orderInfo;
                 let click_type = this.amount == 0 ? 0 : this.paytype;
                 // 潮币单独支付 潮币和欧气值支付
                 // 金币单独支付  金币和欧气值支付 金币和支付宝支付 金币和欧气值和支付宝支付
                 // 支付宝支付 支付宝和金币支付 支付宝和金币和欧气值支付
                 // 开启欧气值总金额
+                 
+    //                 enum PayType {
+    //     OpenGachaPayType_Nil = 0;
+    //     OpenGachaPayType_Coin = 1;          // 潮币
+    //     OpenGachaPayType_PostCard = 2;      // 明信片
+    //     OpenGachaPayType_Gold = 3;          // 金币
+    // }
+           
+                 //UppayMessage 只是存储值
                 if (this.payMessage.url == "v1/gacha/open") {
                     this.UppayMessage({
                         url: "v1/gacha/open",
@@ -459,8 +476,8 @@ export default {
                             nums: this.payNum,
                             take_all: this.payNum > 0 ? 0 : 1,
                             user_coupon_id: this.selectTicket.id,
-                            is_offset: this.goMitigate ? 1 : 0,
-                            offset_money: this.goMitigate ? this.mitigate : 0,
+                            is_offset: this.goMitigate ? 1 : 0, // 欧气值抵扣
+                            offset_money: this.goMitigate ? this.mitigate : 0,// 欧气值抵扣
                         },
                     });
                 }
@@ -476,7 +493,10 @@ export default {
                         },
                     });
                 }
+
+                // 这里支付
                 if (click_type == 0) {
+                    // 直接开箱,有免费优惠卷
                     res = await callPayment(
                         this.payMessage.url == "ddl"? "v1/gacha/open" : this.payMessage.url,
                         this.payMessage.message,
@@ -485,6 +505,7 @@ export default {
                     this.$emit("success", res, this.showAnimation, click_type);
                     this.close();
                 } else {
+                    //还是要调用支付
                     let that = this;
                     res = await callPayment(
                         this.payMessage.url == "ddl" ? "v1/gacha/open" : this.payMessage.url,

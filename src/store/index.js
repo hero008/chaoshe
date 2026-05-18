@@ -3,10 +3,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 import { post } from "@/utils/api.js"
 import { setCache, getCache } from "@/utils/storage.js"
+import { isMTVapp, mgTvIsLogin } from '../utils/mgtv'
 let userInfo = getCache("userInfo") || {};
 const store = new Vuex.Store({
     /* 此处存储数据 */
     state: {
+        isMTVLogin:false,
         userName: "Nnnni",
         userInfo, // 用户信息
         selectTicket: {}, // 选择的优惠券
@@ -45,13 +47,16 @@ const store = new Vuex.Store({
             //     content: "便于您使用该功能联系买家、客服、业务经理与联系等场景下使用",
             //     methods: 'SET_CALL_PHONE'
             // }
-        }
+        },
     },
     /* 
      * 包装类，此处用于包装 state 中数据，类似于页面组件中的计算属性
      * getters 是唯一可以取 state 值的方法
      */
     getters: {
+        isMgLogin(state) {
+            return state.isMTVLogin
+        },
         userInfo(state) {
             return state.userInfo
         },
@@ -84,6 +89,15 @@ const store = new Vuex.Store({
      * 第二个形参是调用此方法时传递的参数
      */
     mutations: {
+        updateMgTvLogin(state,val){
+            if(!val){
+                uni.removeStorageSync("aToken")
+                uni.removeStorageSync("rToken")
+                uni.removeStorageSync("userInfo")
+            }
+            state.isMTVLogin = val
+        },
+       
         updateInfo(state, info) {
             state.userInfo = info;
             setCache("userInfo", info, 60 * 60 * 24 * 7)
@@ -137,6 +151,11 @@ const store = new Vuex.Store({
      * 第二个形参是调用此方法时传递的参数
      */
     actions: {
+        asyncUpdateMgTvLogin(context) {
+            mgTvIsLogin().then(res => {
+                context.commit('updateMgTvLogin', res)
+            })
+        },
         asyncUpdateInfo(context) {
             let userInfo = getCache("userInfo") || {};
             post("v1/user/self/get", { user_id: userInfo.id }).then(res => {

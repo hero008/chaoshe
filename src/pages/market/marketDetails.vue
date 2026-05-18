@@ -222,6 +222,7 @@
             </div>
         </u-popup>
         <!-- 支付 -->
+            <!-- 调用open 打开弹框  交易详情-->
         <x-pay @success="confirmOrder" ref="xPay" mtype="6" :probabilityShow="[]" />
         <gachaDetails ref="gachaDetails" />
         <!-- 通用提示框 -->

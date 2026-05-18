@@ -268,7 +268,7 @@
             <!-- #endif -->
             <!-- 赏品详情 -->
             <gachaDetails ref="gachaDetails" />
-            <!-- 支付 -->
+            <!-- 支付 一番赏1-->
             <x-pay @success="onClickDraw" ref="xPay" mtype="1" :probabilityShow="probabilityShow" />
             <!-- 中赏记录 -->
             <draw-log ref="drawLog" drawType="1" />
