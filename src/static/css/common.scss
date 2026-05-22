@@ -275,11 +275,13 @@ span {
 
 .special_btn1 {
     position: relative;
-    width: 686rpx;
+    width:500rpx;
     height: 84rpx;
     margin: 0 auto;
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/special_btn.png");
-    background-size: 100% 100%;
+    border-radius: 42rpx;
+    // background: url("https://img.chaoshewang.com/static/img/chaowanshang/special_btn.png");
+    // background-size: 100% 100%;
+    background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
     font-weight: 800;
     font-size: 32rpx;
     color: #000000;

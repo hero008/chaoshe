@@ -32,7 +32,6 @@ export const mgTvLogin =()=>{
     MgtvApi.login((res) => {
        store.dispatch('asyncUpdateMgTvLogin');
         setTimeout(() => { goto("/pages/my/loading") }, 100)
-   
     });
 }
 
@@ -176,3 +175,8 @@ export const mgTvIsLogin = () => {
     })
 
 }
+
+// 上面的用不上
+
+
+

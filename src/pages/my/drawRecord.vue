@@ -7,7 +7,7 @@
             </view>
         </div>
         <div class="shanggui_con">
-            <view class="tabs_two flex_r flex_jb">
+            <view class="tabs_two flex_r">
                 <view
                     class="tab_item"
                     :class="{ active: i.val == secondCondition }"
@@ -138,19 +138,19 @@ export default {
     data() {
         return {
             navbar: [
-                { txt: "一番赏", val: 1 },
+                // { txt: "一番赏", val: 1 },
                 { txt: "扭蛋机", val: 2 },
                 { txt: "潮游赏", val: 3 },
                 { txt: "洞洞乐", val: 4 },
-                { txt: "潮社赏", val: 5 },
-                { txt: "一网打尽", val: 6 },
+                // { txt: "潮社赏", val: 5 },
+                // { txt: "一网打尽", val: 6 },
             ],
             pageda: {
                 page: 1,
                 page_size: 20,
                 total: 20,
             },
-            secondCondition: 1,
+            secondCondition: 2,
             myRewardData: [],
         };
     },
@@ -200,22 +200,27 @@ export default {
     height: 100vh;
     position: relative;
     padding: 100rpx 0 30rpx;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
-    overflow-y: auto;
-
-    &::before {
+      background-color: #F5F6F8;
+          &::after {
         content: "";
         width: 100vw;
-        height: calc(100vh - 212rpx);
-        position: absolute;
-        top: 212rpx;
+        height: 600rpx;
         left: 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
+    overflow-y: auto;
+
+  
 }
 
 .navbar_x {
     padding: 0 32rpx;
+    position: relative;
+    z-index: 2;
 
     .btn_r {
         width: 162rpx;
@@ -241,42 +246,49 @@ export default {
 }
 
 .tabs_two {
-    width: 650rpx;
-    background: #ac8afc;
-    border-radius: 0 30rpx 0 0;
+    // width: 650rpx;
+    // background: #ac8afc;
+    // border-radius: 0 30rpx 0 0;
     // padding-right: 20rpx;
     // width: 468rpx;
-    height: 76rpx;
+    height: 56rpx;
     // background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
     // background-size: 100% 100%;
     font-size: 28rpx;
-    color: #fff;
+    color: #666666;
     line-height: 28rpx;
+    padding-left: 32rpx;
 
     .tab_item {
-        // width: 25%;
-        // width: 33.33%;
-
-        line-height: 60rpx;
-        text-align: center;
+      width: 136rpx;
+height: 56rpx;
+background: #EEEEEE;
+border-radius: 28rpx 28rpx 28rpx 28rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 56rpx;
+margin-right: 16rpx;
 
         &:first-child {
-            margin-left: -16rpx;
+            // margin-left: -16rpx;
         }
         &:last-of-type {
-            margin-right: 10rpx;
+            // margin-right: 10rpx;
         }
 
         &.active {
-            margin-top: -10rpx;
-            color: #333;
-            width: 156rpx;
-            height: 86rpx;
-            line-height: 76rpx;
-            font-weight: bold;
-            background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
-            background-size: 100% 100%;
-            font-size: 30rpx;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #000;
+            // margin-top: -10rpx;
+            // color: #333;
+            // width: 156rpx;
+            // height: 86rpx;
+            // line-height: 76rpx;
+            // font-weight: bold;
+            // background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
         }
     }
 }
@@ -287,11 +299,12 @@ export default {
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 2;
 
     .p_lists {
         height: calc(100% - 66rpx);
         border-radius: 0 50rpx 0 0;
-        background: #f4f4f4;
+        // background: #f4f4f4;
         margin-top: -15rpx;
         padding: 32rpx;
     }

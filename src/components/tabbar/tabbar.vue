@@ -13,11 +13,11 @@
             @tap="change(item.va), pagesChange(item)"
             :key="item.va"
             :class="[
-                tabBarStyle.selectIndex == item.va
-                    ? animationIcon
-                        ? 'animationIcons'
-                        : 'animationIconsBig'
-                    : '',
+                // tabBarStyle.selectIndex == item.va
+                //     ? animationIcon
+                //         ? 'animationIcons'
+                //         : 'animationIconsBig'
+                //     : '',
             ]"
         >
             <view class="imageBox">
@@ -26,11 +26,11 @@
                     v-if="tabBarStyle.selectIndex != item.va"
                 ></image>
                 <image :src="item.selectImage" v-else></image>
-                <text
+                <!-- <text
                     class="icons"
                     v-if="item.icon > 0 && tabBarStyle.iconNumber[index] == 1"
                     >{{ item.icon }}</text
-                >
+                > -->
             </view>
             <text
                 :class="{ listTxtColors: tabBarStyle.selectIndex == item.va }"
@@ -63,47 +63,47 @@ export default {
         return {
             tabBarStyle: {
                 list: [
-                    // #ifndef MP-WEIXIN
-                    {
-                        image: "/static/tabBar/tab1-1.png",
-                        selectImage: "/static/tabBar/tab1-2.png",
-                        txt: "潮玩",
+            
+                    // {
+                    //     image: "/static/tabBar/tab1-1.png",
+                    //     selectImage: "/static/tabBar/tab1-2.png",
+                    //     txt: "潮玩",
+                    //     va: 0,
+                    //     isVisible: true,
+                    // },
+                  {
+                        image: "/static/tabBar/tab/tab3-1.png",
+                        selectImage: "/static/tabBar/tab/tab3-2.png",
+                        txt: "首页",
                         va: 0,
                         isVisible: true,
                     },
-
                     {
-                        image: "/static/tabBar/tab2-1.png",
-                        selectImage: "/static/tabBar/tab2-2.png",
+                        image: "/static/tabBar/tab/tab2-1.png",
+                        selectImage: "/static/tabBar/tab/tab2-2.png",
                         txt: "集市",
-                        va: 1,
-                        isVisible: false,
+                        va:1,
+                        isVisible: true,
                     },
-                    // #endif
+                  
+                  
                     {
-                        image: "/static/tabBar/tab3-1.png",
-                        selectImage: "/static/tabBar/tab3-2.png",
-                        txt: "首页",
+                        image: "/static/tabBar/tab/tab4-1.png",
+                        selectImage: "/static/tabBar/tab/tab4-2.png",
+                        txt: "潮柜",
                         va: 2,
                         isVisible: true,
                     },
                     {
-                        image: "/static/tabBar/tab4-1.png",
-                        selectImage: "/static/tabBar/tab4-2.png",
-                        txt: "潮柜",
+                        image: "/static/tabBar/tab/tab5-1.png",
+                        selectImage: "/static/tabBar/tab/tab5-2.png",
+                        txt: "我的",
                         va: 3,
                         isVisible: true,
                     },
-                    {
-                        image: "/static/tabBar/tab5-1.png",
-                        selectImage: "/static/tabBar/tab5-2.png",
-                        txt: "我的",
-                        va: 4,
-                        isVisible: true,
-                    },
                 ],
-                defaultcolor: "#666", //默认字体颜色
-                selectListTxtColor: "#9064FF", //选中后字体颜色
+                defaultcolor: "#B6B6B6", //默认字体颜色
+                selectListTxtColor: "#FFFFFF", //选中后字体颜色
                 defaultFontSizi: "12px", //字体大小
                 selectIndex: 2, //选中之后得下标
                 iconNumber: [], //小角标显示的地方，跟list的下标一致
@@ -167,16 +167,16 @@ export default {
         },
     },
     computed: {
-        // #ifndef MP-WEIXIN
+       
         ...mapState(["userInfo", "popupWebSocket"]),
         filteredTodos() {
-            return this.tabBarStyle.list.filter((todo) =>
-                todo.txt == "集市"
-                    ? (todo.isVisible = this.userInfo.showMarket)
-                    : todo.isVisible
-            );
+            // return this.tabBarStyle.list.filter((todo) =>
+            //     todo.txt == "集市"
+            //         ? (todo.isVisible = this.userInfo.showMarket)
+            //         : todo.isVisible
+            // );
         },
-        // #endif
+   
     },
 };
 </script>
@@ -184,14 +184,16 @@ export default {
 .tabBarBoxs {
     position: fixed;
     z-index: 990;
-    bottom: 0;
-    left: 0;
-    height: 130rpx;
-    width: 100%;
-    background-color: #fff;
+    bottom: 68rpx;
+    left: 32rpx;
+    height: 120rpx;
+    width: 686rpx;
+    background-color: #2A2A2A;
     display: flex;
-    padding: 5rpx 0 30rpx;
-    border-top: 2rpx solid #ddd;
+    border-radius: 64rpx;
+    // padding: 5rpx 0 30rpx;
+    // border-top: 2rpx solid #ddd;
+    
 }
 
 .tab_item {
@@ -235,7 +237,7 @@ export default {
     }
 
     .listTxtColors {
-        color: var(--selectcolor) !important;
+        color: #fff !important;
         font-weight: 600;
     }
 }
@@ -255,7 +257,7 @@ export default {
 }
 
 .animationIcons {
-    animation: myFn 0.6s;
+    // animation: myFn 0.6s;
 }
 
 @keyframes myFns {
@@ -280,21 +282,21 @@ export default {
 }
 
 .animationIconsBig {
-    .listTxtColors {
-        padding-bottom: 8rpx;
-        transform: scale(1.1);
-        animation: myFn1 0.3s;
-    }
+    // .listTxtColors {
+    //     padding-bottom: 8rpx;
+    //     transform: scale(1.1);
+    //     animation: myFn1 0.3s;
+    // }
 
-    image {
-        border-top: 2rpx solid #ddd;
-        padding: 15rpx 32rpx;
-        transform: scale(1.26);
-        position: absolute;
-        top: -28rpx;
-        background-color: #fff;
-        border-radius: 50%;
-        animation: myFns 0.3s;
-    }
+    // image {
+    //     border-top: 2rpx solid #ddd;
+    //     padding: 15rpx 32rpx;
+    //     transform: scale(1.26);
+    //     position: absolute;
+    //     top: -28rpx;
+    //     background-color: #fff;
+    //     border-radius: 50%;
+    //     animation: myFns 0.3s;
+    // }
 }
 </style>

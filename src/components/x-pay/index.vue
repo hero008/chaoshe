@@ -137,6 +137,13 @@ import { callPayment } from "@/utils/pay.js";
 //     GachaType_SurpriseBox = 4;  // 洞洞乐
 //     GachaType_ChaoShe = 5;      // 潮社赏
 //     GachaType_ShareBill = 6;    // 一网打尽
+
+
+// payType
+//    OpenGachaPayType_Nil = 0;
+//         OpenGachaPayType_Coin = 1;          // 潮币
+//         OpenGachaPayType_PostCard = 2;      // 明信片
+//         OpenGachaPayType_Gold = 3;          // 金币
 export default {
     name: "x-pay",
     props: {
@@ -502,6 +509,8 @@ export default {
                         this.payMessage.message,
                         click_type
                     );
+
+                    // 这里直接开箱,没问题. 过去出动画
                     this.$emit("success", res, this.showAnimation, click_type);
                     this.close();
                 } else {
@@ -523,6 +532,8 @@ export default {
                         click_type
                     );
                     orderInfo = res.orderInfo;
+                    // 在这里应该拿到 url.
+                    // 这里需要调支付,有问题.
                     uni.requestPayment({
                         provider: this.paytypeList.includes(3) ? "wxpay" : "alipay",
                         // #ifndef MP-WEIXIN

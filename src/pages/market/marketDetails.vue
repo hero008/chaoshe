@@ -238,6 +238,59 @@ import autonym from "@/components/autonym/index.vue";
 import { mapMutations } from "vuex";
 import { callPayment } from "@/utils/pay.js";
 let that;
+// 用户交易金额决定 提现等级 及 额度
+// message UserDealAmountReply{
+//     int64 amount = 1;
+//     int64 payout_level = 2;
+//     int64 payout_amount_limit = 3;
+// }
+// // 集市订单 类型
+// enum MarketOrderType {
+//     MarketOrderType_Nil = 0;
+//     MarketOrderType_Buy = 1; // 一口价
+//     MarketOrderType_Ask = 2; // 以物换物
+// }
+
+// enum MarketOrderState {
+//     MarketOrderState_nil = 0;
+//     MarketOrderState_Open = 1;    // 交易中
+//     MarketOrderState_Lock = 2;    // 锁定中
+//     MarketOrderState_Close = 3;    // 已关闭
+//     MarketOrderState_Done = 4;    // 已完成
+//     MarketOrderState_Expire = 5;  // 已过期
+//     MarketOrderState_AdminClose = 6;  // 管理员关闭
+// }
+
+// enum MarketOrderClientState {
+//     MarketOrderClientState_Nil = 0;       // 全部
+//     MarketOrderClientState_Open = 1;      // 交易中
+//     MarketOrderClientState_Done = 2;      // 已完成 // 已结束
+//     MarketOrderClientState_Cancel = 3;    // 已取消
+// }
+
+// enum SaleType {
+//     SaleType_Nil = 0;
+//     SaleType_Spots = 1;   // 现货
+//     SaleType_booking = 2; // 预售
+// }
+
+// enum UserOfferState {
+//     UserOfferState_Nil = 0;
+//     UserOfferState_Offer = 1; // 出价
+//     UserOfferState_Done = 2;  // 成交
+//     UserOfferState_Failed = 3;  // 失败
+//     UserOfferState_Cancel = 4;  // 撤回
+//     UserOfferState_Reject = 5;  // 拒绝
+// }
+
+// // 排序类型 // 旧代码 使用了 一口价
+// enum ListOrderType {
+//     ListOrderType_Nil = 0;
+//     ListOrderType_Newest = 1; // 最新
+//     ListOrderType_Hottest = 2;  // 最热
+//     ListOrderType_BuyItNow = 3; // 一口价 // 仅旧版本
+// }
+
 export default {
     data() {
         return {

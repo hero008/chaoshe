@@ -1,14 +1,17 @@
 <template>
     <view class="egg">
         <!-- 背景 -->
-        <image class="egg_bg" src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_bg1.png" mode="widthFix">
-        </image>
-        <image class="egg_ji" src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_bg.png" mode="widthFix">
+        <!-- <image class="egg_bg" src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_bg1.png" mode="widthFix">
+        </image> -->
+        <image class="egg_ji" src="../../static/gachaStatic/niudanji/box.png" mode="widthFix">
         </image>
 
         <!-- 开关 -->
-        <image class="play" :class="start ? 'go' : ''" @click="eggPlay"
-            src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_btn-4.png" mode="widthFix"></image>
+         <view class="play" :class="start ? 'go' : ''" @click="eggPlay">
+
+         </view>
+        <!-- <image class="play" :class="start ? 'go' : ''" @click="eggPlay"
+            src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_btn-4.png" mode="widthFix"></image> -->
         <!-- 散蛋 -->
         <view class="egg_box">
             <image v-for="ball in balls" :key="ball.id" class="ball"
@@ -78,15 +81,17 @@ export default {
 .egg {
     /* z-index: 3; */
     width: 100%;
-    height: 764rpx;
+    height: 662rpx;
     position: relative;
+    margin-top: 24rpx;
 }
 
 .egg .egg_ji {
-    width: 660rpx;
-    height: 764rpx;
+    width: 100%;
+    height: 662rpx;
     position: absolute;
-    left: calc((100% - 660rpx) / 2);
+    left: 0;
+    /* left: calc((100% - 660rpx) / 2); */
     top: 0;
     /* z-index: 1; */
 }
@@ -100,21 +105,21 @@ export default {
 }
 
 .egg .play {
-    width: 92rpx;
-    height: 92rpx;
+    width: 200rpx;
+    height: 62rpx;
     position: absolute;
     /* z-index: 10; */
-    bottom: 82rpx;
+    bottom: 130rpx;
     right: 136rpx;
 }
 
 .egg_box {
     position: absolute;
     width: 517rpx;
-    height: 247rpx;
+    height: 287rpx;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 226rpx;
+    bottom: 206rpx;
     overflow: hidden;
 
 }

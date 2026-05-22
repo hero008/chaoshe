@@ -1,12 +1,26 @@
 <template>
-    <view class="dongdongle" :style="{ paddingTop: MBInfo().top + MBInfo().height + 'px' }">
+    <view class="dongdongle" :style="{ paddingTop: MBInfo().top + 'px' }">
         <view class="top_Back flex_r flex_js flex_ac"
             :style="{ top: MBInfo().top + 'px', height: MBInfo().height + 'px' }">
-            <img src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png" @click.stop="gateBack"
-                class="Back_ico" />
+            <img src="../../static/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
             <text class="title">洞洞乐</text>
         </view>
-        <div class="hint btns">
+         <div class="i_notice flex_r flex_ac">
+            <img src="https://img.chaoshewang.com/static/img/market/ico2.png" class="m_ico" />
+            <u-notice-bar :text="inotice" :fontSize="12" color="#fff" bgColor="rgba(0,0,0,0)"></u-notice-bar>
+          </div>
+             <view class="leftBox"  @click=" goto('/pages/common/rulepop', { val: 'SurpriseBoxRules' })"> <image
+                        src="../../static/gachaStatic/niudanji/ruleIcon.png"
+                        mode="scaleToFill"
+                    /><text>规则</text></view>
+                     <!-- @click="goChaoGui" -->
+        <!-- <view class="leftBox ico-share">
+              <image
+                        src="../../static/gachaStatic/niudanji/shareIcon.png"
+                        mode="scaleToFill"
+                    /><text>分享</text>
+        </view> -->
+        <!-- <div class="hint btns">
             <div class="hint_box flex_r flex_jc flex_ac">
                 <div class="hint_item">
                     <view class="image pic1"></view>
@@ -27,17 +41,24 @@
             <div class="btns_3 t_btn" @click="getRewardHistory">
                 <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-record.png" />
             </div>
-        </div>
+        </div> -->
         <div class="box_bar">
-            <view class="ico-t" @click=" goto('/pages/common/rulepop', { val: 'SurpriseBoxRules' })">规则</view>
+          
+            <!-- <view class="ico-t" @click=" goto('/pages/common/rulepop', { val: 'SurpriseBoxRules' })">规则</view> -->
             <view class="multiple nb" v-if="gachainfo.costAwardMultiple > 1">
                 <view class="number">{{ gachainfo.costAwardMultiple }}</view>
             </view>
-            <div class="pro">
+
+               <view class="tit">
+                     <view class="price">
+                        ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }} / 抽
+                     </view>
+                </view>
+            <!-- <div class="pro">
                 <div class="quan"></div>
                 <div class="txt">{{ Math.ceil((leftAwards / totalAwards) * 100) || 0 }}% </div>
-            </div>
-            <movable-area class="movable-draw">
+            </div> -->
+            <!-- <movable-area class="movable-draw">
                 <movable-view y="1000rpx" v-if="activityOpen" class="movable-ball" direction="vertical">
                     <view class="coupon  flex_r flex_ac" :class="[getCouponType]">
                         <view class="bombImg" @click="$noMultipleClicks(getCoupon)">
@@ -69,26 +90,33 @@
                         </view>
                     </view>
                 </movable-view>
-            </movable-area>
-            <view class="tit">￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }}/ 戳一次</view>
+            </movable-area> -->
+            <!-- <view class="tit">￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }}/ 戳一次</view> -->
             <view class="bomb_box flex_r flex_ac" v-if="gachainfo.bombNum">
                 <view class="bomb"></view>
-                <view class="bomb_text">: {{ gachainfo.bombNum }}枚</view>
+                <view class="bomb_text"> {{ gachainfo.bombNum }}枚</view>
             </view>
             <div class="list clearfix">
                 <div class="item  " :class="{
                     bg2: emptyCellIndexes.includes(s + 1),
                     bg3: selectGrid.includes(s + 1),
                 }" v-for="(i, s) in totalAwards" :key="i" @click="getIndexAraeds(s + 1)">
-                    <view>{{ s + 1 }}</view>
-                    <view class="bomb_bg "
+                    <view style="width: 60rpx;height: 60rpx;position: relative;">{{ s + 1 }}
+
+                     <view class="max_bomb" v-if="gachaBombRecord.cellIndex.includes(s + 1)"></view>
+                       <view class="bomb_bg "
                         v-if="emptyCellIndexes.includes(s + 1) && (gachaBombRecord.bombRewardCellIndex.includes(s + 1) || gachaBombRecord.cellIndex.includes(s + 1))">
                     </view>
-                    <view class="max_bomb" v-if="gachaBombRecord.cellIndex.includes(s + 1)"></view>
+                    
+                    </view>
+                 
+                    <view v-if="((s + 1) % 8 == 0) || (s-1 == (totalAwards.length))" class="line"></view>
                 </div>
             </div>
-        </div>
-        <view @click="onpay(0, 1)" class="foot-btn" v-if="showBtn">
+          
+
+         
+          <view @click="onpay(0, 1)" class="foot-btn" style="padding-top: 56rpx;" v-if="showBtn">
             <view class="special_btn1 flex_c">
                 <view class="">立即抽赏</view>
                 <view class="number">￥{{
@@ -117,28 +145,31 @@
         <view class="foot-btn flex_r flex_jb flex_ac" v-else-if="
             AReward.userBetCount == -1 && AReward.userBetCountDaily == -1
         ">
-            <view class="btn-item" @click="onpay(0)">确定</view>
-            <view class="btn-item" @click="RandomShow = true">随机</view>
-            <view class="btn-item btn-item2" @click="onpay(2)">全部</view>
+          
+            <view class="flex_r">
+                <view class="btn-item suiji" @click="RandomShow = true"></view>
+                <view class="btn-item btn-item2 all" @click="onpay(2)"></view>
+            </view>
+              <view class="btn-item confirm" @click="onpay(0)">确定</view>
         </view>
-        <view class="foot-btn" v-else
+        <view class="foot-btn" style="padding-top: 56rpx;"  v-else
             :class="{ forbid_bg: AReward.userBetCount == 0 || AReward.userBetCountDaily == 0, }"
             @click="AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 ? (showDiscounts = true) : onpay(0, 3)">
             <view class="special_btn1 flex_c">
                 <view class="">立即抽赏</view>
             </view>
         </view>
-        <div class="i_notice flex_r flex_ac">
-            <img src="https://img.chaoshewang.com/static/img/market/ico2.png" class="m_ico" />
-            <u-notice-bar :text="inotice" :fontSize="12" color="#fff" bgColor="rgba(0,0,0,0)"></u-notice-bar>
         </div>
+      
+
         <div class="yunlanBtn" @click="visible = true">
-            <div class="l_dit"></div>
+            <!-- <div class="l_dit"></div>
             <div class="r_dit"></div>
             <img class="ico_img" src="https://img.chaoshewang.com/static/img/dongle/img_small.png" alt="" />
             <img class="ico_txt" src="https://img.chaoshewang.com/static/img/dongle/img_txt.png" alt="" />
-            <img class="ico_light" src="https://img.chaoshewang.com/static/img/dongle/img_light.png" alt="" />
+            <img class="ico_light" src="https://img.chaoshewang.com/static/img/dongle/img_light.png" alt="" /> -->
         </div>
+        <div class="recordBtn" @click="getRewardHistory"></div>
         <!-- 过场动画 , { opacity: !cartoonShow } -->
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
             <div v-if="inAdvance" :class="['cartoon_con']">
@@ -484,7 +515,7 @@ export default {
 
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
-                this.handleDrawResult(res, showAnim);
+                this.handleDrawResult(res, showAnim); // 直接出结果,查询结果
             } else {
                 this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
@@ -817,10 +848,37 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+
+    .leftBox {
+          width: 100rpx;
+        height: 40rpx;
+        background: rgba(26, 26, 26, .5);
+        font-size: 24rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        border-radius: 20rpx 0 0 20rpx;
+        line-height: 40rpx;
+        position: absolute;
+        right: 0;
+        z-index: 88;
+        top: 232rpx;
+        &.ico-share{
+            top: 296rpx;
+        }
+        image{
+           width: 32rpx;
+           height: 32rpx; 
+           margin-right: 4rpx;
+           vertical-align: middle;
+        }
+    }
 .dongdongle {
-    background-color: #a8a2e9;
-    background-image: url("https://img.chaoshewang.com/static/img/dongle/ddl_bg.png");
-    background-size: 100% 100%;
+    // background-color: #a8a2e9;
+    // background-image: url("https://img.chaoshewang.com/static/img/dongle/ddl_bg.png");
+    // background-size: 100% 100%;
+    background: linear-gradient( 180deg, #BCF8FF 0%, #E5FDFF 24%, #E4F5FA 100%);
     height: 100vh;
     overflow-y: auto;
 }
@@ -833,20 +891,18 @@ export default {
 
 
 .top_Back {
-    width: calc(100% - 120rpx);
-    color: #333;
+       color: #000000;
     font-size: 36rpx;
     font-weight: bold;
-    padding: 0 36rpx;
-    position: fixed;
-    top: 106rpx;
-    left: 0;
-    z-index: 888;
+    padding: 0 30rpx;
 
-    .Back_ico {
-        width: 50rpx;
-        height: 50rpx;
-        margin-right: 50rpx;
+     .Back_ico {
+        width: 48rpx;
+        height: 48rpx;
+        margin-right: 24rpx;
+    }
+    .title{
+        max-width: 400rpx;
     }
 }
 
@@ -908,36 +964,50 @@ export default {
 }
 
 .box_bar {
-    width: 670rpx;
-    height: 1040rpx;
-    background: url("https://img.chaoshewang.com/static/img/dongle/ddl_pic-7.png");
+    width: 686rpx;
+    height: 1280rpx;
+    margin-top: 12rpx;
+
+    background: url("../../static/gachaStatic/ddl/bg.png");
     background-size: 100% 100%;
-    margin-left: calc((100% - 670rpx) / 2);
+    margin-left: calc((100% - 686rpx) / 2);
     position: relative;
-    padding-top: 186rpx;
+    padding-top: 47rpx;
+    // padding-top: 186rpx;
 
     .bomb_box {
         position: absolute;
-        top: 120rpx;
+        // top: 120rpx;
         left: 50%;
         transform: translateX(-50%);
+        display: flex;
+        width: fit-content;
 
+    
+        height: 48rpx;
+        border-radius: 24rpx;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding-right: 34rpx;
+        align-items: center;
+        
         .bomb_text {
-            height: 32rpx;
-            padding-top: 5.5rpx;
+            // height: 32rpx;
+            // padding-top: 5.5rpx;
             font-weight: bold;
-            font-size: 20rpx;
-            background: linear-gradient(90deg, #D144EF, #4207B9);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            white-space: nowrap;
+            font-size: 28rpx;
+            // background: linear-gradient(90deg, #D144EF, #4207B9);
+            // -webkit-background-clip: text;
+            // background-clip: text;
+            // color: transparent;
+            // white-space: nowrap;
+            color: #494C5A;
         }
 
         .bomb {
-            width: 32rpx;
-            height: 32rpx;
-            background: url("https://img.chaoshewang.com/static/img/niudan/min_bomb.png");
+            width: 64rpx;
+            height: 64rpx;
+            margin-top: -16rpx;
+            background: url("../../static/gachaStatic/ddl/zd.png");
             background-size: 100% 100%;
         }
     }
@@ -1220,41 +1290,101 @@ export default {
 
     .tit {
         position: absolute;
-        left: calc((100% - 260rpx) / 2);
-        top: 70rpx;
-        font-size: 26rpx;
-        width: 260rpx;
-        text-align: center;
+        left: 44rpx;
+        top: 4rpx;
+        font-weight: 800;
+        font-size: 24rpx;
+        color: #000;
+        width: 178rpx;
+        height: 139rpx;
+        background: url('../../static/gachaStatic/niudanji/price.png');
+        background-size: 100% 100%;
+        // text-align: center;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .price{
+            margin-top: -10rpx;
+            transform: skewY(-10deg);
+        }
     }
 
+ .line{
+     position: absolute;
+  left: 10rpx;
 
+  z-index: 1;
+                width: 534rpx;
+                height: 16rpx;
+                background: url('../../static/gachaStatic/ddl/line.png');
+                background-size: 100% 100%;
+                margin-top: -4rpx;
+               
+
+            }
 
     .list {
-        padding: 0 0 0 38rpx;
-        height: 810rpx;
+
+        // padding: 0 0 0 38rpx;
+        // height: 810rpx;
+        width: 554rpx;
+        height: 938rpx;
+        margin: auto;
         overflow-y: auto;
+        margin-top: 130rpx;
+        padding: 14rpx 10rpx;
+         position: relative;
+         padding-top: 0;
+        // padding-top: 100px;
 
         .item {
             width: 60rpx;
             height: 60rpx;
             text-align: center;
-            line-height: 52rpx;
+            line-height: 60rpx;
             font-size: 24rpx;
             background-size: 100% 100%;
+            margin-left: 6rpx;
+          text-shadow: 1px 1px 2px rgba(73,146,181,0.7);
+text-stroke: 0.4px #1E92CA;
+text-align: center;
+font-style: normal;
+text-transform: none;
+-webkit-text-stroke:  0.4px #1E92CA;
+color: #fff;
+font-family: '倍数欧气值';
             float: left;
-            background-image: url("@/static/btn/ddl_pic-6.png");
-            position: relative;
+            background: url("../../static/gachaStatic/ddl/bg0.png");
+          
             background-size: 100% 100%;
+            margin-bottom: 20rpx;
 
             &.bg2 {
-                background-image: url("@/static/btn/ddl_pic-1.png");
+              background: url("../../static/gachaStatic/ddl/bg2.png");
                 background-size: 100% 100%;
+                color: #899AAA;
+                text-shadow: 1px 1px 2px rgba(155,162,166,0.7);
+                text-stroke: 0.4px #FFFFFF;
+                text-align: center;
+                font-style: normal;
+                text-transform: none;
+                -webkit-text-stroke: 0.4px #FFFFFF;
             }
 
             &.bg3 {
-                background: url("https://img.chaoshewang.com/static/img/dongle/ddl_pic-5.png");
+                background: url("../../static/gachaStatic/ddl/bg1.png");
                 background-size: 100% 100%;
+                color: #0C9CEF;
+
+                text-shadow: 1px 1px 2px rgba(57,166,219,0.7);
+                text-stroke: 0.4px #FFFFFF;
+                text-align: center;
+                font-style: normal;
+                text-transform: none;
+                -webkit-text-stroke: 0.4px #FFFFFF;
             }
+           
 
         }
 
@@ -1274,14 +1404,14 @@ export default {
             left: 0;
             width: 60rpx;
             height: 60rpx;
-            background: url("https://img.chaoshewang.com/static/img/niudan/max_bomb.png");
+            background: url("@/static/gachaStatic/ddl/zd.png");
             background-size: 100% 100%;
         }
     }
 }
 
 .foot-btn {
-    padding: 28rpx 30rpx 170rpx;
+    padding: 42rpx 56rpx 40rpx;
 }
 
 .btn-item {
@@ -1293,80 +1423,121 @@ export default {
     text-align: center;
     font-weight: bolder;
     font-size: 30rpx;
+    &.suiji{
+        width: 112rpx;
+        height: 112rpx;
+        background: url('../../static/gachaStatic/ddl/suiji.png');
+        background-size: 100% 100%;
+        margin-right: 40rpx;
+    }
+    &.all{
+        width: 112rpx;
+        height: 112rpx;
+        background: url('../../static/gachaStatic/ddl/all.png');
+        background-size: 100% 100%;
+    }
+    &.confirm{
+        width: 172rpx;
+        height: 72rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 72rpx;
+          background: url('../../static/gachaStatic/ddl/btnBgc.png');
+        background-size: 100% 100%;
+        color: #fff;
+    }
 }
 
 .btn-item2 {
     background-image: url("@/static/btn/right.png");
     background-size: 100% 100%;
 }
+.recordBtn{
+      width: 112rpx;
+height: 104rpx;
+background: url('../../static/gachaStatic/ddl/record.png');
+background-size: 100% 100%;
+position: absolute;
+right: 0;
 
+top: 1250rpx;  
+}
 .yunlanBtn {
-    background: #eef3ff;
-    border-radius: 42rpx 42rpx 0px 0px;
-    height: 122rpx;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    width: 112rpx;
+height: 104rpx;
+background: url('../../static/gachaStatic/ddl/preview.png');
+background-size: 100% 100%;
+position: absolute;
+right: 0;
 
-    .l_dit {
-        width: 24rpx;
-        height: 24rpx;
-        background: #a295ed;
-        border-radius: 50%;
-        position: absolute;
-        top: 53rpx;
-        left: 217rpx;
-    }
+top: 1100rpx;
+    // background: #eef3ff;
+    // border-radius: 42rpx 42rpx 0px 0px;
+    // height: 122rpx;
+    // width: 100%;
+    // position: fixed;
+    // left: 0;
+    // bottom: 0;
 
-    .r_dit {
-        width: 265rpx;
-        height: 24rpx;
-        background: linear-gradient(43deg, #b8b5f2, #9e90ec);
-        border-radius: 12rpx;
-        position: absolute;
-        top: 53rpx;
-        left: 252rpx;
-    }
+    // .l_dit {
+    //     width: 24rpx;
+    //     height: 24rpx;
+    //     background: #a295ed;
+    //     border-radius: 50%;
+    //     position: absolute;
+    //     top: 53rpx;
+    //     left: 217rpx;
+    // }
 
-    .ico_img {
-        width: 44rpx;
-        height: 44rpx;
-        position: absolute;
-        top: 14rpx;
-        left: 501rpx;
-    }
+    // .r_dit {
+    //     width: 265rpx;
+    //     height: 24rpx;
+    //     background: linear-gradient(43deg, #b8b5f2, #9e90ec);
+    //     border-radius: 12rpx;
+    //     position: absolute;
+    //     top: 53rpx;
+    //     left: 252rpx;
+    // }
 
-    .ico_txt {
-        width: 228rpx;
-        height: 42rpx;
-        position: absolute;
-        top: 30rpx;
-        left: 267rpx;
-    }
+    // .ico_img {
+    //     width: 44rpx;
+    //     height: 44rpx;
+    //     position: absolute;
+    //     top: 14rpx;
+    //     left: 501rpx;
+    // }
 
-    .ico_light {
-        width: 250rpx;
-        height: 64rpx;
-        animation: breathingLight 3s infinite;
-        position: absolute;
-        top: 20rpx;
-        left: 256rpx;
-    }
+    // .ico_txt {
+    //     width: 228rpx;
+    //     height: 42rpx;
+    //     position: absolute;
+    //     top: 30rpx;
+    //     left: 267rpx;
+    // }
 
-    @keyframes breathingLight {
-        0% {
-            opacity: 1;
-        }
+    // .ico_light {
+    //     width: 250rpx;
+    //     height: 64rpx;
+    //     animation: breathingLight 3s infinite;
+    //     position: absolute;
+    //     top: 20rpx;
+    //     left: 256rpx;
+    // }
 
-        50% {
-            opacity: 0.1;
-        }
+    // @keyframes breathingLight {
+    //     0% {
+    //         opacity: 1;
+    //     }
 
-        100% {
-            opacity: 1;
-        }
-    }
+    //     50% {
+    //         opacity: 0.1;
+    //     }
+
+    //     100% {
+    //         opacity: 1;
+    //     }
+    // }
 }
 
 .pro {
@@ -1788,15 +1959,15 @@ export default {
 }
 
 .i_notice {
-    width: 100%;
-    height: 61rpx;
-    background: rgba($color: #ff2525ff, $alpha: 0.2);
-    transform: translateX(-50%);
-    position: absolute;
-    bottom: 120rpx;
-    left: 50%;
-    z-index: 100;
-    padding: 0 30rpx;
+   width: 654rpx;
+height: 56rpx;
+background: #2A2A2A;
+border-radius: 28rpx 28rpx 28rpx 28rpx;
+margin: auto;
+margin-top: 12rpx;
+margin-bottom: 24rpx;
+padding: 0 32rpx;
+padding-right: 16rpx;
 
     .m_ico {
         width: 34rpx;

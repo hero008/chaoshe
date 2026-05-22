@@ -2,6 +2,9 @@
 <template>      
                                                                     <!-- 获取高度,返回写死的 -->
     <view class="chaowan" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top + 'px' }">
+        <!-- <div style="width: 100%;height: 300px;">
+              <infiniteScroll></infiniteScroll>
+        </div> -->
         <!-- 搜索框 -->
         <x-search v-model="keyword" @search="onClickSearhResult" :height="MBInfo().height" :width="boundW" />
         <div class="chaowan-scroll-box" :style="{
@@ -88,6 +91,7 @@ import xSearch from "@/components/modules/x-search.vue";
 import { post } from "@/utils/api.js";
 import xModal from "@/components/modules/x-modal";
 import { service } from '@/utils/fun.js';
+import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
 export default {
     data() {
         return {

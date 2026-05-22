@@ -159,15 +159,12 @@
         "usingComponents" : true
     },
     "h5" : {
-         "publicPath" : "./",
+        "publicPath" : "../",
         "router" : {
-              "base" : "./",
+            "base" : "./",
             "mode" : "history"
         },
-        "devServer": {
-            
-        }
-        
+        "devServer" : {}
     },
     "channel_list" : [
         {

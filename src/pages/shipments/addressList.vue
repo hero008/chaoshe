@@ -166,12 +166,26 @@ export default {
 .addressList {
     height: 100vh;
     padding-top: 80rpx;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
     overflow-y: auto;
+     background-color: #F5F6F8;
+          &::after {
+        content: "";
+        width: 100vw;
+        height: 600rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
+
 }
 
 .navbar_x {
     padding: 0 36rpx;
+    position: relative;
+    z-index: 2;
 
     .btn_r {
         width: 162rpx;
@@ -200,12 +214,13 @@ export default {
     width: 100%;
     height: calc(100% - 190rpx);
     border-radius: 0 50rpx 0 0;
-    background: #f4f4f4;
+    // background: #f4f4f4;
     padding: 30rpx 36rpx;
     overflow-y: auto;
     position: fixed;
     left: 0;
     bottom: 0;
+    z-index: 2;
 }
 
 .top_tit {

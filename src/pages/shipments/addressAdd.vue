@@ -176,21 +176,23 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    background: linear-gradient(104deg, #E1D6F8 0%, #F8E7ED 100%);
+    // background: linear-gradient(104deg, #E1D6F8 0%, #F8E7ED 100%);
     overflow-y: auto;
-
-    &::before {
+    background-color: #F5F6F8;
+          &::after {
         content: "";
         width: 100vw;
-        height: calc(100vh - 212rpx);
+        height: 600rpx;
         left: 0;
-        top: 212rpx;
+        top: 0;
         position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #F0F0F0 50%);
-    }
-
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
     .a_con {
         position: relative;
+        z-index: 2;
     }
 }
 

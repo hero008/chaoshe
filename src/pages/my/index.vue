@@ -7,7 +7,7 @@
                 <div class="info">
                     <div class="u_name">{{ userInfo.name }}</div>
                     <view class="user_name">
-                        <div class="u_ID">潮社ID：{{ userInfo.id || "" }}</div>
+                        <div class="u_ID">ID：{{ userInfo.id || "" }}</div>
                         <!-- 先出现不需要 -->
                         <view class="vip_icon" @click="
                             goto('/pages/common/rulepop', {
@@ -87,9 +87,9 @@
             <img @click="downShow = true" src="https://img.chaoshewang.com/static/img/my/download-app.png" class="AD_img" />
         </div>
         <!-- #endif -->
-        <div class="ver_bar">
+        <!-- <div class="ver_bar">
             <div>当前版本 {{ appversion }}</div>
-        </div>
+        </div> -->
         <!-- 下载app弹窗-->
         <x-modal :visible.sync="downShow" />
         <!-- 公共弹窗提示组件 -->
@@ -207,7 +207,8 @@ export default {
         };
     },
     components: { xModal, autonym },
-    computed: { ...mapState(["userInfo", "popupWebSocket","isMTVLogin"]) },
+    // ,"isMTVLogin"
+    computed: { ...mapState(["userInfo", "popupWebSocket"]) },
     created() {
         that = this;
         this.asyncUpdateInfo();
@@ -225,10 +226,10 @@ export default {
             // this.asyncUpBalance();
         },
         login(){
-            if(!this.isMTVLogin){
-                mgTvLogin()
-                return;
-            }
+            // if(!this.isMTVLogin){
+            //     mgTvLogin()
+            //     return;
+            // }
             goto('/pages/login/login')
         },
         async getAv() {
@@ -315,9 +316,9 @@ export default {
             });
         },
         updateUser() {
-            if(!this.isMTVLogin){
-                mgTvLogin()
-            }
+            // if(!this.isMTVLogin){
+            //     mgTvLogin()
+            // }
 
             this.goto("/pages/my/updateUser");
         },
@@ -346,7 +347,22 @@ export default {
     position: relative;
     padding: 120rpx 36rpx 130rpx;
     overflow-y: auto;
-
+ background-color: #F5F6F8;
+          &::after {
+        content: "";
+        width: 100vw;
+        height: 600rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
+      >div{
+          position: relative;
+          z-index: 2;
+      }
     &.mpWeixin {
         padding-top: 160rpx;
     }
@@ -544,6 +560,7 @@ export default {
 .AD_bar {
     margin: 20rpx 0;
     height: 292rpx;
+    display: none;
 
     .AD_img {
         width: 100%;

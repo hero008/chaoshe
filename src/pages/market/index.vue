@@ -15,7 +15,9 @@
             </view>
             <view class='subclass-bottom' @click="onSsubclass" />
         </div>
-        <scroll-view @scrolltolower="onReachScollBottom" class="market_con" :scroll-y="true" :refresher-enabled="true"
+        <scroll-view :style="{
+            height:`calc(100%  - 74rpx)`,
+        }" @scrolltolower="onReachScollBottom" class="market_con" :scroll-y="true" :refresher-enabled="true"
             refresher-background="rgba(0,0,0,0)" :refresher-triggered="triggered" @refresherrefresh="onRefresh"
             @refresherrestore="onRestore" :refresher-threshold="60">
             <div>
@@ -489,7 +491,19 @@ export default {
     padding: 98rpx 32rpx;
     height: 100vh;
     overflow: hidden;
-
+    padding-bottom: 0;
+background-color: #F5F6F8;
+          &::after {
+        content: "";
+        width: 100vw;
+        height: 600rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
     .notice {
         width: 686rpx;
         height: 72rpx;
@@ -498,6 +512,8 @@ export default {
         display: flex;
         align-items: center;
         padding: 0 18rpx 0 0;
+        position: relative;
+        z-index: 2;
 
         .notice_btn {
             height: 44rpx;
@@ -509,8 +525,11 @@ export default {
 }
 
 .market_con {
-    height: calc(100% - 98rpx);
-    margin-top: 12rpx;
+    // height: calc(100% - 98rpx);
+    // margin-top: 12rpx;
+    padding-top: 12rpx;
+    position: relative;
+    z-index: 2;
 }
 
 .up_btn {
@@ -537,7 +556,7 @@ export default {
     width: 100%;
     height: calc(100vh - 400rpx);
     background: rgba(0, 0, 0, 0.5);
-    z-index: 2;
+    z-index: 6;
 
     .subclass {
         width: 750rpx;
@@ -581,6 +600,7 @@ export default {
     background-color: #fff;
     border-radius: 16rpx;
     padding: 24rpx 28rpx;
+    // padding-bottom: 0;
 
     .filt_bar {
         .btn_item {
@@ -611,6 +631,7 @@ export default {
 
     .lists {
         padding: 20rpx 0 50rpx;
+        padding-bottom: 160rpx;
     }
 
     .t_item {

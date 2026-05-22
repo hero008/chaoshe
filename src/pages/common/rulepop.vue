@@ -62,17 +62,18 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
-
-    &::before {
+background: #F5F6F8;
+    &::after {
         content: "";
         width: 100vw;
-        height: calc(100vh - 212rpx);
+        height: 600rpx;
         left: 0;
-        top: 212rpx;
+        top: 0;
         position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
 }
 
 .agreement_con {
@@ -82,6 +83,7 @@ export default {
     width: 100%;
     bottom: 0;
     left: 0;
+    z-index: 9;
 }
 
 .agree {

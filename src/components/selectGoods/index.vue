@@ -33,12 +33,16 @@
                             <view class="item" v-for="it in i.stockIds" :key="it"
                                 @click.stop="SelectItem(s, it, i, i.stockIds)">
                                 <img class="item_img" :src="i.itemCover" lazy-load="true" />
-                                <img v-if="multiIds[s].includes(it)"
+                                <!-- <img v-if="multiIds[s].includes(it)"
                                     src="https://img.chaoshewang.com/static/img/shanggui/xuanzhong.png" class="box_ico"
                                     lazy-load="true" />
                                 <img v-else src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
-                                    class="box_ico" lazy-load="true" />
-                                <view class="item_txt1">{{ i.saleType == 1 ? "现货" : "预售" }}</view>
+                                    class="box_ico" lazy-load="true" /> -->
+                                    <div style="color: #9064FF;"  class="box_ico icof cor" v-if="multiIds[s].includes(it)">&#xe673;</div>
+                                    <div  class="box_ico icof" v-else >&#xe671;</div>
+                                   <view :style="{
+                                        backgroundImage: `url(${i.saleType == 1?'../../static/gachaStatic/chaogui/xianhuo.png':'../../static/gachaStatic/chaogui/yushou.png'})`,
+                                    }" class="item_txt1"></view>
                             </view>
                         </div>
                     </template>
@@ -465,21 +469,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 .lists {
-    @include grid(152rpx);
+    padding-top: 12rpx;
+    @include grid(216rpx);
 
     &.collect {
-        height: 168rpx;
+        height: 216rpx;
         overflow: hidden;
     }
 
     .item {
-        width: 152rpx;
+        width: 216rpx;
         margin-bottom: 18rpx;
         position: relative;
-
+        height: 216rpx;
+        background-color: #fff;
+         border-radius: 16rpx;
         .item_img {
-            width: 152rpx;
-            height: 152rpx;
+            width: 192rpx;
+            height: 192rpx;
+            margin: 12rpx;
             border-radius: 16rpx;
             background-size: 100% 100%;
             position: relative;
@@ -499,18 +507,22 @@ export default {
 
         .box_ico {
             position: absolute;
-            width: 152rpx;
-            height: 152rpx;
+            width: 32rpx;
+            height: 32rpx;
             top: 0;
             left: 0;
+            z-index: 3;
         }
 
         .item_txt1 {
-            color: #ffffff;
+             color: #ffffff;
             font-size: 20rpx;
             position: absolute;
-            right: 8rpx;
-            top: 0rpx;
+            right: -12rpx;
+            top: -12rpx;
+            width: 60rpx;
+            height: 32rpx;
+            background-size: 100% 100%;
         }
 
         .item_txt {
@@ -572,6 +584,7 @@ export default {
 
     .item_tit_select {
         margin: 20rpx 0 12rpx;
+        margin-bottom: 0;
 
         .tit_l {
             width: calc(100% - 180rpx);

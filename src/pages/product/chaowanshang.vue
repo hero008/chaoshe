@@ -2,12 +2,21 @@
     <view class="chaowanshang" :style="{ paddingTop: MBInfo().top + 'px' }">
         <view class="top_Back flex_r flex_js flex_ac" :class="{ borshad: conScrollTop > 10 }"
             :style="{ height: MBInfo().height + 'px' }">
-            <img src="https://img.chaoshewang.com/static/img/duoyou/tc.png" @click.stop="gateBack" class="Back_ico" />
+            <img src="../../static/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
             <text class="title ellipsis">{{ gachainfo.themeName }}</text>
         </view>
-        <view class="leftBox" @click=" goto('/pages/common/rulepop', { val: 'ChaoPlayRules' })">规则</view>
-        <view class="leftBox cg" @click="goChaoGui">潮柜</view>
-        <scroll-view :style="{ height: conHeight }" scroll-y="true" @scroll="onScroll">
+        <view class="leftBox" @click=" goto('/pages/common/rulepop', { val: 'ChaoPlayRules' })"> <image
+                        src="../../static/gachaStatic/niudanji/ruleIcon.png"
+                        mode="scaleToFill"
+                    /><text>规则</text></view>
+                     <!-- @click="goChaoGui" -->
+        <view class="leftBox ico-share">
+              <image
+                        src="../../static/gachaStatic/niudanji/shareIcon.png"
+                        mode="scaleToFill"
+                    /><text>分享</text>
+        </view>
+        <scroll-view :style="{ height: conHeight, }" scroll-y="true" @scroll="onScroll">
             <view class="chaowanshang_con">
                 <view class="gashapon_machine_box">
                     <view class="gashapon_machine">
@@ -23,26 +32,35 @@
                                 </view>
                             </swiper-item>
                         </swiper>
+                        <view class="dizuo"></view>
                         <view class="switch_btn switch_l" @click="switchover('last')" />
                         <view class="switch_btn  switch_r" @click="switchover('next')" />
-                        <button open-type="share" class="btns_2 " @click="onShare">
+                        <!-- <button open-type="share" class="btns_2 " @click="onShare">
                             <image src="https://img.chaoshewang.com/static/img/duoyou/fx.png" />
-                        </button>
-                        <view class="ts">盲盒概率具有随机性，请理性消费</view>
+                        </button> -->
+                        <!-- <view class="ts">盲盒概率具有随机性，请理性消费</view> -->
                         <!-- #ifdef MP-WEIXIN -->
-                        <view class="price dyzt">{{ price }}</view>
+                        <!-- <view class="price">
+                            <view class="price dyzt">￥{{ price }}/抽</view>
+                        </view> -->
                         <!-- #endif -->
-                        <!-- #ifndef MP-WEIXIN -->
-                        <view class="price dyzt" :style="{ '--after-content': `'.${mantissa}'` }">{{ Math.floor(price)
-                        }} </view>
-                        <!-- #endif -->
+                    
+                        <view class="price dyzt" :style="{ '--after-content': `'.${mantissa}'` }"><view>￥{{ Math.floor(price)
+                        }}/抽</view> </view>
+<!--                     
                         <view class="multiple " v-if="gachainfo.costAwardMultiple > 1">
                             <view class="number">{{ gachainfo.costAwardMultiple }}</view>
-                        </view>
+                        </view> -->
                     </view>
+                    
+                </view>
+                <view class="gahcaAmount">
+                    <image  mode="scaleToFill" src="../../static/gachaStatic/chaoyou/icon.png" />
+                    <text>已抽{{ residual }}发</text>
                 </view>
                 <view class="preview_box">
-                    <view class="p-tit flex_r flex_ac">
+                    <view class="seeRecords" @click="showRecards = true"></view>
+                    <!-- <view class="p-tit flex_r flex_ac">
                         <view class="tit_item " @click="previewType = 1" :class="{ active: previewType == 1 }">赏池预览
                         </view>
                         <view class="tit_item " @click="chaoPlay(2)" :class="{ active: previewType == 2 }">抽赏记录</view>
@@ -50,43 +68,47 @@
                             <view>距上次出SP赏已过</view>
                             <view class="num">x{{ spNum }}</view>
                         </view>
-                    </view>
+                    </view> -->
                     <template v-if="previewType == 1">
-                        <div class="p-probability flex_r flex_ac flex_jse">
-                            <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
-                                <img :src="`https://img.chaoshewang.com/static/img/chaowanshang/duoyou_${s}.png`"
+                        <div class="preview_1">
+                              <div class="p-probability flex_r flex_ac ">
+                                <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
+                                <img :src="`../../static/gachaStatic/chaoyou/duoyou_${s}.png`"
                                     class="badge" />
                                 <!-- <div class="prob_num">{{ ($h.Div(i, gachainfo.totalNum) * 100).toFixed(2) }}%</div> -->
                                 <div class="prob_num" v-if="i">{{ i }}%</div>
                             </div>
                         </div>
-                        <scroll-view scroll-y>
-                            <view class="list-item flex_r flex_ac" v-for="(item, index) in AllRewardsInfo" :key="index"
+                        <view class="spShow">
+                             距上次出SP赏已过<text class="num">x{{ spNum }}</text>
+                        </view>
+                        <scroll-view scroll-y style="height:740rpx;padding-top: 12rpx;">
+                           <view class="list">
+                             <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
                                 @click="ondetail(item.itemId)">
                                 <img :src="item.itemHalfImage" class="p-img" />
-                                <img :src="`https://img.chaoshewang.com/static/img/chaowanshang/duoyou_${item.levelName}.png`"
+                                <img :src="`../../static/gachaStatic/chaoyou/duoyou_${item.levelName}.png`"
                                     class="badge" />
-                                <view class="bor"></view>
+                                <!-- <view class="bor"></view> -->
                                 <view class="p-name flex_c flex_jb">
-                                    <div class="tit">{{ item.itemName }}</div>
+                                    <div class="tit ellipsis">{{ item.itemName }}</div>
                                     <div class="price">
                                         <span>单抽价：</span>
-                                        <!-- #ifdef MP-WEIXIN -->
-                                        <span class="corr">{{ price }}</span>
-                                        <!-- #endif -->
-                                        <!-- #ifndef MP-WEIXIN -->
-                                        <span class="corr" :style="{ '--after-content': `'.${mantissa}'` }">{{
+               <!-- :style="{ '--after-content': `'.${mantissa}'` }" -->
+                                        <span class="corr" >￥{{
                                             Math.floor(price)
                                         }}</span>
-                                        <!-- #endif -->
+                                     
                                     </div>
                                 </view>
                             </view>
+                           </view>
                             <!-- </view> -->
                         </scroll-view>
+                        </div>
                     </template>
                     <template v-if="previewType == 2">
-                        <view class="spNumber flex_r flex_ac flex_jb">
+                        <!-- <view class="spNumber flex_r flex_ac flex_jb">
                             <view class="flex_r flex_ac">
                                 <view class="icon"></view>已抽{{ residual }}发
                             </view>
@@ -94,8 +116,112 @@
                             <view class="sx flex_r flex_ac flex_jc" @click="refreshBtn">
                                 <view class="icon1"></view>刷新
                             </view>
+                        </view> -->
+                     
+                    </template>
+                </view>
+            </view>
+        </scroll-view>
+        <view class="footBox dyzt">
+            <!-- <view v-if="activityOpen" class="coupon  flex_r flex_ac" :class="[getCouponType]">
+                <view class="particulars">
+                    <view class="content flex_r flex_wrap flex_ac">
+                        <view class="water" v-if="waters.length">{{ waters }} </view>
+                        <view class="name ellipsis">{{ ticket }}</view>
+                        <view class="ticket flex_r flex_jb flex_ac">
+                            <img :src=water.thumb @click="ondetail(water.value)" />
+                            <view class="number ellipsis"
+                                :class="{ active: waters.length > 2 && getCouponType == 'long' }">x{{
+                                    water.num || water.value }}</view>
                         </view>
-                        <div class="lotteryRaffle">
+                        <view class="btn" :class="{ active: currentPercent >= 100 }" @click.stop="innerClick">{{
+                            currentPercent
+                                >= 100 ? '领取' : '待完成' }}
+                        </view>
+                    </view>
+                    <view class="progressBar flex_js"
+                        v-if="(waters.length > 5 && getCouponType == 'long') || (ticket.length > 4 && getCouponType == 'short')">
+                        <view class="progress" :style="{ width: currentPercent + '%' }">
+                            <view class="schedule" v-if="currentPercent"></view>
+                        </view>
+                    </view>
+                </view>
+                <div class="cut_ico icof" :style="{ marginLeft: ticket.length > 4 ? '12rpx' : '4rpx' }"
+                    @click="$noMultipleClicks(getCoupon)">{{ getCouponType == 'long' ? '&#xe72c;' : '&#xe72b;' }} </div>
+            </view> -->
+
+            <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
+                <view class="btn-item flex_r flex_jc flex_ac" @click="onpay(1)">抽奖</view>
+            </view>
+            <view style="padding-top: 0;" class="special_btn1 flex_c astrictBtn" v-else-if="showBtn"
+                @click="onpay(AReward.gacha.specialDiscountLimitBetNum, 1)">
+                <view class="">立即抽赏</view>
+                <view class="number">￥{{
+                    ($h.Mul(
+                        AReward.gacha.specialDiscountLimitBetNum - 1,
+                        AReward.gacha.discountPrice
+                            ? AReward.gacha.discountPrice
+                            : AReward.gacha.price
+                    ) + AReward.gacha.specialDiscountPrice).toFixed(2)
+                }}<span class="num">￥{{
+                        $h.Mul(
+                            AReward.gacha.specialDiscountLimitBetNum,
+                            AReward.gacha.discountPrice
+                                ? AReward.gacha.discountPrice
+                                : AReward.gacha.price
+                        )
+                    }}
+                    </span></view>
+                <view class="hubble-bubble">首抽￥{{ AReward.gacha.specialDiscountPrice }}（{{
+                    numberToChinese(AReward.gacha.specialDiscountLimitBetNum)
+                }}抽起）</view>
+            </view>
+            <view class="foot-btn flex_r flex_jb flex_ac"
+                v-else-if="AReward.userBetCount == -1 && AReward.userBetCountDaily == -1">
+                <view class="cut flex_r flex_ac" :class="[cutPattern]" @click="oncut">
+                    <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view>
+                    <view :class="[cutPattern + 'Img']"> </view>
+                </view>
+                <view v-for="(value, index) in payOptions" :key="index" class="btn-item flex_c flex_jc"
+                    :class="value.class" @click="onpay(value.num)">
+                    <view>{{ value.text }} </view>
+                    <!-- #ifdef MP-WEIXIN -->
+                    <!-- <view class="number">{{ value.price }} </view> -->
+                    <!-- #endif -->
+                 
+                    <!-- <view class="number" :style="{ '--after-content': `'.${value.mantissa}'` }">{{
+                        Math.floor(value.price)
+                    }}
+                    </view> -->
+                 
+                </view>
+            </view>
+
+            <view style="padding-top: 0;" v-else class="special_btn1 flex_c astrictBtn"
+                :class="{ forbid_bg: AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 }"
+                @click=" AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 ? (showDiscounts = true) : onpay(1, 2)">
+                <view>立即抽赏</view>
+            </view>
+            <!-- <div class="inform">平台发货不设门槛！潮柜内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。</div> -->
+        </view>
+       
+        <!-- <movable-area class="movable-draw">
+            <movable-view v-if="chqShow" class="movable-ball" direction="all" :style="`left: ${ballLeft}; top:300rpx;`"
+                @click="changeTop">
+                <ball :afterTop="afterTop"></ball>
+            </movable-view>
+        </movable-area> -->
+     
+        <!-- 支付 潮玩赏-->
+        <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
+        <!-- 详情弹窗 -->
+        <gachaDetails ref="gachaDetails" />
+        <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"
+            :message="AReward.openMessage" />
+        <duoyou ref="duoyou" @onDuoyou="onClickDuoyou" />
+        <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
+        <u-popup @close="showRecards = false" :show="showRecards">
+             <div class="lotteryRaffle">
                             <div class="r_item" v-for="(array, key) in recordList" :key="key">
                                 <div class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]">
                                     <img :src="`https://img.chaoshewang.com/static/img/chaowanshang/duoyou_${array.name}.png`"
@@ -142,108 +268,8 @@
                                 </div>
                             </div>
                         </div>
-                    </template>
-                </view>
-            </view>
-        </scroll-view>
-        <view class="footBox dyzt">
-            <view v-if="activityOpen" class="coupon  flex_r flex_ac" :class="[getCouponType]">
-                <view class="particulars">
-                    <view class="content flex_r flex_wrap flex_ac">
-                        <view class="water" v-if="waters.length">{{ waters }} </view>
-                        <view class="name ellipsis">{{ ticket }}</view>
-                        <view class="ticket flex_r flex_jb flex_ac">
-                            <img :src=water.thumb @click="ondetail(water.value)" />
-                            <view class="number ellipsis"
-                                :class="{ active: waters.length > 2 && getCouponType == 'long' }">x{{
-                                    water.num || water.value }}</view>
-                        </view>
-                        <view class="btn" :class="{ active: currentPercent >= 100 }" @click.stop="innerClick">{{
-                            currentPercent
-                                >= 100 ? '领取' : '待完成' }}
-                        </view>
-                    </view>
-                    <view class="progressBar flex_js"
-                        v-if="(waters.length > 5 && getCouponType == 'long') || (ticket.length > 4 && getCouponType == 'short')">
-                        <view class="progress" :style="{ width: currentPercent + '%' }">
-                            <view class="schedule" v-if="currentPercent"></view>
-                        </view>
-                    </view>
-                </view>
-                <div class="cut_ico icof" :style="{ marginLeft: ticket.length > 4 ? '12rpx' : '4rpx' }"
-                    @click="$noMultipleClicks(getCoupon)">{{ getCouponType == 'long' ? '&#xe72c;' : '&#xe72b;' }} </div>
-            </view>
+		</u-popup>
 
-            <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
-                <view class="btn-item flex_r flex_jc flex_ac" @click="onpay(1)">抽奖</view>
-            </view>
-            <view class="special_btn flex_c astrictBtn" v-else-if="showBtn"
-                @click="onpay(AReward.gacha.specialDiscountLimitBetNum, 1)">
-                <view class="">立即抽赏</view>
-                <view class="number">￥{{
-                    ($h.Mul(
-                        AReward.gacha.specialDiscountLimitBetNum - 1,
-                        AReward.gacha.discountPrice
-                            ? AReward.gacha.discountPrice
-                            : AReward.gacha.price
-                    ) + AReward.gacha.specialDiscountPrice).toFixed(2)
-                }}<span class="num">￥{{
-                        $h.Mul(
-                            AReward.gacha.specialDiscountLimitBetNum,
-                            AReward.gacha.discountPrice
-                                ? AReward.gacha.discountPrice
-                                : AReward.gacha.price
-                        )
-                    }}
-                    </span></view>
-                <view class="hubble-bubble">首抽￥{{ AReward.gacha.specialDiscountPrice }}（{{
-                    numberToChinese(AReward.gacha.specialDiscountLimitBetNum)
-                }}抽起）</view>
-            </view>
-            <view class="foot-btn flex_r flex_jb flex_ac"
-                v-else-if="AReward.userBetCount == -1 && AReward.userBetCountDaily == -1">
-                <view class="cut flex_r flex_ac" :class="[cutPattern]" @click="oncut">
-                    <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view>
-                    <view :class="[cutPattern + 'Img']"> </view>
-                </view>
-                <view v-for="(value, index) in payOptions" :key="index" class="btn-item flex_c flex_jc"
-                    :class="value.class" @click="onpay(value.num)">
-                    <view>{{ value.text }} </view>
-                    <!-- #ifdef MP-WEIXIN -->
-                    <view class="number">{{ value.price }} </view>
-                    <!-- #endif -->
-                    <!-- #ifndef MP-WEIXIN -->
-                    <view class="number" :style="{ '--after-content': `'.${value.mantissa}'` }">{{
-                        Math.floor(value.price)
-                    }}
-                    </view>
-                    <!-- #endif -->
-                </view>
-            </view>
-
-            <view v-else class="special_btn flex_c astrictBtn"
-                :class="{ forbid_bg: AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 }"
-                @click=" AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 ? (showDiscounts = true) : onpay(1, 2)">
-                <view>立即抽赏</view>
-            </view>
-            <div class="inform">平台发货不设门槛！潮柜内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。</div>
-        </view>
-        <!-- #ifndef MP-WEIXIN -->
-        <movable-area class="movable-draw">
-            <movable-view v-if="chqShow" class="movable-ball" direction="all" :style="`left: ${ballLeft}; top:300rpx;`"
-                @click="changeTop">
-                <ball :afterTop="afterTop"></ball>
-            </movable-view>
-        </movable-area>
-        <!-- #endif -->
-        <!-- 支付 潮玩赏-->
-        <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
-        <!-- 详情弹窗 -->
-        <gachaDetails ref="gachaDetails" />
-        <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"
-            :message="AReward.openMessage" />
-        <duoyou ref="duoyou" @onDuoyou="onClickDuoyou" />
-        <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
     </view>
 </template>
 <script>
@@ -259,7 +285,9 @@ import xPrize from "@/components/modules/x-prize";
 export default {
     data() {
         return {
+            showRecards:false,
             AReward: {
+                
                 gacha: { themeName: "" },
                 gachaBox: {},
                 gachaAwards: [],
@@ -288,7 +316,7 @@ export default {
             payOptions: [{ num: 1, text: '一发入魂', price: 0, class: '' },
             { num: 3, text: '欧气三连', price: 0, class: '' },
             { num: 5, text: '五连绝世', price: 0, class: '' },
-            { num: 10, text: '十连超神', price: 0, class: '' }],
+            { num: 10, text: '十连超神', price: 0, class: 'btn-item3' }],
             afterTop: 40,
             chqShow: false,
             mantissa: '00',
@@ -462,6 +490,7 @@ export default {
         gachas() {
             let obj = {};
             this.AllRewardsInfo.forEach(({ levelName, ratio = 0 }) => {
+                console.log(levelName)
                 // 使用高精度加法避免浮点数精度丢失
                 if (obj[levelName]) {
                     obj[levelName] = Number(this.$h.Add(obj[levelName], ratio));
@@ -482,6 +511,7 @@ export default {
             let A = [...map.values()];
             this.sortList = A;
             this.probability = obj;
+            console.log(this.probability);
             // #ifdef APP
             if (getApp().globalData.AppTypeList[plus.runtime.channel] == 2) {
                 this.probabilityShow = Object.entries(obj).map(
@@ -645,10 +675,10 @@ export default {
             // 'common',//普通模式  passion激情模式
             this.cutPattern = this.cutPattern == 'common' ? 'passion' : 'common'
             if (this.cutPattern == 'passion') {
-                this.payOptions = [{ num: 1, text: '一发入魂', price: 0, class: '' }, { num: 3, text: '欧气三连', price: 0, class: '' }, { num: 5, text: '五连绝世', price: 0, class: '' }, { num: 10, text: '十连超神', price: 0, class: '' },]
+                this.payOptions = [{ num: 1, text: '一发入魂', price: 0, class: '' }, { num: 3, text: '欧气三连', price: 0, class: '' }, { num: 5, text: '五连绝世', price: 0, class: '' }, { num: 10, text: '十连超神', price: 0, class: 'btn-item3' },]
             } else {
 
-                this.payOptions = [{ num: 5, text: '五连绝世', price: 0, class: '' }, { num: 10, text: '十连超神', price: 0, class: '' }, { num: 50, text: '五十爆燃', price: 0, class: 'btn-item1' }, { num: 100, text: '百连至臻', price: 0, class: 'btn-item2' },]
+                this.payOptions = [{ num: 5, text: '五连绝世', price: 0, class: '' }, { num: 10, text: '十连超神', price: 0, class: '' }, { num: 50, text: '五十爆燃', price: 0, class: '' }, { num: 100, text: '百连至臻', price: 0, class: 'btn-item3' },]
             }
             this.getPrice()
         },
@@ -696,19 +726,25 @@ export default {
 <style lang='scss' scoped>
 .chaowanshang {
     background-color: #969fde;
-    background: url("https://img.chaoshewang.com/static/img/duoyou/bg.png");
-    background-size: 100% 100%;
-    height: 100vh;
+    background: url("../../static/gachaStatic/chaoyou/bg.png") top center no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+
     overflow-y: auto;
+    // padding-bottom: 200rpx;
 
 
     .footBox {
-        position: absolute;
+        position: fixed;
         width: 100%;
-        height: 200rpx;
-        background: linear-gradient(180deg, rgba(45, 12, 23, 0) 0%, #2D0C17 35%, #2D0C17 100%);
+        height: 136rpx;
+        // background: linear-gradient(180deg, rgba(45, 12, 23, 0) 0%, #2D0C17 35%, #2D0C17 100%);
         bottom: 0;
         padding: 0 22rpx;
+        background-color: #fff;
+        border-radius: 32rpx 32rpx 0 0;
+        padding-top: 16rpx;
 
         .inform {
             position: absolute;
@@ -890,20 +926,29 @@ export default {
     }
 
     .leftBox {
-        width: 38rpx;
-        height: 98rpx;
-        background: rgba(0, 0, 0, 0.2);
-        font-weight: bold;
-        font-size: 20rpx;
-        color: #FFFFFF;
+          width: 100rpx;
+        height: 40rpx;
+        background: rgba(26, 26, 26, .5);
+        font-size: 24rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        border-radius: 20rpx 0 0 20rpx;
+        line-height: 40rpx;
         position: absolute;
         right: 0;
-        top: 620rpx;
-        text-align: center;
-        display: grid;
-        place-items: center;
-        z-index: 10;
-        border-radius: 12rpx 0 0 12rpx;
+        z-index: 88;
+        top: 232rpx;
+        &.ico-share{
+            top: 296rpx;
+        }
+        image{
+           width: 32rpx;
+           height: 32rpx; 
+           margin-right: 4rpx;
+           vertical-align: middle;
+        }
     }
 
 
@@ -911,28 +956,45 @@ export default {
     .cg {
         top: 736rpx;
     }
+
+    .gahcaAmount{
+        width: 482rpx;
+height: 56rpx;
+background: rgba(63,94,131,0.1);
+border-radius: 8rpx 8rpx 8rpx 8rpx;
+border: 2rpx solid #FFFFFF;
+margin: auto;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #3F5E83;
+font-size: 24rpx;
+margin-top: -140rpx;
+margin-bottom: 200rpx;
+line-height: 56rpx;
+image{
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 16rpx;
+    vertical-align: middle;
+}
+
+    }
 }
 
 .top_Back {
-    color: #FFFFFF;
+    color: #000000;
+    font-size: 36rpx;
     font-weight: bold;
-    font-size: 30rpx;
     padding: 0 30rpx;
-
-    &.borshad {
-        box-shadow: 0 16rpx 16rpx -12rpx rgba(0, 0, 0, 0.3);
-    }
 
     .Back_ico {
         width: 48rpx;
         height: 48rpx;
-        margin-right: 8rpx;
+        margin-right: 24rpx;
     }
-
-    .title {
-        width: 400rpx;
-        height: 48rpx;
-        line-height: 48rpx;
+    .title{
+        max-width: 400rpx;
     }
 }
 
@@ -955,8 +1017,18 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     margin-bottom: 96rpx;
-    background: url("https://img.chaoshewang.com/static/img/duoyou/pedestal.png");
-    background-size: 100% 100%;
+    .dizuo{
+        position: absolute;
+        width: 610rpx;
+        height: 140rpx;
+        left: 50%;
+        transform: translateX(-50%);
+        background: url('../../static/gachaStatic/chaoyou/dizuo.png');
+        background-size: 100% 100%;
+        bottom: 40rpx;
+    }
+    // background: url("https://img.chaoshewang.com/static/img/duoyou/pedestal.png");
+    // background-size: 100% 100%;
 
     .tit {
         background-color: rgba($color: #000, $alpha: 0.5);
@@ -983,29 +1055,30 @@ export default {
     }
 
     .price {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 55rpx;
-        font-weight: bold;
-        font-size: 44rpx;
-        color: #7A3641;
-
-
-        &:before {
-            content: "￥";
-            font-size: 24rpx;
-        }
-
-        &:after {
-            content: var(--after-content);
-            font-size: 24rpx;
+           position: absolute;
+        right:  12rpx;
+        bottom: 74rpx;
+        font-weight: 800;
+        font-size: 24rpx;
+        color: #000;
+        width: 178rpx;
+        height: 139rpx;
+        background: url('../../static/gachaStatic/niudanji/price.png');
+        background-size: 100% 100%;
+        // text-align: center;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        view{
+            margin-top: -10rpx;
+            transform: skewY(-10deg);
         }
     }
 }
 
 .dyzt {
-    font-family: "多游字体", sans-serif;
+    // font-family: "多游字体", sans-serif;
 }
 
 .switch {
@@ -1026,15 +1099,15 @@ export default {
 
 
 .switch_l {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/last.png");
+    background: url("../../static/gachaStatic/chaoyou/previous.png");
     background-size: 100% 100%;
     left: 0rpx;
 }
 
 .switch_r {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/last.png");
+    background: url("../../static/gachaStatic/chaoyou/next.png");
     background-size: 100% 100%;
-    transform: scaleX(-1);
+    // transform: scaleX(-1);
     right: 0rpx;
 }
 
@@ -1073,11 +1146,25 @@ export default {
 }
 
 .preview_box {
-    width: 100%;
+    width: 702rpx;
+    height: 936rpx;
+    background: url('../../static/gachaStatic/chaoyou/bg1.png');
+    background-size:100%;
+    margin: auto;
+
     padding: 26rpx 24rpx;
-    background: #501C20;
+    padding-right: 0;
+    // background: #501C20;
     border-radius: 24rpx;
+    margin-top: -190rpx;
     position: relative;
+    .seeRecords{
+        width: 200rpx;
+        height: 100rpx;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 
     .p-tit {
         position: absolute;
@@ -1094,7 +1181,7 @@ export default {
             border-radius: 24rpx 24rpx 0 0;
 
             &.active {
-                background: linear-gradient(180deg, #642A26 0%, rgba(100, 42, 38, 0) 100%);
+                // background: linear-gradient(180deg, #642A26 0%, rgba(100, 42, 38, 0) 100%);
                 position: relative;
             }
 
@@ -1113,94 +1200,124 @@ export default {
 
         }
 
-        .spShow {
-            margin-left: auto;
-            padding-right: 40rpx;
+ 
+    }
+       .spShow {
+        width: 524rpx;
+height: 48rpx;
+background: linear-gradient( 90deg, rgba(196,222,237,0) 0%, #C4DEED 30%, #C4DEED 70%, rgba(196,222,237,0) 100%);
+border-radius: 0rpx 0rpx 0rpx 0rpx;
+color: #3F5E83;
+font-size: 24rpx;
+margin: auto;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 48rpx;
+margin-bottom: 12rpx;
 
             .num {
-                font-weight: 500;
-                font-size: 24rpx;
-                color: #FFFFFF;
-                color: #E28A25;
+       
+                color: #F65C36;
                 margin-left: 8rpx;
             }
         }
-    }
-
     .p-probability {
-        margin-bottom: 28rpx;
+        margin-bottom: 24rpx;
+        .prob_item{
+            margin-right: 20rpx;
+            &:last-child{
+                margin-right: 0;
+            }
+        }
 
         .badge {
-            width: 105rpx;
-            height: 38rpx;
+            width: 112rpx;
+            height: 40rpx;
         }
 
         .prob_num {
             text-align: center;
-            font-size: 24rpx;
-            color: #D09D9E;
+            font-size: 20rpx;
+            color: #1A1A1A;
             margin-top: -10rpx;
         }
     }
+ .list{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    // padding-left: 24rpx;
+   
 
-    .list-item {
-        width: 100%;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 16rpx;
+ .list-item {
+        width: 208rpx;
+        height: 300rpx;
+    //   background: linear-gradient( 0deg, #FFFFFF 0%, #CCFFF4 100%); 
+    background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+            border-radius: 16rpx;
         margin-bottom: 16rpx;
-        padding: 24rpx;
+        margin-right: 16rpx;
+        color: #1A1A1A;
         position: relative;
-        color: #FFFFFF;
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+      
 
         .p-img {
-            width: 128rpx;
-            height: 128rpx;
+            width: 208rpx;
+            height: 208rpx;
+            border-radius: 16rpx;
         }
 
         .badge {
-            width: 100rpx;
-            height: 32rpx;
+            width: 112rpx;
+            height: 40rpx;
             position: absolute;
-            left: 38rpx;
-            bottom: 18rpx;
+            left: 0;
+            top: 168rpx;
         }
 
         .p-name {
-            height: 127rpx;
-            padding: 12rpx 0;
-            font-size: 22rpx;
-            width: calc(100% - 168rpx);
+            // height: 127rpx;
+            padding: 0rpx 8rpx;
+            font-size: 24rpx;
+            width: 100%;
+            // width: calc(100% - 168rpx);
 
             .tit {
-                font-weight: 500;
+                // font-weight: 500;
                 font-size: 24rpx;
-                color: #FFFFFF;
+                color: #1A1A1A;
             }
 
             .price {
-                font-weight: 500;
+                // font-weight: 500;
                 font-size: 20rpx;
-                color: #937C7E;
+                color: #8D8D94;
 
                 .corr {
-                    font-weight: bold;
-                    font-size: 24rpx;
-                    color: #F44935;
+                    // font-weight: bold;
+                    // font-size: 24rpx;
+                    // color: #F44935;
 
-                    &::before {
-                        content: "￥";
-                        font-size: 16rpx;
-                    }
+                    // &::before {
+                    //     content: "￥";
+                    //     font-size: 16rpx;
+                    // }
 
-                    &:after {
-                        content: var(--after-content);
-                        font-size: 16rpx;
-                    }
+                    // &:after {
+                    //     content: var(--after-content);
+                    //     font-size: 16rpx;
+                    // }
                 }
             }
 
         }
     }
+ }
+   
 
 
     .spNumber {
@@ -1235,14 +1352,16 @@ export default {
         }
     }
 
-    .lotteryRaffle {
+  
+
+ 
+}
+  .lotteryRaffle {
         height: calc(100% - 180rpx);
         border-radius: 10rpx;
         overflow-y: auto;
         padding-bottom: 100rpx;
-    }
-
-    .r_item {
+           .r_item {
         background: #5D2028;
         border-radius: 24rpx;
 
@@ -1360,8 +1479,7 @@ export default {
             }
         }
     }
-}
-
+    }
 .foot-btn {
     left: 0;
     width: 100%;
@@ -1411,13 +1529,18 @@ export default {
 }
 
 .btn-item {
-    width: 166rpx;
-    height: 88rpx;
-    background: #DC536C;
+    width: 172rpx;
+    height: 72rpx;
+    // background: #DC536C;
+    background: url('../../static/gachaStatic/ddl/btnBgc.png');
+    background-size: 100% 100%;
     border-radius: 24rpx;
     text-align: center;
     font-weight: bold;
-    font-size: 24rpx;
+    font-size: 36rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #FFFFFF;
 
     .number {
@@ -1436,6 +1559,10 @@ export default {
 
 .btn-item1 {
     background: #E6B401;
+}
+.btn-item3{
+    background: url('../../static/gachaStatic/ddl/btn1Bgc.png') !important;
+    background-size: 100% 100% !important;
 }
 
 .btn-item2 {

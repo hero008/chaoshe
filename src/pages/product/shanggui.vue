@@ -2,46 +2,61 @@
 <template>
     <view class="shanggui" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top - 6 + 'px' }">
         <view class="top_tabs">
-            <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs>
-            <view class="top_btn" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">
+            <!-- <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs> -->
+            <!-- <view class="top_btn" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">
                 <span>潮柜规则</span>
                 <img class="ico" src="https://img.chaoshewang.com/static/img/shanggui/group_3.png" />
-            </view>
+            </view> -->
         </view>
-        <div class="shanggui_con" :style="{ height: conHeight }">
+        <div class="shanggui_con">
             <view class="flex_r flex_jb">
                 <view class="tabs_two flex_r flex_jb">
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
                         v-for="(i, s) in navbar2" :key="s">{{ i }}</view>
                 </view>
-                <!-- #ifndef MP-WEIXIN -->
-                <view class="recycle flex_r flex_ac" @click="onGoRecycle()"  v-if="recycleState">
+                <view  @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })" class="rules">
+
+                </view>
+              
+                <!-- <view class="recycle flex_r flex_ac" @click="onGoRecycle()"  v-if="recycleState">
                     <img class="icon" src="https://img.chaoshewang.com/static/img/shanggui/recycle.png" />
                     <view class="text">回收</view>
-                </view>
-                <!-- #endif -->
+                </view> -->
+               
             </view>
             <view class="p_lists">
                 <view class="tab flex_r flex_ac flex_jb">
-                    <view class="teg">赏品共{{ totalReward || 0 }}个</view>
+                   
                     <view class="flex_r flex_ac">
                         <view class="btn " :class="{ active: data.hasOwnProperty('order_by_create_time') }"
-                            @click="onBtn(0)">最新</view>
+                            @click="onBtn(0)">时间
+                          <image
+                            :src="data.hasOwnProperty('order_by_create_time')?'../../static/gachaStatic/chaogui/up.png':'../../static/gachaStatic/chaogui/down.png'"
+                            mode="scaleToFill"
+                          />
+                        </view>
                         <view class="btn" :class="{ active: data.hasOwnProperty('order_by_inner_price') }"
-                            @click="onBtn(1)">最贵</view>
+                            @click="onBtn(1)">价值
+                          <image
+                            :src="data.hasOwnProperty('order_by_inner_price')?'../../static/gachaStatic/chaogui/up.png':'../../static/gachaStatic/chaogui/down.png'"
+                            mode="scaleToFill"
+                          />
+                        </view>
                     </view>
+                     <view class="teg">赏品共{{ totalReward || 0 }}个</view>
                 </view>
                 <scroll-view @scrolltolower="onReachScollBottom" v-if="cabinetData && cabinetData.length"
                     class="ListScroll" :lower-threshold="400" :scroll-y="true">
                     <view class="lists_box">
                         <view class="lists">
                             <view class="item" v-for="(item, index) in cabinetData" :key="index">
-                                <view class="item_img" :style="{
+                                <view class="item_img_box">
+                                 <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }" @click="ondetail(item.itemId)">
-                                    <view class="box_ico frame" v-if="item.state == 'CabinetStockState_InStock'"></view>
+                                    <!-- <view class="box_ico frame" v-if="item.state == 'CabinetStockState_InStock'"></view> -->
                                     <!-- <img src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"  class="box_ico" v-if="item.state =='CabinetStockState_InStock' " /> -->
-                                    <view class="" v-if="
+                                    <!-- <view class="" v-if="
                                         item.state ==
                                         'CabinetStockState_OnDeal' ||
                                         item.state ==
@@ -56,13 +71,18 @@
                                                 : "发货中"
                                         }}
                                         </view>
-                                    </view>
-                                    <view class="item_txt1">{{
+                                    </view> -->
+                                    <!-- {{
                                         item.item.saleType == 1
                                             ? "现货"
                                             : "预售"
-                                    }}</view>
+                                    }} -->
+                                    <view :style="{
+                                        backgroundImage: `url(${item.item.saleType == 1?'../../static/gachaStatic/chaogui/xianhuo.png':'../../static/gachaStatic/chaogui/yushou.png'})`,
+                                    }" class="item_txt1"></view>
                                 </view>
+                                </view>
+                               
                                 <view class="item_name ellipsis">{{
                                     item.item.name
                                     }}</view>
@@ -251,6 +271,20 @@ export default {
     height: 100vh;
     padding-top: 80rpx;
     position: relative;
+    background-color: #F5F6F8;
+          &::after {
+        content: "";
+        width: 100vw;
+        height: 600rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
+
+    
 }
 
 .frame {
@@ -260,14 +294,18 @@ export default {
 
 .shanggui_con {
     width: 100%;
-    height: calc(100% - 196rpx);
+    height: calc(100%);
     position: absolute;
+    padding-top: 70px;
     bottom: 0;
     left: 0;
+    z-index:5;
+    
 }
 
 .top_tabs {
     position: relative;
+    z-index: 6;
 
     .top_btn {
         position: absolute;
@@ -290,35 +328,48 @@ export default {
         }
     }
 }
-
+.rules{
+    width: 144rpx;
+    height: 48rpx;
+    background: url('../../static/gachaStatic/chaogui/rule.png');
+    background-size: 100% 100%;
+    margin-right: 32rpx;
+}
 .tabs_two {
     width: 372rpx;
     height: 76rpx;
-    background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
-    background-size: 100% 100%;
+    // background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+    // background-size: 100% 100%;
     font-size: 28rpx;
     color: #ffffff;
     line-height: 28rpx;
+    padding-left: 32rpx;
 
     .tab_item {
-        width: 156rpx;
-        line-height: 60rpx;
+        width: 136rpx;
+        line-height: 56rpx;
+        height: 56rpx;
         text-align: center;
-
+background: #EEEEEE;
+border-radius: 28rpx;
+color: #666666;
+margin-right: 16rpx;
         &:first-child {
             margin-left: -16rpx;
         }
 
         &.active {
-            margin-top: -10rpx;
-            color: #333;
-            width: 156rpx;
-            height: 86rpx;
-            line-height: 76rpx;
-            font-weight: bold;
-            background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
-            background-size: 100% 100%;
-            font-size: 30rpx;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #000;
+            // margin-top: -10rpx;
+            // color: #333;
+            // width: 156rpx;
+            // height: 86rpx;
+            // line-height: 76rpx;
+            // font-weight: bold;
+            // background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
         }
     }
 }
@@ -348,41 +399,58 @@ export default {
 }
 
 .p_lists {
-    height: calc(100% - 66rpx);
+    height: calc(100% - 62rpx);
     margin-top: -16rpx;
-    border-radius: 0 50rpx 0 0;
-    background: #f4f4f4;
-    padding: 30rpx 36rpx;
+    // border-radius: 0 50rpx 0 0;
+    // background: #f4f4f4;
+    padding: 32rpx 32rpx;
     position: relative;
+    padding-right: 0;
+    padding-bottom: 0;
 
     // overflow-y: auto;
     .tab {
         .teg {
-            width: 178rpx;
-            height: 36rpx;
+            // width: 178rpx;
+            padding: 0 16rpx;
+            height: 48rpx;
             text-align: center;
-            background: rgba(102, 82, 207, 0.1);
-            border-radius: 16rpx;
-            line-height: 36rpx;
-            color: #6652cf;
+            background: #FFFFFF;
+            border-radius: 8rpx;
+            line-height: 48rpx;
+            color: #1A1A1A;
+
             font-size: 24rpx;
         }
 
         .btn {
-            width: 88rpx;
-            height: 44rpx;
-            line-height: 44rpx;
-            font-weight: 500;
+            display: flex;
             font-size: 24rpx;
-            color: #343434;
-            background: #E2E1E3;
-            border-radius: 8rpx;
-            text-align: center;
-            margin-left: 16rpx;
+            color: #1A1A1A;
+            align-items: center;
+            margin-right: 40rpx;
+            &:last-child{
+                margin-right: 0;
+            }
+            image{
+                width: 24rpx;
+                height: 24rpx;
+                margin-left: 4px;
+            }
+            // width: 88rpx;
+            // height: 44rpx;
+            // line-height: 44rpx;
+            // font-weight: 500;
+            // font-size: 24rpx;
+            // color: #343434;
+            // background: #E2E1E3;
+            // border-radius: 8rpx;
+            // text-align: center;
+            // margin-left: 16rpx;
 
             &.active {
-                color: #6652CF;
-                background: #CEC3ED;
+                // color: #6652CF;
+                // background: #CEC3ED;
             }
         }
 
@@ -391,42 +459,64 @@ export default {
 }
 
 .lists_box {
-    padding-bottom: 150rpx;
+    padding-bottom: 160rpx;
     // height: 100%;
     // overflow-y: auto;
 }
 
 .ListScroll {
-    height: calc(100% - 160rpx);
+    height: calc(100% - 76rpx);
     margin-top: 28rpx;
 }
 
 .lists {
-    @include grid(152rpx);
+    // @include grid(152rpx);
+    display: flex;
+    flex-wrap: wrap;
+
 
     .item {
-        width: 152rpx;
+        width: 224rpx;
+        height: 300rpx;
+        background-color: #fff;
+        margin-right: 8rpx;
+        border-radius: 24rpx 24rpx 24rpx 24rpx;
+        padding: 12rpx;
+        &:nth-child(3n) {
+            margin-right: 0;
+            
+        }
         margin-bottom: 18rpx;
-
-        .item_img {
-            width: 152rpx;
-            height: 152rpx;
-            background-color: rgba($color: #f4f4f4, $alpha: 1);
-            border-radius: 16rpx;
+        // .item_img_box{
+       
+        // }
+        .item_img_box{
+                  width: 200rpx;
+height: 200rpx;
+background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
             background-size: 100% 100%;
             position: relative;
+        }
+        .item_img {
+               width: 200rpx;
+height: 200rpx;
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+position: relative;
+background-size: cover;
+
         }
 
         .item_name {
             margin: 5rpx 0;
-            font-size: 20rpx;
+            font-size: 24rpx;
             font-weight: bold;
-            color: #343434;
+            color: #1A1A1A;
         }
 
         .item_no {
-            font-size: 16rpx;
-            color: #343434;
+            font-size: 20rpx;
+            color: #8D8D94;
         }
 
         .box_ico {
@@ -446,8 +536,11 @@ export default {
             color: #ffffff;
             font-size: 20rpx;
             position: absolute;
-            right: 6rpx;
-            top: 0rpx;
+            right: -12rpx;
+            top: -12rpx;
+            width: 60rpx;
+            height: 32rpx;
+            background-size: 100% 100%;
         }
     }
 }
@@ -455,7 +548,7 @@ export default {
 .foot_btn {
     width: 100%;
     position: fixed;
-    bottom: 176rpx;
+    bottom: 200rpx;
     left: 0;
 }
 

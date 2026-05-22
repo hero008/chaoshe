@@ -202,22 +202,25 @@ export default {
 	height: 100vh;
 	position: relative;
 	padding: 100rpx 0 30rpx;
-	background: linear-gradient(104deg, #E1D6F8 0%, #F8E7ED 100%);
 	overflow-y: auto;
-
-	&::before {
-		content: "";
-		width: 100vw;
-		height: calc(100vh - 212rpx);
-		position: absolute;
-		top: 212rpx;
-		left: 0;
-		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #F0F0F0 50%);
-	}
+background-color: #F5F6F8;
+          &::after {
+        content: "";
+        width: 100vw;
+        height: 600rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
 }
 
 .navbar_x {
 	padding: 0 32rpx;
+	position: relative;
+	z-index: 2;
 
 	.btn_r {
 		width: 162rpx;
@@ -283,6 +286,7 @@ export default {
 }
 
 .shanggui_con {
+	z-index: 2;
 	width: 100%;
 	height: calc(100% - 190rpx);
 	position: absolute;
@@ -293,7 +297,7 @@ export default {
 		// height: calc(100% - 66rpx);
 		height: 100%;
 		border-radius: 0 50rpx 0 0;
-		background: #F4F4F4;
+		// background: #F4F4F4;
 		// margin-top: -15rpx;
 		padding: 32rpx;
 	}

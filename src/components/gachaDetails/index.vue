@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <view  class="icon"></view>
+            <!-- <view  class="icon"></view> -->
             <!-- <img src="https://img.chaoshewang.com/static/img/home/ico_ico.png"/> -->
             <img
                 src="https://img.chaoshewang.com/static/img/product/close.png"

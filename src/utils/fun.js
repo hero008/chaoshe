@@ -1,8 +1,17 @@
 import { getCache, setCache } from "@/utils/storage.js";
 import { post } from "@/utils/api.js";
-let goto = (url, json) => {
+import { isMTVapp,mgTvLogin } from "./mgtv";
+let goto = (url, json,mgtvIsLogin=true) => {
     if (!url) {
         // uni.$u.toast('该功能暂未开放，敬请期待！');
+    }
+    if(!mgtvIsLogin){
+        if(!isMTVapp()){
+           // 跳转到芒果
+        }else{
+            mgTvLogin()
+            return;
+        }
     }
     let params = "";
     if (json) {

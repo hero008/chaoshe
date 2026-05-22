@@ -2,26 +2,36 @@
     <view class="niudan" :style="{ paddingTop: MBInfo().top + 'px' }">
         <view class="top_Back flex_r flex_js flex_ac" :style="{ height: MBInfo().height + 'px' }">
             <!-- @click.stop="gateBack" -->
-            <img src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png" @click="goBack" class="Back_ico" />
-            <text class="title">潮魂扭蛋机</text>
+            <img src="../../static/gachaStatic/back.png" @click="goBack" class="Back_ico" />
+            <text class="title ellipsis">{{ marquee }}</text>
         </view>
-        <view class="btns">
+        <!-- <view class="btns">
             <button open-type="share" class="btns_2 t_btn" @click="onShare">
                 <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-share.png" />
             </button>
             <view class="btns_3 t_btn" @click="ondrawLog">
                 <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-record.png" />
             </view>
-        </view>
-        <view class="niudan_con" :style="{ height: conHeight }">
+        </view> -->
+          
+          <view class="niudan_con" :style="{ height: conHeight }">
             <view class="i_notice flex_r flex_ac">
-                <img src="https://img.chaoshewang.com/static/img/market/ico2.png" class="m_ico" />
-                <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#fff"
-                    bgColor="rgba(0,0,0,0)"></u-notice-bar>
-            </view>
+                    <img src="../../static/gachaStatic/niudanji/notice.png" class="m_ico" />
+                    <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#1A1A1A"
+                        bgColor="rgba(0,0,0,0)"></u-notice-bar>
+                </view>
             <view class="gashapon_machine_box">
+                <view class="gachaProgress">
+                     <view class="title">抽赏进度</view>
+                     <view class="progress">
+                     
+                        <div :style="{width:(probability || 0) + '%'}" class="actiiveProgress"></div>
+                        <text>{{ probability || 0 }}%</text>
+                    </view>
+                     <!-- <view class="total"></view> -->
+                </view>
                 <capsule-toys ref="capsuleToys" @eggPlay="onTry" />
-                <view class="probability lp flex_r flex_ae">
+                <!-- <view class="probability lp flex_r flex_ae">
                     <view class="h_num" :style="{ height: probability + '%' }"></view>
                     <div class="bubble l" :style="{ bottom: `${probability * 1.2 - 15}rpx` }">{{ (probability || 0) +  "%" }}</div>
                 </view>
@@ -30,28 +40,40 @@
                     <div class="bubble r flex_r flex_ac flex_jc" :style="{ bottom: `${probability * 1.2 - 15}rpx` }">
                         <view class="rNum">{{ (probability || 0) + "%" }}</view>
                     </div>
+                </view> -->
+                <!-- <view class="motif-tit ellipsis">{{ marquee }}</view> -->
+                <!-- <image :src="gachainfo.coverThumb" class="gacha_img" mode="aspectFill" /> -->
+                <view class="ico-t" @click="goto('/pages/common/rulepop', { val: 'GashaponRules' })">
+                    <image
+                        src="../../static/gachaStatic/niudanji/ruleIcon.png"
+                        mode="scaleToFill"
+                    /><text>规则</text>
                 </view>
-                <view class="motif-tit ellipsis">{{ marquee }}</view>
-                <image :src="gachainfo.coverThumb" class="gacha_img" mode="aspectFill" />
-                <view class="ico-t" @click=" goto('/pages/common/rulepop', { val: 'GashaponRules' })">规则</view>
-                <view class="ico-r">点击试玩</view>
-                <view class="tit">￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }} / 抽</view>
+                 <view class="ico-share ico-t" >
+                    <image
+                        src="../../static/gachaStatic/niudanji/shareIcon.png"
+                        mode="scaleToFill"
+                    /><text>分享</text>
+                </view>
+                <!-- <view class="ico-r">点击试玩</view> -->
+                <view class="tit">
+                     <view class="price">
+                        ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }} / 抽
+                     </view>
+                </view>
                 <view class="multiple nb" v-if="gachainfo.costAwardMultiple > 1">
                     <view class="number">{{ gachainfo.costAwardMultiple }}</view>
                 </view>
             </view>
             <view class="preview_box">
-                <view class="p-tit flex_r flex_jb flex_ac">
-                    <view class="l">奖品概览</view>
-                    <view class="r" v-if="eggTwister.gachaBox">{{
-                        "本池初始商品总数共：" +
-                        (eggTwister.gachaBox &&
-                            eggTwister.gachaBox.totalAwards) +
-                        "抽"
-                    }}
+                <view @click="ondrawLog" class="record"></view>
+                <view class="box">
+                    <view class="tab">
+                        <text>奖池预览</text>
+                        <text class="amount">（初始商品总数共：{{ (eggTwister.gachaBox &&
+                            eggTwister.gachaBox.totalAwards)}}抽）</text>
                     </view>
-                </view>
-                <scroll-view scroll-y class="p-list" @scroll="onScroll">
+                      <scroll-view scroll-y class="p-list" @scroll="onScroll">
                     <view class="flex-container">
                         <view class="list-item" v-for="(item, index) in goodsList" :key="index"  @click=" ondetail(item)">
                             <img lazy-load :src="item.itemCover" class="p-img" />
@@ -72,8 +94,21 @@
                         </view>
                     </view>
                 </scroll-view>
+                </view>
+                <!-- <view class="p-tit flex_r flex_jb flex_ac">
+                    <view class="l">奖品概览</view>
+                    <view class="r" v-if="eggTwister.gachaBox">{{
+                        "本池初始商品总数共：" +
+                        (eggTwister.gachaBox &&
+                            eggTwister.gachaBox.totalAwards) +
+                        "抽"
+                    }}
+                    </view>
+                </view> -->
+              
             </view>
-            <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
+            <view style="padding-top: 10rpx;" class="actionBtn">
+                 <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
                 <view class="btn-item" @click="onpay(1)">抽奖</view>
             </view>
             <view class="special_btn1 flex_c" v-else-if="showBtn"
@@ -111,12 +146,14 @@
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>
                 <!-- <img class="cut " :src="`https://img.chaoshewang.com/static/img/cw-new/${cutPattern}.png`"  :key="cutPattern"   @click="oncut" /> -->
+                <!-- { forbid_btn: probability > 10 && value.text == '全包' } -->
                 <view v-for="(value, index) in payOptions" :key="index" class="btn-item "
-                    :class="[value.className, { forbid_btn: probability > 10 && value.text == '全包' }]"
+                    :class="[value.className, ]"
+                    
                     @click="onpay(value.num)">
                     {{ value.text }}</view>
             </view>
-            <view class="special_btn1 flex_c" v-else :class="{
+            <view  class="special_btn1 flex_c" v-else :class="{
                 forbid_bg:
                     eggTwister.userBetCount == 0 ||
                     eggTwister.userBetCountDaily == 0,
@@ -127,6 +164,7 @@
                     : onpay(1, 2)
                 ">
                 <view class="">立即抽赏</view>
+            </view>
             </view>
         </view>
         <!-- 过场动画 -->
@@ -256,9 +294,9 @@ export default {
             shareType: 0,
             probabilityShow: [],
             payOptions: [{ num: 1, className: "", text: '一抽' },
-            { num: 5, className: "", text: '五连抽' },
-            { num: 10, className: "", text: '十连抽' },
-            { num: 50, className: "btn-item2", text: '五十连抽' }],
+            { num: 5, className: "", text: '五抽' },
+            { num: 10, className: "", text: '十抽' },
+            { num: 50, className: "btn-item4", text: '五十抽' }],
             ballLeft: "",
             afterTop: 40,
             chqShow: false,
@@ -321,10 +359,10 @@ export default {
         const cacheMode = uni.getStorageSync('lotteryMode');
         if (cacheMode == 'common') {
             this.cutPattern = 'common'
-            this.payOptions = [{ num: 50, className: "btn-item2", text: '五十抽' },
-            { num: 100, className: "btn-item2", text: '一百抽' },
-            { num: 200, className: "btn-item2", text: '二百抽' },
-            { num: this.gachainfo.leftAwards, className: "btn-item3", text: '全包' }]
+            this.payOptions = [{ num: 50, className: "", text: '五抽' },
+            { num: 100, className: "", text: '一百抽' },
+            { num: 200, className: "", text: '二百抽' },
+            { num: this.gachainfo.leftAwards, className: "btn-item4", text: '全包' }]
         }
     },
     created() {
@@ -615,7 +653,6 @@ export default {
             return RateRandom.rate(obj);
         },
         onLoaded() {
-            alert('33333333')
             this.$refs.cSvgaRef.call("startAnimation");
             if (this.vibrat) vibratePhone(3000)
             // console.log("动画加载完成，播放时回调");
@@ -730,14 +767,14 @@ export default {
             uni.setStorageSync('lotteryMode', this.cutPattern);
             if (this.cutPattern == 'passion') {
                 this.payOptions = [{ num: 1, className: "", text: '一抽' },
-                { num: 5, className: "", text: '五连抽' },
-                { num: 10, className: "", text: '十连抽' },
-                { num: 50, className: "btn-item2", text: '五十连抽' }]
+                { num: 5, className: "", text: '五抽' },
+                { num: 10, className: "", text: '十抽' },
+                { num: 50, className: "btn-item4", text: '五十抽' }]
             } else {
-                this.payOptions = [{ num: 50, className: "btn-item2", text: '五十抽' },
-                { num: 100, className: "btn-item2", text: '一百抽' },
-                { num: 200, className: "btn-item2", text: '二百抽' },
-                { num: this.gachainfo.leftAwards, className: "btn-item3", text: '全包' }]
+                this.payOptions = [{ num: 50, className: "", text: '五十抽' },
+                { num: 100, className: "", text: '一百抽' },
+                { num: 200, className: "", text: '二百抽' },
+                { num: this.gachainfo.leftAwards, className: "btn-item4", text: '全包' }]
             }
         },
         onScheduleTips(num) {
@@ -782,22 +819,26 @@ export default {
 }
 
 .niudan {
-    background-image: url("https://img.chaoshewang.com/static/img/niudan/ndj_bg.png");
+    background-image: url("../../static/gachaStatic/niudanji/niudanji.png");
     background-size: 100% 100%;
     overflow-y: auto;
     height: 100vh;
+    // padding-bottom: 136rpx;
 }
 
 .top_Back {
-    color: #333;
+    color: #000000;
     font-size: 36rpx;
     font-weight: bold;
     padding: 0 30rpx;
 
     .Back_ico {
-        width: 50rpx;
-        height: 50rpx;
-        margin-right: 50rpx;
+        width: 48rpx;
+        height: 48rpx;
+        margin-right: 24rpx;
+    }
+    .title{
+        max-width: 400rpx;
     }
 }
 
@@ -839,31 +880,72 @@ export default {
     overflow-y: auto;
     padding: 30rpx 0;
     position: relative;
+    padding-bottom: 150rpx;
 
 
 }
 
 .i_notice {
-    width: 695rpx;
+    width: 100%;
     height: 56rpx;
-    border-radius: 28rpx;
-    background: rgba($color: #640899, $alpha: 0.6);
-    transform: translateX(-50%);
-    position: absolute;
-    top: 280rpx;
-    left: 50%;
+    // border-radius: 28rpx;
+    background: rgba(255, 255, 255, 0.5);
+    // transform: translateX(-50%);
+    // position: absolute;
+    // top: 280rpx;
+    // left: 50%;
     z-index: 1;
-    padding: 0 30rpx;
+    padding: 0 32rpx;
 
     .m_ico {
-        width: 34rpx;
-        height: 34rpx;
+        width: 32rpx;
+        height: 32rpx;
     }
 }
 
 .gashapon_machine_box {
-    padding: 0 30rpx 10rpx;
+    // padding: 0 30rpx 10rpx;
     position: relative;
+    .gachaProgress{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        z-index: 44;
+        top: 20rpx;
+        .title{
+            color: #1A1A1A;
+            font-size: 24rpx;
+            font-weight: bold;
+        }
+        .progress{
+            width: 440rpx;
+            margin-top: 12rpx;
+height: 24rpx;
+background: #A4BADA;
+border-radius: 12rpx 12rpx 12rpx 12rpx;
+position: relative;
+text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 20rpx;
+    transform: translate(-50%,-50%);
+}
+.actiiveProgress{
+    position: absolute;
+    height: 24rpx;
+background: linear-gradient( 90deg, #FFC710 0%, #F9E650 100%);
+border-radius: 12rpx 12rpx 12rpx 12rpx;
+}
+        }
+        .total{
+            color: #3F5E83;
+            font-size:20rpx ;
+        }
+
+    }
 
     .probability {
         width: 18rpx;
@@ -946,16 +1028,30 @@ export default {
     }
 
     .ico-t {
-        width: 90rpx;
-        height: 90rpx;
-        background: url("https://img.chaoshewang.com/static/img/niudan/ndj_btn-3.png");
-        background-size: 100% 100%;
+       width: 100rpx;
+        height: 40rpx;
+        background: rgba(26, 26, 26, .5);
         font-size: 24rpx;
-        line-height: 90rpx;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        border-radius: 20rpx 0 0 20rpx;
+        line-height: 40rpx;
         position: absolute;
-        top: 20rpx;
-        left: 140rpx;
+        right: 0;
+        z-index: 88;
+        top: 0;
+        &.ico-share{
+            top: 60rpx;
+        }
+        image{
+           width: 32rpx;
+           height: 32rpx; 
+           margin-right: 4rpx;
+           vertical-align: middle;
+        }
+
         // z-index: 10;
     }
 
@@ -978,14 +1074,24 @@ export default {
 
     .tit {
         position: absolute;
-        left: 242rpx;
-        bottom: 120rpx;
+        left: 152rpx;
+        bottom: 54rpx;
         font-weight: 800;
-        font-size: 26rpx;
-        color: #fff;
-        width: 186rpx;
-        text-align: center;
+        font-size: 24rpx;
+        color: #000;
+        width: 178rpx;
+        height: 139rpx;
+        background: url('../../static/gachaStatic/niudanji/price.png');
+        background-size: 100% 100%;
+        // text-align: center;
         z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .price{
+            margin-top: -10rpx;
+            transform: skewY(-10deg);
+        }
     }
 
 
@@ -996,12 +1102,49 @@ export default {
 }
 
 .preview_box {
-    width: 700rpx;
-    height: 540rpx;
-    margin: 0 auto;
-    padding: 32rpx 26rpx;
-    background: url("https://img.chaoshewang.com/static/img/niudan/ndj_pic-2.png");
-    background-size: 100% 100%;
+    width: 702rpx;
+    height: 963rpx;
+    margin: auto;
+    position: relative;
+  
+    background: url('../../static/gachaStatic/niudanji/bg.png');
+      background-size: 100% 100%;
+      padding-left: 24rpx;
+      .record{
+        position: absolute;
+        width: 200rpx;
+        height: 100rpx;
+        right: 0;
+        top: 0;
+      }
+   
+    // padding: 0rpx 24rpx;
+//    border-radius: 32rpx 32rpx 32rpx 32rpx;
+// border: 2rpx solid #FFFFFF;
+.box{
+//     width: 100%;
+//     height: 868rpx;
+// background: rgba(196, 222, 237, 1);
+// border-radius: 32rpx 32rpx 32rpx 32rpx;
+// border: 2rpx solid #FFFFFF;
+.tab{
+    height: 96rpx;
+    width: 100%;
+    line-height: 96rpx;
+    font-weight: bold;
+    color: #1A1A1A;
+    font-size: 32rpx;
+    display: flex;
+    align-items: center;
+    .amount{
+        color: #3F5E83;
+        font-size: 20rpx;
+        margin-left: 10rpx;
+        font-weight: 100;
+    }
+
+}
+}
 
     .p-tit {
         padding-left: 20rpx;
@@ -1018,45 +1161,57 @@ export default {
     }
 
     .p-list {
-        margin-top: 15rpx;
+        // margin-top: 15rpx;
         width: 100%;
-        height: 420rpx;
+        height: 870rpx;
+        padding-bottom: 15rpx;
 
         .flex-container {
             width: 100%;
-            padding: 0 10rpx;
-            @include grid(151rpx);
+            // padding: 0 24rpx;
+            padding-right: 0rpx;
+            display: flex;
+            flex-wrap: wrap;
+            // @include grid(151rpx);
         }
     }
 
     .list-item {
-        width: 151rpx;
-        height: 200rpx;
-        background: url("@/static/homePage/ndj_pic-3.png");
-        background-size: 100% 100%;
+        width: 208rpx;
+        height: 300rpx;
+        // background: url("@/static/homePage/ndj_pic-3.png");
+        // background-size: 100% 100%;
         text-align: center;
-        padding-top: 18rpx;
+        background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+        // padding-top: 18rpx;
+        border-radius: 16rpx;
+        margin-right: 16rpx;
+
         margin-bottom: 16rpx;
         position: relative;
 
-        // &:nth-child(4n) {
-        //     margin-right: 0rpx;
-        // }
+        &:nth-child(3n) {
+            margin-right: 0rpx;
+        }
         .p-img {
-            width: 118rpx;
-            height: 118rpx;
-            border-radius: 12rpx;
+            width: 208rpx;
+            height: 208rpx;
+            border-radius: 16rpx;
         }
 
         .p-name {
             margin-top: 2rpx;
-            font-size: 18rpx;
-            padding: 0 20rpx;
+            font-size: 24rpx;
+            padding: 0 8rpx;
+            color: #1A1A1A;
         }
 
         .p-probability {
-            font-size: 16rpx;
-            padding: 0 20rpx;
+            font-size: 20rpx;
+            padding: 0 8rpx;
+            color: #8D8D94;
+            text-align: left;
+
         }
 
         .ico3 {
@@ -1130,9 +1285,16 @@ export default {
         }
     }
 }
-
+.actionBtn{
+    position: fixed;
+    bottom: 0;
+    width: 750rpx;
+height: 136rpx;
+background: #FFFFFF;
+border-radius:32rpx 32rpx 0 0 ;
+}
 .foot-btn {
-    padding: 10rpx 30rpx 0;
+    padding: 0rpx 30rpx 0;
     position: relative;
 
 
@@ -1180,14 +1342,16 @@ export default {
 }
 
 .btn-item {
-    width: 178rpx;
-    height: 90rpx;
-    line-height: 90rpx;
-    background-image: url("@/static/btn/left.png");
+    width: 172rpx;
+    height: 72rpx;
+    line-height: 72rpx;
+    // background-image: url("@/static/btn/left.png");
+    background: url('../../static/gachaStatic/ddl/btnBgc.png');
     background-size: 100% 100%;
     text-align: center;
     font-weight: bolder;
-    font-size: 30rpx;
+    font-size: 36rpx;
+    color: #fff;
 }
 
 .nb {
@@ -1203,6 +1367,12 @@ export default {
 .btn-item3 {
     background-image: url("https://img.chaoshewang.com/static/img/niudan/foot_all.png");
     background-size: 100% 100%;
+}
+
+.btn-item4{
+    background: url('../../static/gachaStatic/ddl/btn1Bgc.png');
+    background-size: 100% 100%;
+    color: #000;
 }
 
 .cartoon_con {

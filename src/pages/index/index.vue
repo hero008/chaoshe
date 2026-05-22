@@ -2,13 +2,13 @@
 <template>
     <view>
         <view class="index_page">
-            <chao-wan v-if="tbStyle.selectIndex == 0" :inx.sync="chaowanInx" />
+            <!-- <chao-wan v-if="tbStyle.selectIndex == 0" :inx.sync="chaowanInx" /> -->
             <!-- 微信小程序不需要 -->
             <market v-if="tbStyle.selectIndex == 1" ref="marketPage" />
             <!-- 微信小程序不需要 -->
-            <home v-if="tbStyle.selectIndex == 2" />
-            <shang-gui v-if="tbStyle.selectIndex == 3" ref="shangGui" />
-            <my v-if="tbStyle.selectIndex == 4" ref="tabmy" />
+            <home v-if="tbStyle.selectIndex == 0" />
+            <shang-gui v-if="tbStyle.selectIndex == 2" ref="shangGui" />
+            <my v-if="tbStyle.selectIndex == 3" ref="tabmy" />
             <!-- 底部导航 -->
             <tabbar :tbStyle.sync="tbStyle" ref="xtabbar" @currentChange="currentChange" />
             <!-- 微信协议 -->
@@ -165,17 +165,9 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+    // background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
     overflow-y: auto;
 
-    &::before {
-        content: "";
-        width: 100vw;
-        height: calc(100vh - 212rpx);
-        left: 0;
-        top: 212rpx;
-        position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+  
 }
 </style>

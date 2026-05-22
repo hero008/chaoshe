@@ -118,7 +118,7 @@ export default {
         },
     },
     onLaunch: function () {
-        uni.setStorageSync("currentChange", 2);
+        uni.setStorageSync("currentChange", 0);
         // #ifdef APP-PLUS
         let that = this;
         // 获取网络类型（4G,5G,wifi,none[无网络]）
@@ -132,7 +132,7 @@ export default {
         // #endif
     },
     methods: {
-        ...mapMutations(["updateMgTvLogin"]),
+        // ...mapMutations(["updateMgTvLogin"]),
     },
     onLoad() {},
     computed: { ...mapState(["popupWebSocket"]) },
@@ -145,10 +145,10 @@ export default {
             getWebSocket(this);
         }
 
-        if(isMTVapp()){
-            store.dispatch('asyncUpdateMgTvLogin');
+        // if(isMTVapp()){
+        //     store.dispatch('asyncUpdateMgTvLogin');
      
-        }
+        // }
 
     },
     onHide: function () {

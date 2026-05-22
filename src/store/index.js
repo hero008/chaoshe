@@ -8,7 +8,7 @@ let userInfo = getCache("userInfo") || {};
 const store = new Vuex.Store({
     /* 此处存储数据 */
     state: {
-        isMTVLogin:false,
+        // isMTVLogin:false,
         userName: "Nnnni",
         userInfo, // 用户信息
         selectTicket: {}, // 选择的优惠券
@@ -54,9 +54,9 @@ const store = new Vuex.Store({
      * getters 是唯一可以取 state 值的方法
      */
     getters: {
-        isMgLogin(state) {
-            return state.isMTVLogin
-        },
+        // isMgLogin(state) {
+        //     return state.isMTVLogin
+        // },
         userInfo(state) {
             return state.userInfo
         },
@@ -89,14 +89,14 @@ const store = new Vuex.Store({
      * 第二个形参是调用此方法时传递的参数
      */
     mutations: {
-        updateMgTvLogin(state,val){
-            if(!val){
-                uni.removeStorageSync("aToken")
-                uni.removeStorageSync("rToken")
-                uni.removeStorageSync("userInfo")
-            }
-            state.isMTVLogin = val
-        },
+        // updateMgTvLogin(state,val){
+        //     if(!val){
+        //         uni.removeStorageSync("aToken")
+        //         uni.removeStorageSync("rToken")
+        //         uni.removeStorageSync("userInfo")
+        //     }
+        //     state.isMTVLogin = val
+        // },
        
         updateInfo(state, info) {
             state.userInfo = info;

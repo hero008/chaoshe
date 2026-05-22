@@ -4,7 +4,11 @@
             <view class="p-item" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
                 <view class="product-info">
-                    <img v-if="item.type == 3" src="https://img.chaoshewang.com/static/img/cw-new/wuxiansss.png"
+                      <img v-if="item.type == 3" src="../../../static/gachaStatic/home/wxc.png"
+                        class="w-icon" />
+                         <img v-else-if="item.type == 2" src="../../../static/gachaStatic/home/ndIcon.png"
+                        class="w-icon" />
+                         <img v-else-if="item.type == 4" src="../../../static/gachaStatic/home/ddlIcon.png"
                         class="w-icon" />
                     <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
@@ -21,7 +25,7 @@
                                     item.discountPrice || item.price || "0.00"
                                 }}</view>
                         </view>
-                        <view class="tag"></view>
+                        <!-- <view class="tag"></view> -->
                         <!-- <img class="tag" src="https://img.chaoshewang.com/static/img/home/ico_ico.png" alt="" /> -->
                     </view>
                 </view>
@@ -31,11 +35,13 @@
                     </view>
                     <view class="original">￥{{ item.price }}</view>
                 </view>
-
-                <div class="ltop flex_r">
-                    <view class="tag2" v-show="item.isNew">新箱</view>
-                    <view class="tag2 welfare" v-show="item.isWelfare">福利</view>
+                <view class="ltopBox">
+                  <div class="ltop">
+                    <view class="tag2" v-show="item.isNew"></view>
+                    <view class="tag2 welfare" v-show="item.isWelfare"></view>
                 </div>
+                </view>
+              
                 <div class="sellOut flex_r flex_ac flex_jc"
                     v-show="item.leftBox == 0 || item.state == 1 || item.state == 3">
                     <div class="tag3" v-if="item.state == 1">
@@ -53,13 +59,12 @@
                 </div>
             </view>
         </view>
-        <view class="l-lists" v-else>
+        <!-- <view class="l-lists" v-else>
             <view class="commodityBox" v-for="item in evenList" :key="item.configId">
                 <view class="showImg" @click="onGo(item)">
                     <image :src="item.thumb" class="img" />
                     <image v-if="item.startTime > 0" src="https://img.chaoshewang.com/static/img/home/yushou.png"
                         class="spotGoods" />
-                    <!-- <image  v-else src="https://img.chaoshewang.com/static/img/home/xianhuo.png" class="spotGoods" /> -->
                     <image v-show="item.label == 1" src="https://img.chaoshewang.com/static/img/home/new.png"
                         class="new" />
                     <image v-show="item.onlyShipment == 1" src="https://img.chaoshewang.com/static/img/home/zfh.png"
@@ -75,7 +80,7 @@
                     <view class="number">{{ item.value }}</view>
                 </view>
             </view>
-        </view>
+        </view> -->
         <view class="r-lists" v-if="type < 3">
             <view class="p-item" v-for="(item, index) in oddList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
@@ -88,7 +93,11 @@
                         </view>
                     </view>
 
-                    <img v-if="item.type == 3" src="https://img.chaoshewang.com/static/img/cw-new/wuxiansss.png"
+                   <img v-if="item.type == 3" src="../../../static/gachaStatic/home/wxc.png"
+                        class="w-icon" />
+                         <img v-else-if="item.type == 2" src="../../../static/gachaStatic/home/ndIcon.png"
+                        class="w-icon" />
+                         <img v-else-if="item.type == 4" src="../../../static/gachaStatic/home/ddlIcon.png"
                         class="w-icon" />
                     <view class="p-info flex_r flex_jb">
                         <view v-if="item.isWelfare == true" class="WelfareBox">福利箱</view>
@@ -100,7 +109,7 @@
                             > -->
                             <view class="price">{{ item.discountPrice || item.price || "0.00" }}</view>
                         </view>
-                        <view class="tag"></view>
+                        <!-- <view class="tag"></view> -->
                         <!-- <img class="tag" src="https://img.chaoshewang.com/static/img/home/ico_ico.png" alt="" /> -->
                     </view>
                 </view>
@@ -110,10 +119,14 @@
                     </view>
                     <view class="original">￥{{ item.price }}</view>
                 </view>
-                <div class="ltop flex_r">
-                    <view class="tag2" v-show="item.isNew">新箱</view>
-                    <view class="tag2 welfare" v-show="item.isWelfare">福利</view>
+                   <view class="ltopBox">
+                     <div class="ltop flex_r">
+                 
+                    <view class="tag2 welfare" v-show="item.isWelfare"></view>
+                       <view class="tag2" v-show="item.isNew"></view>
                 </div>
+                   </view>
+               
                 <div class="sellOut flex_r flex_ac flex_jc"
                     v-show="item.leftBox == 0 || item.state == 1 || item.state == 3">
                     <div class="tag3" v-if="item.state == 1">
@@ -127,13 +140,12 @@
                 </div>
             </view>
         </view>
-        <view class="r-lists" v-else>
+        <!-- <view class="r-lists" v-else>
             <view class="commodityBox" v-for="item in oddList" :key="item.configId">
                 <view class="showImg" @click="onGo(item)">
                     <image :src="item.thumb" class="img" />
                     <image v-if="item.startTime > 0" src="https://img.chaoshewang.com/static/img/home/yushou.png"
                         class="spotGoods" />
-                    <!-- <image  v-else  src="https://img.chaoshewang.com/static/img/home/xianhuo.png" class="spotGoods" /> -->
                     <image v-show="item.label == 1" src="https://img.chaoshewang.com/static/img/home/new.png"
                         class="new" />
                     <image v-show="item.onlyShipment == 1" src="https://img.chaoshewang.com/static/img/home/zfh.png"
@@ -150,7 +162,7 @@
                     <view class="number">{{ item.value }}</view>
                 </view>
             </view>
-        </view>
+        </view> -->
     </view>
     <u-empty v-else-if="type < 3" :text="type == 1 ? '敬请期待热门箱子~' : '暂时没有可捡漏的箱子哦~'"
         icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
@@ -408,27 +420,28 @@ export default {
 
 .hot-product {
     padding: 10rpx 0 50rpx;
+    padding-bottom: 160rpx;
 }
 
 .l-lists,
 .r-lists {
-    width: calc(50% - 10rpx);
+    width: 336rpx;
 }
 
 .p-item {
     width: 100%;
     border-radius: 12rpx;
     background-color: #fff;
-    margin-bottom: 20rpx;
+    margin-bottom: 14rpx;
     overflow: hidden;
     position: relative;
 
     .w-icon {
         position: absolute;
-        top: 297.5rpx;
-        left: -5rpx;
-        width: 72rpx;
-        height: 24rpx;
+        bottom: 10rpx;
+        right: 16rpx;
+        width: 96rpx;
+        height: 36rpx;
     }
 }
 
@@ -540,7 +553,7 @@ export default {
 
 .p-img {
     width: 100%;
-    height: 320rpx;
+    height: 336rpx;
     /* background-color: rgba($color: #9064FF, $alpha: 0.5); */
 }
 
@@ -552,26 +565,35 @@ export default {
 .product-info {
     padding: 10rpx 16rpx;
 }
-
+.ltopBox{
+    width: 336rpx;
+    height: 336rpx;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .tag2 {
-    color: #fff;
-    font-size: 24rpx;
-    padding: 2rpx 14rpx;
-    border-radius: 8rpx;
-    border: 2rpx solid #fff;
-    background: linear-gradient(to right, #e6c035, #fc7528);
+    // color: #fff;
+    // font-size: 24rpx;
+    // padding: 2rpx 14rpx;
+    // border-radius: 8rpx;
+    // border: 2rpx solid #fff;
+    // background: linear-gradient(to right, #e6c035, #fc7528);
+    width: 88rpx;
+    height: 32rpx;
+    background: url('../../../static/gachaStatic/home/new.png');
+    background-size: 100% 100%;
+    margin-top: 8rpx;
+  
 
     &.corr {
         background: linear-gradient(to right, #e65a35, #fd4228);
     }
 
     &.welfare {
-        margin-left: 8rpx;
-        background: linear-gradient(90deg,
-                #ff4949 0%,
-                #ff64c1 33%,
-                #ff5a13 66%,
-                #ffb800 100%);
+    
+         background: url('../../../static/gachaStatic/home/discount.png');
+    background-size: 100% 100%;
     }
 }
 
@@ -613,8 +635,8 @@ export default {
 
 .ltop {
     position: absolute;
-    top: 20rpx;
-    left: 20rpx;
+    bottom: 26rpx;
+    left: 0rpx;
 }
 
 .sellOut {
@@ -630,8 +652,8 @@ export default {
     width: 100%;
 
     .p-name {
-        color: #999;
-        font-size: 24rpx;
+        color: #1A1A1A;
+        font-size: 28rpx;
     }
 
     .multiple1 {
@@ -698,7 +720,7 @@ export default {
         .price {
             // font-weight: 800;
             font-size: 30rpx;
-            color: #000;
+            color: #F65C36;
 
             &:before {
                 content: "￥";
@@ -710,7 +732,7 @@ export default {
 
     .WelfareBox {
         font-weight: 600;
-        color: #000;
+        color: #F65C36;
         font-size: 28rpx;
     }
 
