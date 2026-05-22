@@ -4,11 +4,11 @@
             <view class="p-item" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
                 <view class="product-info">
-                      <img v-if="item.type == 3" src="../../../static/gachaStatic/home/wxc.png"
+                      <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/home/wxc.png"
                         class="w-icon" />
-                         <img v-else-if="item.type == 2" src="../../../static/gachaStatic/home/ndIcon.png"
+                         <img v-else-if="item.type == 2" src="https://img.shinemang.com/gachaStatic/home/ndIcon.png"
                         class="w-icon" />
-                         <img v-else-if="item.type == 4" src="../../../static/gachaStatic/home/ddlIcon.png"
+                         <img v-else-if="item.type == 4" src="https://img.shinemang.com/gachaStatic/home/ddlIcon.png"
                         class="w-icon" />
                     <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
@@ -93,11 +93,11 @@
                         </view>
                     </view>
 
-                   <img v-if="item.type == 3" src="../../../static/gachaStatic/home/wxc.png"
+                   <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/home/wxc.png"
                         class="w-icon" />
-                         <img v-else-if="item.type == 2" src="../../../static/gachaStatic/home/ndIcon.png"
+                         <img v-else-if="item.type == 2" src="https://img.shinemang.com/gachaStatic/home/ndIcon.png"
                         class="w-icon" />
-                         <img v-else-if="item.type == 4" src="../../../static/gachaStatic/home/ddlIcon.png"
+                         <img v-else-if="item.type == 4" src="https://img.shinemang.com/gachaStatic/home/ddlIcon.png"
                         class="w-icon" />
                     <view class="p-info flex_r flex_jb">
                         <view v-if="item.isWelfare == true" class="WelfareBox">福利箱</view>
@@ -581,7 +581,7 @@ export default {
     // background: linear-gradient(to right, #e6c035, #fc7528);
     width: 88rpx;
     height: 32rpx;
-    background: url('../../../static/gachaStatic/home/new.png');
+    background: url('https://img.shinemang.com/gachaStatic/home/new.png');
     background-size: 100% 100%;
     margin-top: 8rpx;
   
@@ -592,7 +592,7 @@ export default {
 
     &.welfare {
     
-         background: url('../../../static/gachaStatic/home/discount.png');
+         background: url('https://img.shinemang.com/gachaStatic/home/discount.png');
     background-size: 100% 100%;
     }
 }

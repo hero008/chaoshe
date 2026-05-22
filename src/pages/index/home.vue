@@ -11,7 +11,7 @@
                 <view class="notice_con flex_r flex_ac"
                     @click="goto('/page-activity/notice/notice-details', { id: noticeList[0].id })">
                     <view class="l_ico flex_jc flex_ac">
-                        <img src="../../static/gachaStatic/home/notice.png" class="ico">
+                        <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico">
                         <view>公告栏</view>
                     </view>
                     <u-notice-bar :text="notices[0]" :fontSize="11" color="#1A1A1A" bgColor="transparent"></u-notice-bar>
@@ -39,7 +39,7 @@
                         @click.stop = "ontab({index:1,type:'top'})"
                         style="width: 336rpx;
                          height: 280rpx;"
-                        src="../../static/gachaStatic/home/niudan.png"
+                        src="https://img.shinemang.com/gachaStatic/home/niudan.png"
                         mode="scaleToFill"
                     />
                 </view>
@@ -48,14 +48,14 @@
                         @click.stop =  "ontab({index:2,type:'top'})"
                         style="width: 336rpx;
                          height: 134rpx;margin-bottom: 12rpx;"
-                        src="../../static/gachaStatic/home/gacha.png"
+                        src="https://img.shinemang.com/gachaStatic/home/gacha.png"
                         mode="scaleToFill"
                       />
                         <image
                           @click.stop =  "ontab({index:3,type:'top'})"
                         style="width: 336rpx;
                          height: 134rpx;"
-                        src="../../static/gachaStatic/home/ddl.png"
+                        src="https://img.shinemang.com/gachaStatic/home/ddl.png"
                         mode="scaleToFill"
                       />
                 </view>

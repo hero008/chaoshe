@@ -41,7 +41,7 @@
                                     <div style="color: #9064FF;"  class="box_ico icof cor" v-if="multiIds[s].includes(it)">&#xe673;</div>
                                     <div  class="box_ico icof" v-else >&#xe671;</div>
                                    <view :style="{
-                                        backgroundImage: `url(${i.saleType == 1?'../../static/gachaStatic/chaogui/xianhuo.png':'../../static/gachaStatic/chaogui/yushou.png'})`,
+                                        backgroundImage: `url(${i.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
                                     }" class="item_txt1"></view>
                             </view>
                         </div>

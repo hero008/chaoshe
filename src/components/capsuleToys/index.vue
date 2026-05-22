@@ -3,7 +3,7 @@
         <!-- 背景 -->
         <!-- <image class="egg_bg" src="https://img.shinemang.com/gachaStatic/static/img/capsuleToys/ndj_bg1.png" mode="widthFix">
         </image> -->
-        <image class="egg_ji" src="../../static/gachaStatic/niudanji/box.png" mode="widthFix">
+        <image class="egg_ji" src="https://img.shinemang.com/gachaStatic/niudanji/box.png" mode="widthFix">
         </image>
 
         <!-- 开关 -->

@@ -2,17 +2,17 @@
     <view class="chaowanshang" :style="{ paddingTop: MBInfo().top + 'px' }">
         <view class="top_Back flex_r flex_js flex_ac" :class="{ borshad: conScrollTop > 10 }"
             :style="{ height: MBInfo().height + 'px' }">
-            <img src="../../static/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
+            <img src="https://img.shinemang.com/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
             <text class="title ellipsis">{{ gachainfo.themeName }}</text>
         </view>
         <view class="leftBox" @click=" goto('/pages/common/rulepop', { val: 'ChaoPlayRules' })"> <image
-                        src="../../static/gachaStatic/niudanji/ruleIcon.png"
+                        src="https://img.shinemang.com/gachaStatic/niudanji/ruleIcon.png"
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
         <view class="leftBox ico-share">
               <image
-                        src="../../static/gachaStatic/niudanji/shareIcon.png"
+                        src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
         </view>
@@ -55,7 +55,7 @@
                     
                 </view>
                 <view class="gahcaAmount">
-                    <image  mode="scaleToFill" src="../../static/gachaStatic/chaoyou/icon.png" />
+                    <image  mode="scaleToFill" src="https://img.shinemang.com/gachaStatic/chaoyou/icon.png" />
                     <text>已抽{{ residual }}发</text>
                 </view>
                 <view class="preview_box">
@@ -73,7 +73,7 @@
                         <div class="preview_1">
                               <div class="p-probability flex_r flex_ac ">
                                 <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
-                                <img :src="`../../static/gachaStatic/chaoyou/duoyou_${s}.png`"
+                                <img :src="`https://img.shinemang.com/gachaStatic/chaoyou/duoyou_${s}.png`"
                                     class="badge" />
                                 <!-- <div class="prob_num">{{ ($h.Div(i, gachainfo.totalNum) * 100).toFixed(2) }}%</div> -->
                                 <div class="prob_num" v-if="i">{{ i }}%</div>
@@ -87,7 +87,7 @@
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
                                 @click="ondetail(item.itemId)">
                                 <img :src="item.itemHalfImage" class="p-img" />
-                                <img :src="`../../static/gachaStatic/chaoyou/duoyou_${item.levelName}.png`"
+                                <img :src="`https://img.shinemang.com/gachaStatic/chaoyou/duoyou_${item.levelName}.png`"
                                     class="badge" />
                                 <!-- <view class="bor"></view> -->
                                 <view class="p-name flex_c flex_jb">
@@ -726,7 +726,7 @@ export default {
 <style lang='scss' scoped>
 .chaowanshang {
     background-color: #969fde;
-    background: url("../../static/gachaStatic/chaoyou/bg.png") top center no-repeat;
+    background: url("https://img.shinemang.com/gachaStatic/chaoyou/bg.png") top center no-repeat;
     background-size: cover;
     height: 100%;
     width: 100%;
@@ -1023,7 +1023,7 @@ image{
         height: 140rpx;
         left: 50%;
         transform: translateX(-50%);
-        background: url('../../static/gachaStatic/chaoyou/dizuo.png');
+        background: url('https://img.shinemang.com/gachaStatic/chaoyou/dizuo.png');
         background-size: 100% 100%;
         bottom: 40rpx;
     }
@@ -1063,7 +1063,7 @@ image{
         color: #000;
         width: 178rpx;
         height: 139rpx;
-        background: url('../../static/gachaStatic/niudanji/price.png');
+        background: url('https://img.shinemang.com/gachaStatic/niudanji/price.png');
         background-size: 100% 100%;
         // text-align: center;
         z-index: 10;
@@ -1099,13 +1099,13 @@ image{
 
 
 .switch_l {
-    background: url("../../static/gachaStatic/chaoyou/previous.png");
+    background: url("https://img.shinemang.com/gachaStatic/chaoyou/previous.png");
     background-size: 100% 100%;
     left: 0rpx;
 }
 
 .switch_r {
-    background: url("../../static/gachaStatic/chaoyou/next.png");
+    background: url("https://img.shinemang.com/gachaStatic/chaoyou/next.png");
     background-size: 100% 100%;
     // transform: scaleX(-1);
     right: 0rpx;
@@ -1148,7 +1148,7 @@ image{
 .preview_box {
     width: 702rpx;
     height: 936rpx;
-    background: url('../../static/gachaStatic/chaoyou/bg1.png');
+    background: url('https://img.shinemang.com/gachaStatic/chaoyou/bg1.png');
     background-size:100%;
     margin: auto;
 
@@ -1532,7 +1532,7 @@ margin-bottom: 12rpx;
     width: 172rpx;
     height: 72rpx;
     // background: #DC536C;
-    background: url('../../static/gachaStatic/ddl/btnBgc.png');
+    background: url('https://img.shinemang.com/gachaStatic/ddl/btnBgc.png');
     background-size: 100% 100%;
     border-radius: 24rpx;
     text-align: center;
@@ -1561,7 +1561,7 @@ margin-bottom: 12rpx;
     background: #E6B401;
 }
 .btn-item3{
-    background: url('../../static/gachaStatic/ddl/btn1Bgc.png') !important;
+    background: url('https://img.shinemang.com/gachaStatic/ddl/btn1Bgc.png') !important;
     background-size: 100% 100% !important;
 }
 

@@ -2,7 +2,7 @@
     <view class="niudan" :style="{ paddingTop: MBInfo().top + 'px' }">
         <view class="top_Back flex_r flex_js flex_ac" :style="{ height: MBInfo().height + 'px' }">
             <!-- @click.stop="gateBack" -->
-            <img src="../../static/gachaStatic/back.png" @click="goBack" class="Back_ico" />
+            <img src="https://img.shinemang.com/gachaStatic/back.png" @click="goBack" class="Back_ico" />
             <text class="title ellipsis">{{ marquee }}</text>
         </view>
         <!-- <view class="btns">
@@ -16,7 +16,7 @@
           
           <view class="niudan_con" :style="{ height: conHeight }">
             <view class="i_notice flex_r flex_ac">
-                    <img src="../../static/gachaStatic/niudanji/notice.png" class="m_ico" />
+                    <img src="https://img.shinemang.com/gachaStatic/niudanji/notice.png" class="m_ico" />
                     <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#1A1A1A"
                         bgColor="rgba(0,0,0,0)"></u-notice-bar>
                 </view>
@@ -45,13 +45,13 @@
                 <!-- <image :src="gachainfo.coverThumb" class="gacha_img" mode="aspectFill" /> -->
                 <view class="ico-t" @click="goto('/pages/common/rulepop', { val: 'GashaponRules' })">
                     <image
-                        src="../../static/gachaStatic/niudanji/ruleIcon.png"
+                        src="https://img.shinemang.com/gachaStatic/niudanji/ruleIcon.png"
                         mode="scaleToFill"
                     /><text>规则</text>
                 </view>
                  <view class="ico-share ico-t" >
                     <image
-                        src="../../static/gachaStatic/niudanji/shareIcon.png"
+                        src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
                 </view>
@@ -819,7 +819,7 @@ export default {
 }
 
 .niudan {
-    background-image: url("../../static/gachaStatic/niudanji/niudanji.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/niudanji/niudanji.png");
     background-size: 100% 100%;
     overflow-y: auto;
     height: 100vh;
@@ -1081,7 +1081,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
         color: #000;
         width: 178rpx;
         height: 139rpx;
-        background: url('../../static/gachaStatic/niudanji/price.png');
+        background: url('https://img.shinemang.com/gachaStatic/niudanji/price.png');
         background-size: 100% 100%;
         // text-align: center;
         z-index: 10;
@@ -1107,7 +1107,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
     margin: auto;
     position: relative;
   
-    background: url('../../static/gachaStatic/niudanji/bg.png');
+    background: url('https://img.shinemang.com/gachaStatic/niudanji/bg.png');
       background-size: 100% 100%;
       padding-left: 24rpx;
       .record{
@@ -1346,7 +1346,7 @@ border-radius:32rpx 32rpx 0 0 ;
     height: 72rpx;
     line-height: 72rpx;
     // background-image: url("@/static/btn/left.png");
-    background: url('../../static/gachaStatic/ddl/btnBgc.png');
+    background: url('https://img.shinemang.com/gachaStatic/ddl/btnBgc.png');
     background-size: 100% 100%;
     text-align: center;
     font-weight: bolder;
@@ -1370,7 +1370,7 @@ border-radius:32rpx 32rpx 0 0 ;
 }
 
 .btn-item4{
-    background: url('../../static/gachaStatic/ddl/btn1Bgc.png');
+    background: url('https://img.shinemang.com/gachaStatic/ddl/btn1Bgc.png');
     background-size: 100% 100%;
     color: #000;
 }

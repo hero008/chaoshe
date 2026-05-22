@@ -501,7 +501,7 @@ background-color: #F5F6F8;
         top: 0;
         position: absolute;
         z-index: 1;
-        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
         background-size: 100% 100%;
       }
     .notice {

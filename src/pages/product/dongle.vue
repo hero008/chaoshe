@@ -2,7 +2,7 @@
     <view class="dongdongle" :style="{ paddingTop: MBInfo().top + 'px' }">
         <view class="top_Back flex_r flex_js flex_ac"
             :style="{ top: MBInfo().top + 'px', height: MBInfo().height + 'px' }">
-            <img src="../../static/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
+            <img src="https://img.shinemang.com/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
             <text class="title">洞洞乐</text>
         </view>
          <div class="i_notice flex_r flex_ac">
@@ -10,13 +10,13 @@
             <u-notice-bar :text="inotice" :fontSize="12" color="#fff" bgColor="rgba(0,0,0,0)"></u-notice-bar>
           </div>
              <view class="leftBox"  @click=" goto('/pages/common/rulepop', { val: 'SurpriseBoxRules' })"> <image
-                        src="../../static/gachaStatic/niudanji/ruleIcon.png"
+                        src="https://img.shinemang.com/gachaStatic/niudanji/ruleIcon.png"
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
         <!-- <view class="leftBox ico-share">
               <image
-                        src="../../static/gachaStatic/niudanji/shareIcon.png"
+                        src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
         </view> -->
@@ -968,7 +968,7 @@ export default {
     height: 1280rpx;
     margin-top: 12rpx;
 
-    background: url("../../static/gachaStatic/ddl/bg.png");
+    background: url("https://img.shinemang.com/gachaStatic/ddl/bg.png");
     background-size: 100% 100%;
     margin-left: calc((100% - 686rpx) / 2);
     position: relative;
@@ -1007,7 +1007,7 @@ export default {
             width: 64rpx;
             height: 64rpx;
             margin-top: -16rpx;
-            background: url("../../static/gachaStatic/ddl/zd.png");
+            background: url("https://img.shinemang.com/gachaStatic/ddl/zd.png");
             background-size: 100% 100%;
         }
     }
@@ -1297,7 +1297,7 @@ export default {
         color: #000;
         width: 178rpx;
         height: 139rpx;
-        background: url('../../static/gachaStatic/niudanji/price.png');
+        background: url('https://img.shinemang.com/gachaStatic/niudanji/price.png');
         background-size: 100% 100%;
         // text-align: center;
         z-index: 10;
@@ -1317,7 +1317,7 @@ export default {
   z-index: 1;
                 width: 534rpx;
                 height: 16rpx;
-                background: url('../../static/gachaStatic/ddl/line.png');
+                background: url('https://img.shinemang.com/gachaStatic/ddl/line.png');
                 background-size: 100% 100%;
                 margin-top: -4rpx;
                
@@ -1355,13 +1355,13 @@ text-transform: none;
 color: #fff;
 font-family: '倍数欧气值';
             float: left;
-            background: url("../../static/gachaStatic/ddl/bg0.png");
+            background: url("https://img.shinemang.com/gachaStatic/ddl/bg0.png");
           
             background-size: 100% 100%;
             margin-bottom: 20rpx;
 
             &.bg2 {
-              background: url("../../static/gachaStatic/ddl/bg2.png");
+              background: url("https://img.shinemang.com/gachaStatic/ddl/bg2.png");
                 background-size: 100% 100%;
                 color: #899AAA;
                 text-shadow: 1px 1px 2px rgba(155,162,166,0.7);
@@ -1373,7 +1373,7 @@ font-family: '倍数欧气值';
             }
 
             &.bg3 {
-                background: url("../../static/gachaStatic/ddl/bg1.png");
+                background: url("https://img.shinemang.com/gachaStatic/ddl/bg1.png");
                 background-size: 100% 100%;
                 color: #0C9CEF;
 
@@ -1426,14 +1426,14 @@ font-family: '倍数欧气值';
     &.suiji{
         width: 112rpx;
         height: 112rpx;
-        background: url('../../static/gachaStatic/ddl/suiji.png');
+        background: url('https://img.shinemang.com/gachaStatic/ddl/suiji.png');
         background-size: 100% 100%;
         margin-right: 40rpx;
     }
     &.all{
         width: 112rpx;
         height: 112rpx;
-        background: url('../../static/gachaStatic/ddl/all.png');
+        background: url('https://img.shinemang.com/gachaStatic/ddl/all.png');
         background-size: 100% 100%;
     }
     &.confirm{
@@ -1443,7 +1443,7 @@ font-family: '倍数欧气值';
         align-items: center;
         justify-content: center;
         line-height: 72rpx;
-          background: url('../../static/gachaStatic/ddl/btnBgc.png');
+          background: url('https://img.shinemang.com/gachaStatic/ddl/btnBgc.png');
         background-size: 100% 100%;
         color: #fff;
     }
@@ -1456,7 +1456,7 @@ font-family: '倍数欧气值';
 .recordBtn{
       width: 112rpx;
 height: 104rpx;
-background: url('../../static/gachaStatic/ddl/record.png');
+background: url('https://img.shinemang.com/gachaStatic/ddl/record.png');
 background-size: 100% 100%;
 position: absolute;
 right: 0;
@@ -1466,7 +1466,7 @@ top: 1250rpx;
 .yunlanBtn {
     width: 112rpx;
 height: 104rpx;
-background: url('../../static/gachaStatic/ddl/preview.png');
+background: url('https://img.shinemang.com/gachaStatic/ddl/preview.png');
 background-size: 100% 100%;
 position: absolute;
 right: 0;

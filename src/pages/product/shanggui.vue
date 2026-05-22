@@ -31,14 +31,14 @@
                         <view class="btn " :class="{ active: data.hasOwnProperty('order_by_create_time') }"
                             @click="onBtn(0)">时间
                           <image
-                            :src="data.hasOwnProperty('order_by_create_time')?'../../static/gachaStatic/chaogui/up.png':'../../static/gachaStatic/chaogui/down.png'"
+                            :src="data.hasOwnProperty('order_by_create_time')?'https://img.shinemang.com/gachaStatic/chaogui/up.png':'https://img.shinemang.com/gachaStatic/chaogui/down.png'"
                             mode="scaleToFill"
                           />
                         </view>
                         <view class="btn" :class="{ active: data.hasOwnProperty('order_by_inner_price') }"
                             @click="onBtn(1)">价值
                           <image
-                            :src="data.hasOwnProperty('order_by_inner_price')?'../../static/gachaStatic/chaogui/up.png':'../../static/gachaStatic/chaogui/down.png'"
+                            :src="data.hasOwnProperty('order_by_inner_price')?'https://img.shinemang.com/gachaStatic/chaogui/up.png':'https://img.shinemang.com/gachaStatic/chaogui/down.png'"
                             mode="scaleToFill"
                           />
                         </view>
@@ -78,7 +78,7 @@
                                             : "预售"
                                     }} -->
                                     <view :style="{
-                                        backgroundImage: `url(${item.item.saleType == 1?'../../static/gachaStatic/chaogui/xianhuo.png':'../../static/gachaStatic/chaogui/yushou.png'})`,
+                                        backgroundImage: `url(${item.item.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
                                     }" class="item_txt1"></view>
                                 </view>
                                 </view>
@@ -280,7 +280,7 @@ export default {
         top: 0;
         position: absolute;
         z-index: 1;
-        background: url('../../static/gachaStatic/chaogui/topBg.png');
+        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
         background-size: 100% 100%;
       }
 
@@ -331,7 +331,7 @@ export default {
 .rules{
     width: 144rpx;
     height: 48rpx;
-    background: url('../../static/gachaStatic/chaogui/rule.png');
+    background: url('https://img.shinemang.com/gachaStatic/chaogui/rule.png');
     background-size: 100% 100%;
     margin-right: 32rpx;
 }
