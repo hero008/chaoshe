@@ -4,7 +4,7 @@
         <view class="_modalBox">
             <div class="ipopup_con">
                 <view @click.stop="clickBtn('cancel')" class="close"></view>
-                <img src="https://img.chaoshewang.com/static/img/market/Group_title.png" class="Group_title">
+                <img src="https://img.shinemang.com/gachaStatic/static/img/market/Group_title.png" class="Group_title">
                 <view class="content">
                     <div class="title">{{ title }}</div>
                     <div class="text_con" v-html="content"></div>

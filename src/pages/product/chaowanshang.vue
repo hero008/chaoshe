@@ -36,7 +36,7 @@
                         <view class="switch_btn switch_l" @click="switchover('last')" />
                         <view class="switch_btn  switch_r" @click="switchover('next')" />
                         <!-- <button open-type="share" class="btns_2 " @click="onShare">
-                            <image src="https://img.chaoshewang.com/static/img/duoyou/fx.png" />
+                            <image src="https://img.shinemang.com/gachaStatic/static/img/duoyou/fx.png" />
                         </button> -->
                         <!-- <view class="ts">盲盒概率具有随机性，请理性消费</view> -->
                         <!-- #ifdef MP-WEIXIN -->
@@ -224,7 +224,7 @@
              <div class="lotteryRaffle">
                             <div class="r_item" v-for="(array, key) in recordList" :key="key">
                                 <div class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]">
-                                    <img :src="`https://img.chaoshewang.com/static/img/chaowanshang/duoyou_${array.name}.png`"
+                                    <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
                                         class="badge" />
                                     <div class="tit_r flex_r flex_ac" @click="getJl(array)">
                                         <span>查看最近10个</span>
@@ -336,8 +336,8 @@ export default {
                 height: 752,
                 imgWidth: 320,
                 imgHeight: 320,
-                bg: "https://img.chaoshewang.com/static/img/activity/chq_ls.png",
-                btn: "https://img.chaoshewang.com/static/img/activity/an_ls.png",
+                bg: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_ls.png",
+                btn: "https://img.shinemang.com/gachaStatic/static/img/activity/an_ls.png",
             },
             activityOpen: false,
         };
@@ -765,7 +765,7 @@ export default {
             border: 2rpx solid #fff;
             padding: 8rpx;
             background:
-                url("https://img.chaoshewang.com/static/img/chaowanshang/moie.png"),
+                url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/moie.png"),
                 linear-gradient(90deg, #FF5DBD 0%, #FD4745 50%, #FC7B4B 100%);
             background-size: cover;
             background-repeat: no-repeat;
@@ -1027,7 +1027,7 @@ image{
         background-size: 100% 100%;
         bottom: 40rpx;
     }
-    // background: url("https://img.chaoshewang.com/static/img/duoyou/pedestal.png");
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/pedestal.png");
     // background-size: 100% 100%;
 
     .tit {
@@ -1329,7 +1329,7 @@ margin-bottom: 12rpx;
         .icon {
             width: 40rpx;
             height: 40rpx;
-            background: url("https://img.chaoshewang.com/static/img/duoyou/icon_box.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/icon_box.png");
             background-size: 100% 100%;
             margin-right: 8rpx;
         }
@@ -1337,7 +1337,7 @@ margin-bottom: 12rpx;
         .icon1 {
             width: 28rpx;
             height: 28rpx;
-            background: url("https://img.chaoshewang.com/static/img/duoyou/sx.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/sx.png");
             background-size: 100% 100%;
             margin-right: 8rpx;
         }
@@ -1502,7 +1502,7 @@ margin-bottom: 12rpx;
         .passionImg {
             width: 32rpx;
             height: 32rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(255, 61, 13, 0.50) 0%, rgba(255, 61, 13, 0) 100%);
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(255, 61, 13, 0.50) 0%, rgba(255, 61, 13, 0) 100%);
             background-size: 100% 100%;
             margin-left: 10rpx;
         }
@@ -1510,7 +1510,7 @@ margin-bottom: 12rpx;
         .commonImg {
             width: 32rpx;
             height: 32rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(13, 118, 255, 0.50) 0%, rgba(255, 61, 13, 0) 100%);
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(13, 118, 255, 0.50) 0%, rgba(255, 61, 13, 0) 100%);
             background-size: 100% 100%;
             margin-left: 10rpx;
         }

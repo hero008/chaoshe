@@ -79,10 +79,10 @@
 </template>
 <script>
 // 替换json文件地址
-const provinvialUrl = 'https://img.chaoshewang.com/static/json/provinces.json';
-const cityUrl = 'https://img.chaoshewang.com/static/json/cities.json';
-const areaUrl = 'https://img.chaoshewang.com/static/json/areas.json';
-const streetsUrl = 'https://img.chaoshewang.com/static/json/streets.json';
+const provinvialUrl = 'https://img.shinemang.com/gachaStatic/static/json/provinces.json';
+const cityUrl = 'https://img.shinemang.com/gachaStatic/static/json/cities.json';
+const areaUrl = 'https://img.shinemang.com/gachaStatic/static/json/areas.json';
+const streetsUrl = 'https://img.shinemang.com/gachaStatic/static/json/streets.json';
 // const provinvialUrl = 'https://cos.wkea.cn/static/provinces.json';
 // const cityUrl = 'https://cos.wkea.cn/static/cities.json';
 // const areaUrl = 'https://cos.wkea.cn/static/areas.json';

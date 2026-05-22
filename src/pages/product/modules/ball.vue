@@ -88,7 +88,7 @@ export default {
     }
 
     .water1 {
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/ballFull.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/ballFull.png");
         background-size: 100% 100%;
     }
 
@@ -157,7 +157,7 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        background-image: url("https://img.chaoshewang.com/static/img/duoyou/ballPP.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/ballPP.png");
         background-size: 100% 100%;
         // text-align: center;
         // line-height: 240rpx;
@@ -234,7 +234,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/ballBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/ballBg.png");
     background-size: cover;
     // animation: rotateBg 20s linear infinite;
 }

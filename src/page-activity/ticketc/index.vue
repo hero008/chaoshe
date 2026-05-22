@@ -5,7 +5,7 @@
     >
         <view class="topBack">
             <img
-                src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />
@@ -15,7 +15,7 @@
             <!-- #ifndef MP-WEIXIN -->
             <button open-type="share" class="btns_2 t_btn" @click="onShare">
                 <image
-                    src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-share.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-share.png"
                 />
             </button>
             <!-- #endif -->

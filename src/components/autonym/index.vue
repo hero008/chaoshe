@@ -5,7 +5,7 @@
                 <image
                     @click="onClickClose"
                     class="ico_img"
-                    src="https://img.chaoshewang.com/static/img/transaction/close2.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                 ></image>
                 <view class="t_title">认证信息</view>
             </div>
@@ -295,7 +295,7 @@ export default {
         border-radius: 50%;
 
         &.active {
-            background-image: url("https://img.chaoshewang.com/static/img/pay/ico3.png") !important;
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
             background-size: 100% 100% !important;
         }
     }

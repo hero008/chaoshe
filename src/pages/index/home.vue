@@ -4,7 +4,7 @@
         <!-- 公告 -->
         <view class="notice_top flex_r flex_jb flex_ac">
             <!-- 微信小程序不用-->
-            <!-- <img src="https://img.chaoshewang.com/static/img/home/ico_ico2.png" class="logo_img"
+            <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/home/ico_ico2.png" class="logo_img"
                 :style="{ height: MBInfo().height - 2 + 'px' }" /> -->
             <!-- 微信小程序不用-->
             <view class="notice-bar flex_r flex_jb flex_ac" :style="{ height: MBInfo().height + 'px', width: boundW }">
@@ -61,17 +61,17 @@
                 </view>
                 <!-- <view class="ads_l flex_c flex_jb">
                     <image class="item" @click="goto('/pages/chaowan/gachasList', { type: 1 })"
-                        src="https://img.chaoshewang.com/static/img/home/yifanshang.png" />
+                        src="https://img.shinemang.com/gachaStatic/static/img/home/yifanshang.png" />
                     <image class="item" v-if="egg.open" @click="goto('/page-activity/egg/index')"
-                        src="https://img.chaoshewang.com/static/img/home/chaodan.png" />
+                        src="https://img.shinemang.com/gachaStatic/static/img/home/chaodan.png" />
                     <image class="item" v-else @click="onclickNew"
-                        src="https://img.chaoshewang.com/static/img/home/yysx.png" />
+                        src="https://img.shinemang.com/gachaStatic/static/img/home/yysx.png" />
                 </view>
                 <view class="welfare_show flex_r flex_jb" v-if="activity.open">
                     <image class="item" @click="goto('/page-activity/welfare/index')"
-                        src="https://img.chaoshewang.com/static/img/home/welfare.png" />
+                        src="https://img.shinemang.com/gachaStatic/static/img/home/welfare.png" />
                     <image class="item" @click="goto('/pages/chaowan/gachasList', { type: 2 })"
-                        src="https://img.chaoshewang.com/static/img/home/niudanji.png" />
+                        src="https://img.shinemang.com/gachaStatic/static/img/home/niudanji.png" />
                 </view>
                 <view class="ads_r" @click="goto('/pages/chaowan/gachasList', { type: 2 })" v-else>
                     <view class="item_tit">
@@ -82,7 +82,7 @@
             </view>
             <!-- 爆爆爆活动 -->
             <!-- <view v-if="!allIn.open" class="allIn" @click="goto('/pages/chaowan/gachasList', { type: 3 })">
-                <img src="https://img.chaoshewang.com/static/img/duoyou/syBg.png" class="allIn_img" />
+                <img src="https://img.shinemang.com/gachaStatic/static/img/duoyou/syBg.png" class="allIn_img" />
             </view> -->
             <!-- <view class="allIn" v-else
                 @click="goto('/pages/product/allCaptured', { val: allIn.paramsMap.theme_id, name: allIn.paramsMap.name })">
@@ -94,9 +94,9 @@
                 <!-- 微信小程序不需要 -->
                 <u-tabs :current="active_m" :lineWidth='lineWidth' :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"
                     itemStyle=" height: 60px;"></u-tabs>
-                <!-- <image src="https://img.chaoshewang.com/static/img/home/Group 1261155200@2x.png"
+                <!-- <image src="https://img.shinemang.com/gachaStatic/static/img/home/Group 1261155200@2x.png"
                     :class="[active_m == 2 ? 'shopping' : 'shopping1']" @click="ontab(2)" /> -->
-                <!-- <image src="https://img.chaoshewang.com/static/img/home/welfare-icon.png"
+                <!-- <image src="https://img.shinemang.com/gachaStatic/static/img/home/welfare-icon.png"
                     :class="[active_m == -1 ? 'welfare' : 'welfare1']" @click="ontab(-1)" /> -->
                 <!-- 微信小程序不需要 -->
             </view>
@@ -587,7 +587,7 @@ export default {
             width: 132rpx;
             line-height: 40rpx;
             text-align: right;
-            background-image: url("https://img.chaoshewang.com/static/img/home/ntc-4.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/ntc-4.png");
             background-size: 100% 100%;
             position: relative;
             font-weight: 500;
@@ -689,7 +689,7 @@ opacity: 1;
     }
 
     .ads_r {
-        background-image: url("https://img.chaoshewang.com/static/img/home/cp-3-1.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/cp-3-1.png");
         background-size: 100% 100%;
         position: relative;
         padding: 22rpx 28rpx;

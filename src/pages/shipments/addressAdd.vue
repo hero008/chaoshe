@@ -41,7 +41,7 @@
                     </u-form-item>
                 </div>
             </u--form>
-            <img class="foot_btn" @click="confirmAdd" src="https://img.chaoshewang.com/static/img/transaction/btn5.png">
+            <img class="foot_btn" @click="confirmAdd" src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn5.png">
             <select-address ref="AddressRef" :address.sync="address" @change="addressChange" />
         </div>
     </view>

@@ -39,7 +39,7 @@ export default {
     transform: translate(-50%, -50%);
     width: 670rpx;
     height: 736rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/niudan/scheduleTips.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/scheduleTips.png");
     background-size: 100% 100%;
 
     .title {

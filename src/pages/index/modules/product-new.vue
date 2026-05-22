@@ -13,7 +13,7 @@
                 </view>
             </view>
         </view>
-        <u-empty v-else text="暂无赏品~" icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
+        <u-empty v-else text="暂无赏品~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
     </scroll-view>
 </template>
 <script>

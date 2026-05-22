@@ -3,7 +3,7 @@
         <view class="join" :class="{ active: !val }">
             <view class="top_Back flex_r flex_js flex_ac">
                 <img
-                    src="https://img.chaoshewang.com/static/img/chaowanshang/allFh.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allFh.png"
                     @click.stop="gateBack"
                     class="Back_ico"
                 />{{ val ? "我的开奖记录" : "成团记录" }}
@@ -163,12 +163,12 @@ export default {
 .join {
     width: 100%;
     height: 100vh;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/recordBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/recordBg.png");
     background-size: 100% 100%;
     overflow: hidden;
     color: #ffffff;
     &.active {
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allCardBg.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allCardBg.png");
         background-size: 100% 100%;
     }
     .top_Back {
@@ -207,7 +207,7 @@ export default {
                 .card_title {
                     width: 100%;
                     height: 112rpx;
-                    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/carTitle.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/carTitle.png");
                     background-size: 100% 100%;
                     z-index: 90;
                     padding: 0 32rpx 0 120rpx;
@@ -263,12 +263,12 @@ export default {
             .card_btn {
                 width: 352rpx;
                 height: 136rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allInMin.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allInMin.png");
                 background-size: 100% 100%;
             }
             .card_btn1 {
                 position: relative;
-                background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/againMin.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/againMin.png");
                 background-size: 100% 100%;
                 .card_num {
                     position: absolute;
@@ -296,14 +296,14 @@ export default {
         height: 784rpx;
         top: 50%;
         transform: translateY(-60%);
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allLight.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allLight.png");
         background-size: 100% 100%;
         padding-top: 112rpx;
         .card {
             margin: 0 auto;
             width: 380rpx;
             height: 564rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allCard1.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allCard1.png");
             background-size: 100% 100%;
             transform-style: preserve-3d;
             animation: spin-y 1s linear 2;
@@ -335,12 +335,12 @@ export default {
         width: 438rpx;
         height: 136rpx;
         bottom: 220rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/again.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/again.png");
         background-size: 100% 100%;
     }
     .card_btn1 {
         bottom: 80rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allIn.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allIn.png");
         background-size: 100% 100%;
     }
 }

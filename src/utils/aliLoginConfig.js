@@ -5,7 +5,7 @@ export default {
         setSwitchHidden: "true", //是否隐藏“切换方式”按钮（true：隐藏，false：不隐藏）
         setCheckboxHidden: "true", //是否隐藏隐私协议前面的勾选框（true：隐藏，false：不隐藏，如果隐藏代表用户强制同意协议，请谨慎使用）
         setBackgroundUi: {
-            imageUrl: "https://img.chaoshewang.com/static/login/login_bg.png",
+            imageUrl: "https://img.shinemang.com/gachaStatic/static/login/login_bg.png",
         },
         //导航栏相关设置
         setNavUi: {

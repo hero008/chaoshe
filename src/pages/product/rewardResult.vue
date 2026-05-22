@@ -3,10 +3,10 @@
         <div class="un_res flex_c flex_ac flex_jc" v-show="unRes">
             <image
                 class="title"
-                src="https://img.chaoshewang.com/static/img/cs-result/yfs_txt.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/cs-result/yfs_txt.png"
             ></image>
             <image
-                :src="'https://img.chaoshewang.com/static/img/cs-result/yfs_card.gif'"
+                :src="'https://img.shinemang.com/gachaStatic/static/img/cs-result/yfs_card.gif'"
                 class="yfs_card"
                 @touchstart="start"
                 @touchmove="move"
@@ -15,10 +15,10 @@
         <div class="res_ing flex_c flex_ac flex_jc" v-show="isRun">
             <image
                 class="title"
-                src="https://img.chaoshewang.com/static/img/cs-result/yfs_txt.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/cs-result/yfs_txt.png"
             ></image>
             <image
-                :src="'https://img.chaoshewang.com/static/img/cs-result/yfs_run.gif'"
+                :src="'https://img.shinemang.com/gachaStatic/static/img/cs-result/yfs_run.gif'"
                 class="yfs_run"
             />
         </div>
@@ -34,7 +34,7 @@
                             ? 'ico1'
                             : 'ico' + awards[awardIndex].levelName.length,
                     ]"
-                    :src="`https://img.chaoshewang.com/static/img/reward/${awards[awardIndex].levelName}.png`"
+                    :src="`https://img.shinemang.com/gachaStatic/static/img/reward/${awards[awardIndex].levelName}.png`"
                 />
                 <div class="r_name">{{ awards[awardIndex].itemName }}</div>
             </div>
@@ -46,7 +46,7 @@
                     <span>继续</span>
                     <div class="r_num flex_r flex_ac" v-if="WinnNum > 0">
                         <img
-                            src="https://img.chaoshewang.com/static/img/cs-result/ico1.png"
+                            src="https://img.shinemang.com/gachaStatic/static/img/cs-result/ico1.png"
                             class="ico1"
                         />
                         <span>x{{ WinnNum }}</span>
@@ -148,7 +148,7 @@ export default {
     height: 100vh;
     overflow-y: auto;
     background-color: #0f1013;
-    background-image: url("https://img.chaoshewang.com/static/img/cs-result/yfs_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/cs-result/yfs_bg.png");
     background-size: 100% 100%;
 }
 
@@ -197,7 +197,7 @@ export default {
         width: 100%;
         height: 277rpx;
         animation: largen2 0.8s;
-        background-image: url("https://img.chaoshewang.com/static/img/cs-result/hint.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/cs-result/hint.png");
         background-size: 100% 100%;
         text-align: center;
         padding-top: 76rpx;

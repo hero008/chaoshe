@@ -19,7 +19,7 @@
 		</view>
 		<view class="l-dialer__pointer" :style="pointerStyle">
 			<slot v-if="$slots['pointer'] != null" name="pointer" />
-			<image v-else :class="!isTurnIng ? 'heart' : ''" src="https://img.chaoshewang.com/static/img/activity/dianji.png"
+			<image v-else :class="!isTurnIng ? 'heart' : ''" src="https://img.shinemang.com/gachaStatic/static/img/activity/dianji.png"
 				style="width: 100%" mode="widthFix" @tap="$emit('click')" />
 		</view>
 	</view>

@@ -17,7 +17,7 @@
                 </div>
                 <div class="B_num flex_r flex_ac flex_jc">
                     <img
-                        src="https://img.chaoshewang.com/static/img/pay/gold.png"
+                        src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
                         class="m_ico"
                     />
                     <div class="m_num">{{ balance || "0.00" }}</div>
@@ -252,7 +252,7 @@ export default {
                     margin-left: 8rpx;
                     width: 32rpx;
                     height: 32rpx;
-                    background-image: url("https://img.chaoshewang.com/static/img/home/group_4.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/group_4.png");
                     background-size: 100% 100%;
                 }
             }

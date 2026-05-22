@@ -7,10 +7,10 @@
         </view>
         <!-- <view class="btns">
             <button open-type="share" class="btns_2 t_btn" @click="onShare">
-                <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-share.png" />
+                <image src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-share.png" />
             </button>
             <view class="btns_3 t_btn" @click="ondrawLog">
-                <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-record.png" />
+                <image src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-record.png" />
             </view>
         </view> -->
           
@@ -85,7 +85,7 @@
                                 <view class="sort">{{item.luckyNo}}</view>
                             </view>
                             <img v-else class="ico3":class="[item.levelName == '冲冲' ? 'rotated' : '']"
-                                :src="`https://img.chaoshewang.com/static/img/reward/ico_${item.levelName}.png`" />
+                                :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
                             <view v-if="item.levelName == 'Lucky' && item.luckyPhase"
                                 class="schedule flex_r flex_jb flex_ac" @click.stop="onScheduleTips(item.luckyPhase)">
                                 <view class="num">{{ item.luckyPhase }}%</view>
@@ -145,7 +145,7 @@
                     <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view>
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>
-                <!-- <img class="cut " :src="`https://img.chaoshewang.com/static/img/cw-new/${cutPattern}.png`"  :key="cutPattern"   @click="oncut" /> -->
+                <!-- <img class="cut " :src="`https://img.shinemang.com/gachaStatic/static/img/cw-new/${cutPattern}.png`"  :key="cutPattern"   @click="oncut" /> -->
                 <!-- { forbid_btn: probability > 10 && value.text == '全包' } -->
                 <view v-for="(value, index) in payOptions" :key="index" class="btn-item "
                     :class="[value.className, ]"
@@ -194,11 +194,11 @@
                     </view>
                     <view class="share flex_r flex_ac" v-if="shareType">
                         <view @click="onShareType(2)">
-                            <img class="icon" src="https://img.chaoshewang.com/static/img/home/xcx.png" />
+                            <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
                             <view>小程序</view>
                         </view>
                         <view @click="onShareType(3)">
-                            <img class="icon" src="https://img.chaoshewang.com/static/img/home/pyq.png" />
+                            <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/pyq.png" />
                             <view>朋友圈</view>
                         </view>
                         <div @click="shareType = 0" class="btn icof"> &#xe607;</div>
@@ -209,7 +209,7 @@
                     <view class="c_btn_item cor9" @click="next">
                         <span>继续</span>
                         <view class="r_num flex_r flex_ae" v-if="WinnNum > 0">
-                            <img src="https://img.chaoshewang.com/static/img/niudan/ball.png" class="ico1" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/ball.png" class="ico1" />
                             <view>x{{ WinnNum }}</view>
                         </view>
                     </view>
@@ -277,7 +277,7 @@ export default {
             istry: false,
             cartoonShow: false, // 过场动画
             inAdvance: false, // 过场动画
-            cartoonsrc: "https://img.chaoshewang.com/static/img/cartoon/cartoon.svga",
+            cartoonsrc: "https://img.shinemang.com/gachaStatic/static/img/cartoon/cartoon.svga",
             newFilePath: "",
             percentage: 0, // 动画播放进度
             Winning: [], // 抽中的赏品
@@ -306,11 +306,11 @@ export default {
             //     height: 764,
             //     imgWidth: 240,
             //     imgHeight: 240,
-            //     bg: "https://img.chaoshewang.com/static/img/duoyou/knowBg.png", //背景
-            //     btn: "https://img.chaoshewang.com/static/img/duoyou/knowBtn.png", //按钮图片
+            //     bg: "https://img.shinemang.com/gachaStatic/static/img/duoyou/knowBg.png", //背景
+            //     btn: "https://img.shinemang.com/gachaStatic/static/img/duoyou/knowBtn.png", //按钮图片
             // },
             // cartoonsrc2:
-            //     "https://img.chaoshewang.com/static/img/cartoon/700.gif",
+            //     "https://img.shinemang.com/gachaStatic/static/img/cartoon/700.gif",
             // newGifPath: "", //Gif动画资源地址
             theme_id: '',
             vibrat: false,
@@ -966,7 +966,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
         .bubble {
             width: 72rpx;
             height: 34rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/niudan/bubble_l.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/bubble_l.png");
             background-size: 100% 100%;
             // z-index: 10;
             color: #fff;
@@ -1058,7 +1058,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
     .ico-r {
         width: 118rpx;
         height: 70rpx;
-        background: url("https://img.chaoshewang.com/static/img/niudan/ndj_btn-2.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_btn-2.png");
         background-size: 100% 100%;
         font-size: 22rpx;
         color: #fffefe;
@@ -1228,7 +1228,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
             left: 6rpx;
             width: 99.38rpx;
             height: 32.81rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/niudan/LuckyBg.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
             background-size: 100% 100%;
             font-weight: 800;
             color: transparent;
@@ -1273,7 +1273,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
             .iocn {
                 width: 16rpx;
                 height: 16rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/niudan/info.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/info.png");
                 background-size: 100% 100%;
                 margin-left: 4rpx;
             }
@@ -1315,7 +1315,7 @@ border-radius:32rpx 32rpx 0 0 ;
         .passionImg {
             width: 32rpx;
             height: 32rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(255, 61, 13, 0.50) 0%, rgba(255, 61, 13, 0) 80%);
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(255, 61, 13, 0.50) 0%, rgba(255, 61, 13, 0) 80%);
             background-size: 100% 100%;
             margin-left: 10rpx;
         }
@@ -1323,7 +1323,7 @@ border-radius:32rpx 32rpx 0 0 ;
         .commonImg {
             width: 32rpx;
             height: 32rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(13, 118, 255, 0.50) 0%, rgba(255, 61, 13, 0) 80%);
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(13, 118, 255, 0.50) 0%, rgba(255, 61, 13, 0) 80%);
             background-size: 100% 100%;
             margin-left: 10rpx;
         }
@@ -1365,7 +1365,7 @@ border-radius:32rpx 32rpx 0 0 ;
 }
 
 .btn-item3 {
-    background-image: url("https://img.chaoshewang.com/static/img/niudan/foot_all.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/foot_all.png");
     background-size: 100% 100%;
 }
 
@@ -1414,7 +1414,7 @@ border-radius:32rpx 32rpx 0 0 ;
             .share_img {
                 width: 64rpx;
                 height: 64rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/dongle/shareMin.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/dongle/shareMin.png");
                 background-size: 100% 100%;
             }
 
@@ -1467,7 +1467,7 @@ border-radius:32rpx 32rpx 0 0 ;
         width: 608rpx;
         height: 752rpx;
         padding-top: 192rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/niudan/eggshell.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/eggshell.png");
         background-size: 100% 100%;
         animation: myFn 0.8s;
 

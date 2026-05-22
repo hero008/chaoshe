@@ -8,7 +8,7 @@
         <div class="ipopup_con">
             <img
                 @click="close"
-                src="https://img.chaoshewang.com/static/img/market/close.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/market/close.png"
                 class="close"
             />
             <div class="title">操作提示</div>
@@ -27,14 +27,14 @@
                 <div class="p1 flex_r flex_ac flex_jb">
                     <div class="Ico_item flex_c flex_ac">
                         <img
-                            src="https://img.chaoshewang.com/static/img/my/android.png"
+                            src="https://img.shinemang.com/gachaStatic/static/img/my/android.png"
                             class="i_ico"
                         />
                         <div class="i_name">Andrroid</div>
                     </div>
                     <div class="Ico_item flex_c flex_ac">
                         <img
-                            src="https://img.chaoshewang.com/static/img/my/ios.png"
+                            src="https://img.shinemang.com/gachaStatic/static/img/my/ios.png"
                             class="i_ico"
                         />
                         <div class="i_name">Iphone</div>
@@ -87,7 +87,7 @@ export default {
 .ipopup_con {
     width: 542rpx;
     height: 587rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/imgs/modal_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/imgs/modal_bg.png");
     background-size: 100% 100%;
     position: relative;
 

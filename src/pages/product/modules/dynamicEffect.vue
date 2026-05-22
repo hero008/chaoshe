@@ -9,7 +9,7 @@
         <div class="card_list_popup flex_c flex_ac flex_jc" :style="{ 'pointer-events': shareType ? 'none' : 'auto' }"
             v-else>
             <div class="title">
-                <img src="https://img.chaoshewang.com/static/img/chaowanshang/tit_css.png" class="title_img1" />
+                <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/tit_css.png" class="title_img1" />
             </div>
             <div class="card_list flex_r flex_ac flex_jse flex_wrap">
                 <view class="card rotated" v-for="(k, s) in awardList" :key="s" @click="onRotated(s)">
@@ -20,24 +20,24 @@
                         <view class="itemName"> {{ k.itemName }}</view>
                         <img v-if="['Surprise', 'Lucky', 'Last', 'SSR', 'SS', 'SP',].includes(k.levelName)
                         " @click=" onShare(k.itemName, k.itemId, k.levelIndex, k)"
-                            src="https://img.chaoshewang.com/static/img/chaowanshang/share_btn.png" class="share_btn" />
+                            src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/share_btn.png" class="share_btn" />
                         <view class="Lucky flex_r  flex_js " v-if="k.levelName == 'Lucky' && k.luckyNo">
                             <view class="type">{{ k.levelName }}</view>
                             <view class="sort"> {{ k.luckyNo }}</view>
                         </view>
                         <view v-else class="cs_" :class="[k.levelName.length > 1 ? 'cs_' + k.levelName.length : '',]"
-                            :style="{ backgroundImage: `url(https://img.chaoshewang.com/static/img/chaowanshang/css_${k.levelName}.png)` }">
+                            :style="{ backgroundImage: `url(https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_${k.levelName}.png)` }">
                         </view>
                     </view>
                 </view>
             </div>
             <view class="share flex_r flex_ac" v-if="shareType">
                 <view @click="onShareType(2)">
-                    <img class="icon" src="https://img.chaoshewang.com/static/img/home/xcx.png" />
+                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
                     <view>小程序</view>
                 </view>
                 <view @click="onShareType(3)">
-                    <img class="icon" src="https://img.chaoshewang.com/static/img/home/pyq.png" />
+                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/pyq.png" />
                     <view>朋友圈</view>
                 </view>
                 <div @click="shareType = 0" class="btn icof">&#xe607;</div>
@@ -374,7 +374,7 @@ export default {
     left: 36rpx;
     width: 148rpx;
     height: 52rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/LuckyBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/LuckyBg.png");
     background-size: 100% 100%;
     font-weight: 800;
     color: transparent;
@@ -418,7 +418,7 @@ export default {
 .cl_ {
     width: 104rpx;
     height: 48rpx;
-    background: url("https://img.chaoshewang.com/static/img/card-bg/class4.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/class4.png");
     background-size: 100% 100%;
     position: absolute;
     top: 35rpx;
@@ -426,17 +426,17 @@ export default {
 }
 
 .cl_B {
-    background: url("https://img.chaoshewang.com/static/img/card-bg/class5.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/class5.png");
     background-size: 100% 100%;
 }
 
 .cl_A {
-    background: url("https://img.chaoshewang.com/static/img/card-bg/class6.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/class6.png");
     background-size: 100% 100%;
 }
 
 .cl_SP {
-    background: url("https://img.chaoshewang.com/static/img/card-bg/class7.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/class7.png");
     background-size: 100% 100%;
 }
 
@@ -470,112 +470,112 @@ export default {
 }
 
 .card-front {
-    background: url("https://img.chaoshewang.com/static/img/card-bg/1.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/1.png");
     background-size: 100% 100%;
     transform-style: preserve-3d;
 
     &.bg_A {
-        background: url("https://img.chaoshewang.com/static/img/card-bg/2.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/2.png");
         background-size: 100% 100%;
     }
 
     &.bg_SP {
-        background: url("https://img.chaoshewang.com/static/img/card-bg/3.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/3.png");
         background-size: 100% 100%;
     }
 }
 
 .css-front {
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_A.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_A.png");
     background-size: 100% 100%;
     transform-style: preserve-3d;
 
     &.bg_Surprise {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_Surprise.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_Surprise.png");
         background-size: 100% 100%;
     }
 
     &.bg_Lucky {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_Lucky.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_Lucky.png");
         background-size: 100% 100%;
     }
 
     &.bg_Last {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_Last.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_Last.png");
         background-size: 100% 100%;
     }
 
     &.bg_SSR {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_SSR.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_SSR.png");
         background-size: 100% 100%;
     }
 
     &.bg_SS {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_SS.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_SS.png");
         background-size: 100% 100%;
     }
 
     &.bg_SP {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/card_SP.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/card_SP.png");
         background-size: 100% 100%;
     }
 }
 
 .card-back {
-    background: url("https://img.chaoshewang.com/static/img/card-bg/bgt4.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/bgt4.png");
     background-size: 100% 100%;
     transform: rotateY(180deg);
     transform-style: preserve-3d;
 
     &.bg_B {
-        background: url("https://img.chaoshewang.com/static/img/card-bg/bgt5.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/bgt5.png");
         background-size: 100% 100%;
     }
 
     &.bg_A {
-        background: url("https://img.chaoshewang.com/static/img/card-bg/bgt6.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/bgt6.png");
         background-size: 100% 100%;
     }
 
     &.bg_SP {
-        background: url("https://img.chaoshewang.com/static/img/card-bg/bgt7.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/card-bg/bgt7.png");
         background-size: 100% 100%;
     }
 }
 
 .css-back {
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgA.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgA.png");
     background-size: 100% 100%;
     transform: rotateY(180deg);
     transform-style: preserve-3d;
 
     &.bg_Surprise {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgSurprise.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgSurprise.png");
         background-size: 100% 100%;
     }
 
     &.bg_Lucky {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgLucky.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgLucky.png");
         background-size: 100% 100%;
     }
 
     &.bg_Last {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgLast.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgLast.png");
         background-size: 100% 100%;
     }
 
     &.bg_SSR {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgSSR.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgSSR.png");
         background-size: 100% 100%;
     }
 
     &.bg_SS {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgSS.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgSS.png");
         background-size: 100% 100%;
     }
 
     &.bg_SP {
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/css_bgSP.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_bgSP.png");
         background-size: 100% 100%;
     }
 }

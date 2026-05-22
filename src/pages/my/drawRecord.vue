@@ -125,7 +125,7 @@
                 <u-empty
                     v-else
                     text="暂无抽赏记录~"
-                    icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                    icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50"
                 />
             </view>
@@ -252,7 +252,7 @@ export default {
     // padding-right: 20rpx;
     // width: 468rpx;
     height: 56rpx;
-    // background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
     // background-size: 100% 100%;
     font-size: 28rpx;
     color: #666666;
@@ -286,7 +286,7 @@ margin-right: 16rpx;
             // height: 86rpx;
             // line-height: 76rpx;
             // font-weight: bold;
-            // background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
             // background-size: 100% 100%;
             // font-size: 30rpx;
         }

@@ -9,7 +9,7 @@
                 <div class="list">
                     <div class="item flex_c flex_ac flex_jc" v-for="(i, s) in awards" :key="s"
                         @click="ondetail(i.itemId)">
-                        <img src="https://img.chaoshewang.com/static/img/cs-result/border.png"
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/cs-result/border.png"
                             v-if="BigAward.includes(i.levelIndex)" class="active" />
                         <div class="border" v-else></div>
                         <img :src="i.coverImage || i.itemCover" class="img" />

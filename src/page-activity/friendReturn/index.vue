@@ -86,7 +86,7 @@
                 </div>
 
                 <u-empty v-if="!pointData.recalledList.length" text="暂无记录~"
-                    icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="30" />
+                    icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="30" />
                 <div v-else class="td flex_r flex_ac flex_jb" v-for="i in pointData.recalledList" :key="i.userId">
                     <div class="user flex_r flex_ac">
                         <img :src="i.profile | active" class="user_img" />
@@ -118,7 +118,7 @@ export default {
                 recalledList: [],
             },
             userInfo: this.$gl("userInfo") || {},
-            shareimg:"https://img.chaoshewang.com/static/img/activity/hyhgfx.png",
+            shareimg:"https://img.shinemang.com/gachaStatic/static/img/activity/hyhgfx.png",
             QRdata: {},
             timeData: {},
             inviteCode: "",
@@ -248,7 +248,7 @@ export default {
 .invite {
     // height: 2000rpx;
     height: 100%;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/fr_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fr_bg.png");
     background-size: cover;
     /* 图片覆盖整个容器 */
     background-position: top;
@@ -289,13 +289,13 @@ export default {
     .award_card {
         width: 686rpx;
         height: 704rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/fr_bg1.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fr_bg1.png");
         background-size: 100% 100%;
 
         .tit {
             width: 260rpx;
             height: 60rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/activity/fr_header.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fr_header.png");
             background-size: 100% 100%;
             margin-top: 32rpx;
         }
@@ -439,13 +439,13 @@ export default {
             margin: auto;
             width: 176rpx;
             height: 60rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/activity/fr_flow.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fr_flow.png");
             background-size: 100% 100%;
             margin-top: 32rpx;
         }
 
         .img1 {
-            background-image: url("https://img.chaoshewang.com/static/img/activity/fr_record.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fr_record.png");
             background-size: 100% 100%;
         }
     }

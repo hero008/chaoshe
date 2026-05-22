@@ -34,12 +34,12 @@
                         </div>
                         <!-- <div class="bottom_btn flex_r flex_ac flex_jb">
                             <div class="no">订单号：{{item.id}}</div>
-                            <img src="https://img.chaoshewang.com/static/img/market/copy.png" class="copy" @click.stop="copy(item.id)" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/market/copy.png" class="copy" @click.stop="copy(item.id)" />
                         </div> -->
                     </div>
 					</scroll-view>
                 </div>
-                <u-empty v-else text="暂无发货记录~" icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
+                <u-empty v-else text="暂无发货记录~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
             </view>
         </div>
     </view>
@@ -167,7 +167,7 @@ export default {
     // padding-right: 20rpx;
     // width: 468rpx;
     height: 56rpx;
-    // background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
     // background-size: 100% 100%;
     font-size: 28rpx;
     color: #666666;
@@ -201,7 +201,7 @@ margin-right: 16rpx;
             // height: 86rpx;
             // line-height: 76rpx;
             // font-weight: bold;
-            // background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
             // background-size: 100% 100%;
             // font-size: 30rpx;
         }

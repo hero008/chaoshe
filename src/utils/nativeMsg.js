@@ -78,7 +78,7 @@ class NativeMsg {
 	async getImg() {
 
 		const { extra_data } = this.item;
-		let headImg = extra_data.user_avatar_url.includes('avatars') ? `https://img.chaoshewang.com/static/${extra_data.user_avatar_url}` : extra_data.user_avatar_url
+		let headImg = extra_data.user_avatar_url.includes('avatars') ? `https://img.shinemang.com/gachaStatic/static/${extra_data.user_avatar_url}` : extra_data.user_avatar_url
 		this.list = [headImg, this.item.body]
 		await Promise.all(this.list).then(values => {
 			this.create();

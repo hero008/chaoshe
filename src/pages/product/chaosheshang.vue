@@ -6,13 +6,13 @@
                     top: MBInfo().top + 'px',
                     height: MBInfo().height + 'px',
                 }">
-                    <img src="https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_tc.png"
+                    <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_tc.png"
                         @click.stop="gateBack" class="Back_ico" />
                     <text class="title ellipsis">{{
                         AReward.gacha.themeName
                     }}</text>
                     <!-- #ifndef MP-WEIXIN -->
-                    <img src="https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_fx.png" @click="onShare"
+                    <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_fx.png" @click="onShare"
                         class="Back_ico a" />
                     <!-- #endif -->
                 </view>
@@ -70,7 +70,7 @@
                         </view>
                         <img v-else @click="getJqs(item, index)" class="ico_"
                             :class="[item.levelName.length == 1 ? 'type1' : 'type' + item.levelName.length,]"
-                            :src="`https://img.chaoshewang.com/static/img/chaowanshang/css_${item.levelName}.png`" />
+                            :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_${item.levelName}.png`" />
                         <view v-if="item.levelName == 'Lucky' && item.luckyPhase"  class="schedule flex_r flex_jb flex_ac" @click.stop="onScheduleTips(item.luckyPhase)">
                             <view class="num">{{ item.luckyPhase }}%</view>
                             <view class="iocn"></view>
@@ -135,7 +135,7 @@
             <view class="warp_box">
                 <view class="warp">
                     <uni-icons class="close" @click="onOffSelect" type="close" color="#fff" size="35"></uni-icons>
-                    <img :src="`https://img.chaoshewang.com/static/img/chaowanshang/${cutBtn == 1 ? 'log_ico1' : 'yfs_csjl'}.png`"
+                    <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/${cutBtn == 1 ? 'log_ico1' : 'yfs_csjl'}.png`"
                         class="log_ico2" />
                     <div class="drawLog">
                         <scroll-view class="product-scroll" @scrolltolower="onReachScollBottom" :lower-threshold="400"
@@ -212,7 +212,7 @@
                                                     <view class="sort">{{a.luckyNo}}</view>
                                                 </view>
                                                 <img class="Lucky1" v-else-if="a.levelName == 'Lucky'"
-                                                    :src="`https://img.chaoshewang.com/static/img/chaowanshang/css_Lucky.png`" />
+                                                    :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_Lucky.png`" />
                                             </div>
                                         </template>
                                     </div>
@@ -365,8 +365,8 @@ export default {
     methods: {
         ...mapMutations(["UppayMessage"]),
         async saveFile() {
-            this.newFilePath = await saveFileToLocal("chaowsSvga", "https://img.chaoshewang.com/static/img/cartoon/cws.svga");
-            this.newGifPath = await saveFileToLocal("chaowsGif", "https://img.chaoshewang.com/static/img/cartoon/700.gif");
+            this.newFilePath = await saveFileToLocal("chaowsSvga", "https://img.shinemang.com/gachaStatic/static/img/cartoon/cws.svga");
+            this.newGifPath = await saveFileToLocal("chaowsGif", "https://img.shinemang.com/gachaStatic/static/img/cartoon/700.gif");
         },
         getJqs(item, index) {
             if (["Surprise", "空车", "串串"].includes(item.levelName)) {
@@ -673,7 +673,7 @@ export default {
 .loading_box {
     width: 100%;
     height: 100vh;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_bg.png");
     background-size: 100% 100%;
     overflow: hidden;
 
@@ -760,7 +760,7 @@ export default {
             height: 80rpx;
             line-height: 80rpx;
             padding: 0 52rpx 0 230rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/css_jg.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_jg.png");
             background-size: 100% 100%;
             font-weight: bold;
             font-size: 28rpx;
@@ -796,7 +796,7 @@ export default {
             font-size: 40rpx;
             line-height: 60rpx;
             padding-left: 40rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/css-mz.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css-mz.png");
             background-size: 100% 100%;
 
             &:before {
@@ -818,7 +818,7 @@ export default {
     .rbtn1 {
         width: 124rpx;
         height: 60rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_gz.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_gz.png");
         background-size: 100% 100%;
         position: absolute;
         bottom: 132rpx;
@@ -828,7 +828,7 @@ export default {
     .rbtn3 {
         width: 124rpx;
         height: 60rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_sx.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_sx.png");
         background-size: 100% 100%;
         position: absolute;
         bottom: 52rpx;
@@ -841,7 +841,7 @@ export default {
     width: 100%;
     height: 1036.53rpx;
     margin-top: 64rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_boxBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_boxBg.png");
     background-size: 100% 100%;
 }
 
@@ -866,14 +866,14 @@ export default {
     .l_btn {
         width: 160rpx;
         height: 160rpx;
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_zjjl.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_zjjl.png");
         background-size: 100% 100%;
     }
 
     .r_btn {
         width: 160rpx;
         height: 160rpx;
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_hgxz.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_hgxz.png");
         background-size: 100% 100%;
     }
 
@@ -965,7 +965,7 @@ export default {
             position: absolute;
             width: 36rpx;
             height: 36rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/jing.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jing.png");
             background-size: 100% 100%;
             top: 6rpx;
             left: 6rpx;
@@ -1012,7 +1012,7 @@ export default {
     top: 154rpx;
     width: 148rpx;
     height: 52rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/LuckyBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/LuckyBg.png");
     background-size: 100% 100%;
     font-weight: 800;
     color: transparent;
@@ -1060,7 +1060,7 @@ export default {
     .iocn {
         width: 16rpx;
         height: 16rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/niudan/info.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/info.png");
         background-size: 100% 100%;
         margin-left: 4rpx;
     }
@@ -1101,14 +1101,14 @@ export default {
     font-size: 16rpx;
     padding-left: 85rpx;
     line-height: 22rpx;
-    background: url("https://img.chaoshewang.com/static/img/product/yfs_tag-1.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_tag-1.png");
     background-size: 100% 100%;
 
     &.bc {
         padding: 0;
         color: #fff;
         padding-left: 8rpx;
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_tag-2.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_tag-2.png");
         background-size: 100% 100%;
 
         .ico3 {
@@ -1129,7 +1129,7 @@ export default {
     width: 100%;
     bottom: 0;
     height: 232rpx;
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/chaosheshang_foot.png") no-repeat;
+    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_foot.png") no-repeat;
     background-size: 100% auto;
     text-align: center;
     color: #fff;
@@ -1177,7 +1177,7 @@ export default {
     .jinqushang {
         width: 590rpx;
         height: 764rpx;
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/jinqushang_bg.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jinqushang_bg.png");
         background-size: 100% 100%;
         position: absolute;
         padding-top: 48rpx;
@@ -1186,13 +1186,13 @@ export default {
             position: absolute;
             width: 156rpx;
             height: 156rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/jqs-th.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jqs-th.png");
             background-size: 100% 100%;
             right: -40rpx;
             top: -40rpx;
 
             &.active {
-                background: url("https://img.chaoshewang.com/static/img/chaowanshang/jqs_dg.png");
+                background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jqs_dg.png");
                 background-size: 100% 100%;
             }
         }
@@ -1229,7 +1229,7 @@ export default {
             margin: auto;
             width: 542rpx;
             height: 508rpx;
-            background: url("https://img.chaoshewang.com/static/img/chaowanshang/jqs_bg.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jqs_bg.png");
             background-size: 100% 100%;
             padding-top: 68rpx;
 
@@ -1251,7 +1251,7 @@ export default {
                     height: 132rpx;
                     line-height: 132rpx;
                     padding-left: 20rpx;
-                    background: url("https://img.chaoshewang.com/static/img/chaowanshang/jqs_quantity.png");
+                    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jqs_quantity.png");
                     background-size: 100% 100%;
                     z-index: 99;
                     font-size: 28rpx;
@@ -1264,7 +1264,7 @@ export default {
                     width: 160rpx;
                     height: 132rpx;
                     padding-left: 120rpx;
-                    background: url("https://img.chaoshewang.com/static/img/chaowanshang/jqs_number.png");
+                    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jqs_number.png");
                     background-size: 100% 100%;
                     z-index: 98;
                     writing-mode: vertical-rl;
@@ -1281,7 +1281,7 @@ export default {
                     position: absolute;
                     width: 160rpx;
                     height: 132rpx;
-                    background: url("https://img.chaoshewang.com/static/img/chaowanshang/jqs_icon.png");
+                    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/jqs_icon.png");
                     background-size: 100% 100%;
                     z-index: 97;
 
@@ -1566,7 +1566,7 @@ export default {
                 height: 92rpx;
                 padding-top: 40rpx;
                 margin: auto;
-                background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/css_box.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_box.png");
                 background-size: 100% 100%;
                 font-weight: bold;
                 font-size: 28rpx;
@@ -1603,7 +1603,7 @@ export default {
             height: 208rpx;
             position: absolute;
             top: 0;
-            background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/css_border.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/css_border.png");
             background-size: 100% 100%;
             z-index: 99;
             animation: breathingLight 3s infinite;
@@ -1663,7 +1663,7 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        background: url("https://img.chaoshewang.com/static/img/chaowanshang/extra.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/extra.png");
         background-size: 100% 100%;
 
         .title {

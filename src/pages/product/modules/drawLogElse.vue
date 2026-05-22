@@ -1,8 +1,8 @@
 <template>
     <u-overlay :show="show">
         <view class="warp">
-            <img src="https://img.chaoshewang.com/static/img/niudan/title.png" class="log_ico2" />
-            <img src="https://img.chaoshewang.com/static/img/niudan/close2.png" class="close" @click="onclose" />
+            <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/title.png" class="log_ico2" />
+            <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/close2.png" class="close" @click="onclose" />
             <div class="drawLog">
                 <scroll-view v-if="gachaRecords.length" class="product-scroll" @scrolltolower="onReachScollBottom"
                     :lower-threshold="400" :scroll-y="true">
@@ -38,7 +38,7 @@
                                             <view class="sort">{{a.luckyNo}}</view>
                                         </view>
                                         <img class="Lucky1" v-else-if="a.levelName == 'Lucky'"
-                                            :src="`https://img.chaoshewang.com/static/img/reward/ico_Lucky.png`" />
+                                            :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_Lucky.png`" />
                                     </div>
                                 </template>
 
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </scroll-view>
-                <u-empty v-else text="暂无中赏记录~" icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                <u-empty v-else text="暂无中赏记录~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </div>
         </view>
@@ -128,7 +128,7 @@ export default {
     position: absolute;
     bottom: 0;
     left: calc((100% - 686rpx) / 2);
-    background-image: url("https://img.chaoshewang.com/static/img/niudan/draw_log_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/draw_log_bg.png");
     background-size: 100% 100%;
     padding: 18rpx 16rpx 0;
 
@@ -242,7 +242,7 @@ export default {
                     left: -22rpx;
                     width: 99.38rpx;
                     height: 32.81rpx;
-                    background-image: url("https://img.chaoshewang.com/static/img/niudan/LuckyBg.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
                     background-size: 100% 100%;
                     font-weight: 800;
                     color: transparent;

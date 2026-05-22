@@ -5,7 +5,7 @@
             <!-- <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs> -->
             <!-- <view class="top_btn" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">
                 <span>潮柜规则</span>
-                <img class="ico" src="https://img.chaoshewang.com/static/img/shanggui/group_3.png" />
+                <img class="ico" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_3.png" />
             </view> -->
         </view>
         <div class="shanggui_con">
@@ -19,7 +19,7 @@
                 </view>
               
                 <!-- <view class="recycle flex_r flex_ac" @click="onGoRecycle()"  v-if="recycleState">
-                    <img class="icon" src="https://img.chaoshewang.com/static/img/shanggui/recycle.png" />
+                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/recycle.png" />
                     <view class="text">回收</view>
                 </view> -->
                
@@ -55,14 +55,14 @@
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }" @click="ondetail(item.itemId)">
                                     <!-- <view class="box_ico frame" v-if="item.state == 'CabinetStockState_InStock'"></view> -->
-                                    <!-- <img src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"  class="box_ico" v-if="item.state =='CabinetStockState_InStock' " /> -->
+                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"  class="box_ico" v-if="item.state =='CabinetStockState_InStock' " /> -->
                                     <!-- <view class="" v-if="
                                         item.state ==
                                         'CabinetStockState_OnDeal' ||
                                         item.state ==
                                         'CabinetStockState_Delivered'
                                     ">
-                                        <img src="https://img.chaoshewang.com/static/img/shanggui/group_2.png"
+                                        <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_2.png"
                                             class="box_ico" />
                                         <view class="item_txt">{{
                                             item.state ==
@@ -93,7 +93,7 @@
                         </view>
                     </view>
                 </scroll-view>
-                <u-empty v-else text="暂无赏品~" icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                <u-empty v-else text="暂无赏品~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </view>
             <view class="foot_btn flex_r flex_ac flex_jse">
@@ -338,7 +338,7 @@ export default {
 .tabs_two {
     width: 372rpx;
     height: 76rpx;
-    // background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
     // background-size: 100% 100%;
     font-size: 28rpx;
     color: #ffffff;
@@ -367,7 +367,7 @@ margin-right: 16rpx;
             // height: 86rpx;
             // line-height: 76rpx;
             // font-weight: bold;
-            // background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
             // background-size: 100% 100%;
             // font-size: 30rpx;
         }

@@ -40,7 +40,7 @@
 							</div>
 							<div class="con_msg" v-if="data.state == 1">~ 已过期或不能使用的券不予展示 ~</div>
 						</scroll-view>
-						<u-empty v-else text="暂无卡券~" icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
+						<u-empty v-else text="暂无卡券~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
 					</template>
 				</div>
 			</view>
@@ -248,7 +248,7 @@ background-color: #F5F6F8;
 .tabs_two {
 	width: 276rpx;
 	height: 76rpx;
-	background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+	background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
 	background-size: 100% 100%;
 	font-size: 28rpx;
 	color: #FFFFFF;
@@ -278,7 +278,7 @@ background-color: #F5F6F8;
 			height: 86rpx;
 			line-height: 76rpx;
 			font-weight: bold;
-			background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+			background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
 			background-size: 100% 100%;
 			font-size: 30rpx;
 		}
@@ -449,7 +449,7 @@ background-color: #F5F6F8;
 			width: 36rpx;
 			height: 36rpx;
 			border-radius: 50%;
-			background-image: url(https://img.chaoshewang.com/static/img/pay/ico3.png);
+			background-image: url(https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png);
 			background-size: 100% 100%;
 		}
 

@@ -17,7 +17,7 @@
                 >
                     <img
                         v-if="selectId == i.id"
-                        src="https://img.chaoshewang.com/static/img/shipments/pitch_on.png"
+                        src="https://img.shinemang.com/gachaStatic/static/img/shipments/pitch_on.png"
                         class="pitch_on"
                     />
                     <div class="address_info flex_r flex_jb flex_ac">
@@ -45,7 +45,7 @@
                                 @click.stop="editAddr(i.id)"
                             >
                                 <img
-                                    src="https://img.chaoshewang.com/static/img/shipments/edit.png"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/shipments/edit.png"
                                     class="del_ico"
                                 />
                                 <span>编辑</span>
@@ -55,7 +55,7 @@
                                 @click.stop="ondelAddr(i.id)"
                             >
                                 <img
-                                    src="https://img.chaoshewang.com/static/img/shipments/delete.png"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/shipments/delete.png"
                                     class="del_ico"
                                 />
                                 <span>删除</span>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="addr_item flex_c flex_jc flex_ac" @click="addr">
                     <img
-                        src="https://img.chaoshewang.com/static/img/transaction/ico1.png"
+                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                         class="add_ico"
                     />
                     <div class="add_txt">请添加收货地址</div>

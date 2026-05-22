@@ -2,7 +2,7 @@
     <view class="join">
         <view class="top_Back flex_r flex_js flex_ac">
             <img
-                src="https://img.chaoshewang.com/static/img/chaowanshang/allFh.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allFh.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />参团记录
@@ -68,7 +68,7 @@
             <u-empty
                 v-else
                 text="暂无参团记录~"
-                icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                 :marginTop="50"
             />
         </view>
@@ -141,7 +141,7 @@ export default {
     width: 100%;
     height: 100vh;
     overflow-y: auto;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allBg.png");
     background-size: 100% 100%;
     overflow: hidden;
     color: #ffffff;
@@ -200,7 +200,7 @@ export default {
                         left: 62rpx;
                         top: 4rpx;
                         z-index: 2;
-                        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/crown.png");
+                        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/crown.png");
                         background-size: 100% 100%;
                     }
                     .name {
@@ -224,11 +224,11 @@ export default {
                     .xl {
                         width: 32rpx;
                         height: 32rpx;
-                        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allSj.png");
+                        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allSj.png");
                         background-size: 100% 100%;
                         margin-left: auto;
                         &.active {
-                            background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/allxl.png");
+                            background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allxl.png");
                             background-size: 100% 100%;
                         }
                     }

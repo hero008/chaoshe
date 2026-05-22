@@ -193,7 +193,7 @@ export default {
     .price {
         width: 100%;
         height: 112rpx;
-        background: url("https://img.chaoshewang.com/static/img/home/bg_plus.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/home/bg_plus.png");
         color: #383228;
         font-weight: 800;
         background-size: 100% 100%;
@@ -224,7 +224,7 @@ export default {
             .integralImg {
                 width: 104rpx;
                 height: 56rpx;
-                background: url("https://img.chaoshewang.com/static/img/home/plus.png");
+                background: url("https://img.shinemang.com/gachaStatic/static/img/home/plus.png");
                 background-size: 100% 100%;
                 font-size: 24rpx;
                 color: #ffffff;

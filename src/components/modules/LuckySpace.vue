@@ -39,7 +39,7 @@ export default {
         top: 0;
         width: 100%;
         height: 200rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/upopup_title.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/upopup_title.png");
         background-size: 100% 100%;
         font-weight: 800;
         font-size: 40rpx;
@@ -56,7 +56,7 @@ export default {
         width: 296rpx;
         height: 80rpx;
         margin: 64rpx auto 0;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/kaixin.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/kaixin.png");
         background-size: 100% 100%;
         font-weight: 800;
         font-size: 32rpx;
@@ -74,7 +74,7 @@ export default {
         height: 56rpx;
         right: 0;
         top: -88rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/off.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/off.png");
         background-size: 100% 100%;
     }
 }

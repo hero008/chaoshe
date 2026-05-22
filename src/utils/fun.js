@@ -65,8 +65,8 @@ let getMBInfo = () => {
 }
 // 播放音效
 let playDede = (type = 1, AudioSrc) => {
-    let miniaudio = 'https://img.chaoshewang.com/static/media/mini.mp3'
-    let largeaudio = 'https://img.chaoshewang.com/static/media/large.mp3'
+    let miniaudio = 'https://img.shinemang.com/gachaStatic/static/media/mini.mp3'
+    let largeaudio = 'https://img.shinemang.com/gachaStatic/static/media/large.mp3'
     const innerAudio = uni.createInnerAudioContext();
     innerAudio.autoplay = true;
     innerAudio.src = AudioSrc ? AudioSrc : type == 1 ? miniaudio : largeaudio;
@@ -171,7 +171,7 @@ let objectToUrl = (obj) => {
 let uniShare = (obj = {}, params = {}, imageUrl) => {
     let user = getCache("userInfo") || {};
     if (user.inviteCode) params.inviteCode = user.inviteCode;
-    imageUrl = imageUrl ? imageUrl : "https://img.chaoshewang.com/static/img/imgs/gachas_share.jpg";
+    imageUrl = imageUrl ? imageUrl : "https://img.shinemang.com/gachaStatic/static/img/imgs/gachas_share.jpg";
     uni.share({
         provider: 'weixin',
         scene: "WXSceneSession",
@@ -252,7 +252,7 @@ let shareImg = (obj = {}, params = {},) => {
         provider: 'weixin',
         scene: "WXSceneSession",
         type: 5,
-        imageUrl: "https://img.chaoshewang.com/static/img/imgs/gachas_share.jpg",
+        imageUrl: "https://img.shinemang.com/gachaStatic/static/img/imgs/gachas_share.jpg",
         title: obj.tit || "潮社赏",
         miniProgram: {
             id: "gh_47ea484e5bbc",

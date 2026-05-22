@@ -12,7 +12,7 @@
                             <div class="price">{{ goodsInfo.showPrice }}</div>
                             <div class="tag2">
                                 <img
-                                    src="https://img.chaoshewang.com/static/img/product/Star.png"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/product/Star.png"
                                     class="Star"
                                 />
                                 <div class="txt">参考价</div>
@@ -63,9 +63,9 @@
                 </div>
             </div>
             <!-- <view  class="icon"></view> -->
-            <!-- <img src="https://img.chaoshewang.com/static/img/home/ico_ico.png"/> -->
+            <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/home/ico_ico.png"/> -->
             <img
-                src="https://img.chaoshewang.com/static/img/product/close.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/product/close.png"
                 @click="close"
                 class="close"
             />

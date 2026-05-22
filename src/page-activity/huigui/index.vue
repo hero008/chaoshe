@@ -2,7 +2,7 @@
     <view class="ticket">
         <view class="topBack">
             <img
-                src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />
@@ -11,12 +11,12 @@
         <view class="particulars">
             <button open-type="share" class="btns_2 t_btn" @click="onShare">
                 <image
-                    src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-share.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-share.png"
                 />
             </button>
             <img
                 class="rule"
-                src="https://img.chaoshewang.com/static/img/activity/huoodngguizhe.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/huoodngguizhe.png"
                 @click="
                     goto('/pages/common/rulepop', {
                         val: 'CostGiftCouponOnce',
@@ -30,13 +30,13 @@
             <img
                 v-if="state == 0"
                 class="get"
-                src="https://img.chaoshewang.com/static/img/activity/anniub.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/anniub.png"
                 @click="getInquire"
             />
             <img
                 v-else
                 class="get"
-                src="https://img.chaoshewang.com/static/img/activity/anniua.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/anniua.png"
                 @click="hint"
             />
             <view class="attention">
@@ -83,7 +83,7 @@ export default {
                     path: "page-activity/huigui/index",
                 },
                 { id: this.message.id, index: 0 },
-                "https://img.chaoshewang.com/static/img/activity/huiguiBg.png"
+                "https://img.shinemang.com/gachaStatic/static/img/activity/huiguiBg.png"
             );
         },
         onInquire() {
@@ -124,7 +124,7 @@ export default {
 .ticket {
     // width: 750rpx;
     background-color: #a8a2e9;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/huiguiBg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/huiguiBg.png");
     background-size: 100% 100%;
     height: 1624rpx;
     // height: 100vh;

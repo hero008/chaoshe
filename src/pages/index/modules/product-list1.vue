@@ -6,7 +6,7 @@
                 <!-- <image :src="item.coverImage" class="p-img" /> -->
                 <view class="product-info">
                     <image :src="item.coverImage" class="p-img" />
-                    <!-- <img v-if="item.type == 3" src="https://img.chaoshewang.com/static/img/cw-new/wuxiansss.png"
+                    <!-- <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/static/img/cw-new/wuxiansss.png"
                         class="w-icon" /> -->
                     <!-- <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
@@ -24,7 +24,7 @@
                                 }}</view>
                         </view>
                         <view class="tag"></view>
-                        <img class="tag" src="https://img.chaoshewang.com/static/img/home/ico_ico.png" alt="" /> 
+                        <img class="tag" src="https://img.shinemang.com/gachaStatic/static/img/home/ico_ico.png" alt="" /> 
                     </view> -->
                 </view>
                 <view class="product-detail">
@@ -71,11 +71,11 @@
             <view class="commodityBox" v-for="item in evenList" :key="item.configId">
                 <view class="showImg" @click="onGo(item)">
                     <image :src="item.thumb" class="img" />
-                    <image v-if="item.startTime > 0" src="https://img.chaoshewang.com/static/img/home/yushou.png"
+                    <image v-if="item.startTime > 0" src="https://img.shinemang.com/gachaStatic/static/img/home/yushou.png"
                         class="spotGoods" />
-                    <image v-show="item.label == 1" src="https://img.chaoshewang.com/static/img/home/new.png"
+                    <image v-show="item.label == 1" src="https://img.shinemang.com/gachaStatic/static/img/home/new.png"
                         class="new" />
-                    <image v-show="item.onlyShipment == 1" src="https://img.chaoshewang.com/static/img/home/zfh.png"
+                    <image v-show="item.onlyShipment == 1" src="https://img.shinemang.com/gachaStatic/static/img/home/zfh.png"
                         class="zfh" />
                 </view>
                 <view class="title">{{ item.itemList[0].name }}</view>
@@ -102,7 +102,7 @@
                         </view>
                     </view>
 
-                    <img v-if="item.type == 3" src="https://img.chaoshewang.com/static/img/cw-new/wuxiansss.png"
+                    <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/static/img/cw-new/wuxiansss.png"
                         class="w-icon" />
                     <view class="p-info flex_r flex_jb">
                         <view v-if="item.isWelfare == true" class="WelfareBox">福利箱</view>
@@ -140,11 +140,11 @@
             <view class="commodityBox" v-for="item in oddList" :key="item.configId">
                 <view class="showImg" @click="onGo(item)">
                     <image :src="item.thumb" class="img" />
-                    <image v-if="item.startTime > 0" src="https://img.chaoshewang.com/static/img/home/yushou.png"
+                    <image v-if="item.startTime > 0" src="https://img.shinemang.com/gachaStatic/static/img/home/yushou.png"
                         class="spotGoods" />
-                    <image v-show="item.label == 1" src="https://img.chaoshewang.com/static/img/home/new.png"
+                    <image v-show="item.label == 1" src="https://img.shinemang.com/gachaStatic/static/img/home/new.png"
                         class="new" />
-                    <image v-show="item.onlyShipment == 1" src="https://img.chaoshewang.com/static/img/home/zfh.png"
+                    <image v-show="item.onlyShipment == 1" src="https://img.shinemang.com/gachaStatic/static/img/home/zfh.png"
                         class="zfh" />
                 </view>
                 <view class="title">{{ item.itemList[0].name }}</view>
@@ -161,8 +161,8 @@
         </view> -->
     </view>
     <u-empty v-else-if="type < 3" :text="type == 1 ? '敬请期待热门箱子~' : '暂时没有可捡漏的箱子哦~'"
-        icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
-    <u-empty v-else :text="'暂无商品'" icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
+        icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
+    <u-empty v-else :text="'暂无商品'" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
     <!-- </scroll-view> -->
 </template>
 <script>
@@ -565,7 +565,7 @@ export default {
             color: #ffffff;
             line-height: 40rpx;
             text-align: center;
-            background: url("https://img.chaoshewang.com/static/img/home/integral.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/home/integral.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
             padding-right: 8rpx;
@@ -669,7 +669,7 @@ image{
     font-size: 20rpx;
     position: absolute;
     color: #000;
-    background-image: url("https://img.chaoshewang.com/static/img/home/tag-2.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/tag-2.png");
     background-size: 100% 100%;
     right: 8rpx;
     top: -50rpx;
@@ -817,7 +817,7 @@ image{
 //     padding-top: 115rpx;
 //     top: 0;
 //     right: 0;
-//     background-image: url("https://img.chaoshewang.com/static/img/home/zhekoua.png");
+//     background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/zhekoua.png");
 //     background-size: 100% 100%;
 
 //     .discount {

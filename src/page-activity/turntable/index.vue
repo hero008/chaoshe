@@ -13,7 +13,7 @@
         >
             <view class="topBack">
                 <img
-                    src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                     @click.stop="gateBack"
                     class="Back_ico"
                 />
@@ -456,7 +456,7 @@ export default {
 .share {
     width: 48rpx;
     height: 48rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/fenx.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fenx.png");
     background-size: 100% 100%;
     margin-left: auto;
 }
@@ -581,7 +581,7 @@ export default {
             .r {
                 width: 36rpx;
                 height: 24rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/activity/zhuangshi.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/zhuangshi.png");
                 background-size: 100% 100%;
             }
         }

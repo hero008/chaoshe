@@ -101,7 +101,7 @@
                             <div class="r flex_r flex_ac flex_je">
                                 <span :style="{ color: colorList.img_ts }" class="txt">欧气值</span>
                                 <span class="num">{{ i.point }}</span>
-                                <image src="https://img.chaoshewang.com/static/img/activity/ioc2.png" class="ico" />
+                                <image src="https://img.shinemang.com/gachaStatic/static/img/activity/ioc2.png" class="ico" />
                             </div>
                         </div>
                         <div class="rank_item flex_r flex_ac flex_jb i_bg" :style="{
@@ -135,7 +135,7 @@
                             <div class="r flex_r flex_ac flex_je">
                                 <span class="txt">欧气值</span>
                                 <span class="num">{{ myrank.point }}</span>
-                                <image src="https://img.chaoshewang.com/static/img/activity/ioc2.png" class="ico" />
+                                <image src="https://img.shinemang.com/gachaStatic/static/img/activity/ioc2.png" class="ico" />
                             </div>
                         </div>
                     </div>
@@ -402,7 +402,7 @@ export default {
         .ico {
             width: 36rpx;
             height: 38rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/activity/ioc2.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/ioc2.png");
             background-size: 100% 100%;
             margin-right: 8rpx;
         }

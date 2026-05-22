@@ -3,7 +3,7 @@
         <view class="pay_module">
             <div class="title">{{ title }}</div>
             <div class="msg flex_r flex_jc flex_ac">
-                <img src="https://img.chaoshewang.com/static/img/pay/ico.png" class="ico1" />
+                <img src="https://img.shinemang.com/gachaStatic/static/img/pay/ico.png" class="ico1" />
                 <span>请核对支付信息无误后再支付</span>
             </div>
             <div class="pay_money" :class="{ active: mtype == '13' && allDiscount.discount }">
@@ -75,7 +75,7 @@
                                 (mtype == '6' &&
                                     i.type == 0 &&
                                     userInfo.allowCoinBet)
-                            " src="https://img.chaoshewang.com/static/img/pay/ico2.png" class="ico2" />
+                            " src="https://img.shinemang.com/gachaStatic/static/img/pay/ico2.png" class="ico2" />
                         </div>
                         <div class="reduce_pay flex_r flex_je">
                             <div class="reduce"
@@ -568,7 +568,7 @@ export default {
             this.$emit("fail");
         },
         payIco(va) {
-            return `https://img.chaoshewang.com/static/img/pay/${va}.png`;
+            return `https://img.shinemang.com/gachaStatic/static/img/pay/${va}.png`;
         },
         onHint() {
             if (this.severalPieces !== 0) {
@@ -905,7 +905,7 @@ export default {
         border-radius: 50%;
 
         &.active {
-            background-image: url("https://img.chaoshewang.com/static/img/pay/ico3.png") !important;
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
             background-size: 100% 100% !important;
         }
     }
@@ -928,7 +928,7 @@ export default {
     border-radius: 50%;
 
     &.active {
-        background-image: url("https://img.chaoshewang.com/static/img/pay/ico3.png") !important;
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
         background-size: 100% 100% !important;
     }
 }

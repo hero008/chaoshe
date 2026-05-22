@@ -23,7 +23,7 @@
                 >
                     <div class="info_tit flex_r flex_ac">
                         <image
-                            :src="`https://img.chaoshewang.com/static/img/my/${i.ico}.png`"
+                            :src="`https://img.shinemang.com/gachaStatic/static/img/my/${i.ico}.png`"
                             class="ico"
                             mode="aspectFill"
                         />
@@ -39,7 +39,7 @@
                         />
                         <span v-else>{{ newName }}</span>
                         <img
-                            src="https://img.chaoshewang.com/static/img/my/uico4.png"
+                            src="https://img.shinemang.com/gachaStatic/static/img/my/uico4.png"
                             @click="isedit = !isedit"
                             class="ico"
                         />

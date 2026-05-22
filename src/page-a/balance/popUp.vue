@@ -11,13 +11,13 @@
                 <image
                     @click="close"
                     class="ico_img"
-                    src="https://img.chaoshewang.com/static/img/transaction/close2.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                 ></image>
                 <view class="t_title" >当前金币</view>
                 <view class="gold flex_r flex_ac">
                     <img
                         class="icon"
-                        src="https://img.chaoshewang.com/static/img/pay/gold.png"
+                        src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
                     />
                     <view class="num">{{ userInfo.gold }}</view>
                 </view>

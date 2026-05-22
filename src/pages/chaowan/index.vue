@@ -19,11 +19,11 @@
                     <!-- 小程序没有 -->
                     <div class="tabs flex_r flex_ac flex_jb">
                         <div class="tag_item" :class="{ active: active == 1 }" @click="ontab(1)">
-                            <img src="https://img.chaoshewang.com/static/img/cw-new/cw_tag_bg.png" class="tag_bg" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/cw-new/cw_tag_bg.png" class="tag_bg" />
                             <div class="tag_txt">乐享潮玩</div>
                         </div>
                         <div class="tag_item" :class="{ active: active == 2 }" @click="ontab(2)">
-                            <img src="https://img.chaoshewang.com/static/img/cw-new/cw_tag_bg.png" class="tag_bg" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/cw-new/cw_tag_bg.png" class="tag_bg" />
                             <div class="tag_txt">新品预约</div>
                         </div>
                     </div>
@@ -37,17 +37,17 @@
                                 <div class="p_name" :style="{ color: i.type == 3 ? '#fff' : '' }">{{ i.name }}</div>
                                 <div class="tags">
                                     <img v-for="(j, k) in i.tegs" :key="k"
-                                        :src="`https://img.chaoshewang.com/static/img/cw-new/ico_${j}.png`"
+                                        :src="`https://img.shinemang.com/gachaStatic/static/img/cw-new/ico_${j}.png`"
                                         :class="[i.type !== 5 ? j : j + '1', i.type == 3 ? 'base-tag' : i.type == 3]" />
                                 </div>
                                 <div class="bb flex_r flex_ac flex_jb" :style="{ color: i.type == 3 ? '#A78C8F' : '' }">
                                     <span>{{ i.txt }}</span>
                                     <div class="btn" @click.stop="onClickViewPrizeBox(i)">抽赏 </div>
                                 </div>
-                                <img src="https://img.chaoshewang.com/static/img/cw-new/yfs_logo.png" v-if="i.type == 1"
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/cw-new/yfs_logo.png" v-if="i.type == 1"
                                     class="yfs_logo" />
                                 <view class="qita_logo" v-else></view>
-                                <!-- <img src="https://img.chaoshewang.com/static/img/home/ico_ico.png" v-else /> -->
+                                <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/home/ico_ico.png" v-else /> -->
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="tags">
                                     <img v-for="(j, k) in i.tegs" :key="k"
-                                        :src="`https://img.chaoshewang.com/static/img/cw-new/ico_${j}.png`"
+                                        :src="`https://img.shinemang.com/gachaStatic/static/img/cw-new/ico_${j}.png`"
                                         :class="[i.type !== 5 ? j : j + '1']" />
                                 </div>
                                 <div class="bb flex_r flex_ac flex_jb">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <u-empty v-if="orderList.length < 1" text="今天没有新品预约~"
-                            icon="https://img.chaoshewang.com/static/img/home/empty.png" :marginTop="50" />
+                            icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
                     </div>
                 </div>
                 <div class="gap"></div>
@@ -104,7 +104,7 @@ export default {
                     // tegs: ["cs2", "oh2", "wxs2"],
                     tegs: ["cxy", "oh3", "wxsDy"],
                     txt: "刺激停不下来",
-                    adimg: "https://img.chaoshewang.com/static/img/duoyou/c7.png",
+                    adimg: "https://img.shinemang.com/gachaStatic/static/img/duoyou/c7.png",
                     type: 3,
                     path: "/pages/chaowan/gachasList",
                 },
@@ -112,7 +112,7 @@ export default {
                 //     name: "潮社赏",
                 //     tegs: ["jqs", "Lucky", "Last"],
                 //     txt: "趣味无穷",
-                //     adimg: "https://img.chaoshewang.com/static/img/cw-new/c5.png",
+                //     adimg: "https://img.shinemang.com/gachaStatic/static/img/cw-new/c5.png",
                 //     type: 5,
                 //     path: "/pages/chaowan/gachasList",
                 // },
@@ -120,7 +120,7 @@ export default {
                     name: "潮魂扭蛋机",
                     tegs: ["Lucky", 'super'],
                     txt: "手办、3C、雕像",
-                    adimg: "https://img.chaoshewang.com/static/img/cw-new/c7.png",
+                    adimg: "https://img.shinemang.com/gachaStatic/static/img/cw-new/c7.png",
                     type: 2,
                     path: "/pages/chaowan/gachasList",
                 },
@@ -128,7 +128,7 @@ export default {
                     name: "疯狂洞洞乐",
                     tegs: ["Lucky"],
                     txt: "童年经典再现",
-                    adimg: "https://img.chaoshewang.com/static/img/cw-new/c8.png",
+                    adimg: "https://img.shinemang.com/gachaStatic/static/img/cw-new/c8.png",
                     type: 4,
                     path: "/pages/chaowan/gachasList",
                 },
@@ -137,7 +137,7 @@ export default {
                 //     name: "一番赏",
                 //     tegs: ["Last"],
                 //     txt: "万代官方正品",
-                //     adimg: "https://img.chaoshewang.com/static/img/cw-new/c9.png",
+                //     adimg: "https://img.shinemang.com/gachaStatic/static/img/cw-new/c9.png",
                 //     type: 1,
                 //     path: "/pages/chaowan/gachasList",
                 // },
@@ -396,7 +396,7 @@ export default {
     height: 100vh;
     position: relative;
     padding: 96rpx 32rpx 130rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/cw-new/cw_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/cw-new/cw_bg.png");
     background-size: 100% 100%;
 }
 

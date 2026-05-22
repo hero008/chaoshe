@@ -8,7 +8,7 @@
                     <span class="t_msg">1枚余额=1元RMB</span>
                 </div>
                 <div class="B_num flex_r flex_ac">
-                    <img src="https://img.chaoshewang.com/static/img/market/ico5.png" class="m_ico" />
+                    <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" class="m_ico" />
                     <div class="m_num">{{ balance || "0.00" }}</div>
                 </div>
                 <div class="btns flex_r flex_ac flex_jb">
@@ -49,7 +49,7 @@
             <view class="pop_bg">
                 <div class="p_head flex_c flex_jse">
                     <image @click="onClickClose" class="ico_img"
-                        src="https://img.chaoshewang.com/static/img/transaction/close2.png"></image>
+                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"></image>
                     <view class="t_title">绑定支付宝账户</view>
                     <view class="t_txt">*请您确保账户信息准确，绑定后更改需联系客服</view>
                 </div>
@@ -77,10 +77,10 @@
             <view class="pop_bg">
                 <div class="p_head flex_c flex_jse">
                     <image @click="onClickClose" class="ico_img"
-                        src="https://img.chaoshewang.com/static/img/transaction/close2.png"></image>
+                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"></image>
                     <view class="t_title flex_r flex_ac">
                         <view>当前金额</view>
-                        <img class="img_gold" src="https://img.chaoshewang.com/static/img/market/ico5.png" />
+                        <img class="img_gold" src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" />
                         <view>{{ balance }}<span class="t_ico">枚</span></view>
                     </view>
                     <view class="t_txt">1枚余额=1元RMB</view>

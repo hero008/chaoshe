@@ -1,11 +1,11 @@
 <template>
     <div class="luckEntrance" @click="goto('/page-a/luck/index')" :style="{top:topNum+'rpx'}"  >
         <!-- <img
-            src="https://img.chaoshewang.com/static/img/luck/ou_ico.png"
+            src="https://img.shinemang.com/gachaStatic/static/img/luck/ou_ico.png"
             class="ou_ico"
         />
         <div class="luck_num ellipsis">{{ point }}</div> -->
-         <img src="https://img.chaoshewang.com/static/img/luck/jishangzhongxin.png" class="ou_ico1">
+         <img src="https://img.shinemang.com/gachaStatic/static/img/luck/jishangzhongxin.png" class="ou_ico1">
     </div>
 </template>
 

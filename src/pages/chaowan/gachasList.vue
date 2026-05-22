@@ -40,7 +40,7 @@
                                 <!-- <view class="p-name ellipsis2"
                                     :style="[game_type == 3 ? { minHeight: 0, color: '#fff' } : '',]">{{
                                         item.themeName }}</view> -->
-                                <img src="https://img.chaoshewang.com/static/img/cw-new/ico_wxsDy.png"
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/cw-new/ico_wxsDy.png"
                                     v-if="game_type == 3" class="wuxiansang" />
                                 <view></view>
                                 <view class="p-info flex_r flex_jb">
@@ -88,7 +88,7 @@
                         </view>
                     </view>
                 </scroll-view>
-                <u-empty v-else text="暂无箱子~" icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                <u-empty v-else text="暂无箱子~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </view>
         </div>
@@ -309,7 +309,7 @@ export default {
 .tabs_two {
     width: 396rpx;
     height: 76rpx;
-    background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
     background-size: 100% 100%;
     font-size: 28rpx;
     color: #ffffff;
@@ -331,7 +331,7 @@ export default {
             height: 84rpx;
             line-height: 76rpx;
             font-weight: bold;
-            background: url("https://img.chaoshewang.com/static/img/shanggui/tab_bg.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
             background-size: 100% 100%;
             font-size: 30rpx;
         }
@@ -339,13 +339,13 @@ export default {
 }
 
 .tabs_two_dy {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/tabs_bg.png"); //多游
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/tabs_bg.png"); //多游
     background-size: 100% 100%;
 
     .tab_item {
         &.active {
             color: #ffffff;
-            background: url("https://img.chaoshewang.com/static/img/duoyou/tab_bg.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/tab_bg.png");
             background-size: 100% 100%;
         }
     }
@@ -429,7 +429,7 @@ export default {
             font-size: 20rpx;
             position: absolute;
             color: #000;
-            background-image: url("https://img.chaoshewang.com/static/img/home/tag-2.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/tag-2.png");
             background-size: 100% 100%;
             right: 8rpx;
             top: 0;
@@ -594,7 +594,7 @@ export default {
     padding-top: 115rpx;
     top: 0;
     right: 0;
-    background-image: url("https://img.chaoshewang.com/static/img/home/zhekoua.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/zhekoua.png");
     background-size: 100% 100%;
 
     .discount {

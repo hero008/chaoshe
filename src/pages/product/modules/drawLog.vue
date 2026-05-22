@@ -1,9 +1,9 @@
 <template>
     <u-overlay :show="show">
         <view class="warp">
-            <img src="https://img.chaoshewang.com/static/img/product/log_topbg.png" class="log_topbg">
-            <img src="https://img.chaoshewang.com/static/img/product/log_ico1.png" class="close" @click="onclose">
-            <img src="https://img.chaoshewang.com/static/img/product/log_ico2.png" class="log_ico2">
+            <img src="https://img.shinemang.com/gachaStatic/static/img/product/log_topbg.png" class="log_topbg">
+            <img src="https://img.shinemang.com/gachaStatic/static/img/product/log_ico1.png" class="close" @click="onclose">
+            <img src="https://img.shinemang.com/gachaStatic/static/img/product/log_ico2.png" class="log_ico2">
             <div class="drawLog">
                 <scroll-view v-if="gachaRecords.length" class="product-scroll" @scrolltolower="onReachScollBottom"
                     :lower-threshold="400" :scroll-y="true">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </scroll-view>
-                <u-empty v-else text="暂无中赏记录~" icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                <u-empty v-else text="暂无中赏记录~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </div>
         </view>

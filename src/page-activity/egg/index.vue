@@ -2,7 +2,7 @@
     <view class="eggBox">
         <view class="topBack">
             <img
-                src="https://img.chaoshewang.com/static/img/activity/white.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/white.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />
@@ -193,7 +193,7 @@ export default {
         left: 0;
         top: 0;
         position: absolute;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/eggBg.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/eggBg.png");
         background-size: 100% 100%;
     }
 }
@@ -211,7 +211,7 @@ export default {
     .title {
         width: 100%;
         height: 140rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/eggTitle.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/eggTitle.png");
         background-size: 100% 100%;
     }
     .titleText {
@@ -293,7 +293,7 @@ export default {
         width: 440rpx;
         height: 104rpx;
         margin: 0 auto;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/eggBtn.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/eggBtn.png");
         background-size: 100% 100%;
     }
     .tip {
@@ -315,7 +315,7 @@ export default {
         .recordTitle {
             width: 686rpx;
             height: 120rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/activity/eggRecord.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/eggRecord.png");
             background-size: 100% 100%;
         }
         .record {

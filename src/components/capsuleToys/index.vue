@@ -1,7 +1,7 @@
 <template>
     <view class="egg">
         <!-- 背景 -->
-        <!-- <image class="egg_bg" src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_bg1.png" mode="widthFix">
+        <!-- <image class="egg_bg" src="https://img.shinemang.com/gachaStatic/static/img/capsuleToys/ndj_bg1.png" mode="widthFix">
         </image> -->
         <image class="egg_ji" src="../../static/gachaStatic/niudanji/box.png" mode="widthFix">
         </image>
@@ -11,7 +11,7 @@
 
          </view>
         <!-- <image class="play" :class="start ? 'go' : ''" @click="eggPlay"
-            src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_btn-4.png" mode="widthFix"></image> -->
+            src="https://img.shinemang.com/gachaStatic/static/img/capsuleToys/ndj_btn-4.png" mode="widthFix"></image> -->
         <!-- 散蛋 -->
         <view class="egg_box">
             <image v-for="ball in balls" :key="ball.id" class="ball"
@@ -19,7 +19,7 @@
             </image>
         </view>
         <!-- 掉落的蛋 -->
-        <!-- <image :hidden="qiu" :animation="ani" class="ball ball_end" src="https://img.chaoshewang.com/static/img/capsuleToys/ndj_ball-3.png" mode="widthFix"></image> -->
+        <!-- <image :hidden="qiu" :animation="ani" class="ball ball_end" src="https://img.shinemang.com/gachaStatic/static/img/capsuleToys/ndj_ball-3.png" mode="widthFix"></image> -->
     </view>
 </template>
 <script>
@@ -44,7 +44,7 @@ export default {
                 { id: 12, img: 'ndj_ball-5.png', class: 'ball_12' },
                 { id: 8, img: 'ndj_ball-8.png', class: 'ball_8' }
             ],
-            baseImgUrl: 'https://img.chaoshewang.com/static/img/capsuleToys/'
+            baseImgUrl: 'https://img.shinemang.com/gachaStatic/static/img/capsuleToys/'
         }
     },
     computed: {},

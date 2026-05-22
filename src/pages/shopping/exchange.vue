@@ -40,7 +40,7 @@
                         </div>
                         <div class="address_info" v-else>
                             <div class="on_addr flex_r flex_ac">
-                                <img src="https://img.chaoshewang.com/static/img/shipments/addr_ico.png"
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/shipments/addr_ico.png"
                                     class="addr_ico" />
                                 <span class="addr_txt">选择收货地址</span>
                             </div>
@@ -575,12 +575,12 @@ export default {
                             }
 
                             .minusB {
-                                background: url("https://img.chaoshewang.com/static/img/home/icon--.png");
+                                background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon--.png");
                                 background-size: 100% 100%;
                             }
 
                             .minusA {
-                                background: url("https://img.chaoshewang.com/static/img/home/icon-.png");
+                                background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon-.png");
                                 background-size: 100% 100%;
                             }
 
@@ -590,12 +590,12 @@ export default {
                             }
 
                             .add {
-                                background: url("https://img.chaoshewang.com/static/img/home/icon++.png");
+                                background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon++.png");
                                 background-size: 100% 100%;
                             }
 
                             .addA {
-                                background: url("https://img.chaoshewang.com/static/img/home/icon+.png");
+                                background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon+.png");
                                 background-size: 100% 100%;
                             }
                         }

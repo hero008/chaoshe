@@ -1,7 +1,7 @@
 <template>
     <view class="battleOrder">
         <view class="topBack">
-            <img src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png" @click.stop="gateBack"
+            <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png" @click.stop="gateBack"
                 class="Back_ico" />
             <!--  #ifndef MP-WEIXIN -->
             <view class="share" @click="onShare"></view>
@@ -95,7 +95,7 @@ export default {
                     path: "page-activity/battleOrder/index",
                 },
                 { id: this.message.id, index: 0 },
-                "https://img.chaoshewang.com/static/img/activity/moneyShare.png"
+                "https://img.shinemang.com/gachaStatic/static/img/activity/moneyShare.png"
             );
         },
         calculateProgress,
@@ -147,7 +147,7 @@ export default {
     /*#ifdef APP-PLUS*/
     min-height: 100vh;
     background-size: 1;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/bOBg1.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/bOBg1.png");
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: top center;
@@ -156,7 +156,7 @@ export default {
     /*#ifdef H5*/
     min-height: 100vh;
     background-size: 1;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/bOBg1.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/bOBg1.png");
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: top center;
@@ -166,7 +166,7 @@ export default {
     /*#ifdef MP*/
     height: 100vh;
     overflow-y: auto;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/bOBg1.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/bOBg1.png");
     background-size: 100% 100%;
 
     /*#endif*/
@@ -185,7 +185,7 @@ export default {
             .freeOfCharge {
                 width: 128rpx;
                 height: 128rpx;
-                // background-image: url("https://img.chaoshewang.com/static/img/activity/freeOfCharge.png");
+                // background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/freeOfCharge.png");
                 // background-size: 100% 100%;
                 margin: 0 24rpx;
             }
@@ -293,7 +293,7 @@ export default {
                     width: 128rpx;
                     height: 128rpx;
                     margin: auto;
-                    background-image: url("https://img.chaoshewang.com/static/img/activity/getPrize.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/getPrize.png");
                     background-size: 100% 100%;
                     pointer-events: none;
                 }
@@ -325,7 +325,7 @@ export default {
 .rule {
     width: 50rpx;
     height: 102rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/gz.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/gz.png");
     background-size: 100% 100%;
     position: fixed;
     right: 0;
@@ -344,7 +344,7 @@ export default {
 }
 
 .share {
-    background-image: url("https://img.chaoshewang.com/static/img/activity/fenx.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fenx.png");
     background-size: 100% 100%;
     margin-left: auto;
     width: 48rpx;

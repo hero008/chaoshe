@@ -2,7 +2,7 @@
     <view class="ticket">
         <view class="topBack">
             <img
-                src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />
@@ -11,12 +11,12 @@
         <view class="particulars">
             <button open-type="share" class="btns_2 t_btn" @click="onShare">
                 <image
-                    src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-share.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-share.png"
                 />
             </button>
             <img
                 class="rule"
-                src="https://img.chaoshewang.com/static/img/activity/huoodngguizhe.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/huoodngguizhe.png"
                 @click="
                     goto('/pages/common/rulepop', {
                         val: 'CostGiftCoupon',
@@ -30,13 +30,13 @@
             <img
                 v-if="state == 0"
                 class="get"
-                src="https://img.chaoshewang.com/static/img/activity/huodonganniu.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/huodonganniu.png"
                 @click="getInquire"
             />
             <img
                 v-else
                 class="get"
-                src="https://img.chaoshewang.com/static/img/activity/zhihuianniu.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/zhihuianniu.png"
                 @click="hint"
             />
             <view class="attention">
@@ -141,8 +141,8 @@ export default {
 .ticket {
     // width: 750rpx;
     background-color: #a8a2e9;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/DFSx.png");
-    // background-image: url("https://img.chaoshewang.com/static/img/activity/hdbg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/DFSx.png");
+    // background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/hdbg.png");
     background-size: 100% 100%;
     height: 1624rpx;
     // height: 100vh;

@@ -136,7 +136,7 @@ export default {
         .icon {
             width: 48rpx;
             height: 48rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/niudan/ndj_back.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png");
             background-size: 100% 100%;
         }
         .icon1 {
@@ -147,7 +147,7 @@ export default {
     .center_box {
         width: 100%;
         height: 1448rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/conversion_bg.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/conversion_bg.png");
         background-size: 100% 100%;
         padding-top: 560rpx;
         overflow: hidden;
@@ -156,13 +156,13 @@ export default {
             height: 480rpx;
             margin: 0 auto;
             position: relative;
-            background-image: url("https://img.chaoshewang.com/static/img/activity/conversion_ box.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/conversion_ box.png");
             background-size: 100% 100%;
             .shou {
                 width: 406rpx;
                 height: 278rpx;
                 position: absolute;
-                background-image: url("https://img.chaoshewang.com/static/img/activity/conversion_shou.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/conversion_shou.png");
                 background-size: 100% 100%;
                 left: 50%;
                 top: -154rpx;
@@ -188,7 +188,7 @@ export default {
                 position: absolute;
                 top: 180rpx;
                 right: 90rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/transaction/close2.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png");
                 background-size: 100% 100%;
             }
 

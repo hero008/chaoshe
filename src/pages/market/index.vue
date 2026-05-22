@@ -36,17 +36,17 @@
                             <view class="fil-item" @click="onChildList(i)">
                                 <view class="name">{{ i.name }}</view>
                                 <view :class="[childList.id == i.id ? 'sim1' : 'sim']"></view>
-                                <!-- <image :src="`https://img.chaoshewang.com/static/img/pay/${text.id == i.id?"shouqi":'zhankai'}.png`" class="sim"></image> -->
+                                <!-- <image :src="`https://img.shinemang.com/gachaStatic/static/img/pay/${text.id == i.id?"shouqi":'zhankai'}.png`" class="sim"></image> -->
                             </view>
                         </view>
                         <view v-if="active == 0" class="trendsetter"
-                            :style="{ backgroundImage: `url(https://img.chaoshewang.com/static/img/transaction/${userType ? 'optFor1' : 'trendsetter1'}.png)` }"
+                            :style="{ backgroundImage: `url(https://img.shinemang.com/gachaStatic/static/img/transaction/${userType ? 'optFor1' : 'trendsetter1'}.png)` }"
                             @click="onTrendsetter"></view>
                     </div>
                     <div class="tag flex_r flex_ac" @click="goto('/pages/common/rulepop', { val: 'MarketRules' })">
                         <span>交易规则</span>
                         <img
-                            src="https://img.chaoshewang.com/static/img/pay/ico5.png"><!-- <span class="icof">&#xe6cd;</span> -->
+                            src="https://img.shinemang.com/gachaStatic/static/img/pay/ico5.png"><!-- <span class="icof">&#xe6cd;</span> -->
                     </div>
                 </view>
             </div>
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="goods_remark flex_r flex_ac flex_jb" v-if="item.content">
-                            <img src="https://img.chaoshewang.com/static/img/market/ico2.png" class="m_ico big">
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico big">
                             <span>{{ item.content }}</span>
                         </div>
                         <div class="goods flex_r flex_jb flex_ac">
@@ -78,10 +78,10 @@
                                     <img v-if="item.wantItem" class="goods_img" :src="item.wantItem.coverThumb"
                                         :class="[item.items.length ? 'bore' : 'bor9']"
                                         @click="ondetail(item.wantItem.itemId)">
-                                    <img v-else src="https://img.chaoshewang.com/static/img/transaction/random1.png"
+                                    <img v-else src="https://img.shinemang.com/gachaStatic/static/img/transaction/random1.png"
                                         class=" goods_img bor5">
                                     <!-- <view v-else class="  random"></view> -->
-                                    <img src="https://img.chaoshewang.com/static/img/transaction/ico3.png"
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
                                         v-if="item.items.length" class="ico3">
                                 </template>
                                 <img :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" class="goods_img"
@@ -93,20 +93,20 @@
                         <div class="bottom_btn flex_r flex_je flex_ac">
                             <template v-if="item.wantItem">
                                 <div class="btnE flex_r flex_ac flex_jc" v-if="!item.items.length && item.askPrice">
-                                    <img src="https://img.chaoshewang.com/static/img/market/ico3.png" class="m_ico">
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico">
                                     <span>求购：{{ item.askPrice }}</span>
                                 </div>
 
                                 <template v-else>
                                     <div class="btnE flex_r flex_ac flex_jc">
-                                        <img src="https://img.chaoshewang.com/static/img/market/ico4.png" class="m_ico">
+                                        <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico4.png" class="m_ico">
                                         <span>以物换物</span>
                                     </div>
 
                                 </template>
                             </template>
                             <div class="btnE flex_r flex_ac flex_jc" v-if="item.items.length && item.askPrice">
-                                <img src="https://img.chaoshewang.com/static/img/market/ico3.png" class="m_ico">
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico">
                                 <span>加价：{{ item.askPrice }}</span>
                             </div>
                             <template v-else>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <u-empty v-else :text="emptyTxt" icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                <u-empty v-else :text="emptyTxt" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </div>
         </scroll-view>
@@ -480,7 +480,7 @@ export default {
     .movable-view {
         width: 144rpx;
         height: 144rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/pay/fabu.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/fabu.png");
         background-size: 100% 100%;
         pointer-events: auto; //恢复鼠标事件
     }
@@ -518,7 +518,7 @@ background-color: #F5F6F8;
         .notice_btn {
             height: 44rpx;
             width: 114rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/market/cheshibanben.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/market/cheshibanben.png");
             background-size: 100% 100%;
         }
     }
@@ -859,7 +859,7 @@ background-color: #F5F6F8;
 }
 
 .gold_coin {
-    background-image: url("https://img.chaoshewang.com/static/img/my/gold_coin.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/gold_coin.png");
     background-size: 100% 100%;
 }
 
@@ -903,7 +903,7 @@ background-color: #F5F6F8;
                 margin-left: 6rpx;
                 width: 24rpx;
                 height: 24rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/pay/shouqi.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/shouqi.png");
                 background-size: 100% 100%;
             }
 
@@ -911,7 +911,7 @@ background-color: #F5F6F8;
                 margin-left: 6rpx;
                 width: 24rpx;
                 height: 24rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/pay/zhankai.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/zhankai.png");
                 background-size: 100% 100%;
             }
         }

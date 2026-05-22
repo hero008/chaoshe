@@ -2,7 +2,7 @@
     <view class="addgroup">
         <view class="addgroup_con">
             <x-navbar tcolor="#fff" />
-            <image src="https://img.chaoshewang.com/static/img/activity/addgroup.png" class="bg" />
+            <image src="https://img.shinemang.com/gachaStatic/static/img/activity/addgroup.png" class="bg" />
             <div class="qrcode_box flex_c flex_ac">
                 <img :src="qrurl" class="qrcode" @click="yulan">
                 <!-- #ifdef MP-WEIXIN -->
@@ -19,7 +19,7 @@ import xNavbar from "@/components/modules/x-navbar";
 export default {
     data() {
         return {
-            qrurl: 'https://img.chaoshewang.com/static/img/home/contact_me_qr.png'
+            qrurl: 'https://img.shinemang.com/gachaStatic/static/img/home/contact_me_qr.png'
         };
     },
     components: { xNavbar },

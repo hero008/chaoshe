@@ -1,7 +1,7 @@
 <template>
     <u-overlay :show="visible">
         <view class="warp flex_wrap">
-            <img class="close_btn" src="https://img.chaoshewang.com/static/img/transaction/close.png" @click="onclose('')" />
+            <img class="close_btn" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close.png" @click="onclose('')" />
             <view class="header">备注</view>
             <textarea
                 placeholder="请输入备注(最大长度50字)"

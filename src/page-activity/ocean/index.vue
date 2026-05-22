@@ -1,7 +1,7 @@
 <template>
     <view class="chaowanshang">
         <view class="topBack">
-            <img src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png" @click.stop="gateBack"
+            <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png" @click.stop="gateBack"
                 class="Back_ico" />
             <text class="title" v-if="!Object.keys(types).length">{{ message.name }}</text>
             <!--  #ifndef MP-WEIXIN -->
@@ -37,10 +37,10 @@
                             <view class="chestBg " v-for="awards in chest.awards" :key="awards.id"
                                 :class="{ active: awards.open }" @click="getChest(awards, chest)">
                                 <img class="chest-icon " :class="{ 'dx': openId == awards.id }"
-                                    :src="`https://img.chaoshewang.com/static/img/activity/${chest.cellTypeName}.png`" />
+                                    :src="`https://img.shinemang.com/gachaStatic/static/img/activity/${chest.cellTypeName}.png`" />
                             </view>
                             <img class="chest-get" v-if="chest.awards[0].open && index == 0"
-                                src="https://img.chaoshewang.com/static/img/activity/chest_get.png" />
+                                src="https://img.shinemang.com/gachaStatic/static/img/activity/chest_get.png" />
                         </view>
                     </view>
                     <view v-else>
@@ -132,8 +132,8 @@ export default {
                 height: 752,
                 imgWidth: 320,
                 imgHeight: 320,
-                bg: "https://img.chaoshewang.com/static/img/activity/chq_tc.png",
-                btn: "https://img.chaoshewang.com/static/img/activity/chq_an.png",
+                bg: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_tc.png",
+                btn: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_an.png",
             },
             prizeItems: [{ thumb: '', name: '' }],
             openId: null,
@@ -172,10 +172,10 @@ export default {
         if (da.gacha_id) {
             this.types = da
             this.imageUrlMap = {
-                bg: "https://img.chaoshewang.com/static/img/activity/chq_bg1.png", //大背景
-                button_close: "https://img.chaoshewang.com/static/img/activity/chq_get.png", //不可领取状态按钮
-                button_open: "https://img.chaoshewang.com/static/img/activity/chq_btn.png", //可领取状态按钮
-                rule: "https://img.chaoshewang.com/static/img/activity/gz.png", //规则
+                bg: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_bg1.png", //大背景
+                button_close: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_get.png", //不可领取状态按钮
+                button_open: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_btn.png", //可领取状态按钮
+                rule: "https://img.shinemang.com/gachaStatic/static/img/activity/gz.png", //规则
             }
             this.colorList = {
                 time: "#E97102", //时间
@@ -354,7 +354,7 @@ export default {
 }
 
 .share {
-    background-image: url("https://img.chaoshewang.com/static/img/activity/fenx.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fenx.png");
     background-size: 100% 100%;
     margin-left: auto;
     width: 48rpx;
@@ -550,7 +550,7 @@ export default {
                     &.active {
                         width: 124rpx;
                         height: 124rpx;
-                        background: url("https://img.chaoshewang.com/static/img/activity/light.png");
+                        background: url("https://img.shinemang.com/gachaStatic/static/img/activity/light.png");
                         background-size: 100% 100%;
                     }
 

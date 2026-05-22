@@ -77,7 +77,7 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     padding: 0 28rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/discounts.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/discounts.png");
     background-size: 100% 100%;
     .title {
         font-weight: 800;
@@ -99,7 +99,7 @@ export default {
         right: 20rpx;
         width: 56rpx;
         height: 56rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/market/close.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/market/close.png");
         background-size: 100% 100%;
     }
     .box {
@@ -120,7 +120,7 @@ export default {
     .btn_box {
         width: 258rpx;
         height: 102rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/discountsBtn.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/discountsBtn.png");
         background-size: 100% 100%;
         margin: 0 auto;
     }

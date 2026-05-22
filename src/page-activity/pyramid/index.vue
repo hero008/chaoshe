@@ -2,13 +2,13 @@
     <view class="pyramid">
         <view class="topBack">
             <img
-                src="https://img.chaoshewang.com/static/img/activity/bbgsfh.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/bbgsfh.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />
             <!-- #ifndef MP-WEIXIN -->
             <img
-                src="https://img.chaoshewang.com/static/img/activity/bbgsfx.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/bbgsfx.png"
                 @click="onShare"
                 class="Back_ico ml"
             />
@@ -172,7 +172,7 @@
                             :style="{ background: colorList.item }"
                         >
                             <img
-                                :src="`https://img.chaoshewang.com/static/img/activity/classs_${s}.png`"
+                                :src="`https://img.shinemang.com/gachaStatic/static/img/activity/classs_${s}.png`"
                             />
                             <image
                                 class="title_img"
@@ -268,29 +268,29 @@ export default {
             cont: "",
             activity: {},
             imageUrlMap: {
-                // bg: "https://img.chaoshewang.com/static/img/activity/ladder_bg.png", //大背景
-                // button: "https://img.chaoshewang.com/static/img/activity/begin_icon.png", //立即抽奖
-                // prize: "https://img.chaoshewang.com/static/img/activity/prize_1.png", //礼物
-                // bg1: "https://img.chaoshewang.com/static/img/activity/foot_1.png", //
-                // bg2: "https://img.chaoshewang.com/static/img/activity/foot_2.png", //
-                // bg3: "https://img.chaoshewang.com/static/img/activity/foot_3.png", //
-                // bg4: "https://img.chaoshewang.com/static/img/activity/foot_4.png", //
-                // bg5: "https://img.chaoshewang.com/static/img/activity/foot_5.png", //
+                // bg: "https://img.shinemang.com/gachaStatic/static/img/activity/ladder_bg.png", //大背景
+                // button: "https://img.shinemang.com/gachaStatic/static/img/activity/begin_icon.png", //立即抽奖
+                // prize: "https://img.shinemang.com/gachaStatic/static/img/activity/prize_1.png", //礼物
+                // bg1: "https://img.shinemang.com/gachaStatic/static/img/activity/foot_1.png", //
+                // bg2: "https://img.shinemang.com/gachaStatic/static/img/activity/foot_2.png", //
+                // bg3: "https://img.shinemang.com/gachaStatic/static/img/activity/foot_3.png", //
+                // bg4: "https://img.shinemang.com/gachaStatic/static/img/activity/foot_4.png", //
+                // bg5: "https://img.shinemang.com/gachaStatic/static/img/activity/foot_5.png", //
                 // foot_bg:
-                //     "https://img.chaoshewang.com/static/img/activity/foot_bg.png",
-                // record: "https://img.chaoshewang.com/static/img/activity/record.png", //中奖记录
-                // order: "https://img.chaoshewang.com/static/img/activity/order.png", //排行榜
-                // pop_bg: "https://img.chaoshewang.com/static/img/activity/tcbg.png", //弹窗背景
+                //     "https://img.shinemang.com/gachaStatic/static/img/activity/foot_bg.png",
+                // record: "https://img.shinemang.com/gachaStatic/static/img/activity/record.png", //中奖记录
+                // order: "https://img.shinemang.com/gachaStatic/static/img/activity/order.png", //排行榜
+                // pop_bg: "https://img.shinemang.com/gachaStatic/static/img/activity/tcbg.png", //弹窗背景
                 // pop_close:
-                //     "https://img.chaoshewang.com/static/img/market/close.png", //弹窗关闭
+                //     "https://img.shinemang.com/gachaStatic/static/img/market/close.png", //弹窗关闭
                 // pop_btn:
-                //     "https://img.chaoshewang.com/static/img/activity/qd3.png", //弹窗按钮
-                // spin: "https://img.chaoshewang.com/static/img/activity/guang.png", //旋转bg
+                //     "https://img.shinemang.com/gachaStatic/static/img/activity/qd3.png", //弹窗按钮
+                // spin: "https://img.shinemang.com/gachaStatic/static/img/activity/guang.png", //旋转bg
                 // pop_close1:
-                //     "https://img.chaoshewang.com/static/img/activity/icon32.png", //弹窗关闭按钮
-                // header: "https://img.chaoshewang.com/static/img/activity/hbg.png", //弹窗头部
-                // figure: "https://img.chaoshewang.com/static/img/activity/huawen_r.png", //花纹
-                // share: "https://img.chaoshewang.com/static/img/activity/huodongfx.png", //分享
+                //     "https://img.shinemang.com/gachaStatic/static/img/activity/icon32.png", //弹窗关闭按钮
+                // header: "https://img.shinemang.com/gachaStatic/static/img/activity/hbg.png", //弹窗头部
+                // figure: "https://img.shinemang.com/gachaStatic/static/img/activity/huawen_r.png", //花纹
+                // share: "https://img.shinemang.com/gachaStatic/static/img/activity/huodongfx.png", //分享
             },
             colorList: {
                 // number: "#8e3b00", //

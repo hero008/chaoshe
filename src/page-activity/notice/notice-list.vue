@@ -80,7 +80,7 @@
                     </view>
                     <view class="n_txt flex_r flex_js flex_ac">
                         <img
-                            src="https://img.chaoshewang.com/static/img/home/date.png"
+                            src="https://img.shinemang.com/gachaStatic/static/img/home/date.png"
                             class="n_timt_ico"
                         />
                         <view>{{ item.startTime || item.date }}</view>
@@ -92,7 +92,7 @@
         <u-empty
             v-else
             text="暂无资讯~"
-            icon="https://img.chaoshewang.com/static/img/home/empty.png"
+            icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
             :marginTop="50"
         />
     </view>
@@ -267,7 +267,7 @@ export default {
             .icon {
                 width: 48rpx;
                 height: 48rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/niudan/ndj_back.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png");
                 background-size: 100% 100%;
             }
             .txt {
@@ -282,7 +282,7 @@ export default {
                 .sba {
                     width: 40rpx;
                     height: 40rpx;
-                    background-image: url("https://img.chaoshewang.com/static/img/home/icon-delete.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/icon-delete.png");
                     background-size: 100% 100%;
                 }
                 .text {

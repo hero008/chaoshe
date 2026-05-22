@@ -13,7 +13,7 @@
                 <text class="txt">返回</text>
             </view>
             <img
-                src="https://img.chaoshewang.com/static/img/shipments/btn.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/shipments/btn.png"
                 class="btn_r"
                 @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })"
             />
@@ -63,7 +63,7 @@
                             <div class="address_info" v-else>
                                 <div class="on_addr flex_r flex_ac">
                                     <img
-                                        src="https://img.chaoshewang.com/static/img/shipments/addr_ico.png"
+                                        src="https://img.shinemang.com/gachaStatic/static/img/shipments/addr_ico.png"
                                         class="addr_ico"
                                     />
                                     <span class="addr_txt">选择收货地址</span>
@@ -90,7 +90,7 @@
                                 >
                                  <view class="box_ico frame"></view>
                                     <!-- <img
-                                        src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                        src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico"
                                     /> -->
                                     <view class="item_txt1">{{
@@ -106,7 +106,7 @@
                                 <img
                                     @click="removeItem(item)"
                                     class="remove_btn"
-                                    src="https://img.chaoshewang.com/static/img/transaction/close2.png"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                                 />
                             </view>
                             <div
@@ -114,7 +114,7 @@
                                 @click="addStock"
                             >
                                 <img
-                                    src="https://img.chaoshewang.com/static/img/transaction/ico1.png"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                                     class="ico"
                                 />
                             </div>

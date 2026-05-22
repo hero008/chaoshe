@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="goods_remark flex_r flex_ac flex_jb" v-if="orderinfo.content">
-                        <img src="https://img.chaoshewang.com/static/img/market/ico2.png" class="m_ico big" />
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico big" />
                         <span>{{ orderinfo.content }}</span>
                     </div>
                     <div class="goods flex_r flex_jb flex_ac">
@@ -29,7 +29,7 @@
                                 <img class="goods_img" :src="orderinfo.wantItem.coverThumb" :class="[
                                     myRewardData.length ? 'bore' : 'bor9',
                                 ]" @click="ondetail(orderinfo.wantItem.itemId)" />
-                                <img src="https://img.chaoshewang.com/static/img/transaction/ico3.png"
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
                                     v-if="myRewardData.length" class="ico3" />
                             </template>
                             <img v-for="(cont, i) in myRewardData" :key="i" class="goods_img" :src="cont.coverThumb"
@@ -44,23 +44,23 @@
                             <div class="btnE flex_r flex_ac flex_jc" v-if="
                                 !myRewardData.length && orderinfo.askPrice
                             ">
-                                <img src="https://img.chaoshewang.com/static/img/market/ico3.png" class="m_ico" />
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico" />
                                 <span>求购：{{ orderinfo.askPrice }}</span>
                             </div>
                             <template v-else>
                                 <div class="btnE flex_r flex_ac flex_jc">
-                                    <img src="https://img.chaoshewang.com/static/img/market/ico4.png" class="m_ico" />
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico4.png" class="m_ico" />
                                     <span>以物换物</span>
                                 </div>
                                 <div class="btnE flex_r flex_ac flex_jc" v-if="orderinfo.askPrice">
-                                    <img src="https://img.chaoshewang.com/static/img/market/ico3.png" class="m_ico" />
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico" />
                                     <span>加价：{{ orderinfo.askPrice }}</span>
                                 </div>
                             </template>
                         </template>
                         <template v-else>
                             <div class="btnE flex_r flex_ac flex_jc" v-if="orderinfo.buyPrice">
-                                <img src="https://img.chaoshewang.com/static/img/market/ico5.png" class="m_ico" />
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" class="m_ico" />
                                 <span>一口价：{{ orderinfo.buyPrice }}</span>
                             </div>
                         </template>
@@ -92,7 +92,7 @@
                                 (item.offerPrice > 0 &&
                                     item.userId == userInfo.id)
                                 ">
-                                <img src="https://img.chaoshewang.com/static/img/market/ico5.png" class="m_ico" />
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" class="m_ico" />
                                 <span v-if="
                                     item.offerPrice > 0 ||
                                     (item.userId != orderinfo.userId &&
@@ -146,7 +146,7 @@
                     <view class="tab_item" :class="{ active: i == active2 }" @click="ontab2(i, s)"
                         v-for="(i, s) in navbar2" :key="s">{{ i }}</view>
                 </view>
-                <img @click="popupShow = false" src="https://img.chaoshewang.com/static/img/transaction/close.png"
+                <img @click="popupShow = false" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close.png"
                     class="close_btn" />
                 <view class="p_lists">
                     <div class="flex_r flex_jb">
@@ -164,9 +164,9 @@
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
                                     <img v-if="selectRewardIds.includes(item.id)"
-                                        src="https://img.chaoshewang.com/static/img/shanggui/xuanzhong.png"  class="box_ico" />
+                                        src="https://img.shinemang.com/gachaStatic/static/img/shanggui/xuanzhong.png"  class="box_ico" />
                                     <view class="box_ico frame" v-else></view>
-                                    <!-- <img v-else src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                    <!-- <img v-else src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico" /> -->
                                     <view class="item_txt1">{{ item.item.saleType == 1 ? "现货": "预售" }}</view>
                                 </view>
@@ -176,7 +176,7 @@
                     </scroll-view>
                     <view class="mt20 flex_r flex_ac flex_jb">
                         <div class="money_input">
-                            <img src="https://img.chaoshewang.com/static/img/market/ico5.png" class="m_ico" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" class="m_ico" />
                             <!-- @input="keymoney = keymoney.replace(/[^\d]/g,'') " -->
                             <input v-model="keymoney" maxlength="5" max="50000" type="number" placeholder="请输入金额"
                                 @input="onKeymoney" class="input" />
@@ -190,7 +190,7 @@
         <u-popup :show="popupShow3" mode="center" bgColor="transparent" :safeAreaInsetBottom="false">
             <div class="preview_product">
                 <div class="head_tit">
-                    <img @click="popupShow3 = false" src="https://img.chaoshewang.com/static/img/transaction/close2.png"
+                    <img @click="popupShow3 = false" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                         class="close_btn" />
                     <div class="title">请您确定交易信息</div>
                     <div class="txt">确认交易信息，避免给您带来经济损失</div>
@@ -203,7 +203,7 @@
                                 <view class="item_img" :style="{ backgroundImage: `url(${item.item.coverThumb})`}">
                                     <view class="box_ico frame"></view>
                                     <!-- <img
-                                        src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                        src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico"
                                     /> -->
                                     <view class="item_txt1">{{item.item.saleType == 1? "现货": "预售"}}</view>
@@ -856,7 +856,7 @@ export default {
     margin-top: 40rpx;
     width: 318rpx;
     height: 76rpx;
-    background: url("https://img.chaoshewang.com/static/img/transaction/Rectangle.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
     background-size: 100% 100%;
     font-size: 28rpx;
     color: #ffffff;
@@ -883,7 +883,7 @@ export default {
             height: 84rpx;
             line-height: 70rpx;
             font-weight: bold;
-            background: url("https://img.chaoshewang.com/static/img/transaction/tab_bg1.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
             background-size: 100% 100%;
             font-size: 30rpx;
         }
@@ -979,7 +979,7 @@ export default {
     position: relative;
 
     .tabs_two {
-        background: url("https://img.chaoshewang.com/static/img/shanggui/tabs_bg.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
         background-size: 100% 100%;
         width: 372rpx;
         margin-top: 0;

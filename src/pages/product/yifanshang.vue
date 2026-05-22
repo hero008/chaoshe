@@ -6,12 +6,12 @@
                     top: MBInfo().top + 'px',
                     height: MBInfo().height + 'px',
                 }">
-                    <img src="https://img.chaoshewang.com/static/img/product/yfs_back.png" @click.stop="gateBack"
+                    <img src="https://img.shinemang.com/gachaStatic/static/img/product/yfs_back.png" @click.stop="gateBack"
                         class="Back_ico" />
                     <text class="title">{{ AReward.gacha.themeName }}</text>
                 </view>
                 <view class="rbtn1" @click="goto('/pages/common/rulepop', { val: 'KujiRules' })">规则</view>
-                <img class="yfs_top_bg" src="https://img.chaoshewang.com/static/img/product/yfs_top_bg2.png" />
+                <img class="yfs_top_bg" src="https://img.shinemang.com/gachaStatic/static/img/product/yfs_top_bg2.png" />
                 <button open-type="share" class="rbtn2 rbtns" @click="onShare"></button>
                 <view class="rbtn3 rbtns flex_r flex_jc flex_ac" @click="onFlushed">刷新</view>
                 <div class="box_price">
@@ -28,7 +28,7 @@
                 }}/发</view>
                 <view class="head_in flex_r flex_jb flex_ac">
                     <view class="l_btn flex_c flex_ac flex_wrap" @click="ondrawLog">
-                        <img src="https://img.chaoshewang.com/static/img/product/yfs_btn-3.png" class="ico1" />
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-3.png" class="ico1" />
                         <view class="txt1">中赏记录</view>
                     </view>
                     <view class="c_btn" v-if="AReward.gachaBox">
@@ -40,7 +40,7 @@
                         <view class="p">箱号:{{ AReward.gachaBox.boxOutNo }}</view>
                     </view>
                     <view class="r_btn flex_c flex_ac flex_wrap" @click="selectBoxOpen">
-                        <img src="https://img.chaoshewang.com/static/img/product/yfs_btn-4.png" class="ico1" />
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-4.png" class="ico1" />
                         <view class="txt1">换个箱子</view>
                     </view>
                 </view>
@@ -50,7 +50,7 @@
                             <view class="p1 flex_r flex_jb flex_ac">
                                 <view class="p_l" @click="ondetail(item, index)">
                                     <img :src="item.itemHalfImage" class="itemCover" />
-                                    <img :src="`https://img.chaoshewang.com/static/img/reward/${item.levelName}.png`"
+                                    <img :src="`https://img.shinemang.com/gachaStatic/static/img/reward/${item.levelName}.png`"
                                         class="ico2" />
                                 </view>
                                 <view class="p_r flex_r flex_wrap">
@@ -58,7 +58,7 @@
                                         :style="{ zIndex: 101 + s }">
                                         <view class="card_item flex_r flex_ac flex_js bc">
                                             <div class="ico_box flex_r flex_ae flex_js">
-                                                <img :src="`https://img.chaoshewang.com/static/img/reward/${item.levelName}_.png`"
+                                                <img :src="`https://img.shinemang.com/gachaStatic/static/img/reward/${item.levelName}_.png`"
                                                     class="ico3" />
                                             </div>
                                             <div class="itemName ellipsis2">
@@ -98,7 +98,7 @@
                                     ondetail(item, index + highGrade.length)
                                     ">
                                     <img :src="item.itemHalfImage" class="itemCover" />
-                                    <img :src="`https://img.chaoshewang.com/static/img/reward/${item.levelName}.png`"
+                                    <img :src="`https://img.shinemang.com/gachaStatic/static/img/reward/${item.levelName}.png`"
                                         class="ico2" :class="{
                                             LastIco: item.levelName == 'Last',
                                         }" />
@@ -125,7 +125,7 @@
                                             nc: item.levelIndex == 27,
                                         }">
                                             <div class="ico_box flex_r flex_ae flex_js">
-                                                <img :src="`https://img.chaoshewang.com/static/img/reward/${item.levelName}_.png`"
+                                                <img :src="`https://img.shinemang.com/gachaStatic/static/img/reward/${item.levelName}_.png`"
                                                     class="ico3" :class="{
                                                         LastIco:
                                                             item.levelName ==
@@ -152,7 +152,7 @@
                 </view>
             </div>
             <div class="i_notice flex_r flex_ac">
-                <img src="https://img.chaoshewang.com/static/img/market/ico6.png" class="m_ico" />
+                <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico6.png" class="m_ico" />
                 <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#000"
                     bgColor="rgba(0,0,0,0)"></u-notice-bar>
             </div>
@@ -161,7 +161,7 @@
                 :style="{
                     color: '#FFF',
                     backgroundImage:
-                        'url(https://img.chaoshewang.com/static/img/chaowanshang/special_yfsBtn.png)',
+                        'url(https://img.shinemang.com/gachaStatic/static/img/chaowanshang/special_yfsBtn.png)',
                     height: '102rpx',
                 }">
                 <view>立即抽赏</view>
@@ -202,7 +202,7 @@
                 " class="special_btn flex_c" :style="{
                     color: '#FFF',
                     backgroundImage:
-                        'url(https://img.chaoshewang.com/static/img/chaowanshang/special_yfsBtn.png)',
+                        'url(https://img.shinemang.com/gachaStatic/static/img/chaowanshang/special_yfsBtn.png)',
                     height: '102rpx',
                 }" :class="{
                     forbid_bg:
@@ -215,7 +215,7 @@
             <u-popup :show="selectBoxShow" :safeAreaInsetBottom="false" bgColor="transparent">
                 <view class="select_box_module">
                     <div class="title">
-                        <img src="https://img.chaoshewang.com/static/img/product/yfs_back.png"
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/product/yfs_back.png"
                             @click="selectBoxShow = false" class="Back_ico" />
                         <span>选取箱子</span>
                     </div>
@@ -237,9 +237,9 @@
                                 <div class="box_item" @click="
                                     onClickChangeBox(item.boxIndex, index)
                                     " v-for="(item, index) in boxs" :key="item.boxOutNo">
-                                    <img src="https://img.chaoshewang.com/static/img/product/box.png"
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/product/box.png"
                                         v-if="item.leftAwards > 0" class="box" :class="{ active: index == active2 }" />
-                                    <img src="https://img.chaoshewang.com/static/img/product/unbox.png" v-else
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/product/unbox.png" v-else
                                         class="box" :class="{ active: index == active2 }" />
                                     <div class="box_num">
                                         #{{ item.boxIndex }}
@@ -274,7 +274,7 @@
             <draw-log ref="drawLog" drawType="1" />
             <!-- 预加载动画背景图（过大） -->
             <div class="subscribeLoad" v-show="false">
-                <img src="https://img.chaoshewang.com/static/img/cs-result/yfs_bg.png" />
+                <img src="https://img.shinemang.com/gachaStatic/static/img/cs-result/yfs_bg.png" />
             </div>
             <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"
                 :message="AReward.openMessage" />
@@ -594,7 +594,7 @@ export default {
 
 .yifanshang {
     background-color: #1c1d1f;
-    background-image: url("https://img.chaoshewang.com/static/img/product/yfs_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_bg.png");
     background-size: 100% 100%;
     height: 100vh;
 }
@@ -626,7 +626,7 @@ export default {
         font-size: 28rpx;
         text-align: right;
         padding-right: 10rpx;
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_btn-1.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-1.png");
         background-size: 100% 100%;
         position: absolute;
         bottom: 180rpx;
@@ -645,7 +645,7 @@ export default {
     .rbtn2 {
         width: 144rpx;
         height: 92rpx;
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_share.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_share.png");
         background-size: 100% 100%;
         left: 0;
 
@@ -655,7 +655,7 @@ export default {
     }
 
     .rbtn3 {
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_btn-2.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-2.png");
         background-size: 100% 100%;
         right: 0;
     }
@@ -665,7 +665,7 @@ export default {
         height: 160rpx;
         text-align: center;
         line-height: 168rpx;
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_price.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_price.png");
         background-size: 100% 100%;
         padding-right: 18rpx;
         font-size: 20rpx;
@@ -722,7 +722,7 @@ export default {
     .c_btn {
         width: 320rpx;
         height: 100rpx;
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_number.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_number.png");
         background-size: 100% 100%;
         text-align: center;
         line-height: 24rpx;
@@ -815,14 +815,14 @@ export default {
     font-size: 16rpx;
     padding-left: 85rpx;
     line-height: 22rpx;
-    background: url("https://img.chaoshewang.com/static/img/product/yfs_tag-1.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_tag-1.png");
     background-size: 100% 100%;
 
     &.bc {
         padding: 0;
         color: #fff;
         padding-left: 8rpx;
-        background: url("https://img.chaoshewang.com/static/img/product/yfs_tag-2.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_tag-2.png");
         background-size: 100% 100%;
 
         .ico3 {
@@ -966,7 +966,7 @@ export default {
     right: 0;
     z-index: 1000;
     height: 160rpx;
-    background: url("https://img.chaoshewang.com/static/img/product/yfs_tab_bg.png") no-repeat;
+    background: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_tab_bg.png") no-repeat;
     background-size: 100% auto;
     background-color: rgb(34, 34, 36);
     text-align: center;
@@ -980,22 +980,22 @@ export default {
     }
 
     .btn_item1 {
-        background-image: url("https://img.chaoshewang.com/static/img/product/yfs_btn-5.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-5.png");
         background-size: 100% 100%;
     }
 
     .btn_item3 {
-        background-image: url("https://img.chaoshewang.com/static/img/product/yfs_btn-7.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-7.png");
         background-size: 100% 100%;
     }
 
     .btn_item4 {
-        background-image: url("https://img.chaoshewang.com/static/img/product/yfs_btn-8.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-8.png");
         background-size: 100% 100%;
     }
 
     .btn_item2 {
-        background-image: url("https://img.chaoshewang.com/static/img/product/yfs_btn-6.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/yfs_btn-6.png");
         background-size: 100% 100%;
         width: 276rpx;
         height: 110rpx;
@@ -1008,7 +1008,7 @@ export default {
     overflow: hidden;
     padding: 0 36rpx;
     border-radius: 60rpx 60rpx 0 0;
-    background-image: url("https://img.chaoshewang.com/static/img/product/p_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/p_bg.png");
     background-size: 100% 100%;
 
     .title {
@@ -1050,7 +1050,7 @@ export default {
             }
 
             &.active {
-                background-image: url("https://img.chaoshewang.com/static/img/product/tab_bg.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/tab_bg.png");
                 background-size: 100% 100%;
                 color: #fff;
             }
@@ -1075,7 +1075,7 @@ export default {
                 height: 128rpx;
 
                 &.active {
-                    background-image: url("https://img.chaoshewang.com/static/img/product/border.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/product/border.png");
                     background-size: 100% 100%;
                     // animation: breathingLight 3s infinite;
                 }

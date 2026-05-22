@@ -15,14 +15,14 @@
                             })
                             ">
                             <img class="icon"
-                                :src="`https://img.chaoshewang.com/static/img/my/Lv.${userInfo.level}.png`" />
+                                :src="`https://img.shinemang.com/gachaStatic/static/img/my/Lv.${userInfo.level}.png`" />
                             <view class="class">Lv.{{ userInfo.level }}</view>
                         </view>
                         <img @click="
                             goto('/pages/common/rulepop', {
                                 val: 'PayoutLevel',
                             })
-                            " src="https://img.chaoshewang.com/static/img/my/shuoming.png" class="shuoming" />
+                            " src="https://img.shinemang.com/gachaStatic/static/img/my/shuoming.png" class="shuoming" />
                         <!-- #endif -->
                     </view>
                 </div>
@@ -41,7 +41,7 @@
             <!-- #ifndef MP-WEIXIN -->
             <div class="gold flex_r flex_ac flex_jb" @click="userInfo.id ? goto('/page-a/balance/topUp') : null">
                 <div class="gold_num flex_r flex_ac">
-                    <img src="https://img.chaoshewang.com/static/img/pay/gold.png" class="gold_ico" />
+                    <img src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png" class="gold_ico" />
                     <span>我的账户: {{ balance }}</span>
                 </div>
                 <div class="withdraw_btn flex_r flex_ac flex_jc">
@@ -84,7 +84,7 @@
         </div>
         <!-- #ifdef MP-WEIXIN -->
         <div class="AD_bar">
-            <img @click="downShow = true" src="https://img.chaoshewang.com/static/img/my/download-app.png" class="AD_img" />
+            <img @click="downShow = true" src="https://img.shinemang.com/gachaStatic/static/img/my/download-app.png" class="AD_img" />
         </div>
         <!-- #endif -->
         <!-- <div class="ver_bar">
@@ -112,90 +112,90 @@ export default {
             balance: 0,
             baseList1: [
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico10.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico10.png",
                     path: "/pages/my/drawRecord",
                     title: "抽赏记录",
                 },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico11.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico11.png",
                     path: "/pages/my/releaseRecord",
                     title: "发货订单",
                 },
             ],
             baseList2: [
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico1.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico1.png",
                     path: "/pages/shipments/addressList",
                     title: "地址管理",
                 },
                 // {
-                //     name: 'https://img.chaoshewang.com/static/img/my/ico2.png',
+                //     name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico2.png',
                 //     path: '/pages/index/index',
                 //     title: '进群交流'
                 // },
                 // {
-                //     name: 'https://img.chaoshewang.com/static/img/my/ico3.png',
+                //     name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico3.png',
                 //     path: '/pages/index/index',
                 //     title: '常见问题'
                 // },
 
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico4.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico4.png",
                     path: "/pages/index/index",
                     title: "联系客服",
                 },
 
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico5.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico5.png",
                     path: "/pages/my/agreementList",
                     title: "关于我们",
                     id: 1
                 },
                 // {
-                //     name: 'https://img.chaoshewang.com/static/img/my/ico6.png',
+                //     name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico6.png',
                 //     path: '/pages/index/index',
                 //     title: '隐私设置'
                 // },
 
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico8.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico8.png",
                     path: "/pages/index/index",
                     title: "Double Chance",
                 },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico15.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico15.png",
                     path: "/page-activity/conversion/index",
                     title: "福利兑换",
                 },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico13.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico13.png",
                     path: "/pages/my/cardpack",
                     // path:'/page-a/couponPackage/discountCoupon',
                     title: "我的卡包",
                 },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico16.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico16.png",
                     path: '/page-a/luck/index',
                     title: "集赏中心",
                 },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico12.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico12.png",
                     path: "/pages/index/index",
                     title: "注销账户",
                 },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/vibrate.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/vibrate.png",
                     path: "/pages/my/agreementList",
                     title: "手机震动",
                     id: 2
                 },
                 // {
-                //     name: "https://img.chaoshewang.com/static/img/my/ico7.png",
+                //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico7.png",
                 //     path: "/page-activity/welfare/index",
                 //     title: "任务活动",
                 // },
                 {
-                    name: "https://img.chaoshewang.com/static/img/my/ico17.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico17.png",
                     // path:"/pages/my/agreementList",
                     title: "实名认证",
                 },
@@ -236,7 +236,7 @@ export default {
             let a = await activityLIst({ key: ["Task"] });
             if (a.activities[0].open) {
                 this.baseList2.splice(5, 0, {
-                    name: "https://img.chaoshewang.com/static/img/my/ico14.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico14.png",
                     path: "/page-activity/welfare/index",
                     title: "任务活动",
                 });
@@ -508,7 +508,7 @@ export default {
     .gold {
         width: 100%;
         height: 135rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/my/gold_coin2.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/gold_coin2.png");
         background-size: 100% 100%;
         padding: 0 36rpx 46rpx;
 
@@ -536,7 +536,7 @@ export default {
             .icof {
                 width: 32rpx;
                 height: 32rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/my/icof.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/icof.png");
                 background-size: 100% 100%;
             }
         }
@@ -553,7 +553,7 @@ export default {
 .invite_bar {
     margin-bottom: 20rpx;
     height: 120rpx;
-    background: url("https://img.chaoshewang.com/static/img/activity/invite.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/activity/invite.png");
     background-size: 100% 100%;
 }
 

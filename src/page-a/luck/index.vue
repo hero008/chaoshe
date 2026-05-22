@@ -24,7 +24,7 @@
             >
             <div class="time flex_r flex_ac flex_jc">
                 <img
-                    src="https://img.chaoshewang.com/static/img/luck/clockx.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/luck/clockx.png"
                     class="timeImg"
                 />
                 <view class="timeTiele">集赏时间：</view>
@@ -93,7 +93,7 @@
                 <u-empty
                     v-else
                     text="暂无集赏物品~"
-                    icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                    icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50"
                 />
             </div>
@@ -200,7 +200,7 @@ export default {
 .luck {
     width: 100%;
     height: 100vh;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/jcbg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jcbg.png");
     background-size: 100% auto;
     overflow: hidden;
     background-color: #f4f4f4;
@@ -259,7 +259,7 @@ export default {
 .time {
     width: 468rpx;
     height: 56rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/jssj.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jssj.png");
     background-size: 100% auto;
     font-weight: 400;
     font-size: 24rpx;
@@ -329,14 +329,14 @@ export default {
 .fenxiang {
     width: 48rpx;
     height: 48rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/fenx.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fenx.png");
     background-size: 100% auto;
 }
 .rightImg {
     position: absolute;
     width: 248rpx;
     height: 200rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/zt.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/zt.png");
     background-size: 100% auto;
     right: 0;
     top: 181rpx;

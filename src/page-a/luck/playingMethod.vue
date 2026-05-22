@@ -94,7 +94,7 @@
                     ? ''
                     : {
                         backgroundImage:
-                            'url(https://img.chaoshewang.com/static/img/luck/anclbz.png)',
+                            'url(https://img.shinemang.com/gachaStatic/static/img/luck/anclbz.png)',
                         height: '92rpx',
                     },
             ]" @click="goGather"></view>
@@ -381,7 +381,7 @@ export default {
 .fenxiang {
     width: 48rpx;
     height: 48rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/fenx.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/fenx.png");
     background-size: 100% auto;
 }
 
@@ -389,7 +389,7 @@ export default {
     position: absolute;
     width: 248rpx;
     height: 200rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/zt.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/zt.png");
     background-size: 100% auto;
     right: 0;
     top: 312rpx;
@@ -399,7 +399,7 @@ export default {
     width: 100%;
     height: 100vh;
     overflow-y: auto;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/bj3x.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/bj3x.png");
     background-size: 100% auto;
     background-color: rgba(222, 215, 248, 1);
     font-family: PingFang SC, PingFang SC;
@@ -530,7 +530,7 @@ export default {
     top: 168rpx;
     width: 120rpx !important;
     height: 140rpx !important;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/jtleft.png") !important;
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jtleft.png") !important;
     background-size: 100% auto;
 }
 
@@ -540,7 +540,7 @@ export default {
     top: 168rpx;
     width: 120rpx !important;
     height: 140rpx !important;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/jtright.png") !important;
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jtright.png") !important;
     background-size: 100% auto;
 }
 
@@ -553,7 +553,7 @@ export default {
     .schedule-title {
         width: 120rpx;
         height: 28rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/luck/jcjd.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jcjd.png");
         background-size: 100% auto;
     }
 
@@ -648,7 +648,7 @@ export default {
         right: 0;
         margin: 0 auto;
         top: -16rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/luck/cltfq.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/cltfq.png");
         background-size: 100% auto;
     }
 
@@ -665,7 +665,7 @@ export default {
             height: 48rpx;
             margin: auto;
             margin-top: 44rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/luck/tjcl.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/tjcl.png");
             background-size: 100% auto;
         }
 
@@ -727,7 +727,7 @@ export default {
     height: 100rpx;
     margin: 0 auto;
     margin-top: 48rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/jcbtn.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jcbtn.png");
     background-size: 100% auto;
 }
 
@@ -736,7 +736,7 @@ export default {
     height: 94rpx;
     margin: 0 auto;
     margin-top: 300rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/cgan.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/cgan.png");
     background-size: 100% auto;
 }
 
@@ -744,7 +744,7 @@ export default {
     width: 522rpx;
     height: 632rpx;
     margin: 0 auto;
-    background-image: url("https://img.chaoshewang.com/static/img/luck/kpbj.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/kpbj.png");
     background-size: 100% auto;
 
     .wp {
@@ -782,7 +782,7 @@ export default {
         width: 258rpx;
         height: 92rpx;
         margin: 0 auto;
-        background-image: url("https://img.chaoshewang.com/static/img/luck/querenanniu.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/querenanniu.png");
         background-size: 100% auto;
     }
 }
@@ -808,7 +808,7 @@ export default {
     .go-chaoGui {
         width: 32rpx;
         height: 32rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/luck/baisejiantou.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/baisejiantou.png");
         background-size: 100% auto;
     }
 }

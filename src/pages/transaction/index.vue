@@ -5,7 +5,7 @@
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">返回</text>
             </view>
-            <img src="https://img.chaoshewang.com/static/img/transaction/btn2.png" class="btn_r" @click="
+            <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn2.png" class="btn_r" @click="
                 goto('/pages/common/rulepop', {
                     val: 'ReleaseTransactionInstructions',
                 })
@@ -36,7 +36,7 @@
                                     @change="clickOnePrice" @input="
                                         onePrice = onePrice.replace(/[^\d]/g, '')
                                         " />
-                                <img src="https://img.chaoshewang.com/static/img/transaction/ico2.png" class="ico" />
+                                <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico2.png" class="ico" />
                             </div>
                         </div>
                         <!-- <div class="lists"> -->
@@ -46,15 +46,15 @@
                                 <view class="item" v-for="(item, index) in selectRewardsInfo" :key="index">
                                     <view class="item_img" :style="{ backgroundImage: `url(${item.item.coverThumb})` }">
                                         <view class="box_ico frame"></view>
-                                        <!-- <img src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"  class="box_ico" /> -->
+                                        <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"  class="box_ico" /> -->
                                     </view>
                                     <img @click="removeItem(item)" class="remove_btn"
-                                        src="https://img.chaoshewang.com/static/img/transaction/close2.png" />
+                                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png" />
                                     <view class="item_txt1">{{ item.item.saleType == 1 ? "现货" : "预售" }}</view>
                                 </view>
                                 <div class="SelectProduct flex_r flex_jc flex_ac" v-show="thickData.length < 600"
                                     @click="addStock">
-                                    <img src="https://img.chaoshewang.com/static/img/transaction/ico1.png"
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                                         class="ico" />
                                 </div>
                                 <view class="bottom"></view>
@@ -73,7 +73,7 @@
                                 @change="clickOnePrice" @input="
                                     onePrice = onePrice.replace(/[^\d]/g, '')
                                     " />
-                            <img src="https://img.chaoshewang.com/static/img/transaction/ico2.png" class="ico" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico2.png" class="ico" />
                         </div>
                         <div class="auxiliary flex_r flex_ac">
                             <div class="txt2">是否允许赏品交换</div>
@@ -86,7 +86,7 @@
                             <span>留言</span>
                             <img
                                 @click="one_leaveMessage = ''"
-                                src="https://img.chaoshewang.com/static/img/transaction/ico4.png"
+                                src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico4.png"
                                 class="empty"
                             />
                         </div>
@@ -109,7 +109,7 @@
                         <div class="SelectProduct2 flex_r flex_jb flex_ac">
                             <div @click="addStock" class="Select_box flex_c flex_jc flex_ac">
                                 <template v-if="!selectRewardsInfo.length">
-                                    <img src="https://img.chaoshewang.com/static/img/transaction/ico1.png"
+                                    <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                                         class="ico" />
                                     <div class="add_txt">选择你的赏品</div>
                                 </template>
@@ -126,12 +126,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="https://img.chaoshewang.com/static/img/transaction/ico3.png" class="ico3" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png" class="ico3" />
                             <div @click="popupShow2 = true" class="Select_box flex_c flex_jc flex_ac">
                                 <template v-if="!buyReward[0]">
                                     <view class="random_img random"></view>
                                     <!-- <img
-                                        src="https://img.chaoshewang.com/static/img/transaction/ico1.png"
+                                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                                         class="ico"
                                     />
                                     <div class="add_txt">添加求换赏品</div>
@@ -148,7 +148,7 @@
                                 @change="onInput" @input="
                                     addMoney = addMoney.replace(/[^\d]/g, '')
                                     " />
-                            <img src="https://img.chaoshewang.com/static/img/transaction/ico2.png" class="ico" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico2.png" class="ico" />
                         </div>
                     </div>
                     <div class="form_item" style="width: 708rpx">
@@ -156,7 +156,7 @@
                             <span>留言</span>
                             <img
                                 @click="one_leaveMessage = ''"
-                                src="https://img.chaoshewang.com/static/img/transaction/ico4.png"
+                                src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico4.png"
                                 class="empty"
                             />
                         </div>
@@ -180,7 +180,7 @@
         </div>
         <u-popup :show="popupShow2" bgColor="transparent" :safeAreaInsetBottom="false">
             <div class="select_product_popup">
-                <img @click="popupShow2 = false" src="https://img.chaoshewang.com/static/img/transaction/close.png"
+                <img @click="popupShow2 = false" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close.png"
                     class="close_btn" />
                 <div class="select_product_con">
                     <u--input prefixIcon="search" @confirm="onClickSearhResult" v-model="searchTxt"
@@ -198,12 +198,12 @@
                                     }">
                                         <img v-if="
                                             buyRewardIds.includes(item.id)
-                                        " src="https://img.chaoshewang.com/static/img/shanggui/xuanzhong.png"
+                                        " src="https://img.shinemang.com/gachaStatic/static/img/shanggui/xuanzhong.png"
                                             class="box_ico" />
                                         <view class="box_ico frame" v-else></view>
                                         <!-- <img
                                             v-else
-                                            src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                            src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                             class="box_ico"
                                         /> -->
                                         <view class="item_txt1">{{
@@ -227,7 +227,7 @@
         <u-popup :show="popupShow3" mode="center" bgColor="transparent" :safeAreaInsetBottom="false">
             <div class="preview_product">
                 <div class="head_tit">
-                    <img @click="popupShow3 = false" src="https://img.chaoshewang.com/static/img/transaction/close2.png"
+                    <img @click="popupShow3 = false" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                         class="close_btn" />
                     <div class="title">请您确定交易信息</div>
                     <div class="txt">确认交易信息，避免给您带来经济损失</div>
@@ -267,7 +267,7 @@
         <u-popup :show="popupShow4" mode="center" bgColor="transparent" :safeAreaInsetBottom="false">
             <div class="preview_product2">
                 <div class="head_tit">
-                    <img @click="popupShow4 = false" src="https://img.chaoshewang.com/static/img/transaction/close2.png"
+                    <img @click="popupShow4 = false" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                         class="close_btn" />
                     <div class="title">请您确定交易信息</div>
                     <div class="txt">确认交易信息，避免给您带来经济损失</div>
@@ -281,7 +281,7 @@
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
                                     <view class="box_ico frame"></view>
-                                    <!-- <img src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico" /> -->
                                     <view class="item_txt1">{{
                                         item.item.saleType == 1
@@ -302,7 +302,7 @@
                                     backgroundImage: `url(${item.coverImage})`,
                                 }">
                                     <view class="box_ico frame"></view>
-                                    <!-- <img src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico" /> -->
                                     <view class="item_txt1">{{
                                         item.saleType == 1 ? "现货" : "预售"
@@ -679,7 +679,7 @@ export default {
     height: 76rpx;
     font-size: 28rpx;
     line-height: 28rpx;
-    background: url("https://img.chaoshewang.com/static/img/transaction/Rectangle.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
     background-size: 100% 100%;
     position: relative;
 
@@ -703,7 +703,7 @@ export default {
             height: 84rpx;
             line-height: 70rpx;
             font-weight: bold;
-            background: url("https://img.chaoshewang.com/static/img/transaction/tab_bg1.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
             background-size: 100% 100%;
             font-size: 30rpx;
         }
@@ -983,7 +983,7 @@ export default {
 }
 
 .random {
-    background: url("https://img.chaoshewang.com/static/img/transaction/random1.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/random1.png");
     background-size: 100% 100%;
 }
 

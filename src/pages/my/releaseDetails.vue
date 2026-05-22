@@ -52,7 +52,7 @@
                                 <span>{{ item.logisticsOrderId }}</span>
                                 <img
                                     @click.stop="copy(item.logisticsOrderId)"
-                                    src="https://img.chaoshewang.com/static/img/market/copy.png"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/market/copy.png"
                                     class="copy"
                                 />
                             </div>
@@ -100,7 +100,7 @@
                         <span>快递单号</span>
                         <div class="flex_r flex_ac">
                             <span>暂无</span>
-                            <!-- <img @click.stop="copy('123')" src="https://img.chaoshewang.com/static/img/market/copy.png"
+                            <!-- <img @click.stop="copy('123')" src="https://img.shinemang.com/gachaStatic/static/img/market/copy.png"
 								class="copy" /> -->
                         </div>
                     </div>

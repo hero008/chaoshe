@@ -38,7 +38,7 @@
                     </div>
                     <div class="address_info" v-else>
                         <div class="on_addr flex_r flex_ac">
-                            <img src="https://img.chaoshewang.com/static/img/shipments/addr_ico.png" class="addr_ico" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/shipments/addr_ico.png" class="addr_ico" />
                             <span class="addr_txt">选择收货地址</span>
                         </div>
                     </div>
@@ -330,7 +330,7 @@ export default {
         },
         // 图片
         payIco(va) {
-            return `https://img.chaoshewang.com/static/img/pay/${va}.png`;
+            return `https://img.shinemang.com/gachaStatic/static/img/pay/${va}.png`;
         },
         async getBalance() {
             await post("v1/goods/item/get", {
@@ -437,7 +437,7 @@ export default {
             this.$emit("fail");
         },
         payIco(va) {
-            return `https://img.chaoshewang.com/static/img/pay/${va}.png`;
+            return `https://img.shinemang.com/gachaStatic/static/img/pay/${va}.png`;
         },
         // 获取地址
         loadAddrList() {
@@ -737,12 +737,12 @@ export default {
                         }
 
                         .minusB {
-                            background: url("https://img.chaoshewang.com/static/img/home/icon--.png");
+                            background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon--.png");
                             background-size: 100% 100%;
                         }
 
                         .minusA {
-                            background: url("https://img.chaoshewang.com/static/img/home/icon-.png");
+                            background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon-.png");
                             background-size: 100% 100%;
                         }
 
@@ -752,12 +752,12 @@ export default {
                         }
 
                         .add {
-                            background: url("https://img.chaoshewang.com/static/img/home/icon++.png");
+                            background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon++.png");
                             background-size: 100% 100%;
                         }
 
                         .addA {
-                            background: url("https://img.chaoshewang.com/static/img/home/icon+.png");
+                            background: url("https://img.shinemang.com/gachaStatic/static/img/home/icon+.png");
                             background-size: 100% 100%;
                         }
                     }
@@ -818,7 +818,7 @@ export default {
         border-radius: 50%;
 
         &.active {
-            background-image: url("https://img.chaoshewang.com/static/img/pay/ico3.png") !important;
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
             background-size: 100% 100% !important;
         }
     }
@@ -852,7 +852,7 @@ export default {
     border-radius: 50%;
 
     &.active {
-        background-image: url("https://img.chaoshewang.com/static/img/pay/ico3.png") !important;
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
         background-size: 100% 100% !important;
     }
 }

@@ -1,8 +1,8 @@
 <template>
     <u-popup mode="center" :show="visible" bgColor="transparent" :safeAreaInsetBottom="false">
         <div class="ipopup_con">
-            <img class="btn" @click='tochaowan' src="https://img.chaoshewang.com/static/img/my/first_btn.png">
-            <img @click="close" src="https://img.chaoshewang.com/static/img/market/close.png" class="close">
+            <img class="btn" @click='tochaowan' src="https://img.shinemang.com/gachaStatic/static/img/my/first_btn.png">
+            <img @click="close" src="https://img.shinemang.com/gachaStatic/static/img/market/close.png" class="close">
         </div>
     </u-popup>
 </template>
@@ -35,7 +35,7 @@ export default {
 .ipopup_con {
     width: 573rpx;
     height: 717rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/my/first_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/first_bg.png");
     background-size: 100% 100%;
     position: relative;
 

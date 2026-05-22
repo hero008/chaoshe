@@ -7,7 +7,7 @@
         <view v-show="!dynamicEffectShow" class="card_list_popup flex_c flex_ac flex_jc"
             :style="{ 'pointer-events': shareType ? 'none' : 'auto' }">
             <view class="title flex_r  flex_ac">
-                <img src="https://img.chaoshewang.com/static/img/duoyou/titile.png" class="title_img" />
+                <img src="https://img.shinemang.com/gachaStatic/static/img/duoyou/titile.png" class="title_img" />
                 <view @click="close" class="closebtn"></view>
             </view>
             <view class="card_list  " @touchstart="handleTouchStart" @touchmove="handleTouchMove"
@@ -38,11 +38,11 @@
             </view>
             <view class="share flex_r flex_ac" v-if="shareType">
                 <view @click="onShareType(2)">
-                    <img class="icon" src="https://img.chaoshewang.com/static/img/home/xcx.png" />
+                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
                     <view>小程序</view>
                 </view>
                 <view @click="onShareType(3)">
-                    <img class="icon" src="https://img.chaoshewang.com/static/img/home/pyq.png" />
+                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/pyq.png" />
                     <view>朋友圈</view>
                 </view>
                 <view @click="shareType = 0" class="btn icof">&#xe607;</view>
@@ -83,9 +83,9 @@ export default {
             pageSize: 10,
             animateDir: '',
             isAnimating: false,
-            imgUrlList: [{ imageUrl: 'https://img.chaoshewang.com/static/img/duoyou/open_loading_10.png', key: 'duoyou_img1', class: 'card1' },
-            { imageUrl: 'https://img.chaoshewang.com/static/img/duoyou/cj_center.png', key: 'duoyou_img2', class: 'card2' },
-            { imageUrl: 'https://img.chaoshewang.com/static/img/duoyou/winImgs4.png', key: 'duoyou_img3', class: 'card3' },],
+            imgUrlList: [{ imageUrl: 'https://img.shinemang.com/gachaStatic/static/img/duoyou/open_loading_10.png', key: 'duoyou_img1', class: 'card1' },
+            { imageUrl: 'https://img.shinemang.com/gachaStatic/static/img/duoyou/cj_center.png', key: 'duoyou_img2', class: 'card2' },
+            { imageUrl: 'https://img.shinemang.com/gachaStatic/static/img/duoyou/winImgs4.png', key: 'duoyou_img3', class: 'card3' },],
         };
     },
     mounted() {
@@ -177,7 +177,7 @@ export default {
             if (vue.levelIndex == 28) {
                 this.dynamicEffectShow = true
                 this.styleStep = 3
-                playDede(0, 'https://img.chaoshewang.com/static/media/chaoshen.mp3')
+                playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/chaoshen.mp3')
                 vibratePhone(3000)
                 setTimeout(() => {
                     this.dynamicEffectShow = false
@@ -215,7 +215,7 @@ export default {
                 if (hasTargetItem) {
                     this.dynamicEffectShow = true
                     this.styleStep = 3
-                    playDede(0, 'https://img.chaoshewang.com/static/media/chaoshen.mp3')
+                    playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/chaoshen.mp3')
                     vibratePhone(3000)
                     setTimeout(() => {
                         this.dynamicEffectShow = false;
@@ -285,9 +285,9 @@ export default {
         },
         onDy(index) {
             if (index !== 0) return
-            playDede(0, 'https://img.chaoshewang.com/static/media/click.mp3');
+            playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/click.mp3');
             this.styleStep = 2
-            playDede(0, 'https://img.chaoshewang.com/static/media/putong.mp3');
+            playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/putong.mp3');
             this.timerList = setTimeout(() => {
                 this.styleStep = 0
                 this.showList();
@@ -382,7 +382,7 @@ export default {
         top: 50%;
         -webkit-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
-        background-image: url("https://img.chaoshewang.com/static/img/duoyou/winImgs4.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/winImgs4.png");
         background-size: 100% 6000%;
         background-repeat: no-repeat;
         background-position: 0 0;
@@ -403,7 +403,7 @@ export default {
         right: 0;
         bottom: 0;
         margin: auto;
-        background-image: url('https://img.chaoshewang.com/static/img/duoyou/cj_center.png');
+        background-image: url('https://img.shinemang.com/gachaStatic/static/img/duoyou/cj_center.png');
         background-size: 700rpx 34104px;
         background-repeat: no-repeat;
         background-position: 0 0;
@@ -511,7 +511,7 @@ export default {
         .closebtn {
             width: 58rpx;
             height: 58rpx;
-            background: url("https://img.chaoshewang.com/static/img/duoyou/closebtn.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/closebtn.png");
             background-size: 100% 100%;
             z-index: 9998;
             margin-left: 174rpx;
@@ -663,7 +663,7 @@ export default {
 .cl_ {
     width: 80rpx;
     height: 40rpx;
-    background: url("https://img.chaoshewang.com/static/img/duoyou/class.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/class.png");
     background-size: 100% 100%;
     position: absolute;
     top: 15rpx;
@@ -671,19 +671,19 @@ export default {
 }
 
 .cl_B {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/class5.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/class5.png");
     background-size: 100% 100%;
 }
 
 .cl_A {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/classA.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/classA.png");
     background-size: 100% 100%;
 }
 
 .cl_SP {
     width: 104rpx;
     height: 44rpx;
-    background: url("https://img.chaoshewang.com/static/img/duoyou/classSP.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/classSP.png");
     background-size: 100% 100%;
 }
 
@@ -711,7 +711,7 @@ export default {
 }
 
 .card-back {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/border.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/border.png");
     background-size: 100% 100%;
 
     .share_btn {
@@ -721,7 +721,7 @@ export default {
         left: 50%;
         bottom: -26rpx;
         transform: translate(-50%, 0);
-        background: url("https://img.chaoshewang.com/static/img/duoyou/share_btn.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/share_btn.png");
         background-size: 100% 100%;
         opacity: 0;
         animation: fadeIn 1.5s ease-out forwards;
@@ -742,12 +742,12 @@ export default {
 }
 
 .cardSP {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/unified28.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/unified28.png");
     background-size: 100% 100%;
 }
 
 .cardA {
-    background: url("https://img.chaoshewang.com/static/img/duoyou/unified1.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/unified1.png");
     background-size: 100% 100%;
 }
 

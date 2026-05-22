@@ -120,7 +120,7 @@ export default {
 .notice-details {
     width: 100%;
     height: 100vh;
-    background-image: url("https://img.chaoshewang.com/static/img/home/gg_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/gg_bg.png");
     background-size: 100% 100%;
     padding-top: 88rpx;
     overflow: hidden;
@@ -131,7 +131,7 @@ export default {
         height: 48rpx;
         margin-left: 30rpx;
         margin-bottom: 36rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/niudan/ndj_back.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png");
         background-size: 100% 100%;
     }
 }
@@ -156,13 +156,13 @@ export default {
             width: 26rpx;
             height: 26rpx;
             margin-right: 16rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/home/date.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/date.png");
             background-size: 100% 100%;
         }
     }
     .notice {
         height: calc(100% - 228rpx);
-        background-image: url("https://img.chaoshewang.com/static/img/home/gg_text.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/gg_text.png");
         background-size: 100% 100%;
         overflow: hidden;
         padding: 72rpx 0;

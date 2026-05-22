@@ -2,13 +2,13 @@
     <view class="activityDescription">
         <view class="topBack">
             <img
-                src="https://img.chaoshewang.com/static/img/activity/bbgsfh.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/bbgsfh.png"
                 @click.stop="gateBack"
                 class="Back_ico"
             />
             <!-- #ifndef MP-WEIXIN -->
             <img
-                src="https://img.chaoshewang.com/static/img/activity/bbgsfx.png"
+                src="https://img.shinemang.com/gachaStatic/static/img/activity/bbgsfx.png"
                 @click="onShare"
                 class="Back_ico ml"
             />
@@ -69,7 +69,7 @@ export default {
                     path: "page-activity/activityDescription/index",
                 },
                 { id: this.activity.id, index: 0 },
-                "https://img.chaoshewang.com/static/img/activity/huodongfx3.png"
+                "https://img.shinemang.com/gachaStatic/static/img/activity/huodongfx3.png"
             );
         },
 
@@ -124,7 +124,7 @@ export default {
     height: 100vh;
     overflow-y: auto;
     background: #fef7d2;
-    background-image: url("https://img.chaoshewang.com/static/img/activity/caishen_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/caishen_bg.png");
     background-size: 100% 800rpx;
     background-repeat: no-repeat;
     overflow-y: auto;
@@ -147,7 +147,7 @@ export default {
     .title {
         width: 750rpx;
         height: 640rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/caoshen.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/caoshen.png");
         background-size: 100% 100%;
         position: absolute;
         top: 0rpx;
@@ -155,7 +155,7 @@ export default {
     .center {
         width: 574rpx;
         height: 76rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/center.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/center.png");
         background-size: 100% 100%;
         position: absolute;
         left: 50%;
@@ -190,14 +190,14 @@ export default {
             .r {
                 width: 96rpx;
                 height: 24rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/activity/caishengr.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/caishengr.png");
                 background-size: 100% 100%;
                 margin-left: 32rpx;
             }
             .l {
                 width: 96rpx;
                 height: 24rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/activity/caishenl.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/caishenl.png");
                 background-size: 100% 100%;
                 margin-right: 32rpx;
             }
@@ -215,7 +215,7 @@ export default {
         position: absolute;
         width: 380rpx;
         height: 80rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/activity/choushangfoot.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/choushangfoot.png");
         background-size: 100% 100%;
         left: 50%;
         transform: translate(-50%);

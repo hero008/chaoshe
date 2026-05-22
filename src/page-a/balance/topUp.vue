@@ -19,7 +19,7 @@
                 </div>
                 <div class="B_num flex_r flex_ac flex_jc">
                     <img
-                        src="https://img.chaoshewang.com/static/img/pay/gold.png"
+                        src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
                         class="m_ico"
                     />
                     <div class="m_num">{{ gold || "0.00" }}</div>
@@ -90,7 +90,7 @@
                 <div class="pay_item flex_r flex_jb flex_ac">
                     <div class="pay_name flex_r flex_ac">
                         <img
-                            :src="`https://img.chaoshewang.com/static/img/pay/${payItem.img}.png`"
+                            :src="`https://img.shinemang.com/gachaStatic/static/img/pay/${payItem.img}.png`"
                             class="pay_ico"
                         />{{ payItem.msg
                         }}<view class="t_msg flex_r flex_ac" @click="getSelect"
@@ -135,7 +135,7 @@
                     >
                         <div class="pay_name flex_r flex_ac">
                             <img
-                                :src="`https://img.chaoshewang.com/static/img/pay/${i.img}.png`"
+                                :src="`https://img.shinemang.com/gachaStatic/static/img/pay/${i.img}.png`"
                                 class="pay_ico"
                             />{{ i.msg }}
                         </div>
@@ -395,7 +395,7 @@ export default {
         width: 100vw;
         height: 1000rpx;
         position: absolute;
-        background-image: url("https://img.chaoshewang.com/static/img/home/topUp_bg.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/topUp_bg.png");
         background-size: 100% 100%;
     }
 }
@@ -409,7 +409,7 @@ export default {
     .top_cord {
         width: 686rpx;
         height: 348rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/home/topUp_bg2.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/topUp_bg2.png");
         background-size: 100% 100%;
         padding: 32rpx;
         margin: 44rpx auto 0;
@@ -437,7 +437,7 @@ export default {
                     margin-left: 8rpx;
                     width: 32rpx;
                     height: 32rpx;
-                    background-image: url("https://img.chaoshewang.com/static/img/home/group_4.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/group_4.png");
                     background-size: 100% 100%;
                 }
             }
@@ -517,7 +517,7 @@ export default {
             .pr {
                 width: 64rpx;
                 height: 64rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/pay/gold.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/gold.png");
                 background-size: 100% 100%;
                 margin-bottom: 24rpx;
             }
@@ -554,11 +554,11 @@ export default {
         .select {
             width: 32rpx;
             height: 32rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/home/icon16.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/icon16.png");
             background-size: 100% 100%;
             margin-right: 8rpx;
             &.active {
-                background-image: url("https://img.chaoshewang.com/static/img/pay/ico3.png") !important;
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
                 background-size: 100% 100%;
             }
         }
@@ -588,7 +588,7 @@ export default {
                 margin-left: 8rpx;
                 width: 32rpx;
                 height: 32rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/home/tz_tu.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/tz_tu.png");
                 background-size: 100% 100%;
             }
         }
@@ -663,11 +663,11 @@ export default {
         .select {
             width: 36rpx;
             height: 36rpx;
-            background-image: url("https://img.chaoshewang.com/static/img/home/icon16.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/icon16.png");
             background-size: 100% 100%;
             margin-right: 8rpx;
             &.active {
-                background-image: url("https://img.chaoshewang.com/static/img/home/icon18.png") !important;
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/icon18.png") !important;
                 background-size: 100% 100%;
             }
         }

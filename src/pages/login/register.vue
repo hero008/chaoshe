@@ -3,7 +3,7 @@
         <view class="content">
             <!-- 头部logo -->
             <view class="header">
-                <image src="https://img.chaoshewang.com/static/login/logo.png"></image>
+                <image src="https://img.shinemang.com/gachaStatic/static/login/logo.png"></image>
                 <view class="c_text">正品潮玩抽赏娱乐平台</view>
             </view>
             <!-- 主体 -->

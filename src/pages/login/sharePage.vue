@@ -88,7 +88,7 @@
                     @click="onModal"
                     class="close"
                     :style="{ top: padTop }"
-                    src="https://img.chaoshewang.com/static/img/niudan/ndj_back.png"
+                    src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                 ></image>
                 <image
                     class="ios"
@@ -156,7 +156,7 @@ export default {
             remindYoushow: false,
             QrShow: false,
             qrCodeUrl:
-                "https://img.chaoshewang.com/static/img/niudan/ndj_back.png",
+                "https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png",
             deviceInfo: null,
             downShow: false,
         };

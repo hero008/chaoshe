@@ -128,7 +128,7 @@ span {
     font-family: '倍数欧气值';
     src: url('@/static/css/ali-font/ysbth.ttf') format('truetype');
     /* #ifdef MP-WEIXIN */
-     src: url('https://img.chaoshewang.com/static/css/ali-font/ysbth.ttf');
+     src: url('https://img.shinemang.com/gachaStatic/static/css/ali-font/ysbth.ttf');
      /* #endif */
 }
 
@@ -245,7 +245,7 @@ span {
     height: 84rpx;
     left: 50%;
     transform: translate(-50%);
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/special_btn.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/special_btn.png");
     background-size: 100% 100%;
     bottom: 38rpx;
     font-weight: 800;
@@ -270,7 +270,7 @@ span {
     padding-top: 12rpx;
     color: #FFF;
     height: 102rpx;
-    background-image: url("https://img.chaoshewang.com/static/img/chaowanshang/special_jqsBtn.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/special_jqsBtn.png");
 }
 
 .special_btn1 {
@@ -279,7 +279,7 @@ span {
     height: 84rpx;
     margin: 0 auto;
     border-radius: 42rpx;
-    // background: url("https://img.chaoshewang.com/static/img/chaowanshang/special_btn.png");
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/special_btn.png");
     // background-size: 100% 100%;
     background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
     font-weight: 800;
@@ -306,7 +306,7 @@ span {
     text-align: center;
     top: -72rpx;
     color: #000000;
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/bubble.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/bubble.png");
     background-size: 100% 100%;
     padding-top: 14rpx;
     font-weight: 500;
@@ -370,7 +370,7 @@ span {
     position: absolute;
     right: 118rpx;
     top: 570rpx;
-    background: url("https://img.chaoshewang.com/static/img/chaowanshang/multiple.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/multiple.png");
     background-size: 100% 100%;
     z-index: 999;
 

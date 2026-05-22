@@ -6,7 +6,7 @@
             <text class="title">洞洞乐</text>
         </view>
          <div class="i_notice flex_r flex_ac">
-            <img src="https://img.chaoshewang.com/static/img/market/ico2.png" class="m_ico" />
+            <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico" />
             <u-notice-bar :text="inotice" :fontSize="12" color="#fff" bgColor="rgba(0,0,0,0)"></u-notice-bar>
           </div>
              <view class="leftBox"  @click=" goto('/pages/common/rulepop', { val: 'SurpriseBoxRules' })"> <image
@@ -27,19 +27,19 @@
                     <span>已售</span>
                 </div>
                 <div class="hint_item">
-                    <image class="image" src="https://img.chaoshewang.com/static/img/dongle/ddl_pic-2.png" />
+                    <image class="image" src="https://img.shinemang.com/gachaStatic/static/img/dongle/ddl_pic-2.png" />
                     <span>已选</span>
                 </div>
                 <div class="hint_item">
-                    <image class="image" src="https://img.chaoshewang.com/static/img/dongle/ddl_pic-3.png" />
+                    <image class="image" src="https://img.shinemang.com/gachaStatic/static/img/dongle/ddl_pic-3.png" />
                     <span>可选</span>
                 </div>
             </div>
             <button open-type="share" class="btns_2 t_btn" @click="onShare">
-                <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-share.png" />
+                <image src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-share.png" />
             </button>
             <div class="btns_3 t_btn" @click="getRewardHistory">
-                <image src="https://img.chaoshewang.com/static/img/chaowanshang/cws_icon-record.png" />
+                <image src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-record.png" />
             </div>
         </div> -->
         <div class="box_bar">
@@ -62,7 +62,7 @@
                 <movable-view y="1000rpx" v-if="activityOpen" class="movable-ball" direction="vertical">
                     <view class="coupon  flex_r flex_ac" :class="[getCouponType]">
                         <view class="bombImg" @click="$noMultipleClicks(getCoupon)">
-                            <img src="https://img.chaoshewang.com/static/img/dongle/bombImg.png" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/dongle/bombImg.png" />
                         </view>
                         <view class="schedule" :class="[getCouponType]">
                             <view class="particulars" v-if="textNum.length > 1">
@@ -80,7 +80,7 @@
                                         <view class="chestBg  flex_c  flex_ac "
                                             :class="{ active: currentAmount >= chest.target }" @click="getChest(chest)">
                                             <img class="chest-icon " :class="{ 'dx': openId == chest.id }"
-                                                :src="`https://img.chaoshewang.com/static/img/activity/${chest.cellTypeName}.png`" />
+                                                :src="`https://img.shinemang.com/gachaStatic/static/img/activity/${chest.cellTypeName}.png`" />
                                         </view>
                                     </view>
                                 </view>
@@ -165,9 +165,9 @@
         <div class="yunlanBtn" @click="visible = true">
             <!-- <div class="l_dit"></div>
             <div class="r_dit"></div>
-            <img class="ico_img" src="https://img.chaoshewang.com/static/img/dongle/img_small.png" alt="" />
-            <img class="ico_txt" src="https://img.chaoshewang.com/static/img/dongle/img_txt.png" alt="" />
-            <img class="ico_light" src="https://img.chaoshewang.com/static/img/dongle/img_light.png" alt="" /> -->
+            <img class="ico_img" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_small.png" alt="" />
+            <img class="ico_txt" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_txt.png" alt="" />
+            <img class="ico_light" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_light.png" alt="" /> -->
         </div>
         <div class="recordBtn" @click="getRewardHistory"></div>
         <!-- 过场动画 , { opacity: !cartoonShow } -->
@@ -195,11 +195,11 @@
                     </view>
                     <view class="share flex_r flex_ac" v-if="shareType">
                         <view @click="onShareType(2)">
-                            <img class="icon" src="https://img.chaoshewang.com/static/img/home/xcx.png" />
+                            <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
                             <view>小程序</view>
                         </view>
                         <view @click="onShareType(3)">
-                            <img class="icon" src="https://img.chaoshewang.com/static/img/home/pyq.png" />
+                            <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/pyq.png" />
                             <view>朋友圈</view>
                         </view>
                         <div @click="shareType = 0" class="btn icof">
@@ -214,7 +214,7 @@
                     <div class="c_btn_item cor9" @click="next">
                         <span>继续</span>
                         <div class="r_num flex_r flex_ae" v-if="WinnNum > 0">
-                            <img src="https://img.chaoshewang.com/static/img/dongle/piece.png" class="ico1" />
+                            <img src="https://img.shinemang.com/gachaStatic/static/img/dongle/piece.png" class="ico1" />
                             <span>x{{ WinnNum }}</span>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                                 <view class="sort">{{ item.luckyNo }}</view>
                             </view>
                             <img v-else class="ico3" :class="{ 'rotated': item.levelName == '冲冲' }"
-                                :src="`https://img.chaoshewang.com/static/img/reward/ico_${item.levelName}.png`" />
+                                :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
                             <view v-if="item.levelName == 'Lucky' && item.luckyPhase"
                                 class="schedule flex_r flex_jb flex_ac" @click.stop="onScheduleTips(item.luckyPhase)">
                                 <view class="num">{{ item.luckyPhase }}%</view>
@@ -267,9 +267,9 @@
                 <div class="random_s flex_r flex_jb flex_ac">
                     <div class="random_item flex_c flex_ac flex_jc" @click="selectRandom(i)"
                         :class="{ active: RandomNum == i }" v-for="i in RandomS" :key="i">
-                        <img src="https://img.chaoshewang.com/static/img/dongle/ico2.png" class="img" />
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/dongle/ico2.png" class="img" />
                         <div class="tit">随机{{ i }}抽</div>
-                        <img src="https://img.chaoshewang.com/static/img/dongle/ico1.png" class="select_img" />
+                        <img src="https://img.shinemang.com/gachaStatic/static/img/dongle/ico1.png" class="select_img" />
                         <div class="txt" v-if="oldRandomNum == i">上次选择</div>
                     </div>
                 </div>
@@ -339,9 +339,9 @@ export default {
             showDiscounts: false,
             shareType: 0,
             probabilityShow: [],
-            cartoonsrc: "https://img.chaoshewang.com/static/img/cartoon/ddl.svga",
+            cartoonsrc: "https://img.shinemang.com/gachaStatic/static/img/cartoon/ddl.svga",
             newFilePath: "",
-            cartoonsrc2: "https://img.chaoshewang.com/static/img/cartoon/bomb.svga",
+            cartoonsrc2: "https://img.shinemang.com/gachaStatic/static/img/cartoon/bomb.svga",
             newGifPath: "", //Gif动画资源地址
             showDh: false,
             cartoonShowDh: false,
@@ -365,8 +365,8 @@ export default {
                 height: 752,
                 imgWidth: 320,
                 imgHeight: 320,
-                bg: "https://img.chaoshewang.com/static/img/activity/chq_tc.png",
-                btn: "https://img.chaoshewang.com/static/img/activity/chq_an.png",
+                bg: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_tc.png",
+                btn: "https://img.shinemang.com/gachaStatic/static/img/activity/chq_an.png",
             },
             activityOpen: false,
             LuckyVisible: false,
@@ -715,7 +715,7 @@ export default {
                     uni.vibrateLong();
                 }
             });
-            playDede(0, 'https://img.chaoshewang.com/static/media/bomb.wav')
+            playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/bomb.wav')
         },
         onFinished() {
             // console.log("动画停止播放时回调");
@@ -876,7 +876,7 @@ export default {
     }
 .dongdongle {
     // background-color: #a8a2e9;
-    // background-image: url("https://img.chaoshewang.com/static/img/dongle/ddl_bg.png");
+    // background-image: url("https://img.shinemang.com/gachaStatic/static/img/dongle/ddl_bg.png");
     // background-size: 100% 100%;
     background: linear-gradient( 180deg, #BCF8FF 0%, #E5FDFF 24%, #E4F5FA 100%);
     height: 100vh;
@@ -1015,7 +1015,7 @@ export default {
     .ico-t {
         width: 90rpx;
         height: 90rpx;
-        background: url("https://img.chaoshewang.com/static/img/dongle/ddl_btn-1.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/dongle/ddl_btn-1.png");
         background-size: 100% 100%;
         font-size: 24rpx;
         line-height: 86rpx;
@@ -1143,7 +1143,7 @@ export default {
                             &.active {
                                 width: 88rpx;
                                 height: 88rpx;
-                                background: url("https://img.chaoshewang.com/static/img/activity/light.png");
+                                background: url("https://img.shinemang.com/gachaStatic/static/img/activity/light.png");
                                 background-size: 100% 100%;
                             }
 
@@ -1557,7 +1557,7 @@ top: 1100rpx;
         width: 88rpx;
         height: 88rpx;
         animation: rotoImg 1.5s linear infinite;
-        background-image: url("https://img.chaoshewang.com/static/img/dongle/ddl_pic-8.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/dongle/ddl_pic-8.png");
         background-size: 100% 100%;
     }
 
@@ -1584,7 +1584,7 @@ top: 1100rpx;
         height: 540rpx;
         margin: 0 auto;
         padding: 32rpx 26rpx;
-        background: url("https://img.chaoshewang.com/static/img/niudan/ndj_pic-2.png");
+        background: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_pic-2.png");
         background-size: 100% 100%;
 
         .p-tit {
@@ -1652,7 +1652,7 @@ top: 1100rpx;
                 left: 6rpx;
                 width: 99.38rpx;
                 height: 32.81rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/niudan/LuckyBg.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
                 background-size: 100% 100%;
                 font-weight: 800;
                 color: transparent;
@@ -1697,7 +1697,7 @@ top: 1100rpx;
                 .iocn {
                     width: 16rpx;
                     height: 16rpx;
-                    background-image: url("https://img.chaoshewang.com/static/img/niudan/info.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/info.png");
                     background-size: 100% 100%;
                     margin-left: 4rpx;
                 }
@@ -1827,7 +1827,7 @@ top: 1100rpx;
             .share_img {
                 width: 64rpx;
                 height: 64rpx;
-                background-image: url("https://img.chaoshewang.com/static/img/dongle/shareMin.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/dongle/shareMin.png");
                 background-size: 100% 100%;
             }
 
@@ -1880,7 +1880,7 @@ top: 1100rpx;
         width: 608rpx;
         height: 627rpx;
         padding-top: 126rpx;
-        background-image: url("https://img.chaoshewang.com/static/img/dongle/exhibition.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/static/img/dongle/exhibition.png");
         background-size: 100% 100%;
         animation: myFn 0.8s;
 

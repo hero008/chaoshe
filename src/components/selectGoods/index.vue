@@ -5,7 +5,7 @@
                 <view class="tab_item" :class="{ active: i.val == selectType }" @click="ontab(i.val)"
                     v-for="i in navbar" :key="i.val">{{ i.txt }}</view>
             </view>
-            <img @click="onClose" src="https://img.chaoshewang.com/static/img/transaction/close.png"
+            <img @click="onClose" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close.png"
                 class="close_btn" />
             <view class="p_lists">
                 <div class="flex_r flex_jb">
@@ -34,9 +34,9 @@
                                 @click.stop="SelectItem(s, it, i, i.stockIds)">
                                 <img class="item_img" :src="i.itemCover" lazy-load="true" />
                                 <!-- <img v-if="multiIds[s].includes(it)"
-                                    src="https://img.chaoshewang.com/static/img/shanggui/xuanzhong.png" class="box_ico"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/shanggui/xuanzhong.png" class="box_ico"
                                     lazy-load="true" />
-                                <img v-else src="https://img.chaoshewang.com/static/img/shanggui/group_1.png"
+                                <img v-else src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                     class="box_ico" lazy-load="true" /> -->
                                     <div style="color: #9064FF;"  class="box_ico icof cor" v-if="multiIds[s].includes(it)">&#xe673;</div>
                                     <div  class="box_ico icof" v-else >&#xe671;</div>
@@ -541,7 +541,7 @@ export default {
     height: 76rpx;
     font-size: 28rpx;
     line-height: 28rpx;
-    background: url("https://img.chaoshewang.com/static/img/transaction/Rectangle.png");
+    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
     background-size: 100% 100%;
     position: absolute;
     top: -60rpx;
@@ -571,7 +571,7 @@ export default {
             height: 84rpx;
             line-height: 70rpx;
             font-weight: bold;
-            background: url("https://img.chaoshewang.com/static/img/transaction/tab_bg1.png");
+            background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
             background-size: 100% 100%;
             font-size: 30rpx;
         }

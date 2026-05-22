@@ -99,7 +99,7 @@
                 <u-empty
                     v-if="!pointData.inviteeList.length"
                     text="暂无记录~"
-                    icon="https://img.chaoshewang.com/static/img/home/empty.png"
+                    icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="30"
                 />
             </div>
@@ -126,7 +126,7 @@ export default {
                 inviteeList: [],
             },
             userInfo: this.$gl("userInfo") || {},
-            shareimg:"https://img.chaoshewang.com/static/img/activity/invite_share.png",
+            shareimg:"https://img.shinemang.com/gachaStatic/static/img/activity/invite_share.png",
             QRdata: {},
             ysImg:''  
         };
