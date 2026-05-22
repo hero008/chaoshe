@@ -272,7 +272,7 @@
                     <view class="goBtn" @click="jqsShow = {}">继续开赏</view>
                 </view>
             </view>
-        </u-popup>``
+        </u-popup>
         <gachaDetails ref="gachaDetails" />
         <!-- 支付 芒盒赏5 -->
         <x-pay @success="onClickDraw" ref="xPay" mtype="5" :probabilityShow="probabilityShow" />
