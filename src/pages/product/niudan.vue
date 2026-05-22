@@ -730,7 +730,7 @@ export default {
             if (type == 2) {
                 uniShare(
                     {
-                        tit: `我在娱乐潮社赏APP抽中了${itemName}`,
+                        tit: `我在娱乐芒盒赏APP抽中了${itemName}`,
                         path: "pages/product/niudan",
                     },
                     { id: this.gachaId, index: this.boxIndex },
@@ -746,7 +746,7 @@ export default {
                     scene: "WXSceneTimeline",
                     type: 0,
                     href: "http://www.chaoshewang.com",
-                    title: `我在娱乐潮社赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
+                    title: `我在娱乐芒盒赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
                 };
                 compressImg(
                     coverThumb || itemCover,

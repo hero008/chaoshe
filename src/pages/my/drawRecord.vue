@@ -142,7 +142,7 @@ export default {
                 { txt: "扭蛋机", val: 2 },
                 { txt: "潮游赏", val: 3 },
                 { txt: "洞洞乐", val: 4 },
-                // { txt: "潮社赏", val: 5 },
+                // { txt: "芒盒赏", val: 5 },
                 // { txt: "一网打尽", val: 6 },
             ],
             pageda: {

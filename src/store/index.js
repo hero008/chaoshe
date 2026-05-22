@@ -28,22 +28,22 @@ const store = new Vuex.Store({
         /* #endif */
         mapping: {
             'CAMERA': {
-                title: "潮社娱乐赏对相机权限使用说明",
+                title: "芒盒娱乐赏对相机权限使用说明",
                 content: "便于您使用该功能拍摄照片用于更换头像场景中读取和写入相册和文件内容。",
                 methods: 'SET_CAMERA'
             },
             'WRITE_EXTERNAL_STORAGE': {
-                title: "潮社娱乐赏对相册权限使用说明",
+                title: "芒盒娱乐赏对相册权限使用说明",
                 content: "便于您使用该功能上传您的照片/图片用于更换头像场景中读取和写入相册和文件内容。",
                 methods: 'SET_WRITE_EXTERNAL_STORAGE'
             },
             // 'ACCESS_FINE_LOCATION': {
-            //     title: "潮社娱乐赏对地理位置权限申请说明",
-            //     content: "潮社娱乐赏应用程序可以提供基于位置的服务、定位导航、附近搜索等功能。",
+            //     title: "芒盒娱乐赏对地理位置权限申请说明",
+            //     content: "芒盒娱乐赏应用程序可以提供基于位置的服务、定位导航、附近搜索等功能。",
             //     methods: 'SET_ACCESS_FINE_LOCATION'
             // },
             // 'CALL_PHONE': {
-            //     title: "潮社娱乐赏拨打/管理电话权限申请说明",
+            //     title: "芒盒娱乐赏拨打/管理电话权限申请说明",
             //     content: "便于您使用该功能联系买家、客服、业务经理与联系等场景下使用",
             //     methods: 'SET_CALL_PHONE'
             // }

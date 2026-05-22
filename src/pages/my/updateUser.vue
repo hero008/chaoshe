@@ -68,7 +68,7 @@ export default {
             list: [
                 { name: "昵称", key: "name", ico: "uico1" },
                 { name: "手机号", key: "phone", ico: "uico2" },
-                { name: "潮社ID", key: "id", ico: "uico3" },
+                { name: "芒盒ID", key: "id", ico: "uico3" },
             ],
             isedit: false, // 是否编辑
             newName: "",

@@ -157,7 +157,7 @@
                         ></u-parse
                     ></view>
                     <view class="text1"
-                        >本活动解释权归潮社娱乐文化官方所有</view
+                        >本活动解释权归芒盒娱乐文化官方所有</view
                     >
                 </view>
             </view>

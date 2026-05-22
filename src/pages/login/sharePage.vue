@@ -96,7 +96,7 @@
                     show-menu-by-longpress="true"
                     src="https://img.chaoshewang.com/matt/static/img/index/ios_QR.png"
                 />
-                <view class="ts">长按保存图片微信识别二维码下载潮社APP</view>
+                <view class="ts">长按保存图片微信识别二维码下载芒盒APP</view>
             </view>
             <x-modal :visible.sync="downShow" :text="1" @onModal="onModal" />
         </view>

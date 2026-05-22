@@ -117,7 +117,7 @@
   "uni-app": {
     "scripts": {}
   },
-  "description": "潮社app",
+  "description": "芒盒app",
   "main": "babel.config.js",
   "repository": {
     "type": "git",

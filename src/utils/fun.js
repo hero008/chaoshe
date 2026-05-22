@@ -177,7 +177,7 @@ let uniShare = (obj = {}, params = {}, imageUrl) => {
         scene: "WXSceneSession",
         type: 5,
         imageUrl,
-        title: obj.tit || "潮社赏",
+        title: obj.tit || "芒盒赏",
         miniProgram: {
             // id: 'gh_8701a277156e',
             id: "gh_47ea484e5bbc",
@@ -198,9 +198,9 @@ let uniShare = (obj = {}, params = {}, imageUrl) => {
                 let type2 = {
                     scene: "WXSceneSession",
                     type: 5,
-                    title: obj.tit || "潮社赏",
+                    title: obj.tit || "芒盒赏",
                     miniProgram: {
-                        id: 'gh_47ea484e5bbc',//潮社online
+                        id: 'gh_47ea484e5bbc',//芒盒online
                         path: obj.path + '?' + objectToUrl(params), // 可带参
                         webUrl: 'http://www.chaoshewang.com',
                         // type:2,
@@ -253,7 +253,7 @@ let shareImg = (obj = {}, params = {},) => {
         scene: "WXSceneSession",
         type: 5,
         imageUrl: "https://img.shinemang.com/gachaStatic/static/img/imgs/gachas_share.jpg",
-        title: obj.tit || "潮社赏",
+        title: obj.tit || "芒盒赏",
         miniProgram: {
             id: "gh_47ea484e5bbc",
             path: obj.path + '?' + objectToUrl(params), // 可带参

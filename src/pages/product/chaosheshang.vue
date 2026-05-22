@@ -274,7 +274,7 @@
             </view>
         </u-popup>``
         <gachaDetails ref="gachaDetails" />
-        <!-- 支付 潮社赏5 -->
+        <!-- 支付 芒盒赏5 -->
         <x-pay @success="onClickDraw" ref="xPay" mtype="5" :probabilityShow="probabilityShow" />
         <!-- 抽赏动效 -->
         <dynamic-effect ref="animation" />
@@ -655,7 +655,7 @@ export default {
         onShare() {
             uniShare(
                 {
-                    tit: "潮社赏 : " + this.AReward.gacha.themeName,
+                    tit: "芒盒赏 : " + this.AReward.gacha.themeName,
                     path: "pages/product/chaosheshang",
                 },
                 { id: this.gachaId, index: this.boxIndex },

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="msg">
-                <div class="p">潮社文化传播(深圳)有限公司版权所有</div>
+                <div class="p">芒盒文化传播(深圳)有限公司版权所有</div>
             </div>
         </div>
         <view class="shake flex_r flex_jb flex_ac" v-else>

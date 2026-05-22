@@ -763,7 +763,7 @@ export default {
             if (type == 2) {
                 uniShare(
                     {
-                        tit: `我在娱乐潮社赏APP抽中了${itemName}`,
+                        tit: `我在娱乐芒盒赏APP抽中了${itemName}`,
                         path: "pages/product/dongle",
                     },
                     { id: this.gachaId, index: this.boxIndex },
@@ -779,7 +779,7 @@ export default {
                     scene: "WXSceneTimeline",
                     type: 0,
                     href: "http://www.chaoshewang.com",
-                    title: `我在娱乐潮社赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
+                    title: `我在娱乐芒盒赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
                 };
                 compressImg(
                     coverThumb || itemCover,
@@ -1404,7 +1404,7 @@ font-family: '倍数欧气值';
             left: 0;
             width: 60rpx;
             height: 60rpx;
-            background: url("@/static/gachaStatic/ddl/zd.png");
+            background: url("https://img.shinemang.com/gachaStatic/ddl/zd.png");
             background-size: 100% 100%;
         }
     }

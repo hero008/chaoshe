@@ -109,7 +109,7 @@ export default {
                     path: "/pages/chaowan/gachasList",
                 },
                 // {
-                //     name: "潮社赏",
+                //     name: "芒盒赏",
                 //     tegs: ["jqs", "Lucky", "Last"],
                 //     txt: "趣味无穷",
                 //     adimg: "https://img.shinemang.com/gachaStatic/static/img/cw-new/c5.png",

@@ -23,14 +23,14 @@ export default {
     //1.配置发送给朋友
     onShareAppMessage() {
         return {
-            title: '潮社赏', //分享的标题
+            title: '芒盒赏', //分享的标题
             path: this.sharePath, //点击分享链接之后进入的页面路径
         };
     },
     //2.配置分享到朋友圈
     onShareTimeline() {
         return {
-            title: '潮社赏', //分享的标题
+            title: '芒盒赏', //分享的标题
             query: this.sharePath, //点击分享链接之后进入的页面路径
             // imageUrl: this.img_card //分享发送的链接图片地址
         }

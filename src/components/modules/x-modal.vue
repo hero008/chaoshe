@@ -22,7 +22,7 @@
                 </div>
                 <div class="p">
                     <span v-if="text !== 1">需使用</span
-                    ><span class="corr">完整版潮社APP</span>
+                    ><span class="corr">完整版芒盒APP</span>
                 </div>
                 <div class="p1 flex_r flex_ac flex_jb">
                     <div class="Ico_item flex_c flex_ac">

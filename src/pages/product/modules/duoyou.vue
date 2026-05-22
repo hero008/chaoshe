@@ -255,7 +255,7 @@ export default {
             if (type == 2) {
                 uniShare(
                     {
-                        tit: `我在娱乐潮社赏APP抽中了${tit}`,
+                        tit: `我在娱乐芒盒赏APP抽中了${tit}`,
                         path: url,
                     },
                     { id, index },
@@ -271,7 +271,7 @@ export default {
                     scene: "WXSceneTimeline",
                     type: 0,
                     href: "http://www.chaoshewang.com",
-                    title: `我在娱乐潮社赏APP抽中了“${tit}”赶紧来吸吸欧气吧！！！`,
+                    title: `我在娱乐芒盒赏APP抽中了“${tit}”赶紧来吸吸欧气吧！！！`,
                 };
                 compressImg(
                     k.coverImage,
