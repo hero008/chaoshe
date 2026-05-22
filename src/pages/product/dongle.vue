@@ -1313,7 +1313,7 @@ export default {
  .line{
      position: absolute;
   left: 10rpx;
-
+ pointer-events: none;
   z-index: 1;
                 width: 534rpx;
                 height: 16rpx;
