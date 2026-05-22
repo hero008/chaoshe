@@ -221,7 +221,8 @@
         <duoyou ref="duoyou" @onDuoyou="onClickDuoyou" />
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
         <u-popup @close="showRecards = false" :show="showRecards">
-             <div class="lotteryRaffle">
+            <scroll-view style="height: 1000rpx;" scroll-y>
+                    <div class="lotteryRaffle">
                             <div class="r_item" v-for="(array, key) in recordList" :key="key">
                                 <div class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]">
                                     <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
@@ -267,7 +268,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+             </div>
+            </scroll-view>
+          
 		</u-popup>
 
     </view>
@@ -1357,18 +1360,20 @@ margin-bottom: 12rpx;
  
 }
   .lotteryRaffle {
-        height: calc(100% - 180rpx);
+        height: calc(100%);
         border-radius: 10rpx;
         overflow-y: auto;
-        padding-bottom: 100rpx;
-           .r_item {
-        background: #5D2028;
+        padding-bottom: 40rpx;
+        padding-top: 0rpx;
+       .r_item {
+        // background: #5D2028;
+        background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
         border-radius: 24rpx;
 
         .lr_tit {
             font-weight: 500;
             font-size: 20rpx;
-            color: #E9BCBD;
+            color: #8D8D94;
             padding: 10rpx 12rpx;
             border-radius: 10rpx 10rpx 0 0;
 
@@ -1383,23 +1388,23 @@ margin-bottom: 12rpx;
         }
 
         .badgeA {
-            background: linear-gradient(90deg, #B87B11 0%, rgba(184, 123, 17, 0.1) 100%);
+            // background: linear-gradient(90deg, #B87B11 0%, rgba(184, 123, 17, 0.1) 100%);
         }
 
         .badgeC {
-            background: linear-gradient(90deg, #9B8786 0%, rgba(155, 135, 134, 0.1) 100%);
+            // background: linear-gradient(90deg, #9B8786 0%, rgba(155, 135, 134, 0.1) 100%);
         }
 
         .badgeSP {
-            background: linear-gradient(90deg, #872F3F 0%, rgba(135, 47, 63, 0.1) 100%);
+            // background: linear-gradient(90deg, #872F3F 0%, rgba(135, 47, 63, 0.1) 100%);
         }
 
         .badgeB {
-            background: linear-gradient(90deg, #9B8786 0%, rgba(155, 135, 134, 0.1) 100%);
+            // background: linear-gradient(90deg, #9B8786 0%, rgba(155, 135, 134, 0.1) 100%);
         }
 
         .lr_con {
-            background: #6F2A2B;
+            // background: #6F2A2B;
             border-radius: 0rpx 0rpx 10rpx 10rpx;
             min-height: 150rpx;
             margin-bottom: 16rpx;
@@ -1456,7 +1461,7 @@ margin-bottom: 12rpx;
                 padding: 8rpx 0;
                 font-weight: 500;
                 font-size: 24rpx;
-                color: #FFFFFF;
+                color: #1A1A1A;
 
                 .u_img {
                     width: 32rpx;
@@ -1468,13 +1473,13 @@ margin-bottom: 12rpx;
                 .u_name {
                     font-weight: 500;
                     font-size: 20rpx;
-                    color: #D09D9E;
+                    color: #8D8D94;
                 }
 
                 .time {
                     font-weight: 500;
                     font-size: 20rpx;
-                    color: #D09D9E;
+                    color: #8D8D94;
                 }
             }
         }
