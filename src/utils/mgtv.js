@@ -180,3 +180,14 @@ export const mgTvIsLogin = () => {
 
 
 
+export const formateGachaLevelName = (levelName) => {
+   if(levelName == 'SP'){
+            return '传说'
+           }else if(levelName == 'A'){
+            return '史诗'
+           }else if(levelName == 'B'){
+            return '稀有'
+           }else if(levelName == 'C'){
+               return '普通'
+           }
+}

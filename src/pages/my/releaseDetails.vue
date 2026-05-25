@@ -3,39 +3,44 @@
         <div class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt">返回</text>
+                <text class="txt"></text>
             </view>
         </div>
         <div class="releaseCon">
-            <div class="addr_row">
-                <div class="tit_row flex_r flex_jb flex_ac">
-                    <span>收货地址</span>
-                    <div class="tag corg" v-if="order_de.state == 4">
+
+            <div class="orderStatus">
+                <image
+                    :src="order_de.state == 3?'https://img.shinemang.com/gachaStatic/my/icon1.png':'https://img.shinemang.com/gachaStatic/my/icon2.png'"
+                    mode="scaleToFill"
+                />
+                  <div class="tag corg" v-if="order_de.state == 4">
                         发货中
                     </div>
                     <div class="tag" v-if="order_de.state == 5">已签收</div>
                     <div class="tag corg" v-if="order_de.state == 3">
                         备货中
                     </div>
-                    <!-- <div class="tag">已签收</div> -->
-                </div>
-                <div class="address_info">
-                    <div class="flex_r flex_ac">
-                        <div class="tags flex_r flex_ac">
-                            <!-- <div class="tag corr" v-if="selectAddr.isDefault">默认</div>
-                            <div class="tag corb" v-if="selectAddr.addressTag">家</div> -->
-                            <!-- <div class="tag corr" v-if="order_de.isDefault">默认</div> -->
-                            <!-- <div class="tag corb">{{ addressInfos.addressTag }}</div> -->
-                        </div>
-                        <div class="address">{{ order_de.receiveAddress }}</div>
+            </div>
+            <div class="addr_row">
+                <div class="address_info flex_r flex_ac">
+                    <div>
+                        <image
+                         style="width: 48rpx;height: 48rpx;"
+                            src="https://img.shinemang.com/gachaStatic/my/orderAddressIcon.png"
+                            mode="scaleToFill"
+                        />
                     </div>
-                    <div class="userAddr">
-                        {{ order_de.receiveAddressDetail }}
-                    </div>
-                    <div class="userName">
+                    <div class="info">
+                   
+                       <div class="userName">
                         <span>{{ order_de.receiveName }}</span
-                        ><span>{{ order_de.receivePhone }}</span>
+                        ><span class="phone">{{ order_de.receivePhone }}</span>
                     </div>
+                       
+                        <div class="address">{{ order_de.receiveAddress }} {{ order_de.receiveAddressDetail }}</div>
+                    </div>
+                 
+                  
                 </div>
             </div>
             <div v-if="logisticsInfos.length">
@@ -44,31 +49,30 @@
                     v-for="(item, index) in logisticsInfos"
                     :key="index"
                 >
-                    <div class="tit_row line">物流信息</div>
+                    <div class="tit_row line">
+                        <span>
+                             <span>快递信息</span>
+                             <span class="line"></span>
+                        </span>
+                    </div>
                     <div class="info_row line">
                         <div class="p flex_r flex_jb flex_ac">
                             <span>快递单号</span>
                             <div class="flex_r flex_ac">
                                 <span>{{ item.logisticsOrderId }}</span>
-                                <img
-                                    @click.stop="copy(item.logisticsOrderId)"
+                                <view class="copy"   @click.stop="copy(item.logisticsOrderId)">复制</view>
+                                <!-- <img
+                                  
                                     src="https://img.shinemang.com/gachaStatic/static/img/market/copy.png"
                                     class="copy"
-                                />
+                                /> -->
                             </div>
                         </div>
                         <div class="p flex_r flex_jb flex_ac">
                             <span>快递公司</span>
                             <span>{{ item.logisticsCompany }}</span>
                         </div>
-                        <div class="p flex_r flex_jb flex_ac">
-                            <span>快递运费</span>
-                            <span>{{
-                                order_de.freightAmount > 0 && index == 0
-                                    ? order_de.freightAmount + "元"
-                                    : "免运费"
-                            }}</span>
-                        </div>
+               
                     </div>
                     <div class="info_row">
                         <div class="goods flex_r flex_jb flex_ac">
@@ -94,7 +98,12 @@
                 </div>
             </div>
             <div class="addr_row" v-else>
-                <div class="tit_row line">物流信息</div>
+                <div class="tit_row line">
+                      <span>
+                             <span>快递信息</span>
+                             <span class="line"></span>
+                        </span>
+                </div>
                 <div class="info_row line">
                     <div class="p flex_r flex_jb flex_ac">
                         <span>快递单号</span>
@@ -134,8 +143,23 @@
                     </div>
                 </div>
             </div>
+            <div class="addr_row fee p flex_r flex_jb flex_ac">
+                <div style="padding: 0;" class="tit_row line">  <span>
+                             <span>快递运费</span>
+                             <span class="line"></span>
+                        </span></div>
+                           
+                            <span>{{
+                                order_de.freightAmount > 0 && index == 0
+                                    ? order_de.freightAmount + "元"
+                                    : "免运费"
+                            }}</span>
+             </div>
             <div class="addr_row" style="padding-bottom: 20rpx">
-                <div class="tit_row">备注</div>
+                <div class="tit_row"> <span>
+                             <span>备注</span>
+                             <span class="line"></span>
+                        </span></div>
                 <div class="remark">{{ order_de.remark }}</div>
             </div>
         </div>
@@ -191,17 +215,7 @@ export default {
     overflow-y: auto;
 
    background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+      
 }
 
 .navbar_x {
@@ -238,22 +252,52 @@ export default {
     height: calc(100vh - 180rpx);
     overflow-y: auto;
     z-index: 2;
+    .orderStatus{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1A1A1A;
+        font-size: 40rpx;
+        font-weight: bold;
+        margin-bottom: 48rpx;
+        image{
+            width: 48rpx;
+            height: 48rpx;
+            margin-right: 16rpx;
+        }
+    }
 
     .addr_row {
-        padding: 0 30rpx;
+        padding: 32rpx 22rpx;
         background-color: #fff;
-        border-radius: 16rpx;
+        border-radius: 24rpx;
         margin-bottom: 16rpx;
     }
 
     .line {
-        border-bottom: 2rpx solid #e2e1e3;
+        // border-bottom: 2rpx solid #e2e1e3;
     }
 
     .tit_row {
-        font-size: 28rpx;
+        font-size: 32rpx;
         font-weight: bold;
         padding: 24rpx 0;
+        padding-top: 0;
+        span{
+           position: relative;
+           z-index: 5;
+           .line{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0rpx;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            width: 100%;
+            height: 16rpx;
+            z-index: 2;
+
+           }
+        }
 
         .tag {
             font-size: 24rpx;
@@ -270,8 +314,10 @@ export default {
     }
 
     .address_info {
-        padding: 30rpx 0;
-
+        // padding: 30rpx 0;
+        .info{
+            margin-left: 16rpx;
+        }
         .tag {
             width: 72rpx;
             height: 36rpx;
@@ -294,7 +340,9 @@ export default {
         }
 
         .address {
-            font-size: 28rpx;
+            font-size: 24rpx;
+            margin-top: 15rpx;
+            color: #8D8D94;
         }
 
         .userAddr {
@@ -304,27 +352,43 @@ export default {
         }
 
         .userName {
-            font-size: 24rpx;
+            font-size: 32rpx;
+            color: #1A1A1A;
+            font-weight: bold;
 
             span {
                 margin-right: 20rpx;
+            }
+            .phone{
+                font-size: 28rpx;
+                font-weight: 100;
             }
         }
     }
 
     .info_row {
-        font-size: 24rpx;
-        font-weight: 500;
+        font-size: 28rpx;
+        font-weight: 100;
         padding-bottom: 20rpx;
+        color:#1A1A1A ;
 
         .copy {
-            width: 100rpx;
-            height: 36rpx;
-            margin-left: 25rpx;
+            width: 80rpx;
+            height: 32rpx;
+            // margin-left: 25rpx;
+            font-size: 24rpx;
+            color:#1A1A1A  ;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F5F5F5;
+            border-radius: 16rpx;
+            margin-left: 16rpx;
         }
 
         .p {
-            margin-top: 22rpx;
+            padding: 16rpx 0;
+            // margin-top: 22rpx;
         }
     }
 
@@ -332,18 +396,18 @@ export default {
         margin: 20rpx 0;
 
         .goods_li {
-            height: 110rpx;
-            width: calc(100% - 60rpx);
+            height: 124rpx;
+            width: calc(100% - 70rpx);
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
             .imgBox {
                 position: relative;
-                width: 110rpx;
+                width: 124rpx;
                 margin-right: 12rpx;
                 .number {
                     position: absolute;
-                    right: 0rpx;
+                    left: 0rpx;
                     bottom: 6rpx;
                     font-size: 24rpx;
                     color: #ffffff;
@@ -351,16 +415,16 @@ export default {
                     text-align: center;
                     line-height: 32rpx;
                     padding: 0 10rpx;
-                    background: rgba(0, 0, 0, 0.5);
+                    background: rgba(26, 26, 26, 0.5);
                     border-radius: 8rpx;
                 }
             }
             .goods_img {
-                height: 110rpx;
-                width: 110rpx;
+                height: 124rpx;
+                width: 124rpx;
                 border-radius: 16rpx;
                 /* background-color: rgba($color: $motif-color, $alpha: 0.5); */
-                margin-right: 12rpx;
+                margin-right: 16rpx;
 
                 &:last-child {
                     margin-right: 0;
@@ -372,12 +436,13 @@ export default {
             font-size: 24rpx;
             font-weight: 500;
             padding: 0 4rpx;
+            color: #8D8D94;
         }
     }
 
     .remark {
-        margin-top: 16rpx;
-        background: #f9f9f9;
+        margin-top: 11rpx;
+        background: #F5F6F8;
         border-radius: 16rpx;
         padding: 20rpx;
         min-height: 150rpx;

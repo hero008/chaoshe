@@ -3,9 +3,10 @@
     <view class="market" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top + 'px' }">
         <!-- 热门交易搜索框 -->
         <view class="notice">
-            <u-search style="width: 60%;" placeholder="搜索热门交易" @search="searchKey" v-model="keyword" :showAction="false"
-                bgColor="#fff" :height="MBInfo().height" />
-            <view class="notice_btn"></view>
+            <u-search style="width: 60%;" placeholderColor="#8D8D94" :inputStyle="{
+            color:'#1A1A1A'}" searchIconColor="#1A1A1A" placeholder="搜索热门交易" @search="searchKey" v-model="keyword" :showAction="false"
+                bgColor="transparent" :height="MBInfo().height" />
+            <!-- <view class="notice_btn"></view> -->
         </view>
         <!-- 二级tab -->
         <div class="navbarSubclass" v-if='Object.keys(childList).length'>
@@ -23,10 +24,13 @@
             <div>
                 <!-- 我的余额 左边的tab 分类 -->
                 <view class="tobBox">
-                    <u-tabs :list="navbar" @click="ontab" :lineColor="lineColor" :activeStyle="activeStyl" />
-                    <view class="balance">
-                        <view class="imgbalance gold_coin" />
-                        <view @click=" goto('/page-a/balance/index')">余额</view>
+                    <u-tabs :list="navbar"  :inactiveStyle="{
+                        color: '#8D8D94',
+                        transform: 'scale(1)'
+                    }" @click="ontab" :lineColor="lineColor"  lineHeight="7"  lineWidth="32" :activeStyle="activeStyl" />
+                    <view @click=" goto('/page-a/balance/index')" class="balance">
+                        <!-- <view class="imgbalance gold_coin" />
+                        <view >余额</view> -->
                     </view>
                 </view>
                 <!-- 交易规则部分 -->
@@ -39,18 +43,19 @@
                                 <!-- <image :src="`https://img.shinemang.com/gachaStatic/static/img/pay/${text.id == i.id?"shouqi":'zhankai'}.png`" class="sim"></image> -->
                             </view>
                         </view>
-                        <view v-if="active == 0" class="trendsetter"
+                        <!-- <view v-if="active == 0" class="trendsetter"
                             :style="{ backgroundImage: `url(https://img.shinemang.com/gachaStatic/static/img/transaction/${userType ? 'optFor1' : 'trendsetter1'}.png)` }"
-                            @click="onTrendsetter"></view>
+                            @click="onTrendsetter"></view> -->
                     </div>
-                    <div class="tag flex_r flex_ac" @click="goto('/pages/common/rulepop', { val: 'MarketRules' })">
-                        <span>交易规则</span>
-                        <img
-                            src="https://img.shinemang.com/gachaStatic/static/img/pay/ico5.png"><!-- <span class="icof">&#xe6cd;</span> -->
-                    </div>
+                  
                 </view>
             </div>
-
+          <div class="exchangeRules tag flex_r flex_ac" @click="goto('/pages/common/rulepop', { val: 'MarketRules' })">
+                        <!-- <span>交易规则</span> -->
+                        <!-- <img
+                            src="https://img.shinemang.com/gachaStatic/static/img/pay/ico5.png"> -->
+                            <!-- <span class="icof">&#xe6cd;</span> -->
+                    </div>
             <div class="transaction_list">
                 <div class="lists" v-if="orderList.length">
                     <div class="t_item" v-for="(item, a) in orderList" :key="a">
@@ -71,48 +76,73 @@
                             <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico big">
                             <span>{{ item.content }}</span>
                         </div>
-                        <div class="goods flex_r flex_jb flex_ac">
+                        <div class="goods flex_r  flex_ac">
                             <scroll-view scroll-x class="goods_li flex_r" :hrottle="false"
                                 @scrolltolower="onScrollX(item.id, a)" :lower-threshold="200">
                                 <template v-if="item.type == 'MarketOrderType_Ask'">
-                                    <img v-if="item.wantItem" class="goods_img" :src="item.wantItem.coverThumb"
+                                    <!-- <view style="position: relative;height: 160rpx;"> -->
+                                       <img  v-if="item.wantItem" class="goods_img" :src="item.wantItem.coverThumb"
                                         :class="[item.items.length ? 'bore' : 'bor9']"
                                         @click="ondetail(item.wantItem.itemId)">
+
+                                         <image
+                                           :style="{
+                                            position:'absolute',
+                                            width:'60rpx',
+                                            height:'40rpx',
+                                            bottom:0,
+                                            left:0,
+
+                                           }"
+                                           v-if="item.wantItem"
+                                            src="https://img.shinemang.com/gachaStatic/market/qg.png"
+                                            mode="scaleToFill"
+                                        />
+
+                                       
+                                    <!-- </view> -->
+                                  
                                     <img v-else src="https://img.shinemang.com/gachaStatic/static/img/transaction/random1.png"
                                         class=" goods_img bor5">
                                     <!-- <view v-else class="  random"></view> -->
-                                    <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
+                                     <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
                                         v-if="item.items.length" class="ico3">
                                 </template>
-                                <img :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" class="goods_img"
+                                
+                                <img v-if="item.wantItem" :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" :class="['goods_img', 'wantGoods']"
+                                    @click="ondetail(cont.itemId)" :id="i + 1" />
+                                <img v-else :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" :class="['goods_img']"
                                     @click="ondetail(cont.itemId)" :id="i + 1" />
                             </scroll-view>
-                            <div class="goods_num flex_r flex_jc flex_ac" v-if="item.items.length > 1">x{{ item.nus }}
+                            <div style="margin-left: 10rpx;color: #8D8D94;" class="goods_num flex_c flex_jc flex_ac" v-if="item.items.length > 1">
+                                <div>共</div>
+                                <div>{{ item.nus }}</div>
+                                <div>件</div>
                             </div>
                         </div>
                         <div class="bottom_btn flex_r flex_je flex_ac">
                             <template v-if="item.wantItem">
                                 <div class="btnE flex_r flex_ac flex_jc" v-if="!item.items.length && item.askPrice">
-                                    <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico">
-                                    <span>求购：{{ item.askPrice }}</span>
+                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico"> -->
+                                    <span>求购：<span class="price">{{ item.askPrice }}</span></span>
                                 </div>
 
                                 <template v-else>
                                     <div class="btnE flex_r flex_ac flex_jc">
-                                        <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico4.png" class="m_ico">
-                                        <span>以物换物</span>
+                                        <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico4.png" class="m_ico"> -->
+                                        <span style="color: #EA4CA4;">以物换物</span>
                                     </div>
 
                                 </template>
                             </template>
                             <div class="btnE flex_r flex_ac flex_jc" v-if="item.items.length && item.askPrice">
-                                <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico">
-                                <span>加价：{{ item.askPrice }}</span>
+                                <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico3.png" class="m_ico"> -->
+                                <span>加价：<span class="price">{{ item.askPrice }}</span></span>
                             </div>
                             <template v-else>
                                 <div class="btnE flex_r flex_ac flex_jc" v-if="item.buyPrice">
-                                    <view class="m_ico gold_coin" />
-                                    <span>一口价：{{ item.buyPrice }}</span>
+                                    <!-- <view class="m_ico gold_coin" /> -->
+                                    <span>一口价：<span class="price">{{ item.buyPrice }}</span></span>
                                 </div>
                             </template>
                             <div :class="[active == 0 ? 'btn' : 'btn1']"
@@ -147,11 +177,11 @@ export default {
         return {
             userInfo: this.$gl("userInfo"),
             activeStyl: {
-                color: "#333",
+                color: "#1A1A1A",
                 fontWeight: "bold",
                 fontSize: "18px",
             },
-            lineColor: "linear-gradient( 149deg, #8745EE 0%, #5725D6 100%)",
+            lineColor: "linear-gradient( 90deg, #31E597 0%, #40E0EA 100%)",
             navbar: [
                 { name: "广场" },
                 { name: "我发布的" },
@@ -277,7 +307,7 @@ export default {
             img: "shouqi", //shouqi zhankai
             text: {},
             topp: "1500rpx",
-            leftt: "300rpx",
+            leftt: "3000rpx",
             stateType: ["已关闭", "已完成", "已过期"],
             rawData: [], //原素据
             userType: false,
@@ -472,15 +502,15 @@ export default {
     height: calc(100vh - 100rpx);
     width: calc(100vw - 0rpx);
     right: 0;
-    bottom: 150rpx;
+    bottom: 220rpx;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     pointer-events: none; //此处要加，鼠标事件可以渗透
 
     .movable-view {
-        width: 144rpx;
-        height: 144rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/fabu.png");
+        width: 112rpx;
+        height: 112rpx;
+        background-image: url("https://img.shinemang.com/gachaStatic/market/publish.png");
         background-size: 100% 100%;
         pointer-events: auto; //恢复鼠标事件
     }
@@ -493,28 +523,28 @@ export default {
     overflow: hidden;
     padding-bottom: 0;
 background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+    //       &::after {
+    //     content: "";
+    //     width: 100vw;
+    //     height: 600rpx;
+    //     left: 0;
+    //     top: 0;
+    //     position: absolute;
+    //     z-index: 1;
+    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+    //     background-size: 100% 100%;
+    //   }
     .notice {
-        width: 686rpx;
+        width: 516rpx;
         height: 72rpx;
         background: #ffffff;
-        border-radius: 20rpx 20rpx 20rpx 20rpx;
+        border-radius: 32rpx;
         display: flex;
         align-items: center;
         padding: 0 18rpx 0 0;
         position: relative;
         z-index: 2;
-
+        border: 2rpx solid rgba(0,0,0,0.1);
         .notice_btn {
             height: 44rpx;
             width: 114rpx;
@@ -596,10 +626,11 @@ background-color: #F5F6F8;
 
 .transaction_list {
     min-height: calc(100vh - 460rpx);
-    margin-top: 10rpx;
-    background-color: #fff;
+    // margin-top: 10rpx;
+    // background-color: #fff;
     border-radius: 16rpx;
-    padding: 24rpx 28rpx;
+    padding: 24rpx 0rpx;
+    padding-top: 0;
     // padding-bottom: 0;
 
     .filt_bar {
@@ -630,13 +661,17 @@ background-color: #F5F6F8;
     }
 
     .lists {
-        padding: 20rpx 0 50rpx;
+        // padding: 20rpx 0 50rpx;
         padding-bottom: 160rpx;
     }
 
     .t_item {
-        border-bottom: 2rpx solid #e2e1e3;
-        padding: 25rpx 0;
+        // border-bottom: 2rpx solid #e2e1e3;
+        background-color: #fff;
+        padding: 32rpx 0;
+        padding-left: 24rpx;
+        border-radius: 24rpx;
+        margin-bottom: 16rpx;
 
         .placeOrderUser {
             height: 84rpx;
@@ -655,17 +690,18 @@ background-color: #F5F6F8;
         }
 
         .user_img {
-            width: 84rpx;
-            height: 84rpx;
+            width: 80rpx;
+            height: 80rpx;
             border-radius: 50%;
-            margin-right: 12rpx;
-            border: 2rpx solid #383228;
-            background-color: rgba($color: $motif-color, $alpha: 0.5);
+            margin-right: 16rpx;
+            // border: 2rpx solid #383228;
+            // background-color: rgba($color: $motif-color, $alpha: 0.5);
         }
 
         .user_name {
             font-size: 28rpx;
             font-weight: bold;
+            color: #1A1A1A;
 
             .official {
                 width: 56rpx;
@@ -681,31 +717,31 @@ background-color: #F5F6F8;
 
             .c_time {
                 font-size: 24rpx;
-                font-weight: 500;
-                color: #615e74;
-                margin-top: 12rpx;
+                // font-weight: 500;
+                color: #8D8D94;
+                margin-top: 4rpx;
             }
         }
 
         .goods {
-            margin-top: 20rpx;
+            margin-top: 24rpx;
+            padding-bottom: 24rpx;
+            border-bottom: 2rpx dashed #E5E5E5;
 
             .goods_li {
-                height: 158rpx;
-                width: calc(100% - 60rpx);
+                height: 160rpx;
+                width: calc(100% - 72rpx);
                 overflow-x: auto;
                 overflow-y: hidden;
                 white-space: nowrap;
 
                 .goods_img {
-                    height: 150rpx;
-                    width: 150rpx;
-                    min-width: 150rpx;
-                    border-radius: 16rpx;
-                    box-sizing: border-box;
-                    border: 6rpx solid #fff;
-                    box-shadow: 0 0 4rpx 4rpx #cacaca;
-                    margin: 4rpx;
+                   width: 160rpx;
+                    height: 160rpx;
+                    background: linear-gradient( 0deg, #CCFFF4 0%, #FFFFFF 60%);
+                    border-radius: 16rpx 16rpx 16rpx 16rpx;
+                    border: 2rpx solid #A1FAE3;
+                    // margin: 4rpx;
                     overflow: scroll;
                     margin-right: 20rpx;
 
@@ -714,16 +750,25 @@ background-color: #F5F6F8;
                     }
 
                     &.bor9 {
-                        box-shadow: 0 0 4rpx 4rpx $motif-color;
+                        // box-shadow: 0 0 4rpx 4rpx $motif-color;
+                        background: linear-gradient( 0deg, #FDEEF6 0%, #FFFFFF 60%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+border: 4rpx solid #EA4CA4;
                     }
 
                     &.bore {
-                        box-shadow: 0 0 4rpx 4rpx #ed780c;
+                        // box-shadow: 0 0 4rpx 4rpx #ed780c;
+                        background: linear-gradient( 0deg, #FDEEF6 0%, #FFFFFF 60%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+border: 4rpx solid #EA4CA4;
                     }
 
                     &.bor5 {
+                        background: linear-gradient( 0deg, #FDEEF6 0%, #FFFFFF 60%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+border: 4rpx solid #EA4CA4;
                         // box-shadow: 0 0 4rpx 4rpx $motif-color;
-                        box-shadow: 0 0 4rpx 4rpx #ed780c;
+                        // box-shadow: 0 0 4rpx 4rpx #ed780c;
                     }
                 }
 
@@ -743,49 +788,56 @@ background-color: #F5F6F8;
         }
 
         .bottom_btn {
-            margin-top: 26rpx;
+            margin-top: 24rpx;
 
             .btnE {
-                width: 220rpx;
+                // width: 220rpx;
+                padding: 0 16rpx;
                 height: 60rpx;
-                background: #f9f9f9;
-                border-radius: 40rpx;
-                border: 2rpx solid #f4f4f4;
+                background: #F5F6F8;;
+                border-radius: 8rpx;
+                // border: 2rpx solid #f4f4f4;
                 font-weight: bold;
                 font-size: 20rpx;
+                color: #8D8D94;
                 margin-right: 16rpx;
+                .price{
+                  color: #FF932B;
+                }
             }
 
             .btn {
                 color: #fff;
                 width: 134rpx;
-                height: 60rpx;
-                line-height: 60rpx;
+                height: 56rpx;
+                line-height: 56rpx;
                 text-align: center;
                 font-size: 24rpx;
                 font-weight: bold;
-                background: #282828;
+                background: #1A1A1A;
                 box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.25);
-                border-radius: 36rpx 24rpx 4rpx 36rpx;
+                border-radius:32rpx;
                 position: relative;
+                margin-right: 24rpx;
             }
 
             .btn1 {
                 color: #fff;
                 width: 134rpx;
-                height: 60rpx;
-                line-height: 60rpx;
+                height: 56rpx;
+                line-height: 56rpx;
                 text-align: center;
                 font-size: 24rpx;
                 font-weight: bold;
-                background: #282828;
-                box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.25);
-                border-radius: 36rpx 0rpx 0rpx 36rpx;
+                background: #1A1A1A;
+                // box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.25);
+                border-radius:32rpx;
                 padding-left: 10rpx;
                 position: relative;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                margin-right: 24rpx;
 
                 .icof {
                     margin-left: 10rpx;
@@ -841,26 +893,39 @@ background-color: #F5F6F8;
     align-items: center;
 
     .balance {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 60rpx;
-        background: #f9f9f9;
-        border-radius: 40rpx 40rpx 40rpx 40rpx;
-        border: 2rpx solid #f4f4f4;
-        padding: 26rpx;
+        width: 136rpx;
+        height: 56rpx;
+            background-image: url("https://img.shinemang.com/gachaStatic/market/balance.png");
+    background-size: 100% 100%;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // height: 60rpx;
+        // background: #f9f9f9;
+        // border-radius: 40rpx 40rpx 40rpx 40rpx;
+        // border: 2rpx solid #f4f4f4;
+        // padding: 26rpx;
 
-        .imgbalance {
-            width: 28rpx;
-            height: 28rpx;
-            margin-right: 8rpx;
-        }
+        // .imgbalance {
+        //     width: 28rpx;
+        //     height: 28rpx;
+        //     margin-right: 8rpx;
+        // }
     }
 }
 
 .gold_coin {
     background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/gold_coin.png");
     background-size: 100% 100%;
+}
+.exchangeRules{
+    width: 56rpx;
+    height: 176rpx;
+     background-image: url("https://img.shinemang.com/gachaStatic/market/rules.png");
+    background-size: 100% 100%;
+    position: fixed;
+    right: 0;
+    top: 270rpx;
 }
 
 .filtrate-bar {
@@ -872,6 +937,8 @@ background-color: #F5F6F8;
     font-size: 28rpx;
     color: #343434;
     padding: 22rpx 22rpx;
+    padding-left: 0;
+
 
     // margin: 20rpx 0;
     .tag {
@@ -895,8 +962,16 @@ background-color: #F5F6F8;
             .fil-item {
                 display: flex;
                 align-content: center;
-                margin-right: 32rpx;
+                margin-right: 24rpx;
                 align-items: center;
+                width: 128rpx;
+                    height: 56rpx;
+                    background: #FFFFFF;
+                    border-radius: 28rpx 28rpx 28rpx 28rpx;
+                    color: #8D8D94;
+                    font-size: 24rpx;
+                    font-weight: normal;
+                    justify-content: center;
             }
 
             .sim {

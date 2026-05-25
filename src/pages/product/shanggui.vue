@@ -1,6 +1,6 @@
 <!-- 赏柜界面 -->
 <template>
-    <view class="shanggui" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top - 6 + 'px' }">
+    <view class="shanggui" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top + 36 + 'px' }">
         <view class="top_tabs">
             <!-- <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs> -->
             <!-- <view class="top_btn" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">
@@ -8,7 +8,7 @@
                 <img class="ico" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_3.png" />
             </view> -->
         </view>
-        <div class="shanggui_con">
+        <div :style="{ paddingTop: MBInfo().top + 36 + 'px' }"  class="shanggui_con">
             <view class="flex_r flex_jb">
                 <view class="tabs_two flex_r flex_jb">
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
@@ -96,11 +96,14 @@
                 <u-empty v-else text="暂无赏品~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </view>
-            <view class="foot_btn flex_r flex_ac flex_jse">
-                <!-- #ifndef MP-WEIXIN -->
-                <x-btn v-show="userInfo.showMarket" txt="选择交易" cor="2" @click="goto('/pages/transaction/index')" />
-                <!-- #endif -->
-                <x-btn txt="选择发货" cor="3" @click="goto('/pages/shipments/selectGoods')" />
+            <view class="foot_btn">
+
+                <view v-show="userInfo.showMarket"  @click="goto('/pages/transaction/index')" class="selectToExchange"></view>
+                <view @click="goto('/pages/shipments/selectGoods')" class="selectToSend"></view>
+          
+                <!-- <x-btn v-show="!userInfo.showMarket" txt="选择交易" cor="2" @click="goto('/pages/transaction/index')" />
+            
+                <x-btn txt="选择发货" cor="3" @click="goto('/pages/shipments/selectGoods')" /> -->
             </view>
         </div>
         <gachaDetails ref="gachaDetails" />
@@ -296,7 +299,7 @@ export default {
     width: 100%;
     height: calc(100%);
     position: absolute;
-    padding-top: 70px;
+    // padding-top: 70px;
     bottom: 0;
     left: 0;
     z-index:5;
@@ -419,6 +422,7 @@ margin-right: 16rpx;
             border-radius: 8rpx;
             line-height: 48rpx;
             color: #1A1A1A;
+            margin-right: 32rpx;
 
             font-size: 24rpx;
         }
@@ -546,10 +550,23 @@ background-size: cover;
 }
 
 .foot_btn {
-    width: 100%;
+    width: 120rpx;
     position: fixed;
-    bottom: 200rpx;
-    left: 0;
+    bottom: 204rpx;
+    right: 0;
+    view{
+        width: 120rpx;
+        height: 120rpx;
+    }
+    .selectToExchange{
+       background: url('https://img.shinemang.com/gachaStatic/chaogui/selectExchangeIcon.png');
+       background-size: 100% 100%;
+    }
+    .selectToSend{
+          background: url('https://img.shinemang.com/gachaStatic/chaogui/selectSendIcon.png');
+       background-size: 100% 100%;
+    }
+
 }
 
 .mpWeixin {

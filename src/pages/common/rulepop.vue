@@ -63,22 +63,12 @@ export default {
     height: 100vh;
     position: relative;
 background: #F5F6F8;
-    &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+  
 }
 
 .agreement_con {
     position: absolute;
-    padding: 0 36rpx;
+    // padding: 0 36rpx;
     height: 100vh;
     width: 100%;
     bottom: 0;

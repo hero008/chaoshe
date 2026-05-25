@@ -9,7 +9,7 @@
         <div class="card_list_popup flex_c flex_ac flex_jc" :style="{ 'pointer-events': shareType ? 'none' : 'auto' }"
             v-else>
             <div class="title">
-                <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/tit_css.png" class="title_img1" />
+                <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/tit_css.png" class="title_img1" /> -->
             </div>
             <div class="card_list flex_r flex_ac flex_jse flex_wrap">
                 <view class="card rotated" v-for="(k, s) in awardList" :key="s" @click="onRotated(s)">
@@ -18,9 +18,9 @@
                     <view :class="['card-contents', 'css-back', k.levelName.length == 1 ? '' : 'bg_' + k.levelName]">
                         <img :src="k.coverImage" class="award_img" @click.stop="ondetail(k.itemId)" />
                         <view class="itemName"> {{ k.itemName }}</view>
-                        <img v-if="['Surprise', 'Lucky', 'Last', 'SSR', 'SS', 'SP',].includes(k.levelName)
+                        <!-- <img v-if="['Surprise', 'Lucky', 'Last', 'SSR', 'SS', 'SP',].includes(k.levelName)
                         " @click=" onShare(k.itemName, k.itemId, k.levelIndex, k)"
-                            src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/share_btn.png" class="share_btn" />
+                            src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/share_btn.png" class="share_btn" /> -->
                         <view class="Lucky flex_r  flex_js " v-if="k.levelName == 'Lucky' && k.luckyNo">
                             <view class="type">{{ k.levelName }}</view>
                             <view class="sort"> {{ k.luckyNo }}</view>
@@ -31,7 +31,7 @@
                     </view>
                 </view>
             </div>
-            <view class="share flex_r flex_ac" v-if="shareType">
+            <!-- <view class="share flex_r flex_ac" v-if="shareType">
                 <view @click="onShareType(2)">
                     <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
                     <view>小程序</view>
@@ -41,7 +41,7 @@
                     <view>朋友圈</view>
                 </view>
                 <div @click="shareType = 0" class="btn icof">&#xe607;</div>
-            </view>
+            </view> -->
         </div>
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />
@@ -370,40 +370,63 @@ export default {
 
 .Lucky {
     position: absolute;
-    top: 10rpx;
-    left: 36rpx;
-    width: 148rpx;
-    height: 52rpx;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/LuckyBg.png");
-    background-size: 100% 100%;
-    font-weight: 800;
-    color: transparent;
-    padding-top: 18rpx;
+                top: 168rpx;
+                left: 0rpx;
+                 width: 120rpx;
+            height: 40rpx;
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
+                background-size: 100% 100%;
+                // font-weight: 800;
+                // color: transparent;
+                font-family: '倍数欧气值';
+                text-align: center;
+                // transform: skew(-15deg);
+color: #FF5C7A;
+// color: transparent;
+line-height: 40rpx;
+// text-stroke: 2rpx #000000;
+ text-shadow:
 
-    .type {
-        height: 32.81rpx;
-        line-height: 28rpx;
-        font-weight: 400;
-        font-size: 22rpx;
-        background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-left: 22rpx;
-        font-family: "测试字体", sans-serif;
-    }
+        -1px -1px 0 #000,  /* 左上 */
 
-    .sort {
-        height: 32.81rpx;
-        line-height: 34rpx;
-        font-size: 20rpx;
-        background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-family: "测试字体", sans-serif;
-        margin-left: 4rpx;
-    }
+        1px -1px 0 #000,   /* 右上 */
+
+        -1px 1px 0 #000,   /* 左下 */
+
+        1px 1px 0 #000;    /* 右下 */
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+font-style: normal;
+text-transform: none;
+// -webkit-text-stroke:2rpx #000000;
+font-size: 22rpx;
+
+    // .type {
+    //     height: 32.81rpx;
+    //     line-height: 28rpx;
+    //     font-weight: 400;
+    //     font-size: 22rpx;
+    //     background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
+    //     -webkit-background-clip: text;
+    //     -webkit-text-fill-color: transparent;
+    //     background-clip: text;
+    //     margin-left: 22rpx;
+    //     font-family: "测试字体", sans-serif;
+    // }
+
+    // .sort {
+    //     height: 32.81rpx;
+    //     line-height: 34rpx;
+    //     font-size: 20rpx;
+    //     background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
+    //     -webkit-background-clip: text;
+    //     -webkit-text-fill-color: transparent;
+    //     background-clip: text;
+    //     font-family: "测试字体", sans-serif;
+    //     margin-left: 4rpx;
+    // }
 }
 
 .share_btn {

@@ -1008,40 +1008,64 @@ export default {
 }
 
 .Lucky {
-    position: absolute;
-    top: 154rpx;
-    width: 148rpx;
-    height: 52rpx;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/LuckyBg.png");
-    background-size: 100% 100%;
-    font-weight: 800;
-    color: transparent;
-    padding-top: 18rpx;
+  position: absolute;
+                top: 168rpx;
+                left: 0rpx;
+                 width: 120rpx;
+            height: 40rpx;
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
+                background-size: 100% 100%;
+                // font-weight: 800;
+                // color: transparent;
+                font-family: '倍数欧气值';
+                text-align: center;
+                // transform: skew(-15deg);
+color: #FF5C7A;
+// color: transparent;
+line-height: 40rpx;
+// text-stroke: 2rpx #000000;
+ text-shadow:
 
-    .type {
-        height: 32.81rpx;
-        line-height: 28rpx;
-        font-weight: 400;
-        font-size: 22rpx;
-        background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-left: 22rpx;
-        font-family: "测试字体", sans-serif;
-    }
+        -1px -1px 0 #000,  /* 左上 */
 
-    .sort {
-        height: 32.81rpx;
-        line-height: 34rpx;
-        font-size: 20rpx;
-        background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-family: "测试字体", sans-serif;
-        margin-left: 4rpx;
-    }
+        1px -1px 0 #000,   /* 右上 */
+
+        -1px 1px 0 #000,   /* 左下 */
+
+        1px 1px 0 #000;    /* 右下 */
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+font-style: normal;
+text-transform: none;
+// -webkit-text-stroke:2rpx #000000;
+font-size: 22rpx;
+
+    // .type {
+    //     height: 32.81rpx;
+    //     line-height: 28rpx;
+    //     font-weight: 400;
+    //     font-size: 22rpx;
+    //     background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
+    //     -webkit-background-clip: text;
+    //     -webkit-text-fill-color: transparent;
+    //     background-clip: text;
+    //     margin-left: 22rpx;
+    //     font-family: "测试字体", sans-serif;
+    // }
+
+    // .sort {
+    //     height: 32.81rpx;
+    //     line-height: 34rpx;
+    //     font-size: 20rpx;
+    //     background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
+    //     -webkit-background-clip: text;
+    //     -webkit-text-fill-color: transparent;
+    //     background-clip: text;
+    //     font-family: "测试字体", sans-serif;
+    //     margin-left: 4rpx;
+    // }
 }
 
 .schedule {

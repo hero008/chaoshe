@@ -3,7 +3,7 @@
         <div class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt">返回</text>
+                <text class="txt">关于我们</text>
             </view>
         </div>
         <div class="agr_con" v-if="tab == 1">
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="msg">
-                <div class="p">芒盒文化传播(深圳)有限公司版权所有</div>
+                <!-- <div class="p">芒盒文化传播(深圳)有限公司版权所有</div> -->
             </div>
         </div>
         <view class="shake flex_r flex_jb flex_ac" v-else>
@@ -103,17 +103,7 @@ a {
     height: 100vh;
     position: relative;
       background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+        
 }
 
 .navbar_x {
@@ -145,22 +135,27 @@ a {
 }
 
 .agr_con {
-    padding: 30rpx 32rpx;
+    padding: 30rpx 0rpx;
     position: relative;
+    margin-top: 34rpx;
     z-index: 2;
+    height: calc(100% - 92rpx);
+    background-color: #fff;
+
+    border-radius: 32rpx 32rpx 0 0;
 
     .agr_list {
         background-color: #fff;
         border-radius: 16rpx;
-        padding: 0 24rpx;
+        padding: 0 32rpx;
     }
 
     .agr_item {
         padding: 32rpx 0;
         font-weight: 500;
         font-size: 28rpx;
-        color: #383228;
-        border-bottom: 2rpx solid #e2e1e3;
+        color: #1A1A1A;
+        // border-bottom: 2rpx solid #e2e1e3;
 
         &:last-child {
             border-bottom: none;
@@ -168,7 +163,7 @@ a {
 
         .icof {
             font-size: 40rpx;
-            color: #383228;
+            color: #B3B3B3;
 
         }
 

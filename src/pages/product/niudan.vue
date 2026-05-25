@@ -80,10 +80,10 @@
                             <view class="p-name ellipsis">{{ item.itemName }}</view>
                             <view class="p-probability ellipsis" v-if="![42, 27, 50].includes(item.levelIndex)">{{
                                 "概率：" + item.probability + "%" }}</view>
-                            <view class="Lucky flex_r  flex_js " v-if="item.levelName == 'Lucky' && item.luckyNo">
+                           <view class="Lucky flex_r  flex_js " v-if="item.levelName == 'Lucky' && item.luckyNo">
                                 <view class="type">{{ item.levelName }}</view>
-                                <view class="sort">{{item.luckyNo}}</view>
-                            </view>
+                                <view class="sort">{{item.luckyNo}}赏</view>
+                            </view> 
                             <img v-else class="ico3":class="[item.levelName == '冲冲' ? 'rotated' : '']"
                                 :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
                             <view v-if="item.levelName == 'Lucky' && item.luckyPhase"
@@ -142,7 +142,7 @@
             <view class="foot-btn flex_r flex_jb flex_ac"
                 v-else-if="eggTwister.userBetCount == -1 && eggTwister.userBetCountDaily == -1">
                 <view class="cut flex_r flex_ac" @click="oncut" :class="[cutPattern]">
-                    <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view>
+                    <!-- <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view> -->
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>
                 <!-- <img class="cut " :src="`https://img.shinemang.com/gachaStatic/static/img/cw-new/${cutPattern}.png`"  :key="cutPattern"   @click="oncut" /> -->
@@ -359,10 +359,10 @@ export default {
         const cacheMode = uni.getStorageSync('lotteryMode');
         if (cacheMode == 'common') {
             this.cutPattern = 'common'
-            this.payOptions = [{ num: 50, className: "", text: '五抽' },
-            { num: 100, className: "", text: '一百抽' },
-            { num: 200, className: "", text: '二百抽' },
-            { num: this.gachainfo.leftAwards, className: "btn-item4", text: '全包' }]
+            this.payOptions = [{ num: 50, className: "btn-item4", text: '五十抽' },
+            { num: 100, className: "btn-item4", text: '一百抽' },
+            { num: 200, className: "btn-item4", text: '二百抽' },
+            { num: this.gachainfo.leftAwards, className: "btn-item5", text: '全包' }]
         }
     },
     created() {
@@ -771,10 +771,10 @@ export default {
                 { num: 10, className: "", text: '十抽' },
                 { num: 50, className: "btn-item4", text: '五十抽' }]
             } else {
-                this.payOptions = [{ num: 50, className: "", text: '五十抽' },
-                { num: 100, className: "", text: '一百抽' },
-                { num: 200, className: "", text: '二百抽' },
-                { num: this.gachainfo.leftAwards, className: "btn-item4", text: '全包' }]
+                this.payOptions = [{ num: 50, className: "btn-item4", text: '五十抽' },
+                { num: 100, className: "btn-item4", text: '一百抽' },
+                { num: 200, className: "btn-item4", text: '二百抽' },
+                { num: this.gachainfo.leftAwards, className: "btn-item5", text: '全包' }]
             }
         },
         onScheduleTips(num) {
@@ -1214,53 +1214,55 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
 
         }
 
-        .ico3 {
-            position: absolute;
-            top: 6rpx;
-            left: 6rpx;
-            width: 77rpx;
-            height: 35rpx;
-        }
+      .ico3 {
+                position: absolute;
+                top: 168rpx;
+                left: 0rpx;
+                 width: auto;
+            height: 40rpx;
+            }
 
         .Lucky {
-            position: absolute;
-            top: 6rpx;
-            left: 6rpx;
-            width: 99.38rpx;
-            height: 32.81rpx;
-            background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
-            background-size: 100% 100%;
-            font-weight: 800;
-            color: transparent;
-            transform: skew(-15deg);
+               position: absolute;
+                top: 168rpx;
+                left: 0rpx;
+                 width: 120rpx;
+            height: 40rpx;
+                background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
+                background-size: 100% 100%;
+                // font-weight: 800;
+                // color: transparent;
+                font-family: '倍数欧气值';
+                text-align: center;
+                // transform: skew(-15deg);
+color: #FF5C7A;
+// color: transparent;
+line-height: 40rpx;
+// text-stroke: 1rpx #000000;
+ text-shadow:
 
-            .type {
-                height: 32.81rpx;
-                line-height: 28rpx;
-                font-size: 17rpx;
-                background: linear-gradient(90deg, #FFF661, #FF1D1D);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                margin-left: 8.44rpx;
-            }
+        -1px -1px 0 #000,  /* 左上 */
 
-            .sort {
-                height: 32.81rpx;
-                line-height: 28rpx;
-                font-size: 19rpx;
-                background: linear-gradient(360deg, #FFF661, #FF1D1D);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                margin-left: 2rpx;
-            }
+        1px -1px 0 #000,   /* 右上 */
+
+        -1px 1px 0 #000,   /* 左下 */
+
+        1px 1px 0 #000;    /* 右下 */
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+font-style: normal;
+text-transform: none;
+// -webkit-text-stroke:1rpx #000000;
+font-size: 22rpx;
         }
 
         .schedule {
-            position: absolute;
-            bottom: 59rpx;
-            right: 10rpx;
+            // position: absolute;
+            // bottom: 59rpx;
+            // right: 10rpx;
+            width: fit-content;
             // width: 76rpx;
             height: 36rpx;
             background: linear-gradient(0deg, #58BBF7 0%, #7347B1 100%);
@@ -1299,46 +1301,48 @@ border-radius:32rpx 32rpx 0 0 ;
 
 
     .cut {
-        position: absolute;
-        width: 172rpx;
-        height: 52rpx;
-        bottom: 100rpx;
-        right: 0;
-        border-radius: 18rpx 0 0 18rpx;
-        font-weight: bold;
-        font-size: 24rpx;
-        color: #FFFFFF;
-        padding: 0 14rpx;
-        letter-spacing: 2rpx;
-        justify-content: flex-end;
+          position: absolute;
+        width: 196rpx;
+        height: 64rpx;
+        bottom: 90rpx;
+        right: 0rpx;
+        // border-radius: 18rpx 0 0 18rpx;
+        // font-weight: bold;
+        // font-size: 24rpx;
+        // color: #FFFFFF;
+        // padding: 0 14rpx;
+        // letter-spacing: 2rpx;
+        // justify-content: flex-end;
 
         .passionImg {
-            width: 32rpx;
-            height: 32rpx;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(255, 61, 13, 0.50) 0%, rgba(255, 61, 13, 0) 80%);
+            width: 100%;
+            height: 100%;
+            background: url("https://img.shinemang.com/gachaStatic/jq.png");
             background-size: 100% 100%;
-            margin-left: 10rpx;
+          
         }
 
         .commonImg {
-            width: 32rpx;
-            height: 32rpx;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(13, 118, 255, 0.50) 0%, rgba(255, 61, 13, 0) 80%);
+            // width: 32rpx;
+            // height: 32rpx;
+           width: 100%;
+            height: 100%;
+            background: url("https://img.shinemang.com/gachaStatic/pt.png");
             background-size: 100% 100%;
-            margin-left: 10rpx;
+            // margin-left: 10rpx;
         }
 
     }
 
-    .passion {
-        background: linear-gradient(86deg, rgba(227, 146, 75, 0.8) 0%, rgba(227, 93, 75, 0.8) 100%);
-        box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(255, 61, 13, 0.3);
-    }
+    // .passion {
+    //     background: linear-gradient(86deg, rgba(227, 146, 75, 0.8) 0%, rgba(227, 93, 75, 0.8) 100%);
+    //     box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(255, 61, 13, 0.3);
+    // }
 
-    .common {
-        background: linear-gradient(86deg, rgba(62, 223, 252, 0.8) 0%, rgba(83, 132, 246, 0.8) 100%);
-        box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(13, 118, 255, 0.3);
-    }
+    // .common {
+    //     background: linear-gradient(86deg, rgba(62, 223, 252, 0.8) 0%, rgba(83, 132, 246, 0.8) 100%);
+    //     box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(13, 118, 255, 0.3);
+    // }
 }
 
 .btn-item {
@@ -1349,9 +1353,10 @@ border-radius:32rpx 32rpx 0 0 ;
     background: url('https://img.shinemang.com/gachaStatic/ddl/btnBgc.png');
     background-size: 100% 100%;
     text-align: center;
-    font-weight: bolder;
+    // font-weight: bolder;
     font-size: 36rpx;
     color: #fff;
+    font-family: '倍数欧气值';
 }
 
 .nb {
@@ -1371,6 +1376,11 @@ border-radius:32rpx 32rpx 0 0 ;
 
 .btn-item4{
     background: url('https://img.shinemang.com/gachaStatic/ddl/btn1Bgc.png');
+    background-size: 100% 100%;
+    color: #000;
+}
+.btn-item5{
+    background: url('https://img.shinemang.com/gachaStatic/ddl/btn2Bgc.png');
     background-size: 100% 100%;
     color: #000;
 }

@@ -3,31 +3,45 @@
     <view class="my" :class="{ mpWeixin: ISmp() }">
         <div class="user_sugar flex_r flex_ac flex_jb" v-if="userInfo.name">
             <div class="user_info flex_r flex_ac">
-                <image :src="userInfo.avatarUrl | active" class="profile" mode="aspectFill" />
+               <view  @click="updateUser" style="height: 164rpx;height: 164rpx;border:4rpx solid #fff;border-radius: 50%;position: relative;">
+                 <image :src="userInfo.avatarUrl | active" class="profile" mode="aspectFill" />
+                 <view class="edit">
+                    <image
+                        src="https://img.shinemang.com/gachaStatic/my/editIcon.png"
+                        mode="scaleToFill"
+                    />
+                 </view>
+               </view>
                 <div class="info">
-                    <div class="u_name">{{ userInfo.name }}</div>
-                    <view class="user_name">
-                        <div class="u_ID">ID：{{ userInfo.id || "" }}</div>
-                        <!-- 先出现不需要 -->
-                        <view class="vip_icon" @click="
+                    <div class="u_name">
+                        <div>{{ userInfo.name }}</div>
+
+                        <div @click="
                             goto('/pages/common/rulepop', {
                                 val: 'PayoutLevel',
-                            })
-                            ">
-                            <img class="icon"
-                                :src="`https://img.shinemang.com/gachaStatic/static/img/my/Lv.${userInfo.level}.png`" />
+                            }) " class="vip">
+                           <view class="vip_icon" >
+                            <!-- <img class="icon"
+                                :src="`https://img.shinemang.com/gachaStatic/static/img/my/Lv.${userInfo.level}.png`" /> -->
                             <view class="class">Lv.{{ userInfo.level }}</view>
                         </view>
-                        <img @click="
+                       
+                        </div>
+                         <!-- <img @click="
                             goto('/pages/common/rulepop', {
                                 val: 'PayoutLevel',
                             })
-                            " src="https://img.shinemang.com/gachaStatic/static/img/my/shuoming.png" class="shuoming" />
+                            " src="https://img.shinemang.com/gachaStatic/static/img/my/shuoming.png" class="shuoming" /> -->
+                    </div>
+                    <view class="user_name">
+                        <div class="u_ID">{{ userInfo.id || "" }}</div>
+                        <!-- 先出现不需要 -->
+                     
                         <!-- #endif -->
                     </view>
                 </div>
             </div>
-            <div class="editInfo" @click="updateUser">编辑资料</div>
+            <!-- <div class="editInfo" @click="updateUser">编辑资料</div> -->
         </div>
         <div class="user_sugar" v-else>
             <div class="user_info flex_r flex_ac">
@@ -40,22 +54,25 @@
         <div class="module_bar">
             <!-- #ifndef MP-WEIXIN -->
             <div class="gold flex_r flex_ac flex_jb" @click="userInfo.id ? goto('/page-a/balance/topUp') : null">
-                <div class="gold_num flex_r flex_ac">
-                    <img src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png" class="gold_ico" />
-                    <span>我的账户: {{ balance }}</span>
+                <div class="gold_num">
+                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png" class="gold_ico" /> -->
+                    <span>我的账户</span>
+                    <view style="font-size: 32rpx;margin-top: 12rpx;"> {{ balance }}</view>
                 </div>
                 <div class="withdraw_btn flex_r flex_ac flex_jc">
-                    <view>充值</view>
+                    <view></view>
                     <view class="icof"></view>
                 </div>
             </div>
             <!-- #endif -->
             <div class="grid_bar">
-                <div class="grid_tit">我的交易</div>
+                <!-- <div class="grid_tit">我的交易</div> -->
                 <div class="grid_jy">
-                    <div class="jy-item" v-for="(i, s) in baseList1" @click="goto(i.path)" :key="s" >
-                        <img class="jy-img" :src="i.name" />
-                        <text class="jy-text">{{ i.title }}</text>
+                    <div :style="{
+                        backgroundImage: 'url(' + i.bgUrl + ')',
+                    }" class="jy-item" v-for="(i, s) in baseList1" @click="goto(i.path)" :key="s" >
+                        <!-- <img class="jy-img" :src="i.name" />
+                        <text class="jy-text">{{ i.title }}</text> -->
                     </div>
                 </div>
                 <!-- <u-grid :border="false"  :col='2'>
@@ -74,13 +91,23 @@
         <!-- <button class="invite_bar" open-type="share" id="invite"></button> -->
         <!-- <button class="invite_bar" @click="goto('/page-activity/invite/index')"></button>  -->
         <div class="grid_bar">
-            <div class="grid_tit">常用功能</div>
-            <u-grid :border="false" col="4">
-                <u-grid-item @click="topGrid(i)" v-for="(i, s) in baseList2" :key="s" class="x_grid"  v-if="!userInfo.isAuthenticated && i.title === '实名认证' || i.title !== '实名认证'">
-                    <u-icon :name="i.name" :size="22" ></u-icon>
-                    <text class="grid-text ellipsis">{{ i.title }}</text>
-                </u-grid-item>
-            </u-grid>
+            <!-- <div class="grid_tit">常用功能</div> -->
+            <view class="grid_content">
+                <view  @click="topGrid(i)" v-for="(i, s) in baseList2" :key="s" class="x_grid"  v-if="!userInfo.isAuthenticated && i.title === '实名认证' || i.title !== '实名认证'">
+                    <view class="leftIcon">
+                        <view class="icon"
+                         :style="{
+                            backgroundImage:'url('+i.name+')'
+                         }"
+                        ></view>
+                        <!-- <u-icon :name="i.name" :size="22" ></u-icon> -->
+                    <text class="ellipsis">{{ i.title }}</text>
+                    </view>
+                    <view>
+                       <u-icon color="#B3B3B3" name="arrow-right"></u-icon>
+                    </view>
+                </view>
+            </view>
         </div>
         <!-- #ifdef MP-WEIXIN -->
         <div class="AD_bar">
@@ -115,16 +142,18 @@ export default {
                     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico10.png",
                     path: "/pages/my/drawRecord",
                     title: "抽赏记录",
+                    bgUrl:"https://img.shinemang.com/gachaStatic/my/recordsBgc.png",
                 },
                 {
                     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico11.png",
                     path: "/pages/my/releaseRecord",
                     title: "发货订单",
+                     bgUrl:"https://img.shinemang.com/gachaStatic/my/orderBgc.png",
                 },
             ],
             baseList2: [
                 {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico1.png",
+                    name: "https://img.shinemang.com/gachaStatic/my/addressIcon.png",
                     path: "/pages/shipments/addressList",
                     title: "地址管理",
                 },
@@ -138,15 +167,30 @@ export default {
                 //     path: '/pages/index/index',
                 //     title: '常见问题'
                 // },
-
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico4.png",
-                    path: "/pages/index/index",
-                    title: "联系客服",
+            {
+                    name: "https://img.shinemang.com/gachaStatic/my/myCardsIcon.png",
+                    path: "/pages/my/cardpack",
+                    // path:'/page-a/couponPackage/discountCoupon',
+                    title: "我的卡包",
                 },
+                 {
+                    name: "https://img.shinemang.com/gachaStatic/my/exchangeIcon.png",
+                    path: "/page-activity/conversion/index",
+                    title: "福利兑换",
+                },
+                  {
+                    name: "https://img.shinemang.com/gachaStatic/my/centerIcon.png",
+                    path: '/page-a/luck/index',
+                    title: "集赏中心",
+                },
+                // {
+                //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico4.png",
+                //     path: "/pages/index/index",
+                //     title: "联系客服",
+                // },
 
                 {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico5.png",
+                    name: "https://img.shinemang.com/gachaStatic/my/aboutUsIcon.png",
                     path: "/pages/my/agreementList",
                     title: "关于我们",
                     id: 1
@@ -157,38 +201,25 @@ export default {
                 //     title: '隐私设置'
                 // },
 
+                // {
+                //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico8.png",
+                //     path: "/pages/index/index",
+                //     title: "Double Chance",
+                // },
+               
+              
+              
                 {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico8.png",
-                    path: "/pages/index/index",
-                    title: "Double Chance",
-                },
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico15.png",
-                    path: "/page-activity/conversion/index",
-                    title: "福利兑换",
-                },
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico13.png",
-                    path: "/pages/my/cardpack",
-                    // path:'/page-a/couponPackage/discountCoupon',
-                    title: "我的卡包",
-                },
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico16.png",
-                    path: '/page-a/luck/index',
-                    title: "集赏中心",
-                },
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico12.png",
+                    name: "https://img.shinemang.com/gachaStatic/my/loginOutIcon.png",
                     path: "/pages/index/index",
                     title: "注销账户",
                 },
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/vibrate.png",
-                    path: "/pages/my/agreementList",
-                    title: "手机震动",
-                    id: 2
-                },
+                // {
+                //     name: "https://img.shinemang.com/gachaStatic/static/img/my/vibrate.png",
+                //     path: "/pages/my/agreementList",
+                //     title: "手机震动",
+                //     id: 2
+                // },
                 // {
                 //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico7.png",
                 //     path: "/page-activity/welfare/index",
@@ -345,18 +376,18 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    padding: 120rpx 36rpx 130rpx;
+    padding: 120rpx 32rpx 190rpx;
     overflow-y: auto;
- background-color: #F5F6F8;
+    background-color: #F5F6F8;
           &::after {
         content: "";
         width: 100vw;
-        height: 600rpx;
+        height: 800rpx;
         left: 0;
         top: 0;
         position: absolute;
         z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+        background: url('https://img.shinemang.com/gachaStatic/my/bg.png');
         background-size: 100% 100%;
       }
       >div{
@@ -364,17 +395,33 @@ export default {
           z-index: 2;
       }
     &.mpWeixin {
-        padding-top: 160rpx;
+        // padding-top: 160rpx;
     }
 }
 
 .user_sugar {
     .user_info {
         .profile {
-            width: 150rpx;
-            height: 150rpx;
+            width: 160rpx;
+            height: 160rpx;
             border-radius: 50%;
-            border: 4rpx solid #fff;
+            // border: 4rpx solid #fff;
+        }
+        .edit{
+            position: absolute;
+            width: 48rpx;
+            height: 48rpx;
+            background: #FFFFFF;
+            border-radius:50%;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            image{
+                width: 32rpx;
+                height: 32rpx;
+            }
         }
 
         .info {
@@ -382,9 +429,28 @@ export default {
         }
 
         .u_name {
-            font-size: 32rpx;
+            font-size: 40rpx;
             font-weight: 800;
-            margin-bottom: 26rpx;
+            margin-bottom: 8rpx;
+            color: #1A1A1A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .vip{
+                width: 116rpx;
+                height: 56rpx;
+                background: url('https://img.shinemang.com/gachaStatic/my/vipBgc.png');
+                background-size: 100% 100%;
+                margin-left: 16rpx;
+                color:#7E4904;
+                font-size: 24rpx;
+                padding-right: 16rpx;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+            }
+
         }
 
         .user_name {
@@ -392,8 +458,9 @@ export default {
             align-items: flex-end;
 
             .u_ID {
-                color: #818181;
-                font-size: 20rpx;
+                color: #1A1A1A;
+                font-size: 28rpx;
+                font-weight: bold;
             }
 
             .vip_icon {
@@ -456,9 +523,10 @@ export default {
 }
 
 .grid_bar {
+    margin-top: 24rpx;
     // padding: 30rpx 0 0;
-    background-color: #fff;
-    border-radius: 16rpx;
+    // background-color: #fff;
+    // border-radius: 16rpx;
 
     .grid_tit {
         font-weight: bold;
@@ -468,26 +536,28 @@ export default {
 
     .grid_jy {
         display: flex;
-        padding: 0rpx 80rpx 28rpx;
+        // padding: 0rpx 80rpx 28rpx;
         justify-content: space-between;
 
         // width: 686rpx;
         // height: 196rpx;
         .jy-item {
-            display: flex;
+            width: 334rpx;
+            height: 160rpx;
+            background-size: 100% 100%;
 
-            .jy-img {
-                width: 60rpx;
-                height: 60rpx;
-                object-fit: contain;
-            }
+            // .jy-img {
+            //     width: 60rpx;
+            //     height: 60rpx;
+            //     object-fit: contain;
+            // }
 
-            .jy-text {
-                margin-left: 30rpx;
-                padding-top: 10rpx;
-                font-size: 24rpx;
-                font-weight: 500;
-            }
+            // .jy-text {
+            //     margin-left: 30rpx;
+            //     padding-top: 10rpx;
+            //     font-size: 24rpx;
+            //     font-weight: 500;
+            // }
         }
     }
 
@@ -496,24 +566,48 @@ export default {
         font-size: 24rpx;
         font-weight: 500;
     }
-
+.grid_content{
+    background-color: #fff;
+    border-radius: 24rpx;
+    padding: 0 24rpx;
+}
     .x_grid {
-        margin-bottom: 36rpx;
+        // margin-bottom: 36rpx;
+        display: flex;
+        align-items: center;
+        height: 112rpx;
+        justify-content: space-between;
+        .leftIcon{
+            display: flex;
+            align-items: center;
+            color: #1A1A1A;
+            font-size: 28rpx;
+            font-weight: bold;
+
+            .icon{
+                width: 40rpx;
+                height: 40rpx;
+                background-size: 100% 100%;
+                margin-right: 24rpx;
+            }
+
+        }
     }
 }
 
 .module_bar {
-    margin: 80rpx 0 20rpx;
+    margin: 40rpx 0 20rpx;
 
     .gold {
         width: 100%;
-        height: 135rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/gold_coin2.png");
+        height: 152rpx;
+        background-image: url("https://img.shinemang.com/gachaStatic/my/balanceBgc.png");
         background-size: 100% 100%;
-        padding: 0 36rpx 46rpx;
+        padding: 24rpx 32rpx;
+        position: relative;
 
         .gold_num {
-            font-size: 32rpx;
+            font-size: 28rpx;
             color: #fff;
             font-weight: bold;
         }
@@ -525,26 +619,29 @@ export default {
         }
 
         .withdraw_btn {
-            width: 122rpx;
-            height: 44rpx;
-            background-color: #fff;
-            border-radius: 26rpx;
-            font-weight: bold;
-            font-size: 24rpx;
-            color: #865bf2;
+            width: 150rpx;
+            height: 60rpx;
+            position: absolute;
+            right: 10rpx;
+            top: 10rpx;
+            // background-color: #fff;
+            // border-radius: 26rpx;
+            // font-weight: bold;
+            // font-size: 24rpx;
+            // color: #865bf2;
 
-            .icof {
-                width: 32rpx;
-                height: 32rpx;
-                background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/icof.png");
-                background-size: 100% 100%;
-            }
+            // .icof {
+            //     width: 32rpx;
+            //     height: 32rpx;
+            //     background-image: url("https://img.shinemang.com/gachaStatic/static/img/my/icof.png");
+            //     background-size: 100% 100%;
+            // }
         }
     }
 
     // #ifndef MP-WEIXIN
     .grid_bar {
-        margin-top: -46rpx;
+        // margin-top: -46rpx;
     }
 
     // #endif

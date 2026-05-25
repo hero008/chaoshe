@@ -661,9 +661,9 @@ export default {
 
 
 .cl_ {
-    width: 80rpx;
+    width: 88rpx;
     height: 40rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/class.png");
+    background: url("https://img.shinemang.com/gachaStatic/tag_C.png");
     background-size: 100% 100%;
     position: absolute;
     top: 15rpx;
@@ -671,19 +671,19 @@ export default {
 }
 
 .cl_B {
-    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/class5.png");
+    background: url("https://img.shinemang.com/gachaStatic/tag_B.png");
     background-size: 100% 100%;
 }
 
 .cl_A {
-    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/classA.png");
+    background: url("https://img.shinemang.com/gachaStatic/tag_A.png");
     background-size: 100% 100%;
 }
 
 .cl_SP {
     width: 104rpx;
     height: 44rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/img/duoyou/classSP.png");
+    background: url("https://img.shinemang.com/gachaStatic/tag_SP.png");
     background-size: 100% 100%;
 }
 

@@ -33,13 +33,13 @@
                             <view class="item" v-for="it in i.stockIds" :key="it"
                                 @click.stop="SelectItem(s, it, i, i.stockIds)">
                                 <img class="item_img" :src="i.itemCover" lazy-load="true" />
-                                <!-- <img v-if="multiIds[s].includes(it)"
+                              <img v-if="multiIds[s].includes(it)"
                                     src="https://img.shinemang.com/gachaStatic/static/img/shanggui/xuanzhong.png" class="box_ico"
                                     lazy-load="true" />
                                 <img v-else src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
-                                    class="box_ico" lazy-load="true" /> -->
-                                    <div style="color: #9064FF;"  class="box_ico icof cor" v-if="multiIds[s].includes(it)">&#xe673;</div>
-                                    <div  class="box_ico icof" v-else >&#xe671;</div>
+                                    class="box_ico" lazy-load="true" /> 
+                                    <!-- <div style="color: #9064FF;"  class="box_ico icof cor" v-if="multiIds[s].includes(it)">&#xe673;</div>
+                                    <div  class="box_ico icof" v-else >&#xe671;</div> -->
                                    <view :style="{
                                         backgroundImage: `url(${i.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
                                     }" class="item_txt1"></view>
@@ -507,8 +507,8 @@ export default {
 
         .box_ico {
             position: absolute;
-            width: 32rpx;
-            height: 32rpx;
+            width: 216rpx;
+            height: 216rpx;
             top: 0;
             left: 0;
             z-index: 3;
@@ -520,6 +520,7 @@ export default {
             position: absolute;
             right: -12rpx;
             top: -12rpx;
+            z-index: 7;
             width: 60rpx;
             height: 32rpx;
             background-size: 100% 100%;

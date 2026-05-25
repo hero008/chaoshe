@@ -231,7 +231,7 @@
                 </div>
             </div>
         </u-popup>
-        <u-popup :show="visible" @close="onclose" :overlay="false" :closeable="true" round="20">
+        <u-popup :show="visible" @close="onclose" :overlay="true" :closeable="true" round="20">
             <div class="preview_con">
                 <div class="title">奖品概览</div>
                 <view class="preview_box">
@@ -244,9 +244,10 @@
                             }}</view>
                             <view class="p-probability ellipsis" v-if="![42, 27, 50].includes(item.levelIndex)"> {{
                                 "概率：" + item.probability + "%" }}</view>
+                                    <!-- 图标 -->
                             <view class="Lucky flex_r  flex_js " v-if="item.levelName == 'Lucky' && item.luckyNo">
                                 <view class="type">{{ item.levelName }}</view>
-                                <view class="sort">{{ item.luckyNo }}</view>
+                                <view class="sort">{{ item.luckyNo }}赏</view>
                             </view>
                             <img v-else class="ico3" :class="{ 'rotated': item.levelName == '冲冲' }"
                                 :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
@@ -256,6 +257,7 @@
                                 <view class="iocn"></view>
                             </view>
                         </view>
+                        
                     </view>
                 </view>
             </div>
@@ -299,6 +301,7 @@ import { Postpayment } from "@/utils/pay.js";
 import discounts from "@/components/modules/x-discounts.vue";
 import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
+import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 export default {
     data() {
         return {
@@ -1571,21 +1574,29 @@ top: 1100rpx;
 
 .preview_con {
     padding-bottom: 50rpx;
+    background-color: #C4DEED;
+    border-radius: 32rpx 32rpx 0 0;
+    height: 1248rpx;
 
     .title {
         font-weight: bold;
         font-size: 30rpx;
         padding: 26rpx 0;
+        padding-top: 40rpx;
         padding-left: 36rpx;
     }
 
     .preview_box {
-        width: 700rpx;
-        height: 540rpx;
+        width: 702rpx;
+        height: 1100rpx;
         margin: 0 auto;
-        padding: 32rpx 26rpx;
-        background: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_pic-2.png");
-        background-size: 100% 100%;
+       
+        padding-right: 0;
+        background: rgba(255,255,255,0.6);
+        border-radius: 32rpx;
+        overflow-y: auto;
+        // background: url("https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_pic-2.png");
+        // background-size: 100% 100%;
 
         .p-tit {
             padding-left: 20rpx;
@@ -1602,90 +1613,128 @@ top: 1100rpx;
         }
 
         .p-list {
-            margin-top: 15rpx;
-            padding: 0 10rpx;
-            display: grid;
-            justify-content: space-between;
-            grid-template-columns: repeat(auto-fill, 151rpx);
-            overflow-y: auto;
-            height: 420rpx;
+            // margin-top: 15rpx;
+            // padding: 0 10rpx;
+             padding: 24rpx 26rpx;
+             padding-right: 0;
+            // display: grid;
+            // justify-content: space-between;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            // grid-template-columns: repeat(auto-fill, 151rpx);
+            // overflow-y: auto;
+            // height: 100%;
         }
 
         .list-item {
-            width: 151rpx;
-            height: 200rpx;
-            background: url("@/static/homePage/ndj_pic-3.png");
-            background-size: 100% 100%;
-            text-align: center;
-            padding-top: 18rpx;
+            width: 208rpx;
+            height: 300rpx;
+            // background: url("@/static/homePage/ndj_pic-3.png");
+            // background-size: 100% 100%;
+            background: linear-gradient( 0deg, #C4DEED 0%, #FFFFFF 60%);
+            border-radius: 16rpx;
+            // text-align: center;
+            // padding-top: 18rpx;
+            margin-right: 16rpx;
+
             margin-bottom: 16rpx;
+            
             position: relative;
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
 
             .p-img {
-                width: 118rpx;
-                height: 118rpx;
-                border-radius: 12rpx;
+                width: 208rpx;
+                height: 208rpx;
+                border-radius: 16rpx 16rpx 0 0;
             }
 
             .p-name {
                 margin-top: 2rpx;
-                font-size: 18rpx;
-                padding: 0 20rpx;
+                font-size: 24rpx;
+                padding: 0 8rpx;
+                color: #1A1A1A;
             }
 
             .p-probability {
-                font-size: 16rpx;
-                padding: 0 20rpx;
+                font-size: 20rpx;
+                color: #8D8D94;
+                padding: 0 8rpx;
             }
 
             .ico3 {
                 position: absolute;
-                top: 6rpx;
-                left: 6rpx;
-                width: 77rpx;
-                height: 35rpx;
+                top: 168rpx;
+                left: 0rpx;
+                 width: auto;
+            height: 40rpx;
             }
 
             .Lucky {
                 position: absolute;
-                top: 6rpx;
-                left: 6rpx;
-                width: 99.38rpx;
-                height: 32.81rpx;
+                top: 168rpx;
+                left: 0rpx;
+                 width: 120rpx;
+            height: 40rpx;
                 background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/LuckyBg.png");
                 background-size: 100% 100%;
-                font-weight: 800;
-                color: transparent;
-                transform: skew(-15deg);
+                // font-weight: 800;
+                // color: transparent;
+                font-family: '倍数欧气值';
+                text-align: center;
+                // transform: skew(-15deg);
+color: #FF5C7A;
+// color: transparent;
+line-height: 40rpx;
+// text-stroke: 2rpx #000000;
+ text-shadow:
+      1px  1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+    -1px -1px 0 #000,
+     1px  0px 0 #000,
+    -1px  0px 0 #000,
+     0px  1px 0 #000,
+     0px -1px 0 #000;
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+font-style: normal;
+text-transform: none;
+// -webkit-text-stroke:2rpx #000000;
+font-size: 22rpx;
+                // .type {
+                //     height: 32.81rpx;
+                //     line-height: 28rpx;
+                //     font-size: 17rpx;
+                //     background: linear-gradient(90deg, #FFF661, #FF1D1D);
+                //     -webkit-background-clip: text;
+                //     -webkit-text-fill-color: transparent;
+                //     background-clip: text;
+                //     margin-left: 8.44rpx;
+                // }
 
-                .type {
-                    height: 32.81rpx;
-                    line-height: 28rpx;
-                    font-size: 17rpx;
-                    background: linear-gradient(90deg, #FFF661, #FF1D1D);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    margin-left: 8.44rpx;
-                }
-
-                .sort {
-                    height: 32.81rpx;
-                    line-height: 28rpx;
-                    font-size: 19rpx;
-                    background: linear-gradient(360deg, #FFF661, #FF1D1D);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    margin-left: 2rpx;
-                }
+                // .sort {
+                //     height: 32.81rpx;
+                //     line-height: 28rpx;
+                //     font-size: 19rpx;
+                //     background: linear-gradient(360deg, #FFF661, #FF1D1D);
+                //     -webkit-background-clip: text;
+                //     -webkit-text-fill-color: transparent;
+                //     background-clip: text;
+                //     margin-left: 2rpx;
+                // }
             }
 
             .schedule {
-                position: absolute;
-                bottom: 59rpx;
-                right: 10rpx;
+                // position: absolute;
+                // bottom: 59rpx;
+                // right: 10rpx;
                 // width: 76rpx;
+                width: fit-content;
                 height: 36rpx;
                 background: linear-gradient(0deg, #58BBF7 0%, #7347B1 100%);
                 border-radius: 12rpx 12rpx 12rpx 12rpx;
@@ -1693,6 +1742,7 @@ top: 1100rpx;
                 font-size: 20rpx;
                 color: #FFFFFF;
                 padding: 6rpx;
+                line-height: 36rpx;
 
                 .iocn {
                     width: 16rpx;

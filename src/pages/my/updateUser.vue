@@ -1,32 +1,24 @@
 <template>
     <view class="updateUser">
-        <x-navbar />
+        <x-navbar tit="个人信息" />
         <div class="info_con" :style="{ paddingTop: padTop }">
-            <div class="user_img flex_r flex_jc">
-                <div class="avatar_box flex_r flex_ac flex_jc">
-                    <image
-                        v-if="activeUrl"
-                        :src="activeUrl | active"
-                        class="avatar"
-                        mode="aspectFill"
-                        @click="yulan"
-                    />
-                    <div class="edit_avatar" @click="handleUpImg">修改头像</div>
-                </div>
-            </div>
+           <div style="height: 100%;background-color: #fff;">
+             <!-- <div class="user_img flex_r flex_jc">
+                
+            </div> -->
             <div class="info_list">
-                <div class="con_title">个人信息</div>
+            
                 <div
                     class="info_item flex_r flex_ac flex_jb"
                     v-for="(i, s) in list"
                     :key="s"
                 >
                     <div class="info_tit flex_r flex_ac">
-                        <image
+                        <!-- <image
                             :src="`https://img.shinemang.com/gachaStatic/static/img/my/${i.ico}.png`"
                             class="ico"
                             mode="aspectFill"
-                        />
+                        /> -->
                         <div class="txt">{{ i.name }}</div>
                     </div>
                     <div class="info_va flex_r flex_ac" v-if="i.key == 'name'">
@@ -39,11 +31,23 @@
                         />
                         <span v-else>{{ newName }}</span>
                         <img
-                            src="https://img.shinemang.com/gachaStatic/static/img/my/uico4.png"
+                            src="https://img.shinemang.com/gachaStatic/my/modifyEditIcon.png"
                             @click="isedit = !isedit"
                             class="ico"
                         />
                     </div>
+                <div @click="handleUpImg" v-else-if="i.key == 'avator'" class="avatar_box flex_r flex_ac flex_jc">
+                    <image
+                        v-if="activeUrl"
+                        :src="activeUrl | active"
+                        class="avatar"
+                        mode="aspectFill"
+                        @click.stop="yulan"
+                    />
+                    <!-- <div class="edit_avatar" @click="handleUpImg">修改头像</div> -->
+                     <u-icon color="#B3B3B3" name="arrow-right"></u-icon>
+                </div>
+                <!-- <div class="con_title">个人信息</div> -->
                     <div class="info_va" v-else>{{ userInfo[i.key] }}</div>
                 </div>
             </div>
@@ -51,6 +55,7 @@
                 <x-btn txt="确认" v-if="IsConfirm" @click="confirm" cor="3" />
                 <x-btn txt="确认" v-else />
             </div>
+           </div>
         </div>
     </view>
 </template>
@@ -66,9 +71,10 @@ export default {
         return {
             activeUrl: "",
             list: [
+                { name: "头像", key: "avator", ico: "uico1" },
                 { name: "昵称", key: "name", ico: "uico1" },
                 { name: "手机号", key: "phone", ico: "uico2" },
-                { name: "芒盒ID", key: "id", ico: "uico3" },
+                { name: "ID号", key: "id", ico: "uico3" },
             ],
             isedit: false, // 是否编辑
             newName: "",
@@ -80,7 +86,7 @@ export default {
         ...mapState(["userInfo"]),
         padTop() {
             let da = this.MBInfo();
-            return da.top + da.height + 29 + "px";
+            return da.top + da.height + 9 + "px";
         },
         IsConfirm() {
             return (
@@ -183,57 +189,63 @@ export default {
     // background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
     overflow-y: auto;
    background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+    //       &::after {
+    //     content: "";
+    //     width: 100vw;
+    //     height: 600rpx;
+    //     left: 0;
+    //     top: 0;
+    //     position: absolute;
+    //     z-index: 1;
+    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+    //     background-size: 100% 100%;
+    //   }
 }
 
 .info_con {
     height: 100%;
-    padding: 0 32rpx;
+    // padding: 0 32rpx;
     z-index: 2;
     position: relative;
+    >div{
+      padding: 0 32rpx;
+      border-radius: 32rpx 32rpx 0 0;
+    }
 
     .avatar {
-        width: 172rpx;
-        height: 172rpx;
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
+        margin-right: 16rpx;
     }
 
     .avatar_box {
-        width: 180rpx;
-        height: 180rpx;
-        border-radius: 50%;
-        border: 4rpx solid #fff;
+        // width: 80rpx;
+        // height: 80rpx;
+        // border-radius: 50%;
+        // border: 4rpx solid #fff;
         overflow: hidden;
         position: relative;
     }
 
     .edit_avatar {
-        width: 100%;
-        text-align: center;
-        font-size: 20rpx;
-        height: 46rpx;
-        line-height: 40rpx;
-        color: #fff;
-        background-color: rgba($color: #000, $alpha: 0.5);
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        // width: 100%;
+        // text-align: center;
+        // font-size: 20rpx;
+        // height: 46rpx;
+        // line-height: 40rpx;
+        // color: #fff;
+        // background-color: rgba($color: #000, $alpha: 0.5);
+        // position: absolute;
+        // bottom: 0;
+        // left: 0;
     }
 }
 
 .info_list {
     background-color: #fff;
     border-radius: 16rpx;
-    padding: 0 28rpx;
+    // padding: 0 28rpx;
     margin-top: 40rpx;
 
     .con_title {
@@ -243,11 +255,12 @@ export default {
     }
 
     .info_item {
-        padding: 32rpx 0;
+        padding:  0;
         font-weight: 500;
         font-size: 28rpx;
-        color: #383228;
-        border-bottom: 2rpx solid #e2e1e3;
+        color: #1A1A1A;
+        height: 110rpx;
+        // border-bottom: 2rpx solid #e2e1e3;
 
         &:last-child {
             border-bottom: none;
@@ -255,22 +268,22 @@ export default {
 
         .info_tit {
             .ico {
-                width: 36rpx;
-                height: 36rpx;
+                width: 32rpx;
+                height: 32rpx;
                 margin-right: 16rpx;
             }
         }
 
         .info_va {
-            color: #615e74;
+            color: #1A1A1A;
             .va_name {
                 text-align: right;
                 color: $motif-color;
             }
             .ico {
-                width: 36rpx;
-                height: 36rpx;
-                margin-left: 24rpx;
+                width: 32rpx;
+                height: 32rpx;
+                margin-left: 16rpx;
             }
         }
     }

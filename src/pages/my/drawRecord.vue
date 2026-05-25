@@ -3,20 +3,24 @@
         <div class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt">返回</text>
+                <text class="txt">抽赏记录</text>
             </view>
         </div>
         <div class="shanggui_con">
-            <view class="tabs_two flex_r">
+            <view class="tabs_two flex_r flex_jb">
                 <view
                     class="tab_item"
                     :class="{ active: i.val == secondCondition }"
                     @click="ontab2(i)"
                     v-for="(i, s) in navbar"
                     :key="s"
-                    >{{ i.txt }}</view
+                    >
+                    <text>{{ i.txt }}</text>
+                     <view v-if="i.val == secondCondition" class="line"></view>
+                    </view
                 >
             </view>
+            <view style="margin-top: 14rpx;" class="bgcBox"></view>
             <view class="p_lists">
                 <div class="order_list" v-if="myRewardData.length">
                     <scroll-view
@@ -31,7 +35,8 @@
                             :key="index"
                             @click="onclickHistoryDetail(item)"
                         >
-                            <div class="row flex_r flex_jb flex_ac">
+                            <view style="padding:  0 32rpx;">
+                                <div class="row flex_r flex_jb flex_ac">
                                 <div class="flex_r flex_ac">
                                     <span class="txt">套系</span
                                     ><span class="txt">{{
@@ -119,6 +124,8 @@
                                     </div>
                                 </template>
                             </div>
+                            </view>
+                             <view style="margin-top: 24rpx;" class="bgcBox"></view>
                         </div>
                     </scroll-view>
                 </div>
@@ -140,7 +147,7 @@ export default {
             navbar: [
                 // { txt: "一番赏", val: 1 },
                 { txt: "扭蛋机", val: 2 },
-                { txt: "潮游赏", val: 3 },
+                { txt: "无限赏", val: 3 },
                 { txt: "洞洞乐", val: 4 },
                 // { txt: "芒盒赏", val: 5 },
                 // { txt: "一网打尽", val: 6 },
@@ -200,21 +207,16 @@ export default {
     height: 100vh;
     position: relative;
     padding: 100rpx 0 30rpx;
-      background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+      background-color: #fff;
+        
     overflow-y: auto;
 
   
+}
+.bgcBox{
+    width: 100%;
+    height: 16rpx;
+    background-color: #F5F6F8;
 }
 
 .navbar_x {
@@ -246,6 +248,7 @@ export default {
 }
 
 .tabs_two {
+    
     // width: 650rpx;
     // background: #ac8afc;
     // border-radius: 0 30rpx 0 0;
@@ -257,18 +260,35 @@ export default {
     font-size: 28rpx;
     color: #666666;
     line-height: 28rpx;
-    padding-left: 32rpx;
+    padding-left: 78rpx;
+    padding-right: 78rpx;
 
     .tab_item {
       width: 136rpx;
 height: 56rpx;
-background: #EEEEEE;
-border-radius: 28rpx 28rpx 28rpx 28rpx;
+// background: #EEEEEE;
+// border-radius: 28rpx 28rpx 28rpx 28rpx;
 display: flex;
 align-items: center;
 justify-content: center;
 line-height: 56rpx;
 margin-right: 16rpx;
+color: #8D8D94;
+position: relative;
+.line{
+    width: 64rpx;
+height: 12rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 6rpx 6rpx 6rpx 6rpx;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+bottom: 4rpx;
+}
+text{
+    position: relative;
+    z-index: 2;
+}
 
         &:first-child {
             // margin-left: -16rpx;
@@ -278,8 +298,9 @@ margin-right: 16rpx;
         }
 
         &.active {
-            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
-            color: #000;
+            // background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #1A1A1A;
+            font-weight: 600;
             // margin-top: -10rpx;
             // color: #333;
             // width: 156rpx;
@@ -306,7 +327,7 @@ margin-right: 16rpx;
         border-radius: 0 50rpx 0 0;
         // background: #f4f4f4;
         margin-top: -15rpx;
-        padding: 32rpx;
+        padding: 32rpx 0;
     }
 }
 
@@ -321,7 +342,7 @@ margin-right: 16rpx;
 .order_item {
     background-color: #fff;
     border-radius: 16rpx;
-    padding: 20rpx 26rpx;
+    padding: 20rpx 0rpx;
     margin-bottom: 20rpx;
     font-size: 24rpx;
 

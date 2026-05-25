@@ -56,9 +56,13 @@ let ISmp = () => {
 }
 // 获取胶囊按钮信息
 let getMBInfo = () => {
-    // #ifdef MP-WEIXIN
-    return uni.getMenuButtonBoundingClientRect();
-    // #endif
+   if(window.mgtv){
+    return mgtv.getMenuButtonBoundingClientRect()
+   }else{
+    return { top: 40, height: 32, width: 0 }
+
+   }
+   
     // #ifndef MP-WEIXIN
     return { top: 40, height: 32, width: 0 }
     // #endif

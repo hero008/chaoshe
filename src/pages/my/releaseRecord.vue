@@ -3,12 +3,15 @@
         <div class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt">返回</text>
+                <text class="txt">发货订单</text>
             </view>
         </div>
         <div class="shanggui_con">
-            <view class="tabs_two flex_r">
-                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">{{i}}</view>
+            <view class="tabs_two flex_r flex_jb">
+                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i}}</text>
+                    <view v-if="i==active" class="line"></view>
+                </view>
             </view>
             <view class="p_lists">
                 <div class="order_list" v-if="orderlist.length">
@@ -16,21 +19,31 @@
 						:scroll-y="true">
                     <div class="order_item" v-for="(item,index) in orderlist" :key="index" @click="goto('/pages/my/releaseDetails',{id:item.id})">
                         <div class="head_tit flex_r flex_jb flex_ac">
-                            <div class="l_tit flex_r flex_ac">
-                                <div class="tag corg" v-if="item.state == 4">发货中</div>
-                                <div class="tag" v-if="item.state == 5">已签收</div>
-                                <div class="tag corg" v-if="item.state == 3">备货中</div>
+                            <div class="l_tit flex_r flex_jb">
+                              
                                 <div class="addr">
+                                    <image
+                                        src="https://img.shinemang.com/gachaStatic/my/locationIcon.png"
+                                        mode="scaleToFill"
+                                    />
                                     {{setTxtLength(item)}}
                                 </div>
+                                  <div class="tag isSend" v-if="item.state == 4">发货中</div>
+                                <div class="tag" v-if="item.state == 5">已签收</div>
+                                <div class="tag corg" v-if="item.state == 3">备货中</div>
                             </div>
-                            <div class="detail"><span>查看详情</span><span class="icof">&#xe72b;</span></div>
+                            <!-- -->
                         </div>
                         <div class="goods flex_r flex_jb flex_ac">
                             <div class="goods_li">
                                 <img v-for="(v,k) in item.items" :key="k" class="goods_img" :src="v.cover">
                             </div>
-                            <div class="goods_num flex_r flex_jc flex_ac">x{{item.items.length}}</div>
+                          
+                        </div>
+
+                        <div class="goodsBottom flex_r flex_jb flex_ac">
+                              <div class="goods_num">共 <text>{{item.items.length}}</text>件赏品</div>
+                               <div class="detail"><span>查看订单</span></div>
                         </div>
                         <!-- <div class="bottom_btn flex_r flex_ac flex_jb">
                             <div class="no">订单号：{{item.id}}</div>
@@ -118,17 +131,17 @@ export default {
     overflow-y: auto;
 
     background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+    //       &::after {
+    //     content: "";
+    //     width: 100vw;
+    //     height: 600rpx;
+    //     left: 0;
+    //     top: 0;
+    //     position: absolute;
+    //     z-index: 1;
+    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+    //     background-size: 100% 100%;
+    //   }
 }
 
 .navbar_x {
@@ -172,19 +185,36 @@ export default {
     font-size: 28rpx;
     color: #666666;
     line-height: 28rpx;
-    padding-left: 32rpx;
+       padding-left: 62rpx;
+    padding-right: 62rpx;
 
     .tab_item {
       width: 136rpx;
 height: 56rpx;
-background: #EEEEEE;
-border-radius: 28rpx 28rpx 28rpx 28rpx;
+// background: #EEEEEE;
+// border-radius: 28rpx 28rpx 28rpx 28rpx;
 display: flex;
+color: #8D8D94;
+font-weight: bold;
 align-items: center;
 justify-content: center;
 line-height: 56rpx;
 margin-right: 16rpx;
-
+position: relative;
+.line{
+    width: 64rpx;
+height: 12rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 6rpx 6rpx 6rpx 6rpx;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+bottom: 4rpx;
+}
+text{
+    position: relative;
+    z-index: 2;
+}
         &:first-child {
             // margin-left: -16rpx;
         }
@@ -193,8 +223,8 @@ margin-right: 16rpx;
         }
 
         &.active {
-            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
-            color: #000;
+            // background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #1A1A1A;
             // margin-top: -10rpx;
             // color: #333;
             // width: 156rpx;
@@ -221,7 +251,8 @@ margin-right: 16rpx;
         border-radius: 0 50rpx 0 0;
         // background: #F4F4F4;
         margin-top: -15rpx;
-        padding: 32rpx;
+        padding: 24rpx;
+        padding-top: 40rpx;
     }
 }
 
@@ -233,50 +264,70 @@ margin-right: 16rpx;
 .order_item {
     background-color: #fff;
     border-radius: 16rpx;
-    padding: 20rpx 26rpx;
-    margin-bottom: 20rpx;
+    // padding: 20rpx 26rpx;
+    padding: 0 24rpx 24rpx 24rpx;
+    width: 100%;
+    height: 348rpx;
+    margin-bottom: 16rpx;
 
     .head_tit {
         font-size: 24rpx;
-        padding-bottom: 20rpx;
-        border-bottom: 2rpx solid #E2E1E3;
+        // padding-bottom: 20rpx;
+        height: 96rpx;
+        width: 100%;
+        border-bottom: 2rpx dashed #E5E5E5;
 
         .tag {
-            padding: 2rpx 10rpx;
-            border-radius: 4rpx;
-            color: #FFFFFF;
-            background: #A9A9A9;
-            margin-right: 10rpx;
+            padding: 2rpx 12rpx;
+            border-radius: 8rpx;
+            color: #8D8D94;
+          background: #F2F2F2;
+            // margin-right: 10rpx;
 
             &.corg {
-                background: #78BF72;
+                background: #FFF5EB;
+                color: #FF932B;
+            }
+            &.isSend{
+                background-color: #D6FCFF;
+                color: #01C2D0;
+            }
+        }
+        .l_tit{
+            width: 100%;
+        }
+        .addr{
+            display: flex;
+            align-items: center;
+            image{
+                width: 32rpx;
+                height: 32rpx;
+                margin-right: 4rpx;
+
             }
         }
 
-        .detail {
-            color: #818181;
-        }
     }
 
     .goods {
-        margin: 20rpx 0;
-
+        margin: 24rpx 0;
+// calc(100% - 60rpx);
         .goods_li {
             height: 120rpx;
-            width: calc(100% - 60rpx);
+            width: 100%;
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
 
             .goods_img {
-                height: 110rpx;
-                width: 110rpx;
+                height: 124rpx;
+                width: 124rpx;
                 border-radius: 16rpx;
-                border: 2rpx solid #fff;
-                box-shadow: 0 0 2rpx 2rpx #CACACA;
+                // border: 2rpx solid #fff;
+                // box-shadow: 0 0 2rpx 2rpx #CACACA;
                 margin: 2rpx;
                 /* background-color: rgba($color: $motif-color, $alpha: 0.5); */
-                margin-right: 12rpx;
+                margin-right: 16rpx;
 
                 &:last-child {
                     margin-right: 0;
@@ -284,13 +335,31 @@ margin-right: 16rpx;
             }
         }
 
+    }
+    .goodsBottom{
+        height: 56rpx;
+        
+        .detail {
+           width: 144rpx;
+height: 56rpx;
+border-radius: 32rpx 32rpx 32rpx 32rpx;
+border: 2rpx solid #1A1A1A;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24rpx;
+color: #1A1A1A;
+        }
+    }
         .goods_num {
             font-size: 24rpx;
             font-weight: 500;
-            padding: 0 4rpx;
+            // padding: 0 4rpx;
+            color: #8D8D94;
+            text{
+              color: #FF932B;
+            }
         }
-    }
-
     .bottom_btn {
         font-size: 24rpx;
         color: #818181;

@@ -73,8 +73,10 @@
                         <div class="preview_1">
                               <div class="p-probability flex_r flex_ac ">
                                 <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
-                                <img :src="`https://img.shinemang.com/gachaStatic/chaoyou/duoyou_${s}.png`"
-                                    class="badge" />
+                           
+                                    <div :class="['prob_name',s]"> 
+                                          {{ formatName(s) }}
+                                    </div>
                                 <!-- <div class="prob_num">{{ ($h.Div(i, gachainfo.totalNum) * 100).toFixed(2) }}%</div> -->
                                 <div class="prob_num" v-if="i">{{ i }}%</div>
                             </div>
@@ -87,7 +89,7 @@
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
                                 @click="ondetail(item.itemId)">
                                 <img :src="item.itemHalfImage" class="p-img" />
-                                <img :src="`https://img.shinemang.com/gachaStatic/chaoyou/duoyou_${item.levelName}.png`"
+                                <img :src="`https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png`"
                                     class="badge" />
                                 <!-- <view class="bor"></view> -->
                                 <view class="p-name flex_c flex_jb">
@@ -179,7 +181,7 @@
             <view class="foot-btn flex_r flex_jb flex_ac"
                 v-else-if="AReward.userBetCount == -1 && AReward.userBetCountDaily == -1">
                 <view class="cut flex_r flex_ac" :class="[cutPattern]" @click="oncut">
-                    <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view>
+                    <!-- <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view> -->
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>
                 <view v-for="(value, index) in payOptions" :key="index" class="btn-item flex_c flex_jc"
@@ -220,30 +222,41 @@
             :message="AReward.openMessage" />
         <duoyou ref="duoyou" @onDuoyou="onClickDuoyou" />
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
-        <u-popup @close="showRecards = false" :show="showRecards">
-            <scroll-view style="height: 1000rpx;" scroll-y>
+        <u-popup round="16" @close="showRecards = false" :show="showRecards">
+          <view class="recordList">
+             <view class="title">中奖记录</view>
+             <view class="tab">
+                  <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem',value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
+                  <!-- <view class="tabItem">史诗</view>
+                  <view class="tabItem">稀有</view>
+                  <view class="tabItem">普通</view> -->
+             </view>
+               <scroll-view style="height: 1010rpx;" scroll-y>
                     <div class="lotteryRaffle">
-                            <div class="r_item" v-for="(array, key) in recordList" :key="key">
-                                <div class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]">
-                                    <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
-                                        class="badge" />
-                                    <div class="tit_r flex_r flex_ac" @click="getJl(array)">
+                            <div v-if="newRecordList" class="r_item" >
+                             <!-- v-for="(array, key) in recordList" -->
+                                <!-- <div  class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]"> -->
+                                    <!-- <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
+                                        class="badge" /> -->
+                                    <!-- <div class="tit_r flex_r flex_ac" @click="getJl(array)">
                                         <span>查看最近10个</span>
                                         <span class="icof" v-if="array.active">&#xe72a;</span>
                                         <span class="icof" v-else>&#xe72d;</span>
-                                    </div>
-                                </div>
-                                <div :class="['lr_con', { row1: !array.active }]">
-                                    <div v-if="array.records.length !== 0">
-                                        <div class="lr_i flex_r flex_ac flex_jb"
-                                            v-for="(item, i) in array.records.slice(0, array.lengthNumber)" :key="i">
+                                    </div> -->
+                                <!-- </div> -->
+                                <div  :class="['lr_con', { row1: false }]">
+                                    <div v-if="newRecordList && newRecordList.records && newRecordList.records.length !== 0">
+                                        <div :style="{
+                                backgroundImage: `url(https://img.shinemang.com/gachaStatic/chaoyou/k_${newRecordList.name}.png)`,
+                            }"  class="lr_i flex_r flex_ac flex_jb"
+                                            v-for="(item, i) in newRecordList.records.slice(0, newRecordList.records.lengthNumber)" :key="i">
                                             <div class="lr_r">
                                                 <img class="lr_img" :src="item.itemCover" />
                                                 <div class="nums">{{ item.no }}发</div>
                                             </div>
                                             <div class="bor"></div>
                                             <div class="lr_info flex_c flex_jb">
-                                                <div class="name ellipsis2">
+                                                <div class="name ellipsis">
                                                     {{ item.itemName }}
                                                 </div>
                                                 <div class="user_time flex_r flex_ac flex_jb">
@@ -270,6 +283,7 @@
                             </div>
              </div>
             </scroll-view>
+          </view>
           
 		</u-popup>
 
@@ -285,6 +299,7 @@ import ball from "@/page-activity/ball/ball.vue";
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
+import { formateGachaLevelName } from "../../utils/mgtv";
 export default {
     data() {
         return {
@@ -343,6 +358,12 @@ export default {
                 btn: "https://img.shinemang.com/gachaStatic/static/img/activity/an_ls.png",
             },
             activityOpen: false,
+
+
+            recordLevelName:'SP',
+            newRecordList:'',
+
+
         };
     },
     components: {
@@ -371,6 +392,17 @@ export default {
         this.loadDetail();
     },
     methods: {
+        recordsTab(value){
+            console.log(value);
+            this.recordLevelName = value
+            this.newRecordList = this.recordList.find((item) => {
+                        return item.name == this.recordLevelName
+                    })
+        },
+        formatName(str){
+            return formateGachaLevelName(str)
+          
+        },
         ...mapMutations(["UppayMessage"]),
         onScroll(e) {
             this.conScrollTop = e.detail.scrollTop;
@@ -513,6 +545,7 @@ export default {
             }
             let A = [...map.values()];
             this.sortList = A;
+         
             this.probability = obj;
             console.log(this.probability);
             // #ifdef APP
@@ -573,6 +606,11 @@ export default {
                         }
                     }
                     this.recordList = obj;
+                 
+                    this.newRecordList = this.recordList.find((item) => {
+                        return item.name == this.recordLevelName
+                    })
+               
                 }
             });
         },
@@ -681,7 +719,7 @@ export default {
                 this.payOptions = [{ num: 1, text: '一发入魂', price: 0, class: '' }, { num: 3, text: '欧气三连', price: 0, class: '' }, { num: 5, text: '五连绝世', price: 0, class: '' }, { num: 10, text: '十连超神', price: 0, class: 'btn-item3' },]
             } else {
 
-                this.payOptions = [{ num: 5, text: '五连绝世', price: 0, class: '' }, { num: 10, text: '十连超神', price: 0, class: '' }, { num: 50, text: '五十爆燃', price: 0, class: '' }, { num: 100, text: '百连至臻', price: 0, class: 'btn-item3' },]
+                this.payOptions = [{ num: 5, text: '五连绝世', price: 0, class: 'btn-item3' }, { num: 10, text: '十连超神', price: 0, class: 'btn-item3' }, { num: 50, text: '五十爆燃', price: 0, class: 'btn-item3' }, { num: 100, text: '百连至臻', price: 0, class: 'btn-item4' },]
             }
             this.getPrice()
         },
@@ -1133,9 +1171,9 @@ image{
 
 .bor {
     width: 1rpx;
-    height: 104rpx;
-    border: 1rpx solid #D8A7BD;
-    opacity: 0.2;
+    height: 86rpx;;
+    border: 1rpx dashed #E5E5E5;
+    // opacity: 0.2;
     margin: 0 20rpx;
 }
 
@@ -1228,12 +1266,35 @@ margin-bottom: 12rpx;
     .p-probability {
         margin-bottom: 24rpx;
         .prob_item{
-            margin-right: 20rpx;
+            margin-right:40rpx;
             &:last-child{
                 margin-right: 0;
             }
         }
+     .prob_name{
+        font-family: '倍数欧气值';
+        font-size: 28rpx;
+line-height: 40rpx;
 
+text-stroke: 1rpx #000000;
+-webkit-text-stroke:1rpx #000000;
+text-align: center;
+font-style: normal;
+text-transform: none;
+        &.SP{
+            color: #FF93C7;
+        }
+        &.A{
+            color: #F9E650;
+        }
+        &.B{
+            color: #50FFF5;
+        }
+        &.C{
+            color: #EDF1F0;
+        }
+    
+     }
         .badge {
             width: 112rpx;
             height: 40rpx;
@@ -1275,7 +1336,7 @@ margin-bottom: 12rpx;
         }
 
         .badge {
-            width: 112rpx;
+            width: 88rpx;
             height: 40rpx;
             position: absolute;
             left: 0;
@@ -1359,17 +1420,79 @@ margin-bottom: 12rpx;
 
  
 }
-  .lotteryRaffle {
+.recordList{
+     height: 1248rpx;
+    width: 750rpx;
+    // position: absolute;
+    // bottom: 0;
+    background: #F5F6F8;
+    // left: calc((100% - 686rpx) / 2);
+    // background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/draw_log_bg.png");
+    // background-size: 100% 100%;
+    // padding: 18rpx 16rpx 0;
+    border-radius: 32rpx 32rpx 0 0;
+      &::after {
+        content: "";
+        width: 100vw;
+        height: 210rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('https://img.shinemang.com/gachaStatic/pouponTopBgc.png');
+        background-size: 100% 100%;
+      }
+
+      .title{
+             color: #1A1A1A;
+        font-size: 36rpx;
+        text-align: center;
+        padding-top: 48rpx;
+        padding-bottom: 32rpx;
+        position: relative;
+        z-index: 2;
+        font-weight: bold;
+      }
+      .tab{
+        display: flex;
+        margin-bottom: 32rpx;
+        padding-left: 32rpx;
+        position: relative;
+        z-index: 2;
+       .tabItem{
+        width: 136rpx;
+height: 56rpx;
+background: #EEEEEE;
+border-radius: 28rpx 28rpx 28rpx 28rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 56rpx;
+margin-right: 16rpx;
+ color: #666666;
+ font-size: 28rpx;
+ &.active{
+    background: #FF93C7;
+    color: #000;
+    font-weight: bold;
+ }
+
+       }
+      }
+.lotteryRaffle {
         height: calc(100%);
         border-radius: 10rpx;
         overflow-y: auto;
-        padding-bottom: 40rpx;
-        padding-top: 0rpx;
+        
+        padding:0 32rpx;
+        
        .r_item {
         // background: #5D2028;
-        background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+        // background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
         border-radius: 24rpx;
-
+          width: 100%;
+          height: 184rpx;
+          background-size: 100% 100%;
         .lr_tit {
             font-weight: 500;
             font-size: 20rpx;
@@ -1425,66 +1548,71 @@ margin-bottom: 12rpx;
         }
 
         .lr_i {
-            padding: 12rpx 14rpx;
+            padding: 16rpx;
+            background-size: 100% 100%;
+            margin-bottom: 16rpx;
             // padding: 12rpx 0;
 
             .lr_r {
                 position: relative;
 
                 .lr_img {
-                    width: 126rpx;
-                    height: 126rpx;
+                    width: 152rpx;
+                    height: 152rpx;
                 }
 
                 .nums {
                     white-space: nowrap;
-                    padding: 0 12rpx;
+                    // padding: 0 32rpx;
+                    width: 152rpx;
                     height: 32rpx;
                     line-height: 32rpx;
-                    background: #E28A25;
-                    box-shadow: inset 4rpx 4rpx 4rpx 0rpx rgba(255, 248, 227, 0.25), inset -4rpx -4rpx 4rpx 0rpx rgba(255, 248, 227, 0.25);
-                    border-radius: 18rpx;
+                    background: #DBB36F;
+                    // box-shadow: inset 4rpx 4rpx 4rpx 0rpx rgba(255, 248, 227, 0.25), inset -4rpx -4rpx 4rpx 0rpx rgba(255, 248, 227, 0.25);
+                    border-radius: 16rpx;
                     position: absolute;
                     left: 50%;
                     transform: translateX(-50%);
                     bottom: 0;
-                    font-weight: bold;
-                    font-size: 18rpx;
-                    color: #442914;
+                    // font-weight: bold;
+                    font-size: 20rpx;
+                    color: #fff;
                     text-align: center;
                 }
             }
 
             .lr_info {
-                width: calc(100% - 166rpx);
+                width: 445rpx;
                 height: 126rpx;
                 padding: 8rpx 0;
                 font-weight: 500;
-                font-size: 24rpx;
+                font-size: 28rpx;
                 color: #1A1A1A;
 
                 .u_img {
-                    width: 32rpx;
-                    height: 32rpx;
+                    width: 40rpx;
+                    height: 40rpx;
                     margin-right: 8rpx;
                     border-radius: 50%;
                 }
 
                 .u_name {
-                    font-weight: 500;
-                    font-size: 20rpx;
-                    color: #8D8D94;
+                  
+                    font-size: 24rpx;
+                    color: #1A1A1A;
                 }
 
                 .time {
-                    font-weight: 500;
-                    font-size: 20rpx;
+                  
+                    font-size: 24rpx;
                     color: #8D8D94;
                 }
             }
         }
     }
     }
+}
+  
 .foot-btn {
     left: 0;
     width: 100%;
@@ -1492,44 +1620,46 @@ margin-bottom: 12rpx;
 
     .cut {
         position: absolute;
-        width: 172rpx;
-        height: 52rpx;
-        bottom: 100rpx;
-        right: -26rpx;
-        border-radius: 18rpx 0 0 18rpx;
-        font-weight: bold;
-        font-size: 24rpx;
-        color: #FFFFFF;
-        padding: 0 14rpx;
-        letter-spacing: 2rpx;
-        justify-content: flex-end;
+        width: 196rpx;
+        height: 64rpx;
+        bottom: 90rpx;
+        right: 0rpx;
+        // border-radius: 18rpx 0 0 18rpx;
+        // font-weight: bold;
+        // font-size: 24rpx;
+        // color: #FFFFFF;
+        // padding: 0 14rpx;
+        // letter-spacing: 2rpx;
+        // justify-content: flex-end;
 
         .passionImg {
-            width: 32rpx;
-            height: 32rpx;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(255, 61, 13, 0.50) 0%, rgba(255, 61, 13, 0) 100%);
+            width: 100%;
+            height: 100%;
+            background: url("https://img.shinemang.com/gachaStatic/jq.png");
             background-size: 100% 100%;
-            margin-left: 10rpx;
+          
         }
 
         .commonImg {
-            width: 32rpx;
-            height: 32rpx;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/chaowanshang/pattern.png"), radial-gradient(circle at center, rgba(13, 118, 255, 0.50) 0%, rgba(255, 61, 13, 0) 100%);
+            // width: 32rpx;
+            // height: 32rpx;
+           width: 100%;
+            height: 100%;
+            background: url("https://img.shinemang.com/gachaStatic/pt.png");
             background-size: 100% 100%;
-            margin-left: 10rpx;
+            // margin-left: 10rpx;
         }
 
     }
 
     .passion {
-        background: linear-gradient(86deg, rgba(227, 146, 75, 0.7) 0%, rgba(227, 93, 75, 0.7) 100%);
-        box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(255, 61, 13, 0.3);
+        // background: linear-gradient(86deg, rgba(227, 146, 75, 0.7) 0%, rgba(227, 93, 75, 0.7) 100%);
+        // box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(255, 61, 13, 0.3);
     }
 
     .common {
-        background: linear-gradient(86deg, rgba(62, 223, 252, 0.7) 0%, rgba(83, 132, 246, 0.7) 100%);
-        box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(13, 118, 255, 0.3);
+        // background: linear-gradient(86deg, rgba(62, 223, 252, 0.7) 0%, rgba(83, 132, 246, 0.7) 100%);
+        // box-shadow: inset 0rpx 1rpx 0rpx 0rpx rgba(255, 255, 255, 0.2), -4rpx 4rpx 8rpx 0rpx rgba(13, 118, 255, 0.3);
     }
 }
 
@@ -1541,13 +1671,13 @@ margin-bottom: 12rpx;
     background-size: 100% 100%;
     border-radius: 24rpx;
     text-align: center;
-    font-weight: bold;
+    // font-weight: bold;
     font-size: 36rpx;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-
+    font-family: '倍数欧气值';
     .number {
         &:before {
             content: "￥";
@@ -1568,8 +1698,13 @@ margin-bottom: 12rpx;
 .btn-item3{
     background: url('https://img.shinemang.com/gachaStatic/ddl/btn1Bgc.png') !important;
     background-size: 100% 100% !important;
+    color:#000 !important
 }
-
+.btn-item4{
+    background: url('https://img.shinemang.com/gachaStatic/ddl/btn2Bgc.png') !important;
+    background-size: 100% 100% !important;
+      color:#000 !important
+}
 .btn-item2 {
     background: #EC8917;
 }

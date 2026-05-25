@@ -269,14 +269,14 @@ export default {
                 }
             });
             // console.log(this.userInfo,'userInfo')
-            if(this.userInfo.id){
+            // if(this.userInfo.id){
                 post("v1/publicize/mail", { page: 1, page_size: 1 }).then((res) => {
                 if (!res.code) {
                     this.UpMail(res.unread);
                 }
             });
-            }
-           if(this.userInfo.id){
+            // }
+        //    if(this.userInfo.id){
               let a = await activityLIst({
                 key: ["Task", "ShareBill", "Lottery", 'RandomDiscount'],
             });
@@ -287,7 +287,7 @@ export default {
                 if (i.key == "ActivityKey_Lottery") this.egg = i;
                 if (i.key == "ActivityKey_RandomDiscount") this.RandomDiscount(Object.keys(i).length ? i.open : false);
             });
-           }
+        //    }
           
             if (this.allIn.open) {
                 const todayStr =
@@ -482,10 +482,10 @@ export default {
        
         //    this.asyncUpdateInfo();
           
-            if(this.userInfo.id){
+            // if(this.userInfo.id){
                 this.asyncUpBalance();
                 this.asyncUpOffsetInfo();
-            }
+            // }
          
             let w = this.SystemInfo.windowWidth;
             let va = this.MBInfo().width;

@@ -9,6 +9,7 @@
       color="#9064FF"
       bgColor="rgba(0,0,0,0)"
     />
+    <u-modal @confirm="confirm" :show="show" :title="title" :content='content'></u-modal>
   </view>
 </template>
 <script>
@@ -20,6 +21,9 @@ export default {
   data() {
     return {
       inviteCode: uni.getStorageSync("inviteCode"),
+      show:false,
+      title:'提示',
+      content:'登录失败,请重试,体验更多内容吧',
     };
   },
   created() {
@@ -31,30 +35,50 @@ export default {
     if (user.id) {
       this.backtrack();
     } else {
-        if(window.mgtv){
-          this.loginMgtv((res)=>{
-               // 登录成功// 获取到res 的用户信息,在去登录
-          },(err)=>{
-              //登录失败 
-                // uni.$u.toast('登录失败');
-                // that.backtrack();
-          });
-        }else{
-            this.webLogin();
-        }
-      
+      this.toLogin();
     }
     // if(!user.id) this.wxlogin()
     // else this.backtrack()
   },
   // computed: { ...mapState(["isMTVLogin"]) },
   methods: {
+    toLogin() {
+        if(window.mgtv){
+          this.loginMgtv((res)=>{
+            //  let uuid = res.uuid;
+            // let ticket = res.ticket;
+            // let nickName = res.nickName;
+            // let avatarUrl = res.avatarUrl;
+            this.webLogin();
+               // 登录成功// 获取到res 的用户信息,在去登录
+          },(err)=>{
+                 //登录失败 
+                // uni.$u.toast('登录失败');
+                // that.backtrack();
+                this.show=true;
+          });
+        }else{
+            this.webLogin();
+            // this.show=true
+        }
+      
+    },
+    confirm(){
+      let user = this.$gl("userInfo") || {};
+        if (user.id) {
+          this.backtrack();
+        } else {
+          this.toLogin();
+          
+        }
+    },
     loginMgtv(success_, fail_) {
+
       let isLogin = mgtv.isLogin();
       if (!isLogin) {
         mgtv.login({
           success(res) {
-            this.getUserInfo(success_, fail_);
+            that.getUserInfo(success_, fail_);
           },
           fail(res) {
             fail_ && fail_(res);
@@ -81,6 +105,7 @@ export default {
                     success_ && success_(res.data);
                   },
                   fail(res) {
+                    console.log(res)
                     fail_ && fail_(res);
                   },
                 });
