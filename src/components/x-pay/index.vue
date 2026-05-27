@@ -1,5 +1,5 @@
 <template>
-    <u-popup :show="show" @close="close" :safeAreaInsetBottom="false" :closeable="true" round="20" bgColor="#F4F4F4">
+    <u-popup :show="show" @close="close" :safeAreaInsetBottom="false" :closeable="true" round="20" bgColor="#fff">
         <view class="pay_module">
             <div class="title">{{ title }}</div>
             <div class="msg flex_r flex_jc flex_ac">
@@ -113,13 +113,16 @@
             </div>
             <view v-if="couponId !== '0'">
                 <!-- <div class="btn" v-if="selectTicket.type" @click="$u.debounce(onPay, 1000)">支付</div> -->
-                <div class="btn" v-if="selectTicket.type" @click="$noMultipleClicks(onPay)">支付</div>
-                <div v-else class="btn disabled" @click="onHint">支付</div>
+                <div class="btn" v-if="selectTicket.type" @click="$noMultipleClicks(onPay)">确认信息并支付</div>
+                <div v-else class="btn disabled" @click="onHint">确认信息并支付</div>
             </view>
             <!-- <div class="btn" v-else @click="$u.debounce(onPay, 1000)">支付</div> -->
-            <div class="btn" v-else @click="$noMultipleClicks(onPay)">支付</div>
+            <div class="btn" v-else @click="$noMultipleClicks(onPay)">确认信息并支付</div>
         </view>
         <mp-privacy title="授权手机号" ref="mpPrivacy" type="2" @authChange="authChange" />
+
+        <u-modal :closeOnClickOverlay="true" @close="showToRecharge = false" :show="showToRecharge" @confirm="confirmToRecharge" title="金币不足" content='快去充值吧'></u-modal>
+
     </u-popup>
 </template>
 <script>
@@ -129,6 +132,8 @@ import { integralPrice } from "@/utils/getData.js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { callPayment } from "@/utils/pay.js";
+import { isIos } from "../../utils/mgtv";
+import { goto } from "../../utils/fun";
 
 //     GachaType_Nil = 0;
 //     GachaType_Kuji = 1;         // 一番赏
@@ -163,6 +168,7 @@ export default {
     components: { mpPrivacy },
     data() {
         return {
+            showToRecharge:false,
             show: false, // 显示组件
             amount: 0, // 支付总额
             oldamount: 0, //未优惠的初始价格
@@ -189,11 +195,11 @@ export default {
                 //     msg: "微信APP支付",
                 // },  // 是否金币和潮币支付
                 {
-                    name: "潮币余额",
+                    name: "余额",
                     type: 0,
                     img: "chao",
                     show: false,
-                    msg: "潮币支付",
+                    msg: "余额支付",
                     randomShow: false,
                     consume: 0,
                     // number: this.$gl("userInfo").coin,
@@ -213,11 +219,11 @@ export default {
                     payType: 3,
                 },
                 {
-                    name: "支付宝",
+                    name: "芒果支付",
                     type: 1,
-                    img: "Ali",
+                    img: "xjzf",
                     show: true,
-                    msg: "支付宝APP支付",
+                    msg: "芒果支付",
                     randomShow: true,
                     consume: 0,
                     payType: 0,
@@ -240,7 +246,7 @@ export default {
                 {
                     name: "支付宝11",
                     type: 1,
-                    img: "Ali",
+                    img: "xjzf",
                     show: true,
                     msg: "支付宝APP支付",
                     randomShow: true,
@@ -289,6 +295,9 @@ export default {
         this.showAgree = this.$gl("IsAgree") || false;
     },
     methods: {
+        confirmToRecharge(){
+           goto('/page-a/balance/topUp')
+        },
         ...mapMutations(["UpselectTicket", "UppayMessage"]),
         ...mapActions(["asyncUpBalance"]),
         onAnimationChange() {
@@ -325,7 +334,10 @@ export default {
             else this.discount = discount;
             this.pays.forEach((user) => {
                 user.consume = 0;
-                                              // 是否容许潮币抽
+                // if(isIos() && user.type == 1){
+                //     user.show =false
+                // }
+                                               // 是否容许潮币抽
                 if (this.mtype !== "12" && this.userInfo.allowCoinBet && !user.type) user.show = true; // 显示潮币支付
                 if (user.type == 4 && this.mtype !== "6") user.show = true;  //显示金币支付
                 if (user.type == 4) user.number = this.userInfo.gold;  // 赋值金币
@@ -337,7 +349,7 @@ export default {
                 // this.$refs.mpPrivacy.open();
                 // #endif
                 // #ifndef MP-WEIXIN  可以不用
-                this.goto("/pages/login/binding");
+                // this.goto("/pages/login/binding");
                 // #endif
             } else {
                 this.asyncUpBalance();//获取金币
@@ -454,7 +466,13 @@ export default {
                 this.paytypeList.length < 2 &&
                 this.goldNumber < this.amount
             ) {
-                uni.$u.toast("金币不足，可与支付宝组合付款！");
+                // if(isIos()){
+                //     // uni.$u.toast("金币不足");
+                //     // this.showToRecharge = true
+                // }else{
+                     uni.$u.toast("金币不足，可与现金支付组合付款！");
+                // }
+             
                 return;
             } else {
                 // this.amount  == 0   免费抽
@@ -521,7 +539,7 @@ export default {
                         {
                             ...this.payMessage.message,
                             create_payment_request: {
-                                platform_id: click_type,
+                                platform_id: 6,
                                 amount: (this.paytypeList.includes(3) ? this.amount : allNum) + "",
                                 device_id: this.device_id,
                                 source_type: this.source_type,
@@ -534,27 +552,50 @@ export default {
                     orderInfo = res.orderInfo;
                     // 在这里应该拿到 url.
                     // 这里需要调支付,有问题.
-                    uni.requestPayment({
-                        provider: this.paytypeList.includes(3) ? "wxpay" : "alipay",
-                        // #ifndef MP-WEIXIN
-                        orderInfo,
-                        // #endif
-                        // #ifdef MP-WEIXIN
-                        ...orderInfo,
-                        // #endif
-                        success: function (res1) {
-                            that.$emit( "success", res,  that.showAnimation, click_type );
-                            that.close();
-                        },
-                        fail: function (err) {
-                            if (err.errCode == -8) uni.$u.toast("客户端未安装");
-                            if (err.errCode == -100)
-                                uni.$u.toast("您中途取消了支付");
-                            if (err.errMsg == "requestPayment:fail cancel")
-                                uni.$u.toast("您中途取消了支付");
-                            that.fail();
-                        },
-                    });
+                         console.log(
+                             res.res.createPaymentReply.signData,
+                             res.res.createPaymentReply.sign,
+                             Number(res.res.createPaymentReply.timestamp))
+                    if(window.mgtv){
+                     
+                         mgtv.requestPaymentGameItem({
+                             signData:res.res.createPaymentReply.signData,
+                             sign:res.res.createPaymentReply.sign,
+                             timestamp:Number(res.res.createPaymentReply.timestamp),
+                             success:(res)=>{
+                                console.log(res,'成功')
+                                   that.$emit( "success", res,  that.showAnimation, click_type );
+                                   that.close();
+
+                             },
+                             fail:(err)=>{
+                                console.log(err)
+                                 
+                             }
+
+                         })
+                    }
+                    // uni.requestPayment({
+                    //     provider: this.paytypeList.includes(3) ? "wxpay" : "alipay",
+                    //     // #ifndef MP-WEIXIN
+                    //     orderInfo,
+                    //     // #endif
+                    //     // #ifdef MP-WEIXIN
+                    //     ...orderInfo,
+                    //     // #endif
+                    //     success: function (res1) {
+                    //         that.$emit( "success", res,  that.showAnimation, click_type );
+                    //         that.close();
+                    //     },
+                    //     fail: function (err) {
+                    //         if (err.errCode == -8) uni.$u.toast("客户端未安装");
+                    //         if (err.errCode == -100)
+                    //             uni.$u.toast("您中途取消了支付");
+                    //         if (err.errMsg == "requestPayment:fail cancel")
+                    //             uni.$u.toast("您中途取消了支付");
+                    //         that.fail();
+                    //     },
+                    // });
                 }
             }
         },
@@ -771,6 +812,7 @@ export default {
     font-weight: 800;
     text-align: center;
     margin: 10rpx 0 30rpx;
+    // margin-top: 50rpx;
 
     &.active {
         margin-bottom: 0;
@@ -854,9 +896,10 @@ export default {
 }
 
 .pays {
-    padding: 20rpx 24rpx;
+    padding: 16rpx 32rpx;
     background: #fff;
-    border-radius: 16rpx;
+    border-radius: 24rpx;
+    background-color: #F5F6F8;
 
     .pay_item {
         padding: 20rpx 0;
@@ -901,11 +944,13 @@ export default {
     .select {
         width: 36rpx;
         height: 36rpx;
-        background: #eee;
+        // background: #eee;
+        background: url('https://img.shinemang.com/gachaStatic/notSelect.png');
+        background-size: 100%;
         border-radius: 50%;
 
         &.active {
-            background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
+             background: url('https://img.shinemang.com/gachaStatic/select.png') !important;
             background-size: 100% 100% !important;
         }
     }
@@ -924,13 +969,16 @@ export default {
 .select {
     width: 36rpx;
     height: 36rpx;
-    background: #eee;
+    // background: #eee;
     border-radius: 50%;
+  background: url('https://img.shinemang.com/gachaStatic/notSelect.png');
+        background-size: 100%;
+        border-radius: 50%;
 
-    &.active {
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
-        background-size: 100% 100% !important;
-    }
+        &.active {
+             background: url('https://img.shinemang.com/gachaStatic/select.png') !important;
+            background-size: 100% 100% !important;
+        }
 }
 
 .selectBox {
@@ -959,17 +1007,18 @@ export default {
 }
 
 .btn {
-    color: #fff;
-    width: calc(100vw - 72rpx);
-    height: 100rpx;
-    line-height: 100rpx;
-    text-align: center;
-    font-size: 32rpx;
-    font-weight: 500;
-    background: #715cdd;
-    border-radius: 16rpx;
+   width: 686rpx;
+height: 80rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 40rpx 40rpx 40rpx 40rpx;
     position: absolute;
     left: 36rpx;
+    color: #1A1A1A;
+    font-size: 32rpx;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     bottom: 50rpx;
 }
 

@@ -5,34 +5,63 @@
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">返回</text>
             </view>
-            <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn2.png" class="btn_r" @click="
+            <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn2.png" class="btn_r" @click="
                 goto('/pages/common/rulepop', {
                     val: 'ReleaseTransactionInstructions',
                 })
-                " />
+                " /> -->
         </div>
         <div class="transaction_con" :style="{ height: conHeight }">
             <view class="tabs_two flex_r flex_jb">
                 <view class="tab_item" :class="{ active: i.val == transactionType }" @click="ontab(i)"
                     v-for="(i, s) in navbar" :key="s">{{ i.txt }}</view>
+
+                    <view class="exchangeTips" @click="
+                goto('/pages/common/rulepop', {
+                    val: 'ReleaseTransactionInstructions',
+                })
+                " >交易须知</view>
             </view>
             <view class="p_lists">
-                <div class="flex_r flex_ac">
+              <div class="title">
+                <div class="subTitle"><span class="icof corr">&#xe641;</span>交易赏品</div>
+                   <div class="totalNum flex_r flex_ac">
                     <view class="teg">赏品共{{ totalNums || 0 }}个</view>
                     <view class="teg cor_g">已选{{ thickData.length || 0 }}个</view>
                 </div>
+              </div>
                 <div class="form_box" v-if="transactionType == 1">
+                       <scroll-view scroll-y="true" class="listss " @scrolltolower="onReachScollBottom"
+                            :lower-threshold="200">
+                            <view class="lists">
+                                <view class="item" v-for="(item, index) in selectRewardsInfo" :key="index">
+                                    <view class="item_img" :style="{ backgroundImage: `url(${item.item.coverThumb})` }">
+                                        <!-- <view class="box_ico frame"></view> -->
+                                        <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"  class="box_ico" /> -->
+                                    </view>
+                                    <img @click="removeItem(item)" class="remove_btn"
+                                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png" />
+                                    <view :class="['item_txt1',item.item.saleType==1?'xianhuo':'']">{{ item.item.saleType == 1 ? "现货" : "预售" }}</view>
+                                </view>
+                                <div class="SelectProduct flex_r flex_jc flex_ac" v-show="thickData.length < 600"
+                                    @click="addStock">
+                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
+                                        class="ico" /> -->
+                                </div>
+                                <!-- <view class="bottom"></view> -->
+                            </view>
+                        </scroll-view>
                     <div class="form_item">
-                        <div class="txt flex_r flex_ac">
+                        <!-- <div class="txt flex_r flex_ac">
                             <span class="icof corr">&#xe641;</span>交易赏品
                             <div class="txt3">是否设置一口价</div>
-                            <u-switch v-model="isSetPrice" :size="18" inactiveColor="#E2E1E3"></u-switch>
-                        </div>
+                            
+                        </div> -->
 
                         <div class="form_item " style="margin-bottom: 30rpx" v-if="isSetPrice">
-                            <div class="txt">设置一口价</div>
+                            <div class="txt flex_r flex_ac"><span style="margin-right: 5rpx;">设置一口价</span><u-switch v-model="isSetPrice" :size="18" inactiveColor="#E2E1E3"></u-switch></div>
                             <div class="inp_box flex_r flex_ac">
-                                <u--input placeholder="请输入金额" type="number" maxlength="5" v-model="onePrice"
+                                <u--input placeholder="请输入金额" type="number" style="height: 80rpx;" maxlength="5" v-model="onePrice"
                                     @change="clickOnePrice" @input="
                                         onePrice = onePrice.replace(/[^\d]/g, '')
                                         " />
@@ -40,26 +69,7 @@
                             </div>
                         </div>
                         <!-- <div class="lists"> -->
-                        <scroll-view scroll-y="true" class="listss " @scrolltolower="onReachScollBottom"
-                            :lower-threshold="200">
-                            <view class="lists">
-                                <view class="item" v-for="(item, index) in selectRewardsInfo" :key="index">
-                                    <view class="item_img" :style="{ backgroundImage: `url(${item.item.coverThumb})` }">
-                                        <view class="box_ico frame"></view>
-                                        <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"  class="box_ico" /> -->
-                                    </view>
-                                    <img @click="removeItem(item)" class="remove_btn"
-                                        src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png" />
-                                    <view class="item_txt1">{{ item.item.saleType == 1 ? "现货" : "预售" }}</view>
-                                </view>
-                                <div class="SelectProduct flex_r flex_jc flex_ac" v-show="thickData.length < 600"
-                                    @click="addStock">
-                                    <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
-                                        class="ico" />
-                                </div>
-                                <view class="bottom"></view>
-                            </view>
-                        </scroll-view>
+                     
                         <!-- </div> -->
                     </div>
                     <!-- <div class="form_item flex_r flex_ac">
@@ -81,14 +91,14 @@
                         </div>
                     </div> -->
                     <!-- <div class="form_item" > -->
-                    <div class="form_item" style="width: 708rpx">
-                        <!-- <div class="txt flex_r flex_ac flex_jb">
+                    <div class="form_item" style="width: 100%">
+                        <div class="txt flex_r flex_ac flex_jb">
                             <span>留言</span>
-                            <img
+                            <!-- <img
                                 @click="one_leaveMessage = ''"
                                 src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico4.png"
                                 class="empty"
-                            />
+                            /> -->
                         </div>
                         <u--textarea
                             placeholder="请输入留言(最大长度50字)"
@@ -97,20 +107,22 @@
                             :count="true"
                         />
                         <div class="msg">
-                            请注意！发布钓鱼、欺诈、广告等违规信息将封禁交易！所有出价物品为总价非单价！
-                        </div> -->
+                            1,请注意！发布钓鱼、欺诈、广告等违规信息将封禁交易！<br />
+                            2,所有出价物品为总价非单价！
+                        </div>
                     </div>
                 </div>
                 <div class="form_box" v-if="transactionType == 2">
-                    <div class="form_item">
-                        <div class="txt flex_r flex_ac">
+                    <div class="form_item" style="margin-top: 16rpx;">
+                        <!-- <div class="txt flex_r flex_ac">
                             <span class="icof">&#xe641;</span>交易赏品
-                        </div>
+                        </div> -->
                         <div class="SelectProduct2 flex_r flex_jb flex_ac">
-                            <div @click="addStock" class="Select_box flex_c flex_jc flex_ac">
+                            <div @click="addStock" :class="['Select_box', 'flex_c', 'flex_jc', 'flex_ac',selectRewardsInfo.length?'select':'']">
                                 <template v-if="!selectRewardsInfo.length">
-                                    <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
-                                        class="ico" />
+                                    <u-icon name="plus" color="#CECFD4" size="28" style="font-weight: bold;"></u-icon>
+                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
+                                        class="ico" /> -->
                                     <div class="add_txt">选择你的赏品</div>
                                 </template>
                                 <div :class="{
@@ -126,8 +138,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png" class="ico3" />
-                            <div @click="popupShow2 = true" class="Select_box flex_c flex_jc flex_ac">
+                            <img src="https://img.shinemang.com/gachaStatic/market/marketExchange.png" class="ico3" />
+                            <div @click="popupShow2 = true" :class="['Select_box', 'flex_c', 'flex_jc', 'flex_ac',buyReward[0]?'select':'']">
                                 <template v-if="!buyReward[0]">
                                     <view class="random_img random"></view>
                                     <!-- <img
@@ -141,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form_item">
+                    <div class="form_item" style="margin-top: 48rpx;">
                         <div class="txt">加钱换购</div>
                         <div class="inp_box flex_r flex_ac">
                             <u--input placeholder="请输入金额" type="number" :maxlength="5" v-model="addMoney"
@@ -151,14 +163,14 @@
                             <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico2.png" class="ico" />
                         </div>
                     </div>
-                    <div class="form_item" style="width: 708rpx">
-                        <!-- <div class="txt flex_r flex_ac flex_jb">
+                    <div class="form_item" style="margin-top: 48rpx;">
+                        <div class="txt flex_r flex_ac flex_jb">
                             <span>留言</span>
-                            <img
+                            <!-- <img
                                 @click="one_leaveMessage = ''"
                                 src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico4.png"
                                 class="empty"
-                            />
+                            /> -->
                         </div>
                         <u--textarea
                             placeholder="请输入留言(最大长度50字)"
@@ -168,14 +180,16 @@
                         />
                         <div class="msg">
                             请注意！发布钓鱼、欺诈、广告等违规信息将封禁交易！所有出价物品为总价非单价！
-                        </div> -->
+                        </div> 
                     </div>
                 </div>
 
             </view>
             <div class="foot_btn flex_r flex_jc">
-                <x-btn txt="发布交易" v-if="!isTransaction" />
-                <x-btn txt="发布交易" v-else @click="onClickRelTransaction" cor="2" />
+                <view class="btn1"  v-if="!isTransaction">发布交易</view>
+                <view class="btn2" v-else @click="onClickRelTransaction" >发布交易</view>
+                <!-- <x-btn txt="发布交易" /> -->
+                <!-- <x-btn txt="发布交易" cor="2" /> -->
             </div>
         </div>
         <u-popup :show="popupShow2" bgColor="transparent" :safeAreaInsetBottom="false">
@@ -206,7 +220,7 @@
                                             src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                             class="box_ico"
                                         /> -->
-                                        <view class="item_txt1">{{
+                                        <view :class="['item_txt1',item.saleType==1?'xianhuo':'']">{{
                                             item.saleType == 1 ? "现货" : "预售"
                                         }}</view>
                                     </view>
@@ -240,8 +254,8 @@
                                 <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
-                                    <view class="box_ico frame"></view>
-                                    <view class="item_txt1">{{
+                                    <!-- <view class="box_ico frame"></view> -->
+                                    <view :class="['item_txt1',item.item.saleType==1?'xianhuo':'']">{{
                                         item.item.saleType == 1
                                             ? "现货"
                                             : "预售"
@@ -260,7 +274,9 @@
                     </view>
                 </div>
                 <div class="popup_btn flex_r flex_jc">
-                    <x-btn txt="确认" @click="onClickPostTransaction" cor="1" />
+
+                    <div @click="onClickPostTransaction" class="btn1">确认</div>
+                    <!-- <x-btn txt="确认"  cor="1" /> -->
                 </div>
             </div>
         </u-popup>
@@ -280,10 +296,10 @@
                                 <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
-                                    <view class="box_ico frame"></view>
+                                    <!-- <view class="box_ico frame"></view> -->
                                     <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico" /> -->
-                                    <view class="item_txt1">{{
+                                    <view :class="['item_txt1',item.item.saleType==1?'xianhuo':'']" >{{
                                         item.item.saleType == 1
                                             ? "现货"
                                             : "预售"
@@ -304,7 +320,7 @@
                                     <view class="box_ico frame"></view>
                                     <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico" /> -->
-                                    <view class="item_txt1">{{
+                                    <view :class="['item_txt1',item.saleType==1?'xianhuo':'']">{{
                                         item.saleType == 1 ? "现货" : "预售"
                                     }}</view>
                                 </view>
@@ -322,7 +338,8 @@
                     </view>
                 </div>
                 <div class="popup_btn flex_r flex_jc">
-                    <x-btn txt="确认" @click="onClickPostTransaction2" cor="1" />
+                    <view class="btn1"  @click="onClickPostTransaction2">确认 </view>
+                    <!-- <x-btn txt="确认" cor="1" /> -->
                 </div>
             </div>
         </u-popup>
@@ -344,6 +361,7 @@ import selectGoods from "@/components/selectGoods/index";
 import autonym from "@/components/autonym/index.vue";
 import { callPayment } from "@/utils/pay.js";
 import { mapState, mapMutations } from "vuex";
+import { br } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 export default {
     data() {
         return {
@@ -365,7 +383,7 @@ export default {
             buyRewardIds: [],
             searchTxt: undefined, // 搜索赏品名称
             searchItem: [], // 搜索到的赏品结果
-            isSetPrice: false, // 是否设置一口价
+            isSetPrice: true, // 是否设置一口价
             onePrice: undefined, // 一口价
             addMoney: undefined, // 加钱换购
             one_leaveMessage: "", // 留言
@@ -629,9 +647,19 @@ export default {
     height: 100vh;
     position: relative;
     padding-top: 106rpx;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+    // background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
     overflow: hidden;
     // overflow-y: auto;
+           &::after {
+        content: "";
+        width: 100vw;
+        height: 240rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+      background: linear-gradient( 180deg, #BAFFF9 0%, #F5F6F8 100%);
+      }
 }
 
 .frame {
@@ -641,6 +669,8 @@ export default {
 
 .navbar_x {
     padding: 0 36rpx;
+    position: relative;
+    z-index: 5;
 
     .btn_r {
         width: 162rpx;
@@ -648,7 +678,7 @@ export default {
     }
 
     .top_Back {
-        color: #1c1c1c;
+        color: #1A1A1A;
 
         text {
             vertical-align: middle;
@@ -670,66 +700,123 @@ export default {
     height: calc(100% - 200rpx);
     position: absolute;
     bottom: 0;
+    background-color: #fff;
     right: 0;
+    z-index: 5;
+    border-radius: 32rpx 32rpx 0 0;
+    padding: 36rpx 32rpx 32rpx 0;
+  
+ 
 }
 
 .tabs_two {
-    color: #fff;
-    width: 318rpx;
-    height: 76rpx;
+    color: #1A1A1A;
+    width: 360rpx;
+    height: 64rpx;
     font-size: 28rpx;
     line-height: 28rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
-    background-size: 100% 100%;
-    position: relative;
+    font-weight: bold;
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
+    // background-size: 100% 100%;
+   
+    background-color: #F5F6F8;
+    border-radius: 32rpx;
+    margin: auto;
+    .exchangeTips{
+        position: absolute;
+        right: 0;
+        top: 40rpx;
+        width: 136rpx;
+        height: 48rpx;
+        background: #2E3032;
+        border-radius: 24rpx 0 0 24rpx;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 48rpx;
+        font-size: 24rpx;
+        font-weight: normal;
+    }
 
     .tab_item {
-        width: 182rpx;
-        line-height: 60rpx;
+        width: 180rpx;
+        line-height: 64rpx;
         text-align: center;
-        position: absolute;
+        border-radius: 32rpx;
+        // position: absolute;
 
-        &:first-child {
-            left: -16rpx;
-        }
+        // &:first-child {
+        //     left: -16rpx;
+        // }
 
-        &:last-child {
-            right: -6rpx;
-        }
+        // &:last-child {
+        //     right: -6rpx;
+        // }
 
         &.active {
-            top: -8rpx;
-            color: #333;
-            height: 84rpx;
-            line-height: 70rpx;
-            font-weight: bold;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
-            background-size: 100% 100%;
-            font-size: 30rpx;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            // width: 180rpx;
+            // left: 50%;
+            // transform: translateX(-50%);
+            // top: -8rpx;
+            // color: #333;
+            // height: 84rpx;
+            // line-height: 70rpx;
+            // font-weight: bold;
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
         }
     }
 }
 
 .p_lists {
-    margin-top: -16rpx;
+    // margin-top: -16rpx;
     height: calc(100% - 60rpx);
-    border-radius: 0 50rpx 0 0;
-    background: #f4f4f4;
+
+    background: #fff;
+    width: 100%;
     padding: 30rpx 40rpx 10rpx 20rpx;
+    padding-right: 0;
     position: relative;
+      overflow-y: auto;
+        margin-top: 10rpx;
+         padding-bottom: 160rpx;
+
+
+    .title{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: bold;
+        .corr{
+            color: #EE4326;
+        }
+    }
+    .totalNum{
+     
+height: 48rpx;
+background: #F5F6F8;
+border-radius: 8rpx 8rpx 8rpx 8rpx;
+padding: 0 16rpx;
+    }
     // overflow-y: auto;
 
     .teg {
         height: 36rpx;
         text-align: center;
-        background: rgba(102, 82, 207, 0.1);
-        border-radius: 16rpx;
+        // background: rgba(102, 82, 207, 0.1);
+        // border-radius: 16rpx;
         line-height: 36rpx;
-        color: #6652cf;
+        color: #8D8D94;
         font-size: 24rpx;
         margin-right: 16rpx;
         display: inline-block;
-        padding: 0 16rpx;
+        font-weight: normal;
+
+        // padding: 0 16rpx;
 
         &:last-child {
             margin-right: 0;
@@ -737,12 +824,18 @@ export default {
     }
 
     .cor_g {
-        color: #23b408;
-        background: rgba(35, 180, 8, 0.1);
+        color: #FF932B;
+        // background: rgba(35, 180, 8, 0.1);
     }
 
     .listss {
-        height: 850rpx;
+        height: auto;
+        max-height: 850rpx;
+  
+   
+        .remove_btn{
+            left: 0rpx;
+        }
 
     }
 
@@ -751,14 +844,20 @@ export default {
         @include grid(170rpx);
 
         .item {
-            width: 152rpx;
+            width: 160rpx;
+            height: 160rpx;
+            box-sizing: border-box;
             margin-bottom: 18rpx;
             margin-top: 18rpx;
             margin-right: 18rpx;
-
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16rpx;
+            background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
             .item_img {
-                width: 152rpx;
-                height: 152rpx;
+                width: 160rpx;
+                height: 160rpx;
                 /* background-color: rgba($color: #9064FF, $alpha: 1); */
                 border-radius: 16rpx;
                 background-size: 100% 100%;
@@ -805,11 +904,13 @@ export default {
     }
 
     .SelectProduct {
-        width: 152rpx;
-        height: 152rpx;
-        border-radius: 12rpx;
-        background: #e2e1e3;
-        border: 2rpx dashed #aca9bc;
+        width: 160rpx;
+        height: 160rpx;
+        // border-radius: 12rpx;
+        background: url('https://img.shinemang.com/gachaStatic/my/add.png');
+        background-size: 100% 100%;
+        // background: #e2e1e3;
+        // border: 2rpx dashed #aca9bc;
         margin-top: 18rpx;
 
         .ico {
@@ -832,7 +933,7 @@ export default {
 
         .txt {
             font-size: 32rpx;
-            color: #383228;
+            color: #1A1A1A;
             font-weight: bold;
             margin-bottom: 20rpx;
 
@@ -854,25 +955,30 @@ export default {
             font-weight: bold;
             margin-right: 36rpx;
             font-size: 32rpx;
-            color: #383228;
+            color: #1A1A1A;
             margin-left: 36rpx;
         }
 
         .txt2 {
             margin-right: 20rpx;
             font-size: 24rpx;
-            color: #383228;
+            color: #1A1A1A;
         }
 
         .msg {
+            width: 100%;
+           padding: 24rpx;
+            background-color: #FEF5F4;
             color: #f23a13;
-            line-height: 28rpx;
-            font-size: 20rpx;
-            margin-top: 8rpx;
+            line-height: 32rpx;
+            font-size: 24rpx;
+            margin-top: 32rpx;
+            font-weight: normal;
         }
 
         .inp_box {
             width: 460rpx;
+            height: 80rpx;
 
             .ico {
                 width: 40rpx;
@@ -882,8 +988,8 @@ export default {
         }
 
         .item_img {
-            width: 152rpx;
-            height: 152rpx;
+            width: 160rpx;
+            height: 160rpx;
             /* background-color: rgba($color: #9064FF, $alpha: 1); */
             border-radius: 16rpx;
             background-size: 100% 100%;
@@ -909,11 +1015,16 @@ export default {
         .Select_box {
             width: 316rpx;
             height: 316rpx;
+            // background: url('https://img.shinemang.com/gachaStatic/my/add.png');
+            // background-size: 100% 100%;
             border-radius: 12rpx;
-            background: #e2e1e3;
-            font-size: 24rpx;
-            color: #818181;
+            background: #F5F6F8;
+            font-size: 28rpx;
+            color: #8D8D94;
             overflow: hidden;
+            &.select{
+                background: linear-gradient( 190deg, #D6E5FF 0%, #FFFFFF 100%);
+            }
 
             .ico {
                 width: 48rpx;
@@ -930,12 +1041,12 @@ export default {
         }
 
         .ico3 {
-            width: 82rpx;
-            height: 82rpx;
+            width: 112rpx;
+            height: 112rpx;
             position: absolute;
-            left: calc((100% - 82rpx) / 2);
-            top: calc((100% - 82rpx) / 2);
-            border: 8rpx solid #f4f4f4;
+            left: calc((100% - 112rpx) / 2);
+            top: calc((100% - 112rpx) / 2);
+            // border: 8rpx solid #f4f4f4;
             border-radius: 50%;
         }
 
@@ -989,9 +1100,28 @@ export default {
 
 .foot_btn {
     // margin-top: 120rpx;
-    position: relative;
-    bottom: 200rpx;
+    position: fixed;
+    bottom: 100rpx;
     z-index: 999;
+    left: 50%;
+    transform: translateX(-50%);
+    .btn1,.btn2{
+        width: 686rpx;
+height: 88rpx;
+background:rgba(26, 26, 26, 0.5);
+border-radius: 44rpx 44rpx 44rpx 44rpx;
+color: #fff;
+font-size: 32rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 88rpx;
+font-weight: bold;
+
+    }
+    .btn2{
+        background:#1A1A1A;
+    }
 
 }
 
@@ -1009,6 +1139,7 @@ export default {
 
     .p_lists {
         height: calc(100% - 60rpx);
+      
 
         .lists {
             padding: 0;
@@ -1055,21 +1186,25 @@ export default {
 
     .head_tit {
         height: 188rpx;
-        background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+     background: linear-gradient( 180deg, #BAFFF9 0%, #FFFFFF 100%);
         border-radius: 16rpx 16rpx 0 0;
         position: relative;
         padding: 46rpx 40rpx;
 
         .title {
             font-size: 40rpx;
-            font-weight: 800;
-            color: #1c1c1c;
+            // font-weight: 800;
+            text-align: center;
+            color: #1A1A1A;
+            font-family: '倍数欧气值';
         }
 
         .txt {
-            margin-top: 8rpx;
-            color: #9e91ac;
-            font-size: 28rpx;
+            margin-top: 16rpx;
+            // color: #9e91ac;
+            font-size: 24rpx;
+            text-align: center;
+            color: #EE4326;
         }
     }
 
@@ -1086,14 +1221,15 @@ export default {
 
         .tit {
             font-size: 28rpx;
-            color: #1c1c1c;
+            color: #1A1A1A;
         }
 
         .products {
-            padding: 20rpx 26rpx;
+            padding: 16rpx;
             border-radius: 16rpx;
-            background: #f4f4f4;
+            // background: #f4f4f4;
             margin: 16rpx 0 26rpx;
+            border: 2rpx solid #31E597;
 
             .product_list {
                 overflow-x: auto;
@@ -1102,8 +1238,9 @@ export default {
             }
 
             .img {
-                width: 152rpx;
-                height: 152rpx;
+                width: 134rpx;
+                height: 134rpx;
+                background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
                 // background: #AC8AFC;
                 border-radius: 16rpx;
                 display: inline-block;
@@ -1152,7 +1289,9 @@ export default {
     .popup_btn {
         margin-top: 0;
         position: absolute;
-        left: calc((686rpx - 270rpx) / 2);
+        // left: calc((686rpx - 270rpx) / 2);
+        left: 50%;
+        transform: translateX(-50%);
         bottom: 38rpx;
     }
 }
@@ -1165,21 +1304,24 @@ export default {
 
     .head_tit {
         height: 188rpx;
-        background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+           background: linear-gradient( 180deg, #BAFFF9 0%, #FFFFFF 100%);
         border-radius: 16rpx 16rpx 0 0;
         position: relative;
         padding: 46rpx 40rpx;
 
         .title {
             font-size: 40rpx;
-            font-weight: 800;
-            color: #1c1c1c;
+            // font-weight: 800;
+            color: #1A1A1A;
+            text-align: center;
+             font-family: '倍数欧气值';
         }
 
         .txt {
-            margin-top: 8rpx;
-            color: #9e91ac;
-            font-size: 28rpx;
+            margin-top: 16rpx;
+            color: #EE4326;
+            text-align: center;
+            font-size: 24rpx;
         }
     }
 
@@ -1204,13 +1346,15 @@ export default {
 
         .tit {
             font-size: 28rpx;
-            color: #1c1c1c;
+            color: #1A1A1A;
         }
 
         .products {
-            padding: 20rpx 26rpx;
+            padding: 16rpx;
             border-radius: 16rpx;
-            background: #f4f4f4;
+            border: 1px solid #31E597;
+            // background: #f4f4f4;
+
             margin: 16rpx 0 26rpx;
 
             .product_list {
@@ -1270,13 +1414,28 @@ export default {
     .popup_btn {
         margin-top: 0;
         position: absolute;
-        left: calc((686rpx - 270rpx) / 2);
+        left:50%;
+        transform: translateX(-50%);
         bottom: 38rpx;
     }
 }
 
 .popup_btn {
     margin-top: 20rpx;
+
+    .btn1{
+width: 400rpx;
+height: 80rpx;
+background: #1A1A1A;
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size:32rpx ;
+font-weight: bold;
+color: #fff;
+
+    }
 }
 
 .mpWeixin {
@@ -1285,13 +1444,25 @@ export default {
     }
 }
 
-.item_txt1 {
-    color: #ffffff;
-    font-size: 20rpx;
-    position: absolute;
-    right: 6rpx;
-    top: 0rpx;
-}
+      .item_txt1{
+            position: absolute;
+            right: 0rpx;
+            top: 0rpx;
+            font-size: 20rpx;
+            color: #000;
+            width: 60rpx;
+            height: 32rpx;
+            background: #FFFFFF;
+            border-radius: 0 0 0 16rpx;
+            color: #FFC720;
+            display: flex;
+            line-height: 32rpx;
+            align-items: center;
+            justify-content: center;
+            &.xianhuo{
+               color: #31E597;
+            }
+        }
 
 .box_ico {
     width: 152rpx;

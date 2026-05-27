@@ -28,7 +28,7 @@
                     </view> -->
                 </view>
                 <view class="product-detail">
-                    <view class="p-name">{{ item.themeName }}</view>
+                    <view class="p-name ellipsis">{{ item.themeName }}</view>
                     <view class="label" v-if="item.discount > 0">
                             <view class="discount">
                                ￥ {{ item.discountPrice || item.price || "0.00" }}
@@ -42,7 +42,9 @@
                             <!-- <view class="original">￥{{ item.price }}</view> -->
                         </view>
 
-                        <view class="rewards"></view>
+                        <view class="rewards">
+                            <infiniteScroll :list="item.awards"></infiniteScroll>
+                        </view>
                 </view>
                
 
@@ -168,6 +170,7 @@
 <script>
 import { post } from "@/utils/api.js";
 import { mapState } from "vuex";
+import infiniteScroll from "../../../components/infiniteScroll/infiniteScroll.vue";
 export default {
     data() {
         return {
@@ -633,7 +636,7 @@ image{
     .rewards{
         height: 88rpx;
         width: 100%;
-        background-color: red;
+        // background-color: red;
     }
 }
 

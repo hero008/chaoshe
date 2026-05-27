@@ -47,6 +47,17 @@
                                 mode="scaleToFill"
                             />
                         </div>
+                              <div
+                                class="btn flex_r flex_ac"
+                                @click.stop="ondelAddr(i.id)"
+                            >
+                                <img
+                                     style="width:50rpx;height: 50rpx;"
+                                    src="https://img.shinemang.com/gachaStatic/static/img/shipments/delete.png"
+                                    class="del_ico"
+                                />
+                                <!-- <span>删除</span> -->
+                            </div>
                     </div>
                     <!-- <div class="address_btn flex_r flex_jb flex_ac">
                       
@@ -217,7 +228,7 @@ export default {
     }
 
     .txt {
-        font-size: 36rpx;
+        font-size: 32rpx;
     }
 }
 
@@ -325,7 +336,7 @@ width: 686rpx;
 height: 88rpx;
 background: #1A1A1A;
 border-radius: 44rpx 44rpx 44rpx 44rpx;
-bottom: 60rpx;
+bottom: 230rpx;
 left: 50%;
 transform: translateX(-50%);
 color: #fff;
@@ -360,12 +371,13 @@ img{
 
 .foot_btn {
     width: 686rpx;
-    height: 100rpx;
-    line-height: 100rpx;
+    height: 96rpx;
+    line-height: 96rpx;
     text-align: center;
-    background: #715cdd;
+    background: #1A1A1A;
     border-radius: 16rpx;
     font-size: 32rpx;
+    border-radius: 48rpx;
     font-weight: 500;
     color: #fff;
     position: absolute;

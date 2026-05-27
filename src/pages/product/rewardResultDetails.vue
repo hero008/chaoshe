@@ -16,7 +16,8 @@
                     </div>
                 </div>
                 <div class="foot_btn flex_r flex_jc">
-                    <x-btn txt="确定" @click="confirmBtn" cor="3" />
+                    <view class="btn" @click="confirmBtn" >确定</view>
+                    <!-- <x-btn txt="确定" @click="confirmBtn" cor="3" /> -->
                 </div>
             </div>
         </div>
@@ -78,17 +79,17 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+    background: #F5F6F8;
 
-    &::before {
-        content: "";
-        width: 100vw;
-        height: calc(100vh - 212rpx);
-        left: 0;
-        top: 212rpx;
-        position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+    // &::before {
+    //     content: "";
+    //     width: 100vw;
+    //     height: calc(100vh - 212rpx);
+    //     left: 0;
+    //     top: 212rpx;
+    //     position: absolute;
+    //     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
+    // }
 }
 
 .details_con {
@@ -178,6 +179,17 @@ export default {
         position: absolute;
         bottom: 60rpx;
         left: 0;
+        .btn{
+            width: 328rpx;
+            height: 80rpx;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            border-radius: 40rpx 40rpx 40rpx 40rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32rpx;
+            font-weight: bold;
+        }
     }
 }
 </style>

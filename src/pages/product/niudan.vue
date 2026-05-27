@@ -49,12 +49,12 @@
                         mode="scaleToFill"
                     /><text>规则</text>
                 </view>
-                 <view class="ico-share ico-t" >
+                 <!-- <view class="ico-share ico-t" >
                     <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
-                </view>
+                </view> -->
                 <!-- <view class="ico-r">点击试玩</view> -->
                 <view class="tit">
                      <view class="price">

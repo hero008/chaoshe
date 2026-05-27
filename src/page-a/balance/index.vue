@@ -11,11 +11,11 @@
                     <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" class="m_ico" />
                     <div class="m_num">{{ balance || "0.00" }}</div>
                 </div>
-                <div class="btns flex_r flex_ac flex_jb">
+                <!-- <div class="btns flex_r flex_ac flex_jb">
                     <div class="btn cor" @click="onClickWithdrawal">
                         申请退款
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="bill_log">
                 <div class="tit flex_r flex_ac flex_jb">
@@ -372,17 +372,18 @@ export default {
     height: 100vh;
     overflow-y: auto;
     position: relative;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+    background: #F5F6F8;
+    // background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
 
-    &::before {
-        content: "";
-        width: 100vw;
-        height: calc(100% - 212rpx);
-        left: 0;
-        top: 212rpx;
-        position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+    // &::before {
+    //     content: "";
+    //     width: 100vw;
+    //     height: calc(100% - 212rpx);
+    //     left: 0;
+    //     top: 212rpx;
+    //     position: absolute;
+    //     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
+    // }
 }
 
 .balance_con {

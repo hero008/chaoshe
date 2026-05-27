@@ -7,7 +7,7 @@
                     <text class="txt">返回</text>
                 </view>
             </div>
-            <u--form labelPosition="left" :model="formDa" :rules="rules" ref="uForm" labelWidth="80">
+            <u--form class="uform" labelPosition="left" :model="formDa" :rules="rules" ref="uForm" labelWidth="80">
                 <div class="form_item">
                     <u-form-item label="收货人" prop="name" required borderBottom>
                         <u--input v-model="formDa.name" placeholder="请输入收货人名称" border="none"></u--input>
@@ -41,7 +41,10 @@
                     </u-form-item>
                 </div>
             </u--form>
-            <img class="foot_btn" @click="confirmAdd" src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn5.png">
+            <view  class="foot_btn">
+                <view class="add"  @click="confirmAdd">保存</view>
+            </view>
+            <!-- <img class="foot_btn" src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn5.png"> -->
             <select-address ref="AddressRef" :address.sync="address" @change="addressChange" />
         </div>
     </view>
@@ -172,28 +175,36 @@ export default {
 </script>
 <style lang='scss' scoped>
 .addressAdd {
-    padding: 80rpx 36rpx 28rpx;
+    padding: 80rpx 0rpx 28rpx;
     width: 100vw;
     height: 100vh;
     position: relative;
     // background: linear-gradient(104deg, #E1D6F8 0%, #F8E7ED 100%);
     overflow-y: auto;
     background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+    padding-bottom: 0;
+    //       &::after {
+    //     content: "";
+    //     width: 100vw;
+    //     height: 600rpx;
+    //     left: 0;
+    //     top: 0;
+    //     position: absolute;
+    //     z-index: 1;
+    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+    //     background-size: 100% 100%;
+    //   }
     .a_con {
         position: relative;
         z-index: 2;
+        height: 100%;
+        
     }
+}
+.uform{
+    height: calc(100% - 120rpx);
+        background-color: #fff;
+        padding-bottom: 100rpx;
 }
 
 .navbar_x {
@@ -263,10 +274,23 @@ export default {
 }
 
 .foot_btn {
-    width: 246rpx;
+    width: 100%;
     height: 88rpx;
     position: fixed;
-    bottom: 152rpx;
-    left: calc((100% - 246rpx) / 2);
+    bottom: 100rpx;
+    left: 0;
+    .add{
+width: 686rpx;
+height: 88rpx;
+background: #1A1A1A;
+border-radius: 44rpx 44rpx 44rpx 44rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #fff;
+font-weight: bold;
+line-height: 88rpx;
+margin-left: 32rpx;
+    }
 }
 </style>

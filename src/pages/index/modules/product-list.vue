@@ -172,6 +172,7 @@
 <script>
 import { post } from "@/utils/api.js";
 import { mapState } from "vuex";
+import infiniteScroll from "../../../components/infiniteScroll/infiniteScroll.vue";
 export default {
     data() {
         return {

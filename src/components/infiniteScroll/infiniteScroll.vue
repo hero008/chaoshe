@@ -3,18 +3,16 @@
     <view class="scroll-wrapper">
       <view 
         class="scroll-content" 
-        :class="{ 'animate-scroll': items.length >= 4 }"
+        :class="{ 'animate-scroll': items.length >= 3 }"
         :style="animationStyle"
       >
         <!-- 原始内容 -->
         <view v-for="(item, index) in items" :key="'o-' + index" class="scroll-item">
-          <view class="item-icon">{{ item.icon }}</view>
-          <view class="item-text">{{ item.title }}</view>
+            <img :src="item.itemCover" alt="">
         </view>
         <!-- 复制一份实现无缝 -->
         <view v-for="(item, index) in items" :key="'c-' + index" class="scroll-item">
-          <view class="item-icon">{{ item.icon }}</view>
-          <view class="item-text">{{ item.title }}</view>
+           <img :src="item.itemCover" alt="">
         </view>
       </view>
     </view>
@@ -61,8 +59,8 @@ export default {
       const screenWidth = systemInfo.screenWidth;
       
       // CSS中定义的：width: 280rpx, margin-right: 24rpx
-      const itemWidthPx = (280 * screenWidth) / 750;
-      const marginPx = (24 * screenWidth) / 750;
+      const itemWidthPx = (88 * screenWidth) / 750;
+      const marginPx = (16 * screenWidth) / 750;
       
       // 总宽度 = 个数 × (盒子宽度 + 右边距)
       return len * (itemWidthPx + marginPx);
@@ -114,16 +112,24 @@ export default {
 
 .scroll-item {
   flex-shrink: 0;
-  width: 280rpx;
-  margin-right: 24rpx;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border-radius: 32rpx;
+width: 88rpx;
+height: 88rpx;
+background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+border: 2rpx solid #A1FAE3;
+  margin-right: 16rpx;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40rpx 0;
+
   color: white;
+  img{
+    width: 88rpx;
+    height: 88rpx;
+    border-radius: 16rpx;
+  }
 }
 
 .item-icon {

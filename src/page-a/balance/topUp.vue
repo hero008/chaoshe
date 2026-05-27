@@ -1,6 +1,6 @@
 <template>
     <view class="balance">
-        <x-navbar tit="金币充值" />
+        <x-navbar tit="充值" />
         <div class="balance_con">
             <div class="top_cord">
                 <div class="tit flex_r flex_ac flex_jb">
@@ -14,40 +14,45 @@
                         >当前金币<view class="ico"></view
                     ></view>
                     <view class="t_msg flex_r flex_ac" @click="goRechargeRecord"
-                        >交易记录 <view class="ico"></view
+                        ><view>交易记录</view> <view class="ico"></view
                     ></view>
                 </div>
-                <div class="B_num flex_r flex_ac flex_jc">
-                    <img
+                <div class="B_num flex_r flex_ac">
+                    <!-- <img
                         src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
                         class="m_ico"
-                    />
+                    /> -->
                     <div class="m_num">{{ gold || "0.00" }}</div>
                 </div>
-                <view class="nums">1金币=1元RMB</view>
-                <div class="btns" @click="onClickWithdrawal">申请退款</div>
+                <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view>
+                <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
             </div>
             <div class="bill_log">
                 <div class="tit flex_r flex_ac">
                     <span>请选择充值金额:</span
                     ><span class="tit1">(余额可支持提现退款)</span>
                 </div>
-                <div class="box">
+                <div   v-if="topUpList.length > 0" class="box">
                     <view
+                      
                         class="list_item flex_c flex_ac flex_jc"
                         v-for="(i, s) in topUpList"
                         :key="s"
                         :class="{ active: topUp.id == i.id }"
                         @click="getPayNum(i)"
-                        ><view class="pr"></view
-                        ><view>{{ i.amount }}</view></view
-                    >
+                        >
+                        <view class="selected" v-if="topUp.id == i.id"></view>
+                        <view class="pr"></view>
+                        <view>{{ i.amount }}</view>
+                       <view style="color: #8D8D94;font-size: 24rpx;">￥{{ i.payAmount }}</view>
+                    </view>
+                       
                 </div>
                 <view class="text"
                     >1、充值的<span class="co">芒盒金币</span>可用于<span
                         class="co"
                         >购买芒盒平台在售盲盒商品</span
-                    >，1芒盒金币等于1元钱;<br />
+                    >，1芒盒金币等于{{isIos?'0.75':'1'}}元钱;<br />
                     2、充值的芒盒金币不会过期，支付后的<span class="co"
                         >剩余芒盒金币支持提现退款</span
                     >，但不可转赠他人;<br />
@@ -86,7 +91,7 @@
                     >
                 </div>
             </div>
-            <div class="pays">
+            <!-- <div class="pays">
                 <div class="pay_item flex_r flex_jb flex_ac">
                     <div class="pay_name flex_r flex_ac">
                         <img
@@ -104,10 +109,10 @@
                         ></div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <view class="all flex_r flex_jb flex_ac">
                 <view class="allNum"
-                    >合计：<span class="num">{{ topUp.amount }}</span></view
+                    >合计：<span class="num">{{ topUp.payAmount }}</span></view
                 >
                 <view class="btn" @click="onpayDeposit">立即购买</view>
             </view>
@@ -175,9 +180,11 @@ import { callPayment } from "@/utils/pay.js";
 import popUpVue from "./popUp.vue";
 // import autonym from "@/components/autonym/index.vue";
 import xTipsVue from "../../components/modules/x-tips.vue";
+import { isIos } from "../../utils/mgtv.js";
 export default {
     data() {
         return {
+            isIos:isIos(),
             gold: 0,
             accesstype: 1, // 1退款 0充值
             valueDeposit: undefined, // 充值金额
@@ -277,7 +284,7 @@ export default {
 
         // 获取余额
         getBalance() {
-            post("v1/pay/saving/config", { type: 2 }).then((res) => {
+            post("v1/pay/saving/config", { type: 2,device_type:this.isIos?'ios':'android' }).then((res) => {
                 if (!res.code) {
                     res.config.forEach((element) => {
                         if (!element.amount.includes("."))
@@ -287,6 +294,7 @@ export default {
                     if (Object.keys(this.topUp).length == 0) {
                         this.topUp = res.config[0];
                     }
+                    console.log(this.topUpList,'就算了菲利克斯动静分离')
                     this.refund = res;
                 }
             });
@@ -297,10 +305,10 @@ export default {
         },
         // 申请退款
         onClickWithdrawal() {
-            // if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
-            //     this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
-            //     return;
-            // }
+            if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
+                this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
+                return;
+            }
             if (!this.refund.refundResidueCnt) {
                 uni.$u.toast("今日提现次数已达上限！");
                 return;
@@ -315,42 +323,59 @@ export default {
                 this.tipsShow = true;
                 return;
             }
-            let money = Number(this.topUp.amount);
+            let money = Number(this.topUp.payAmount);
             let that = this;
             let type = that.payItem.type;
             let data = {
-                platform_id: type,
+                platform_id: 6,
                 amount: money,
                 device_id: "",
                 source_type: 12,
                 source_id: that.topUp.id,
+                device_type: this.isIos?'ios':'android'
             };
             let res = await callPayment("v1/pay/payment/create", data, type);
             let orderInfo = res.orderInfo;
             if (!res.code) {
-                uni.requestPayment({
-                    provider: type == 1 ? "alipay" : "wxpay",
-                    // #ifndef MP-WEIXIN
-                    orderInfo,
-                    // #endif
-                    // #ifdef MP-WEIXIN
-                    ...orderInfo,
-                    // #endif
-                    success: async function (res) {
-                        console.log("success:" + JSON.stringify(res));
-                        uni.$u.toast("充值金币成功！");
-                        that.asyncUpBalance();
-                        // that.gold = that.floatingPoint(that.gold, "+", money);
-                    },
-                    fail: function (err) {
-                        console.log("fail:" + JSON.stringify(err));
-                        if (err.errCode == -8) uni.$u.toast("客户端未安装");
-                        if (err.errCode == -100)
-                            uni.$u.toast("您中途取消了支付");
-                        if (err.errMsg == "requestPayment:fail cancel")
-                            uni.$u.toast("您中途取消了支付");
-                    },
-                });
+                if(window.mgtv){
+                           mgtv.requestPaymentGameItem({
+                             signData:res.res.signData,
+                             sign:res.res.sign,
+                             timestamp:Number(res.res.timestamp),
+                             success:(res)=>{
+                                  console.log("success:" + JSON.stringify(res));
+                                    uni.$u.toast("充值金币成功！");
+                                    that.asyncUpBalance();
+                             },
+                             fail:(err)=>{
+                                console.log(err)
+                             }
+
+                         })
+                }
+                // uni.requestPayment({
+                //     provider: type == 1 ? "alipay" : "wxpay",
+                //     // #ifndef MP-WEIXIN
+                //     orderInfo,
+                //     // #endif
+                //     // #ifdef MP-WEIXIN
+                //     ...orderInfo,
+                //     // #endif
+                //     success: async function (res) {
+                //         console.log("success:" + JSON.stringify(res));
+                //         uni.$u.toast("充值金币成功！");
+                //         that.asyncUpBalance();
+                //         // that.gold = that.floatingPoint(that.gold, "+", money);
+                //     },
+                //     fail: function (err) {
+                //         console.log("fail:" + JSON.stringify(err));
+                //         if (err.errCode == -8) uni.$u.toast("客户端未安装");
+                //         if (err.errCode == -100)
+                //             uni.$u.toast("您中途取消了支付");
+                //         if (err.errMsg == "requestPayment:fail cancel")
+                //             uni.$u.toast("您中途取消了支付");
+                //     },
+                // });
             } else {
                 uni.$u.toast(res.message);
             }
@@ -390,33 +415,41 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    &::before {
+    background-color: #FFFFFF;
+       &::after {
         content: "";
         width: 100vw;
-        height: 1000rpx;
+        height: 600rpx;
+        left: 0;
+        top: 0;
         position: absolute;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/topUp_bg.png");
-        background-size: 100% 100%;
-    }
+        z-index: 1;
+       background: linear-gradient( 180deg, #BAFFF9 0%, #F5F6F8 100%);
+      }
 }
 
 .balance_con {
     position: absolute;
-    padding-top: 150rpx;
+    height: calc(100vh - 150rpx);
+    // padding-top: 150rpx;
+    bottom: 0;
+    left: 0;
     overflow-y: auto;
     padding-bottom: 200rpx;
+    z-index: 5;
 
     .top_cord {
         width: 686rpx;
-        height: 348rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/topUp_bg2.png");
+        height: 264rpx;
+        background-image: url("https://img.shinemang.com/gachaStatic/my/rechargeBgc.png");
         background-size: 100% 100%;
         padding: 32rpx;
         margin: 44rpx auto 0;
-        margin-bottom: 16rpx;
-        color: #fff;
+        margin-bottom: 24rpx;
+        color: #1A1A1A;
         font-weight: 500;
         font-size: 24rpx;
+        position: relative;
 
         .tit {
             font-weight: 500;
@@ -424,21 +457,27 @@ export default {
             .t_msg1 {
                 .ico {
                     margin-left: 8rpx;
-                    width: 32rpx;
-                    height: 32rpx;
-                    background-image: url("https://img.chaoshewang.com/matt/static/img/index/group_3.png");
+                    width: 24rpx;
+                    height: 24rpx;
+                    background-image: url("https://img.shinemang.com/gachaStatic/my/rechargeTips.png");
                     background-size: 100% 100%;
                 }
             }
             .t_msg {
                 font-weight: 500;
                 font-size: 24rpx;
+                color: #fff;
+                margin-top: -24rpx;
+                display: flex;
+                align-items: center;
+              
                 .ico {
                     margin-left: 8rpx;
                     width: 32rpx;
                     height: 32rpx;
-                    background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/group_4.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/my/toIcon.png");
                     background-size: 100% 100%;
+                    margin-top: 6rpx;
                 }
             }
         }
@@ -465,20 +504,35 @@ export default {
             }
         }
         .nums {
-            text-align: center;
+            // text-align: center;
             margin-bottom: 32rpx;
+            color: #266B59;
+            font-size: 24rpx;
         }
         .btns {
-            margin: auto;
-            width: 220rpx;
-            height: 64rpx;
-            line-height: 64rpx;
-            text-align: center;
-            font-weight: bold;
+            // margin: auto;
+            // width: 220rpx;
+            // height: 64rpx;
+            // line-height: 64rpx;
+            // text-align: center;
+            // font-weight: bold;
+            // font-size: 28rpx;
+            // color: #000000;
+            // background: #fff;
+            // border-radius: 32rpx;
+            width: 160rpx;
+            height: 56rpx;
+            background: #1A1A1A;
+            border-radius: 28rpx 28rpx 28rpx 28rpx;
             font-size: 28rpx;
-            color: #000000;
-            background: #fff;
-            border-radius: 32rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+            top: 168rpx;
+            right: 32rpx;
+
         }
     }
 }
@@ -486,14 +540,14 @@ export default {
 .bill_log {
     width: 100%;
     background-color: #fff;
-    border-radius: 16rpx 16rpx 0 0;
+    border-radius: 40rpx 40rpx 0 0;
     padding: 32rpx 32rpx 120rpx;
     .tit {
         font-weight: bold;
-        font-size: 32rpx;
+        font-size: 28rpx;
         .tit1 {
             font-weight: bold;
-            font-size: 28rpx;
+            font-size: 24rpx;
             color: #fcb25f;
             margin-left: 8rpx;
         }
@@ -509,11 +563,22 @@ export default {
             height: 236rpx;
 
             border-radius: 16rpx;
-            border: 2rpx solid #ebeef3;
+            // border: 2rpx solid #ebeef3;
             font-weight: 800;
             font-size: 36rpx;
             color: #000000;
+            background: #F5F6F8;
             margin-bottom: 16rpx;
+            position: relative;
+            .selected{
+                width: 48rpx;
+                height: 40rpx;
+                position: absolute;
+                right: -4rpx;
+                top: -4rpx;
+                background: url('https://img.shinemang.com/gachaStatic/my/rechargeSelect.png');
+                background-size: 100% 100%;
+            }
             .pr {
                 width: 64rpx;
                 height: 64rpx;
@@ -522,8 +587,10 @@ export default {
                 margin-bottom: 24rpx;
             }
             &.active {
-                border: 4rpx solid #865bf2;
-                color: #865bf2;
+                border: 4rpx solid #31E597;
+                background: #E8FFF7;
+                // color: #865bf2;
+                // border-image: linear-gradient(90deg, rgba(49, 229, 151, 1), rgba(64, 224, 234, 1)) 4 4;
             }
         }
     }
@@ -531,22 +598,23 @@ export default {
         margin-top: 20rpx;
         font-weight: 500;
         font-size: 24rpx;
-        color: #aaacbb;
+        color: #8D8D94;
         letter-spacing: 2px;
     }
     .co {
-        color: #865bf2;
+        color: #01C2D0;
     }
 }
 
 .foot-btn {
     width: 100%;
-    height: 320rpx;
+    height:220rpx;
     background: #fff;
     position: fixed;
     bottom: 0rpx;
     left: 0;
     width: 100%;
+    z-index: 10;
     padding: 24rpx 28rpx 24rpx;
     .appoint {
         height: 68rpx;
@@ -596,7 +664,7 @@ export default {
     .all {
         font-weight: bold;
         font-size: 28rpx;
-        color: #000000;
+        color: #1A1A1A;
         .allNum {
             .num {
                 font-weight: 800;
@@ -613,13 +681,13 @@ export default {
         .btn {
             width: 280rpx;
             height: 80rpx;
-            background: #865bf2;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
             border-radius: 40rpx;
             text-align: center;
             line-height: 80rpx;
             font-weight: bold;
             font-size: 32rpx;
-            color: #ffffff;
+            color: #000000;
             letter-spacing: 1px;
         }
     }

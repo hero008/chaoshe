@@ -22,7 +22,7 @@
                     />
                     <div class="m_num">{{ balance || "0.00" }}</div>
                 </div>
-                <div class="btns" @click="onClickWithdrawal">申请退款</div>
+                <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
             </div>
             <div class="bill_log">
                 <div class="tit flex_r flex_ac flex_jb">

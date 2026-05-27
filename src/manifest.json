@@ -159,10 +159,10 @@
         "usingComponents" : true
     },
     "h5" : {
-        "publicPath" : "../",
+       
         "router" : {
             "base" : "./",
-            "mode" : "history"
+            "mode" : "hash"
         },
         "devServer" : {}
     },

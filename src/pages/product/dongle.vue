@@ -188,11 +188,11 @@
                     <div class="msg" v-if="percentage > 95">
                         赏品已自动放入潮柜，可在潮柜查看~
                     </div>
-                    <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
+                    <!-- <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
                         v-if="spList[WinnInx].levelIndex == 28">
                         <view class="share_img"></view>
                         <view class="share_text">炫耀一下</view>
-                    </view>
+                    </view> -->
                     <view class="share flex_r flex_ac" v-if="shareType">
                         <view @click="onShareType(2)">
                             <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />

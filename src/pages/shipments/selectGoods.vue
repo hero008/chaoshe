@@ -12,16 +12,13 @@
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">返回</text>
             </view>
-            <img
-                src="https://img.shinemang.com/gachaStatic/static/img/shipments/btn.png"
-                class="btn_r"
-                @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })"
-            />
+         
         </div>
         <div class="selectGoods_con" :style="{ height: conHeight }">
             <div class="con_box">
                 <div class="form_box">
-                    <div class="form_item">
+                    <div class="form_item" style="border-radius: 32rpx 32rpx 0 0;">
+                        <div class="sendTips" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">发货须知</div>
                         <div class="txt" style="margin-bottom: 0">
                             <span class="icof">&#xe641;</span>收货地址
                         </div>
@@ -32,12 +29,7 @@
                             <div class="address_info" v-if="selectAddr.name">
                                 <div class="flex_r flex_ac">
                                     <div class="tags flex_r flex_ac">
-                                        <div
-                                            class="tag corr"
-                                            v-if="selectAddr.isDefault"
-                                        >
-                                            默认
-                                        </div>
+                                   
                                         <div
                                             class="tag corb"
                                             v-if="selectAddr.addressTag"
@@ -49,15 +41,21 @@
                                         {{ selectAddr.province
                                         }}{{ selectAddr.city
                                         }}{{ selectAddr.area
-                                        }}{{ selectAddr.subArea }}
+                                        }}
                                     </div>
                                 </div>
-                                <div class="userAddr">
-                                    {{ selectAddr.address }}
-                                </div>
+                               <div class="userAddr">
+                                    {{ selectAddr.subArea }}{{ selectAddr.address }}
+                                </div> 
                                 <div class="userName">
                                     <span>{{ selectAddr.name }}</span
                                     ><span>{{ selectAddr.phoneNum }}</span>
+                                         <span
+                                            class="tag corr"
+                                            v-if="selectAddr.isDefault"
+                                        >
+                                            默认
+                                        </span>
                                 </div>
                             </div>
                             <div class="address_info" v-else>
@@ -72,7 +70,7 @@
                             <div class="addr_r_ico icof">&#xe72b;</div>
                         </div>
                     </div>
-                    <div class="form_item">
+                    <div style="margin-top: 16rpx;margin-bottom: 0;" class="form_item">
                         <div class="txt">
                             <span class="icof">&#xe641;</span>选择赏品
                         </div>
@@ -88,20 +86,18 @@
                                         backgroundImage: `url(${item.item.coverThumb})`,
                                     }"
                                 >
-                                 <view class="box_ico frame"></view>
+                                 <!-- <view class="box_ico frame"></view> -->
                                     <!-- <img
                                         src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico"
                                     /> -->
-                                    <view class="item_txt1">{{
-                                        item.item.saleType == 1
-                                            ? "现货"
-                                            : "预售"
-                                    }}</view>
+                                   <view :style="{
+                                        backgroundImage: `url(${item.item.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
+                                    }" class="item_txt1"></view>
                                 </view>
-                                <view class="item_name ellipsis">{{
+                                <!-- <view class="item_name ellipsis">{{
                                     item.item.name
-                                }}</view>
+                                }}</view> -->
                                 <!-- <view class="item_no ellipsis">{{item.itemId}}</view> -->
                                 <img
                                     @click="removeItem(item)"
@@ -113,14 +109,14 @@
                                 class="SelectProduct flex_r flex_jc flex_ac"
                                 @click="addStock"
                             >
-                                <img
+                                <!-- <img
                                     src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                                     class="ico"
-                                />
+                                /> -->
                             </div>
                         </div>
                     </div>
-                    <div class="form_item">
+                    <div class="form_item" style="padding-top: 0;">
                         <div class="txt">发货备注</div>
                         <u--textarea
                             v-model="remark"
@@ -165,11 +161,13 @@
                     </div>
                 </div>
                 <div class="foot_btn flex_r flex_jc">
-                    <x-btn
-                        txt="提交订单"
-                        v-if="!isTransaction || !selectAddr.id"
+                    <view class="btn1"  v-if="!isTransaction || !selectAddr.id">提交订单</view>
+                     <view class="btn2"  v-else @click="onpay">提交订单</view>
+                    <!-- <x-btn
+                        txt=""
+                       
                     />
-                    <x-btn txt="提交订单" v-else @click="onpay" cor="3" />
+                    <x-btn txt="提交订单" cor="3" /> -->
                 </div>
             </div>
         </div>
@@ -324,6 +322,21 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.sendTips{
+    position: absolute;
+    width: 136rpx;
+height: 48rpx;
+background: #2E3032;
+border-radius: 20rpx 0 0 20rpx;
+display: flex;
+align-items: center;
+right: 0;
+top: 32rpx;
+justify-content: center;
+color: #FFFFFF;
+line-height: 48rpx;
+font-size: 24rpx;
+}
 .selectGoods {
     height: 100vh;
     position: relative;
@@ -331,17 +344,17 @@ export default {
     padding-top: 106rpx;
     // background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
     overflow-y: auto;
-      &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+    //   &::after {
+    //     content: "";
+    //     width: 100vw;
+    //     height: 600rpx;
+    //     left: 0;
+    //     top: 0;
+    //     position: absolute;
+    //     z-index: 1;
+    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+    //     background-size: 100% 100%;
+    //   }
 }
 .navbar_x {
     padding: 0 36rpx;
@@ -376,17 +389,20 @@ export default {
     height: calc(100% - 190rpx);
     border-radius: 0 50rpx 0 0;
     // background: #f4f4f4;
+  
     padding: 30rpx 0;
     overflow-y: auto;
     position: absolute;
     left: 0;
     z-index: 9;
     bottom: 0;
+      padding-bottom: 0;
 
     .con_box {
         height: 100%;
         overflow-y: auto;
-        padding: 0 36rpx 80rpx;
+        padding: 0 0rpx 200rpx;
+        // background-color: #fff;
     }
 }
 .frame {
@@ -401,7 +417,8 @@ export default {
         width: 152rpx;
         margin-bottom: 18rpx;
         position: relative;
-
+       background: linear-gradient(0deg, #D6E5FF 0%, #FFFFFF 100%);
+          border-radius: 16rpx;
         .item_img {
             width: 152rpx;
             height: 152rpx;
@@ -410,13 +427,16 @@ export default {
             background-size: 100% 100%;
             position: relative;
 
-            .item_txt1 {
-                color: #ffffff;
-                font-size: 20rpx;
-                position: absolute;
-                right: 6rpx;
-                top: 0rpx;
-            }
+         .item_txt1 {
+            color: #ffffff;
+            font-size: 20rpx;
+            position: absolute;
+            right: -12rpx;
+            top: -12rpx;
+            width: 60rpx;
+            height: 32rpx;
+            background-size: 100% 100%;
+        }
         }
 
         .item_name {
@@ -451,10 +471,13 @@ export default {
         width: 152rpx;
         height: 152rpx;
         border-radius: 12rpx;
-        background: #e2e1e3;
-        border: 2rpx dashed #aca9bc;
+        // background: #e2e1e3;
+        background: url('https://img.shinemang.com/gachaStatic/my/add.png');
+        background-size: 100% 100%;
+        // border: 2rpx dashed #aca9bc;
 
         .ico {
+            display: none;
             width: 48rpx;
             height: 48rpx;
         }
@@ -462,20 +485,23 @@ export default {
 
     .remove_btn {
         position: absolute;
-        right: -20rpx;
+        left: -20rpx;
         top: -20rpx;
         width: 50rpx;
         height: 50rpx;
     }
 
     .form_item {
-        margin-bottom: 60rpx;
+        margin-bottom: 16rpx;
+        background: #fff;
+        padding: 32rpx;
+
 
         .txt {
             font-size: 32rpx;
-            color: #383228;
+            color: #1A1A1A;
             font-weight: bold;
-            margin-bottom: 20rpx;
+            margin-bottom: 16rpx;
 
             .icof {
                 color: #f20;
@@ -515,19 +541,19 @@ export default {
         font-size: 28rpx;
 
         .msg {
-            font-size: 30rpx;
-            color: #f23a13;
+            font-size: 24rpx;
+            color: #8D8D94;
             margin-left: 10rpx;
 
             .a_msg {
-                font-size: 30rpx;
-                color: blue;
+                font-size: 24rpx;
+                color: #01C2D0;
             }
         }
 
         .p {
             padding: 18rpx 0;
-            border-bottom: 2rpx dashed #aca9bc;
+            // border-bottom: 2rpx dashed #aca9bc;
 
             &:last-child {
                 border: none;
@@ -549,7 +575,7 @@ export default {
 
 .address_info {
     padding: 30rpx 0;
-    border-bottom: 2rpx solid #e2e1e3;
+    // border-bottom: 2rpx solid #e2e1e3;
 
     .on_addr {
         .addr_ico {
@@ -559,7 +585,7 @@ export default {
         }
 
         .addr_txt {
-            font-size: 32rpx;
+            font-size: 28rpx;
             font-weight: 500;
         }
     }
@@ -609,6 +635,26 @@ export default {
     position: fixed;
     bottom: 60rpx;
     left: 0;
+    .btn1,.btn2{
+width: 686rpx;
+height: 88rpx;
+background: #1A1A1A;
+border-radius: 44rpx 44rpx 44rpx 44rpx;
+
+
+display: flex;
+align-items: center;
+justify-content: center;
+color: #fff;
+font-size: 32rpx;
+font-weight: bold;
+    }
+    .btn1{
+opacity: 0.5;
+    }
+    .btn2{
+ opacity: 1;
+    }
 }
 
 .mpWeixin {

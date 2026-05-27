@@ -16,6 +16,7 @@
 import { post } from "@/utils/api.js";
 import { isMTVapp } from "../../utils/mgtv";
 import { mapState } from "vuex";
+import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 let that;
 export default {
   data() {
@@ -45,11 +46,44 @@ export default {
     toLogin() {
         if(window.mgtv){
           this.loginMgtv((res)=>{
+            
             //  let uuid = res.uuid;
             // let ticket = res.ticket;
             // let nickName = res.nickName;
             // let avatarUrl = res.avatarUrl;
-            this.webLogin();
+            // this.webLogin();
+
+            console.log( {
+                phone_num: "",
+                type: 8,
+                code:res.ticket,
+                login_platform: 0,
+                device_id: this.SystemInfo.deviceId,
+                invite_code: this.inviteCode,
+                channel_id: 1,
+                uuid:res.uuid
+            })
+               post("v1/user/login", {
+                phone_num: "",
+                type: 8,
+                code:res.ticket,
+                login_platform: 0,
+                device_id: this.SystemInfo.deviceId,
+                invite_code: this.inviteCode,
+                channel_id: 1,
+                uuid:res.uuid
+            }).then((res) => {
+                if (res.code) {
+                uni.$u.toast(res.message);
+                this.show = true;
+                // that.backtrack();
+                } else {
+                uni.setStorageSync("aToken", res.accessToken);
+                uni.setStorageSync("rToken", res.refreshToken);
+                that.$store.commit("updateInfo", res);
+                that.backtrack();
+                }
+            });
                // 登录成功// 获取到res 的用户信息,在去登录
           },(err)=>{
                  //登录失败 

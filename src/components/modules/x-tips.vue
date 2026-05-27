@@ -93,7 +93,7 @@ export default {
         font-size: 28rpx;
         color: #383228;
         .xy {
-            color: rgba(126, 85, 227, 1);
+            color:#01C2D0;
         }
     }
     .btn_box {
@@ -110,8 +110,8 @@ export default {
             color: #383228;
         }
         .right {
-            background: #7e55e3;
-            color: #ffffff;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #000;
             margin-left: 30rpx;
         }
     }

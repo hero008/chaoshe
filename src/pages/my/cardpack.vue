@@ -3,7 +3,7 @@
 		<div class="navbar_x flex_r flex_jb flex_ac">
 			<view class="top_Back" @click.stop="gateBack">
 				<text class="icof Back_ico">&#xe72c;</text>
-				<text class="txt">返回</text>
+				<text class="txt">我的卡包</text>
 			</view>
 		</div>
 		<div class="shanggui_con">
@@ -20,22 +20,22 @@
 									<span class="txt1">{{ {va: item.useRange, target: item.target, name:item.targetName} |userange }}</span>
 								</div>
 								<div class="row_r flex_r flex_ac flex_jb">
-									<div class="rowc borr flex_c flex_jb flex_as">
-										<div class="">
+									<div class="rowc borr flex_c flex_jc flex_as">
+										<div >
 											<div class="txt">{{ item.name }}</div>
-											<div class="date">有效期至：{{ item.expiredAt }}</div>
-											<div class="desc ellipsis">{{ item.desc }}</div>
 										</div>
 										<div class="ico"
 											@click.stop="goto('/pages/common/rulepop', { val: 'CouponRule' })">
 											<span>使用规则</span><span class="icof">&#xe72b;</span>
 										</div>
+										<div class="desc ellipsis">{{ item.desc }}</div>
+										<div class="date">有效期至：{{ item.expiredAt }}</div>
 									</div>
-									<div class="rowr flex_r flex_jc flex_ac">
+									 <div class="rowr flex_r flex_jc flex_ac">
 										<div class="select" v-if="selectTicketId == item.id"></div>
-										<span class="txt" style="color:#999" v-else-if="item.state != 1">{{ item.state== 3 ?"已使用" : item.state == 4 ? "已过期" : "锁定" }}</span>
-										<span class="txt" v-else>立即使用</span>
-									</div>
+										<div :class="['txt',item.state==4?'expired':'']" v-else-if="item.state != 1">{{ item.state== 3 ?"已使用" : item.state == 4 ? "" : "锁定" }}</div>
+										<div class="txt" style="opacity: 1;" v-else>去使用</div>
+									</div> 
 								</div>
 							</div>
 							<div class="con_msg" v-if="data.state == 1">~ 已过期或不能使用的券不予展示 ~</div>
@@ -204,17 +204,17 @@ export default {
 	padding: 100rpx 0 30rpx;
 	overflow-y: auto;
 background-color: #F5F6F8;
-          &::after {
-        content: "";
-        width: 100vw;
-        height: 600rpx;
-        left: 0;
-        top: 0;
-        position: absolute;
-        z-index: 1;
-        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-        background-size: 100% 100%;
-      }
+    //       &::after {
+    //     content: "";
+    //     width: 100vw;
+    //     height: 600rpx;
+    //     left: 0;
+    //     top: 0;
+    //     position: absolute;
+    //     z-index: 1;
+    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+    //     background-size: 100% 100%;
+    //   }
 }
 
 .navbar_x {
@@ -288,10 +288,11 @@ background-color: #F5F6F8;
 .shanggui_con {
 	z-index: 2;
 	width: 100%;
-	height: calc(100% - 190rpx);
+	height: calc(100% - 180rpx);
 	position: absolute;
 	bottom: 0;
 	left: 0;
+	background-color: #fff;
 
 	.p_lists {
 		// height: calc(100% - 66rpx);
@@ -300,6 +301,7 @@ background-color: #F5F6F8;
 		// background: #F4F4F4;
 		// margin-top: -15rpx;
 		padding: 32rpx;
+		padding-bottom: 0;
 	}
 }
 
@@ -327,43 +329,68 @@ background-color: #F5F6F8;
 
 .order_item {
 	// width: 686rpx;
-	width: 100%;
-	height: 210rpx;
+	width: 686rpx;
+	height: 196rpx;
 	background: #fff;
 	border-radius: 16rpx;
-	margin-bottom: 20rpx;
+	margin-bottom: 24rpx;
+	// background-color: #EFFFF7;
+	background: url('../../static/cardPackBgc.png');
+	background-size: 100% 100%;
+//    border: 1px solid #36E4AF;
+   position: relative;
 
+
+   	// &::after {
+	// 		content: "";
+	// 		width: 40rpx;
+	// 		height: 40rpx;
+	// 		background: #fff;
+	// 		border: 1px solid #36E4AF;
+	// 		border-radius:  0 0 20rpx 20rpx;
+	// 		position: absolute;
+	// 		top: -26rpx;
+	// 		left: 174rpx;
+	// 		 border-radius: 50%;
+    //        clip-path: polygon(0% 50%, 100% 50%, 100% 100%, 0% 100%);
+	// 	}
+
+	// 	&::before {
+	// 		content: "";
+	// 		width: 40rpx;
+	// 		height: 40rpx;
+	// 		background: #fff;
+	// 	   border: 1px solid #36E4AF;
+	// 		border-radius: 50%;
+
+	// 		position: absolute;
+	// 		bottom: -26rpx;
+	// 		left: 174rpx;
+	// 		 border-radius: 50%;
+    //     //  clip-path: polygon(0% 50%, 100% 50%, 100% 100%, 0% 100%);
+	// 	clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%)
+	// 	}
+	// border: 1px solid #36E4AF;
+		
+// background: #EFFFF7;
+// border-radius: 0rpx 0rpx 0rpx 0rpx;
+// border: 2rpx solid;
+// border-image: linear-gradient(90deg, rgba(49, 229, 151, 1), rgba(64, 224, 234, 1)) 2 2;
 	.ticket {
-		&::after {
-			content: "";
-			width: 40rpx;
-			height: 40rpx;
-			background: #F4F4F4;
-			border-radius: 50%;
-			position: absolute;
-			top: -20rpx;
-			right: -20rpx;
-		}
-
-		&::before {
-			content: "";
-			width: 40rpx;
-			height: 40rpx;
-			background: #F4F4F4;
-			border-radius: 50%;
-			position: absolute;
-			bottom: -20rpx;
-			right: -20rpx;
-		}
+	
 	}
 
 	.rowl {
-		width: 186rpx;
-		height: 210rpx;
-		color: #fff;
+		width: 190rpx;
+		height: 196rpx;
+		color: #000;
+		
 		position: relative;
-		background: linear-gradient(180deg, #EAB4D4 0%, #A259EC 100%);
-		border-radius: 16rpx;
+		// background: linear-gradient(180deg, #EAB4D4 0%, #A259EC 100%);
+		//   border: 16rpx 0 0 16rpx;
+			// border: 1rpx solid #36E4AF;
+		
+			// border-right: 0;
 
 		&.active {
 			background: #fff;
@@ -383,9 +410,9 @@ background-color: #F5F6F8;
 		}
 
 		.txt1 {
-			font-weight: 500;
-			font-size: 28rpx;
-			color: #fff;
+			// font-weight: 500;
+			font-size: 24rpx;
+			color: #858D89;
 			line-height: 34rpx;
 		}
 
@@ -398,52 +425,61 @@ background-color: #F5F6F8;
 	}
 
 	.row_r {
-		height: 210rpx;
-		width: calc(100% - 186rpx);
-		padding: 22rpx 28rpx;
+		height: 196rpx;
+		width: 480rpx;
+		
+		// padding: 22rpx 28rpx;
 		padding-right: 0;
+		
 	}
 
 	.rowc {
 		height: 100%;
 		width: calc(100% - 88rpx);
 		padding: 10rpx 0;
+		margin-left: 40rpx;
 
 		&.borr {
-			border-right: 4rpx dashed #eee;
+			// border-left: 4rpx dashed #eee;
 		}
 
 		.txt {
 			font-weight: 800;
-			font-size: 28rpx;
-			color: #383228;
-			line-height: 28rpx;
+			font-size: 32rpx;
+			color: #1A1A1A;
+			line-height: 32rpx;
 		}
 
 		.date {
 			font-weight: 500;
 			font-size: 24rpx;
-			color: #818181;
+			color: #858D89;
 			// line-height: 60rpx;
-			margin: 10rpx 0 6rpx;
+			// margin: 10rpx 0 6rpx;
 		}
 
 		.desc {
-			font-size: 22rpx;
+			font-size: 24rpx;
 			color: #818181;
+			margin: 4rpx 0;
 		}
 
 		.ico {
 			font-weight: 500;
 			font-size: 24rpx;
-			color: #818181;
+			color: #FF932B;
+			margin-top: 8rpx;
 		}
 	}
 
 	.rowr {
-		width: 88rpx;
+		position: absolute;
+		right: 0;
+		top: 0;
 		height: 100%;
-		position: relative;
+		// width: 88rpx;
+		// height: 100%;
+		// position: relative;
 
 		.select {
 			width: 36rpx;
@@ -454,11 +490,40 @@ background-color: #F5F6F8;
 		}
 
 		.txt {
-			font-weight: 500;
-			font-size: 28rpx;
-			color: #715CDD;
-			line-height: 34rpx;
-			writing-mode: vertical-rl;
+			width: 128rpx;
+			height: 56rpx;
+			line-height:56rpx;
+			background: #1A1A1A;
+			border-radius: 28rpx 28rpx 28rpx 28rpx;
+			display: flex;
+			align-items: center;
+			font-size: 24rpx;
+			color: #fff;
+			justify-content: center;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 24rpx;
+            opacity: 0.5;
+			
+
+			&.expired{
+                width: 160rpx;
+				height: 140rpx;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				opacity: 1;
+				background: url('https://img.shinemang.com/gachaStatic/my/expired.png');
+				background-size: 100% 100%;
+			}
+
+
+			// font-weight: 500;
+			// font-size: 28rpx;
+			// color: #715CDD;
+			// line-height: 34rpx;
+			// writing-mode: vertical-rl;
 		}
 
 		.btn {

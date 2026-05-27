@@ -14,7 +14,7 @@
                         <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico">
                         <view>公告栏</view>
                     </view>
-                    <u-notice-bar :text="notices[0]" :fontSize="11" color="#1A1A1A" bgColor="transparent"></u-notice-bar>
+                    <u-notice-bar v-if="notices.length" :text="notices[0]" :fontSize="11" color="#1A1A1A" bgColor="transparent"></u-notice-bar>
                 </view>
                 <!-- <view class="notice_btn" @click="goto('/page-activity/notice/notice-list')">
                     <view v-if="mail !== '0' && mail" class="notice_num">{{ mail > 99 ? '99+' : mail }}</view>
@@ -92,8 +92,8 @@
             <!-- 微信小程序不需要  tab链-->
             <view class="tab">
                 <!-- 微信小程序不需要 -->
-                <u-tabs :current="active_m" :lineWidth='lineWidth' :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"
-                    itemStyle=" height: 60px;"></u-tabs>
+                <u-tabs :current="active_m"  lineHeight="7"  lineWidth="32" :list="navbar" @click="ontab" :lineColor="lineColor" :activeStyle="activeStyl"
+                    itemStyle="height: 60px;"></u-tabs>
                 <!-- <image src="https://img.shinemang.com/gachaStatic/static/img/home/Group 1261155200@2x.png"
                     :class="[active_m == 2 ? 'shopping' : 'shopping1']" @click="ontab(2)" /> -->
                 <!-- <image src="https://img.shinemang.com/gachaStatic/static/img/home/welfare-icon.png"
@@ -122,9 +122,11 @@ import xPay from "@/components/x-pay/index.vue";
 import { mapActions, mapState, mapMutations } from "vuex";
 import xModal from "@/components/modules/x-modal";
 import { service } from '@/utils/fun.js';
+import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
 export default {
     data() {
         return {
+            lineColor: "linear-gradient( 90deg, #31E597 0%, #40E0EA 100%)",
             scrollTop:0,
             scrollTop1:0,
             list3: [],
@@ -238,7 +240,7 @@ export default {
                     color: "#1A1A1A",
                     fontWeight: "bold",
                     fontSize: "18px",
-                    transform: "scale(1.05)",
+                    // transform: "scale(1.05)",
                 };
                 this.lineWidth = "40rpx";
             // }
@@ -642,10 +644,6 @@ opacity: 1;
     display: flex;
     z-index: 1;
     ::v-deep .u-tabs__wrapper__nav__line {
-        background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%) !important;
-        border-radius: 6rpx 6rpx 6rpx 6rpx;
-        width: 32px !important;
-        height: 6px !important;
         bottom: 15px !important;
     }
     .shopping {

@@ -10,12 +10,12 @@
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
-        <view class="leftBox ico-share">
+        <!-- <view class="leftBox ico-share">
               <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
-        </view>
+        </view> -->
         <scroll-view :style="{ height: conHeight, }" scroll-y="true" @scroll="onScroll">
             <view class="chaowanshang_con">
                 <view class="gashapon_machine_box">

@@ -1,5 +1,5 @@
 <template>
-    <u-popup :show="popupShow" bgColor="transparent" :safeAreaInsetBottom="false">
+    <u-popup :show="popupShow" bgColor="#fff" :safeAreaInsetBottom="false">
         <div class="select_product_popup">
             <view class="tabs_two flex_r flex_jb" v-if="isfilt == 1">
                 <view class="tab_item" :class="{ active: i.val == selectType }" @click="ontab(i.val)"
@@ -7,20 +7,25 @@
             </view>
             <img @click="onClose" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close.png"
                 class="close_btn" />
-            <view class="p_lists">
-                <div class="flex_r flex_jb">
-                    <view>
-                        <view class="teg cor_g">已选{{ selectNums }}个</view>
+
+                <div :style="{
+                    marginTop: isfilt == 1 ? '0rpx' : '30rpx',
+                }"class="total">
+                    <view class="flex_r flex_jb">
                         <view class="teg">赏品共{{ totalNums }}个</view>
+                        <view class="teg cor_g">已选{{ selectNums }}个</view>
                     </view>
                 </div>
+            <view :style="{
+                height: isfilt == 1 ?  'calc(100% - 192rpx)' :  'calc(100% - 80rpx)'
+            }" class="p_lists">
                 <scroll-view scroll-y="true" class="list_box" :scroll-into-view="toView" @scroll="onScroll">
-                    <template v-for="(i, s) in sliceList">
+                    <view :key="s" class="list_box_item" v-for="(i, s) in sliceList">
                         <div class="item_tit_select flex_r flex_ac flex_jb" :id="'a' + s" :key="s + '-' + i.itemId">
                             <div class="tit_l flex_r flex_ac flex_js" @click="SelectMulti(s, i.stockIds, i)">
-                                <div class="icof cor" v-if="multiIds[s].length == i.stockIds.length">&#xe673;</div>
-                                <div class="icof cor" v-else-if="multiIds[s].length">&#xe670;</div>
-                                <div class="icof" v-else>&#xe671;</div>
+                                <div class="allSelect icof cor" v-if="multiIds[s].length ==  i.nums"></div>
+                                <!-- <div class="icof cor" v-else-if="multiIds[s].length">&#xe670;</div> -->
+                                <div class="notSelect icof" v-else></div>
                                 <div class="g_name ellipsis"> {{ i.itemName }}</div>
                             </div>
                             <div class="tit_r flex_r flex_ac flex_je" @click="onShowUnfold(i, s)">
@@ -34,26 +39,31 @@
                                 @click.stop="SelectItem(s, it, i, i.stockIds)">
                                 <img class="item_img" :src="i.itemCover" lazy-load="true" />
                               <img v-if="multiIds[s].includes(it)"
-                                    src="https://img.shinemang.com/gachaStatic/static/img/shanggui/xuanzhong.png" class="box_ico"
+                                    src="https://img.shinemang.com/gachaStatic/select.png" class="box_ico"
                                     lazy-load="true" />
-                                <img v-else src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
+                                <img v-else src="https://img.shinemang.com/gachaStatic/notSelect.png"
                                     class="box_ico" lazy-load="true" /> 
                                     <!-- <div style="color: #9064FF;"  class="box_ico icof cor" v-if="multiIds[s].includes(it)">&#xe673;</div>
                                     <div  class="box_ico icof" v-else >&#xe671;</div> -->
                                    <view :style="{
                                         backgroundImage: `url(${i.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
                                     }" class="item_txt1"></view>
+
+                                    <!-- <view>{{ it.itemName }}</view>
+                                    <view>{{ it.itemId }}</view> -->
                             </view>
                         </div>
-                    </template>
+                    </view>
                 </scroll-view>
                 <div class="popup_btn flex_r flex_ac">
                     <view class="all flex_r flex_ac" @click="onSelectAll">
-                        <uni-icons v-if="isAllSelected" type="checkbox-filled" size="25" color="#23B408"></uni-icons>
-                        <uni-icons v-else type="circle" size="25" color="#CCCEDA"></uni-icons>
+                        <view class="allSelect"  v-if="isAllSelected"></view>
+                        <view class="notSelect" v-else></view>
+                        <!-- <uni-icons v-if="isAllSelected" type="checkbox-filled" size="25" color="#23B408"></uni-icons> -->
+                        <!-- <uni-icons v-else type="circle" size="25" color="#CCCEDA"></uni-icons> -->
                         <view class="text">全选</view>
                     </view>
-                    <view class="btn "> <x-btn txt="确认" @click="confirmSelect" cor="1" /></view>
+                    <view class="btn1"  @click="confirmSelect">确认 </view>
                 </div>
             </view>
         </div>
@@ -286,6 +296,7 @@ export default {
 
         },
         SelectMulti(ix) {
+
             let all = this.multi[ix].stockIds;
             let da = this.multi[ix];
             let ids = JSON.parse(JSON.stringify(this.multiIds[ix]));
@@ -316,10 +327,16 @@ export default {
                 this.selectNums += all.length;
                 ids = all;
             }
-            this.$set(this.multiIds, ix, ids);
+        
+        //    this.$set(this.multiIds, ix, ids);
+           this.multiIds[ix] = ids;
+           this.multiIds = JSON.parse(JSON.stringify(this.multiIds));
             da.stockIds = ids;
+            console.log(da,ids)
             if (ids.length) this.multiinfo[ix] = da;
             else this.multiinfo[ix] = {};
+
+               console.log(this.multiIds[ix]);
             this.clickTotal();
         },
         confirmSelect() {
@@ -468,26 +485,54 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.allSelect{
+    width: 40rpx;
+    height: 40rpx;
+    background: url('https://img.shinemang.com/gachaStatic/select.png');
+    background-size: 100% 100%;
+}
+.notSelect{
+        width: 40rpx;
+    height: 40rpx;
+    background: url('https://img.shinemang.com/gachaStatic/notSelect.png');
+    background-size: 100% 100%;
+}
+.total{
+    .teg{
+        font-size: 28rpx;
+        color: #1A1A1A;
+        font-weight: bold;
+        &.cor_g{
+            color: #FF932B;
+            font-size: 24rpx;
+        }
+    }
+}
 .lists {
     padding-top: 12rpx;
-    @include grid(216rpx);
+    @include grid(204rpx);
 
     &.collect {
-        height: 216rpx;
+        height: 204rpx;
         overflow: hidden;
     }
 
     .item {
-        width: 216rpx;
-        margin-bottom: 18rpx;
+        width: 204rpx;
+        margin-bottom: 16rpx;
         position: relative;
-        height: 216rpx;
+        height: 204rpx;
         background-color: #fff;
          border-radius: 16rpx;
+         padding: 12rpx;
+         display: flex;
+        //  align-items: center;
+         justify-content: center;
         .item_img {
-            width: 192rpx;
-            height: 192rpx;
-            margin: 12rpx;
+            width: 180rpx;
+            height: 180rpx;
+            background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
+            // margin: 12rpx;
             border-radius: 16rpx;
             background-size: 100% 100%;
             position: relative;
@@ -507,8 +552,8 @@ export default {
 
         .box_ico {
             position: absolute;
-            width: 216rpx;
-            height: 216rpx;
+            width: 40rpx;
+            height: 40rpx;
             top: 0;
             left: 0;
             z-index: 3;
@@ -518,8 +563,8 @@ export default {
              color: #ffffff;
             font-size: 20rpx;
             position: absolute;
-            right: -12rpx;
-            top: -12rpx;
+            right: 0rpx;
+            top: 0rpx;
             z-index: 7;
             width: 60rpx;
             height: 32rpx;
@@ -538,43 +583,56 @@ export default {
 
 .tabs_two {
     color: #fff;
-    width: 372rpx;
-    height: 76rpx;
+    width: 440rpx;
+    height: 64rpx;
     font-size: 28rpx;
-    line-height: 28rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
-    background-size: 100% 100%;
-    position: absolute;
-    top: -60rpx;
-    left: 0;
+    // line-height: 28rpx;
+    margin: auto;
+    background:#F5F6F8 ;
+    border-radius: 32rpx;
+    margin-top: 36rpx;
+    margin-bottom: 36rpx;
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
+    // background-size: 100% 100%;
+    // position: absolute;
+    // top: 0rpx;
+    // left: 0;
 
     .tab_item {
-        width: 156rpx;
-        line-height: 60rpx;
-        text-align: center;
-        position: absolute;
+        width: 144rpx;
+        line-height: 64rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1A1A1A;
+        font-weight: bold;
+        // text-align: center;
+        // position: absolute;
 
-        &:first-child {
-            left: -16rpx;
-        }
+        // &:first-child {
+        //     left: -16rpx;
+        // }
 
-        &:nth-child(2) {
-            right: 120rpx;
-        }
+        // &:nth-child(2) {
+        //     right: 120rpx;
+        // }
 
-        &:last-child {
-            right: -6rpx;
-        }
+        // &:last-child {
+        //     right: -6rpx;
+        // }
 
         &.active {
-            top: -8rpx;
-            color: #333;
-            height: 84rpx;
-            line-height: 70rpx;
-            font-weight: bold;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
-            background-size: 100% 100%;
-            font-size: 30rpx;
+            color: #000;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            border-radius: 32rpx;
+            // top: -8rpx;
+            // color: #333;
+            // height: 84rpx;
+            // line-height: 70rpx;
+            // font-weight: bold;
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
         }
     }
 }
@@ -582,6 +640,7 @@ export default {
 .select_product_popup {
     height: 80vh;
     position: relative;
+    padding: 0 32rpx;
 
     .item_tit_select {
         margin: 20rpx 0 12rpx;
@@ -598,7 +657,8 @@ export default {
         .tit_r {
             width: 300rpx;
             font-size: 24rpx;
-            color: #999;
+            color: #8D8D94;
+            // margin-right: 22rpx;
 
             .icof {
                 margin-top: 4rpx;
@@ -616,10 +676,11 @@ export default {
         }
 
         .g_name {
-            font-size: 26rpx;
+            font-size: 24rpx;
             font-weight: bold;
-            height: 26rpx;
-            line-height: 26rpx;
+            height: 24rpx;
+            line-height: 24rpx;
+            color: #1A1A1A;
         }
 
         .cor {
@@ -636,11 +697,19 @@ export default {
     }
 
     .p_lists {
-        height: 100%;
-        border-radius: 0 50rpx 0 0;
-        background: #f4f4f4;
-        padding: 30rpx 36rpx;
+        height: calc(100% - 192rpx);
+        // border-radius: 0 50rpx 0 0;
+        // background: #f4f4f4;
+        padding: 24rpx 0rpx;
         position: relative;
+        .list_box_item{
+            width: 686rpx;
+                background: #F5F6F8;
+                padding: 20rpx 22rpx;
+                // padding-right: 0;
+                border-radius: 24rpx 24rpx 24rpx 24rpx;
+                margin-bottom: 16rpx;
+        }
 
         .teg {
             height: 36rpx;
@@ -674,6 +743,7 @@ export default {
         margin-top: 20rpx;
         position: relative;
         width: 100%;
+        padding-top: 30rpx;
 
         .all {
             margin-right: auto;
@@ -685,12 +755,22 @@ export default {
             }
         }
 
-        .btn {
+        .btn1 {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             /* 保证不被左边覆盖 */
             z-index: 1;
+            width: 328rpx;
+height: 80rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+color: #1A1A1A;
+font-size: 32rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
         }
     }
 }

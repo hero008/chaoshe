@@ -614,18 +614,18 @@ export default {
     height: 100vh;
     position: relative;
     padding: 100rpx 0 0;
-    background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
+    background: #F5F6F8;
     overflow-y: auto;
 
-    &::before {
-        content: "";
-        width: 100vw;
-        height: calc(100vh - 212rpx);
-        left: 0;
-        top: 212rpx;
-        position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+    // &::before {
+    //     content: "";
+    //     width: 100vw;
+    //     height: calc(100vh - 212rpx);
+    //     left: 0;
+    //     top: 212rpx;
+    //     position: absolute;
+    //     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
+    // }
 }
 
 .frame {
@@ -712,12 +712,11 @@ export default {
             white-space: nowrap;
 
             .goods_img {
-                height: 150rpx;
-                width: 150rpx;
-                border-radius: 16rpx;
-                box-sizing: border-box;
-                border: 6rpx solid #fff;
-                box-shadow: 0 0 4rpx 4rpx #cacaca;
+                width: 144rpx;
+                    height: 144rpx;
+                    background: linear-gradient( 0deg, #CCFFF4 0%, #FFFFFF 60%);
+                    border-radius: 16rpx 16rpx 16rpx 16rpx;
+                    border: 2rpx solid #A1FAE3;
                 margin: 4rpx;
                 margin-right: 20rpx;
 
@@ -726,11 +725,17 @@ export default {
                 }
 
                 &.bor9 {
-                    box-shadow: 0 0 4rpx 4rpx $motif-color;
+                    // box-shadow: 0 0 4rpx 4rpx $motif-color;
+                           background: linear-gradient( 0deg, #FDEEF6 0%, #FFFFFF 60%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+border: 4rpx solid #EA4CA4;
                 }
 
                 &.bore {
-                    box-shadow: 0 0 4rpx 4rpx #ed780c;
+                    // box-shadow: 0 0 4rpx 4rpx #ed780c;
+                           background: linear-gradient( 0deg, #FDEEF6 0%, #FFFFFF 60%);
+border-radius: 16rpx 16rpx 16rpx 16rpx;
+border: 4rpx solid #EA4CA4;
                 }
             }
 

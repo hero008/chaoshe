@@ -7,7 +7,7 @@
         <view v-show="!dynamicEffectShow" class="card_list_popup flex_c flex_ac flex_jc"
             :style="{ 'pointer-events': shareType ? 'none' : 'auto' }">
             <view class="title flex_r  flex_ac">
-                <img src="https://img.shinemang.com/gachaStatic/static/img/duoyou/titile.png" class="title_img" />
+                <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/duoyou/titile.png" class="title_img" /> -->
                 <view @click="close" class="closebtn"></view>
             </view>
             <view class="card_list  " @touchstart="handleTouchStart" @touchmove="handleTouchMove"

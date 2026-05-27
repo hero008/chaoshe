@@ -53,9 +53,8 @@
         </div>
         <div class="module_bar">
             <!-- #ifndef MP-WEIXIN -->
-            <div class="gold flex_r flex_ac flex_jb" @click="userInfo.id ? goto('/page-a/balance/topUp') : null">
+            <!-- <div class="gold flex_r flex_ac flex_jb" @click="userInfo.id ? goto('/page-a/balance/topUp') : null">
                 <div class="gold_num">
-                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png" class="gold_ico" /> -->
                     <span>我的账户</span>
                     <view style="font-size: 32rpx;margin-top: 12rpx;"> {{ balance }}</view>
                 </div>
@@ -63,29 +62,16 @@
                     <view></view>
                     <view class="icof"></view>
                 </div>
-            </div>
-            <!-- #endif -->
+            </div> -->
             <div class="grid_bar">
-                <!-- <div class="grid_tit">我的交易</div> -->
                 <div class="grid_jy">
                     <div :style="{
                         backgroundImage: 'url(' + i.bgUrl + ')',
                     }" class="jy-item" v-for="(i, s) in baseList1" @click="goto(i.path)" :key="s" >
-                        <!-- <img class="jy-img" :src="i.name" />
-                        <text class="jy-text">{{ i.title }}</text> -->
+                      
                     </div>
                 </div>
-                <!-- <u-grid :border="false"  :col='2'>
-                    <u-grid-item
-                        v-for="(i, s) in baseList1"
-                        :key="s"
-                        class="x_grid"
-                        @click="goto(i.path)"
-                    >
-                        <u-icon :name="i.name" :size="30"></u-icon>
-                        <text class="grid-text ellipsis">{{ i.title }}</text>
-                    </u-grid-item>
-                </u-grid> -->
+            
             </div>
         </div>
         <!-- <button class="invite_bar" open-type="share" id="invite"></button> -->
@@ -173,16 +159,16 @@ export default {
                     // path:'/page-a/couponPackage/discountCoupon',
                     title: "我的卡包",
                 },
-                 {
-                    name: "https://img.shinemang.com/gachaStatic/my/exchangeIcon.png",
-                    path: "/page-activity/conversion/index",
-                    title: "福利兑换",
-                },
-                  {
-                    name: "https://img.shinemang.com/gachaStatic/my/centerIcon.png",
-                    path: '/page-a/luck/index',
-                    title: "集赏中心",
-                },
+                //  {
+                //     name: "https://img.shinemang.com/gachaStatic/my/exchangeIcon.png",
+                //     path: "/page-activity/conversion/index",
+                //     title: "福利兑换",
+                // },
+                //   {
+                //     name: "https://img.shinemang.com/gachaStatic/my/centerIcon.png",
+                //     path: '/page-a/luck/index',
+                //     title: "集赏中心",
+                // },
                 // {
                 //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico4.png",
                 //     path: "/pages/index/index",

@@ -9,12 +9,21 @@
             <!-- <view class="notice_btn"></view> -->
         </view>
         <!-- 二级tab -->
-        <div class="navbarSubclass" v-if='Object.keys(childList).length'>
+      <div class="navbarSubclass" :style="{
+        height:`calc(100vh - 290rpx - ${MBInfo().top}px)`,
+        top:`calc(290rpx + ${MBInfo().top}px)`
+      }" v-if='Object.keys(childList).length'>
             <view class='subclass'>
                 <view :class="[text.name == i.name ? ' subclass-tiem ' : 'subclass-tiem tiem1']"
                     v-for="(i, s) in childList.child" :key="s" @click="onChild(i, childList.id)">{{ i.name }}</view>
             </view>
             <view class='subclass-bottom' @click="onSsubclass" />
+        </div>
+         <div class="exchangeRules tag flex_r flex_ac" @click="goto('/pages/common/rulepop', { val: 'MarketRules' })">
+                        <!-- <span>交易规则</span> -->
+                        <!-- <img
+                            src="https://img.shinemang.com/gachaStatic/static/img/pay/ico5.png"> -->
+                            <!-- <span class="icof">&#xe6cd;</span> -->
         </div>
         <scroll-view :style="{
             height:`calc(100%  - 74rpx)`,
@@ -32,6 +41,7 @@
                         <!-- <view class="imgbalance gold_coin" />
                         <view >余额</view> -->
                     </view>
+       
                 </view>
                 <!-- 交易规则部分 -->
                 <view class="filtrate-bar ">
@@ -50,12 +60,7 @@
                   
                 </view>
             </div>
-          <div class="exchangeRules tag flex_r flex_ac" @click="goto('/pages/common/rulepop', { val: 'MarketRules' })">
-                        <!-- <span>交易规则</span> -->
-                        <!-- <img
-                            src="https://img.shinemang.com/gachaStatic/static/img/pay/ico5.png"> -->
-                            <!-- <span class="icof">&#xe6cd;</span> -->
-                    </div>
+      
             <div class="transaction_list">
                 <div class="lists" v-if="orderList.length">
                     <div class="t_item" v-for="(item, a) in orderList" :key="a">
@@ -69,8 +74,8 @@
                                     <div class="c_time">{{ item.createTime }}</div>
                                 </div>
                             </div>
-                            <div class="tag " :class="[stateType.includes(item.state) ? 'core' : '']">{{ item.state }}
-                            </div>
+                            <!-- <div class="tag " :class="[stateType.includes(item.state) ? 'core' : '']">{{ item.state }}
+                            </div> -->
                         </div>
                         <div class="goods_remark flex_r flex_ac flex_jb" v-if="item.content">
                             <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico big">
@@ -80,11 +85,7 @@
                             <scroll-view scroll-x class="goods_li flex_r" :hrottle="false"
                                 @scrolltolower="onScrollX(item.id, a)" :lower-threshold="200">
                                 <template v-if="item.type == 'MarketOrderType_Ask'">
-                                    <!-- <view style="position: relative;height: 160rpx;"> -->
-                                       <img  v-if="item.wantItem" class="goods_img" :src="item.wantItem.coverThumb"
-                                        :class="[item.items.length ? 'bore' : 'bor9']"
-                                        @click="ondetail(item.wantItem.itemId)">
-
+                             
                                          <image
                                            :style="{
                                             position:'absolute',
@@ -94,13 +95,14 @@
                                             left:0,
 
                                            }"
-                                           v-if="item.wantItem"
+                                         
                                             src="https://img.shinemang.com/gachaStatic/market/qg.png"
                                             mode="scaleToFill"
                                         />
 
-                                       
-                                    <!-- </view> -->
+                                       <img  v-if="item.wantItem" class="goods_img" :src="item.wantItem.coverThumb"
+                                        :class="[item.items.length ? 'bore' : 'bor9']"
+                                        @click="ondetail(item.wantItem.itemId)">
                                   
                                     <img v-else src="https://img.shinemang.com/gachaStatic/static/img/transaction/random1.png"
                                         class=" goods_img bor5">
@@ -108,10 +110,7 @@
                                      <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
                                         v-if="item.items.length" class="ico3">
                                 </template>
-                                
-                                <img v-if="item.wantItem" :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" :class="['goods_img', 'wantGoods']"
-                                    @click="ondetail(cont.itemId)" :id="i + 1" />
-                                <img v-else :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" :class="['goods_img']"
+                                <img  :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" :class="['goods_img',item.type == 'MarketOrderType_Ask'?'imgAsk':'']"
                                     @click="ondetail(cont.itemId)" :id="i + 1" />
                             </scroll-view>
                             <div style="margin-left: 10rpx;color: #8D8D94;" class="goods_num flex_c flex_jc flex_ac" v-if="item.items.length > 1">
@@ -582,9 +581,9 @@ background-color: #F5F6F8;
 .navbarSubclass {
     position: absolute;
     left: 0;
-    top: 330rpx;
+    top: 370rpx;
     width: 100%;
-    height: calc(100vh - 400rpx);
+    height: calc(100vh - 370rpx);
     background: rgba(0, 0, 0, 0.5);
     z-index: 6;
 
@@ -734,13 +733,16 @@ background-color: #F5F6F8;
                 overflow-x: auto;
                 overflow-y: hidden;
                 white-space: nowrap;
-
+                font-size: 0;
+                
+  display: flex;
                 .goods_img {
-                   width: 160rpx;
-                    height: 160rpx;
+                   width: 144rpx;
+                    height: 144rpx;
                     background: linear-gradient( 0deg, #CCFFF4 0%, #FFFFFF 60%);
                     border-radius: 16rpx 16rpx 16rpx 16rpx;
                     border: 2rpx solid #A1FAE3;
+                    box-sizing: content-box;
                     // margin: 4rpx;
                     overflow: scroll;
                     margin-right: 20rpx;
@@ -769,6 +771,16 @@ border-radius: 16rpx 16rpx 16rpx 16rpx;
 border: 4rpx solid #EA4CA4;
                         // box-shadow: 0 0 4rpx 4rpx $motif-color;
                         // box-shadow: 0 0 4rpx 4rpx #ed780c;
+                    }
+
+                    &.imgAsk{
+                        background: #F5F6F8;
+                        border: 4rpx solid #F5F6F8;
+                        margin-right: 0;
+                     
+                        border-radius: unset;
+                        vertical-align: top;
+                        // vertical-align: middle;
                     }
                 }
 
@@ -891,6 +903,7 @@ border: 4rpx solid #EA4CA4;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 
     .balance {
         width: 136rpx;
@@ -926,6 +939,7 @@ border: 4rpx solid #EA4CA4;
     position: fixed;
     right: 0;
     top: 270rpx;
+    z-index: 55;
 }
 
 .filtrate-bar {
