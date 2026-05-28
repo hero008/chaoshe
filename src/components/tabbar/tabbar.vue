@@ -90,7 +90,7 @@ export default {
                     {
                         image: "/static/tabBar/tab/tab4-1.png",
                         selectImage: "/static/tabBar/tab/tab4-2.png",
-                        txt: "潮柜",
+                        txt: "星仓",
                         va: 2,
                         isVisible: true,
                     },

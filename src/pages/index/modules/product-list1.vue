@@ -198,7 +198,6 @@ export default {
     components: {},
     watch: {
         type() {
-            console.log('sljflksjflksd')
             this.pageda = {
                 page: 1,
                 page_size: 16,
@@ -236,9 +235,10 @@ export default {
                         sale_type:0,
                         ...this.pageda,
                     };
+                    // console.log(p,this.pageda.page,'ksfhskd');
              if (p >= this.pageda.page) {
                     post(url, da).then((res) => {
-                        if (this.pageda.page == 1) {
+                        if (p < this.pageda.page  || this.pageda.page == 1) {
                             this.evenList = [];
                             this.oddList = [];
                         }
@@ -255,6 +255,7 @@ export default {
                         //     odd = Arr;
                         //     even = [];
                         // }
+                        
                         this.evenList = [...this.evenList, ...res.gachas];
                         // this.evenList = [...this.evenList, ...even];
                         // this.oddList = [...this.oddList, ...odd];
@@ -620,7 +621,7 @@ image{
     }
     .label{
         font-size: 28rpx;
-        margin: 20rpx 0rpx;
+        margin: 16rpx 0rpx;
         display: flex;
         align-items: center;
         .discount{

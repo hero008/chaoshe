@@ -17,7 +17,7 @@
           <view class="niudan_con" :style="{ height: conHeight }">
             <view class="i_notice flex_r flex_ac">
                     <img src="https://img.shinemang.com/gachaStatic/niudanji/notice.png" class="m_ico" />
-                    <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#1A1A1A"
+                    <u-notice-bar text="平台发货不设门槛!星仓内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#1A1A1A"
                         bgColor="rgba(0,0,0,0)"></u-notice-bar>
                 </view>
             <view class="gashapon_machine_box">
@@ -187,11 +187,11 @@
                         </view>
                     </view>
                     <view class="msg" v-if="percentage > 95">{{ hint }}</view>
-                    <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
+                    <!-- <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
                         v-if="spList[WinnInx].levelIndex == 28">
                         <view class="share_img"></view>
                         <view class="share_text">炫耀一下</view>
-                    </view>
+                    </view> -->
                     <view class="share flex_r flex_ac" v-if="shareType">
                         <view @click="onShareType(2)">
                             <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
@@ -285,7 +285,7 @@ export default {
             isRun: true,
             isWelfare: false, //福利
             couponId: 0, //福利券
-            hint: "赏品已自动放入潮柜，可在潮柜查看~",
+            hint: "赏品已自动放入星仓，可在星仓查看~",
             coverImage: "",
             spList: [],
             showDiscounts: false,
@@ -666,7 +666,7 @@ export default {
         next() {
             this.isRun = false;
             this.WinnInx++;
-            this.hint = "赏品已自动放入潮柜，可在潮柜查看~";
+            this.hint = "赏品已自动放入星仓，可在星仓查看~";
             if (this.WinnInx >= this.spList.length) {
                 this.toDetails();
             }
@@ -730,7 +730,7 @@ export default {
             if (type == 2) {
                 uniShare(
                     {
-                        tit: `我在娱乐芒盒赏APP抽中了${itemName}`,
+                        tit: `我在娱乐芒星赏APP抽中了${itemName}`,
                         path: "pages/product/niudan",
                     },
                     { id: this.gachaId, index: this.boxIndex },
@@ -746,7 +746,7 @@ export default {
                     scene: "WXSceneTimeline",
                     type: 0,
                     href: "http://www.chaoshewang.com",
-                    title: `我在娱乐芒盒赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
+                    title: `我在娱乐芒星赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
                 };
                 compressImg(
                     coverThumb || itemCover,

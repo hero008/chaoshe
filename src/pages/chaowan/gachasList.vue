@@ -326,7 +326,7 @@ export default {
 
         &.active {
             margin-top: -10rpx;
-            color: #333; //芒盒
+            color: #333; //芒星赏
             width: 156rpx;
             height: 84rpx;
             line-height: 76rpx;

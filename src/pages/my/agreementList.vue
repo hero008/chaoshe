@@ -13,21 +13,21 @@
                     <div class="agr_tit">{{ i.name }}</div>
                     <div class="icof">&#xe72b;</div>
                 </div>
-                <div class="agr_item flex_r flex_ac flex_jb">
+                <!-- <div class="agr_item flex_r flex_ac flex_jb">
                     <div class="agr_tit">ICP备案</div>
                     <div class="a_text">
                         <div @click="copyToClipboard(text)" class="icof_txt">{{ text }}</div>
                         <a class="icof" href="https://beian.miit.gov.cn/" target="_blank">&#xe72b;</a>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="msg">
-                <!-- <div class="p">芒盒文化传播(深圳)有限公司版权所有</div> -->
+                <!-- <div class="p">芒星赏文化传播(深圳)有限公司版权所有</div> -->
             </div>
         </div>
         <view class="shake flex_r flex_jb flex_ac" v-else>
             <view>手机震动</view>
-            <u-switch v-model="vibration" :size="18" inactiveColor="#E2E1E3" @change="switchChange"></u-switch>
+            <u-switch v-model="vibration" :size="18" inactiveColor="#31E597" @change="switchChange"></u-switch>
         </view>
     </view>
 </template>
@@ -42,7 +42,7 @@ export default {
                 // #ifndef MP-WEIXIN
                 { name: "集市服务协议", key: { val: 'MarketAgreement' } },
                 // #endif
-                { name: "营业执照", key: { val: 'BusinessLicense' } },
+                // { name: "营业执照", key: { val: 'BusinessLicense' } },
                 { name: "概率公正", key: { val: 'SystemProbabilityDetection' } },
             ],
             // #ifndef MP-WEIXIN

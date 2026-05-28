@@ -113,7 +113,7 @@ export default {
             'LotteryTargetType_Gacha_Gashapon': 102,//扭蛋机
             'LotteryTargetType_Gacha_ChaoPlay': 103,//潮游赏
             'LotteryTargetType_Gacha_SurpriseBox': 104,//洞洞乐
-            'LotteryTargetType_Gacha_ChaoShe': 105,//芒盒赏
+            'LotteryTargetType_Gacha_ChaoShe': 105,//芒星赏
             'LotteryTargetType_Gacha_ShareBill': 106,//一网打尽
         },
     },

@@ -34,7 +34,8 @@
             </view>
             <!-- 微信小程序不需要 中间的--> 
             <view class="ad-entry flex_r flex_jb">
-                <view>
+                <homeInfiniteScroll @toGacha="toGacha" :list="gachaList"></homeInfiniteScroll>
+                <!-- <view>
                     <image
                         @click.stop = "ontab({index:1,type:'top'})"
                         style="width: 336rpx;
@@ -58,7 +59,7 @@
                         src="https://img.shinemang.com/gachaStatic/home/ddl.png"
                         mode="scaleToFill"
                       />
-                </view>
+                </view> -->
                 <!-- <view class="ads_l flex_c flex_jb">
                     <image class="item" @click="goto('/pages/chaowan/gachasList', { type: 1 })"
                         src="https://img.shinemang.com/gachaStatic/static/img/home/yifanshang.png" />
@@ -123,9 +124,20 @@ import { mapActions, mapState, mapMutations } from "vuex";
 import xModal from "@/components/modules/x-modal";
 import { service } from '@/utils/fun.js';
 import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
+import homeInfiniteScroll from "../../components/homeInfiniteScroll/homeInfiniteScroll.vue";
+import { goto } from "../../utils/fun.js";
 export default {
     data() {
         return {
+             gachaList:[{
+                url:'https://img.shinemang.com/gachaStatic/ndj.png',
+             },{
+                url:'https://img.shinemang.com/gachaStatic/wxs.png',
+             },{
+                url:'https://img.shinemang.com/gachaStatic/ddl.png',
+             },{
+                url:'https://img.shinemang.com/gachaStatic/jjzx.png',
+             }],
             lineColor: "linear-gradient( 90deg, #31E597 0%, #40E0EA 100%)",
             scrollTop:0,
             scrollTop1:0,
@@ -133,7 +145,8 @@ export default {
             activeStyl: {
                 color: "#1A1A1A",
                 fontWeight: "bold",
-                fontSize: "18px",
+                transform: "scale(1.05)",
+                // fontSize: "18px",
               
             },
               navbar: [
@@ -183,6 +196,7 @@ export default {
         productList1,
         xPay,
         xModal,
+        homeInfiniteScroll
     },
     mounted() {
         // #ifdef MP-WEIXIN
@@ -200,12 +214,31 @@ export default {
             },
         });
         // #endif
+
+        // if(this.userInfo && this.userInfo.id){
+            // if(window.mgtv){
+            //    const data = mgtv.getLaunchOptionsSync()
+            //    console.log(data.query)
+            // }
+          
+        // }
     },
     created() {
         this.getBannerList();
         this.showFirstActive();
     },
     methods: {
+        toGacha(index){
+           if(index == 0){
+            this.ontab({index:1,type:'top'})
+           }else if(index == 1){
+                this.ontab({index:2,type:'top'})
+           }else if(index == 2){
+                this.ontab({index:3,type:'top'})
+           }else{
+             goto('/page-a/luck/index')
+           }
+        },
         scroll(e){
             this.scrollTop1 = e.detail.scrollTop
         },
@@ -239,10 +272,10 @@ export default {
                 this.activeStyl = {
                     color: "#1A1A1A",
                     fontWeight: "bold",
-                    fontSize: "18px",
-                    // transform: "scale(1.05)",
+                    // fontSize: "18px",
+                    transform: "scale(1.05)",
                 };
-                this.lineWidth = "40rpx";
+                // this.lineWidth = "40rpx";
             // }
 
         
@@ -482,7 +515,7 @@ export default {
         ...mapState(["mail", 'userInfo']),
         boundW() {
        
-        //    this.asyncUpdateInfo();
+           this.asyncUpdateInfo();
           
             // if(this.userInfo.id){
                 this.asyncUpBalance();

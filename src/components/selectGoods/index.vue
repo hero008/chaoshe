@@ -432,7 +432,7 @@ export default {
                 this.addTotalPrice >= this.totalPrice + this.totalPrice * 0.1 &&
                 this.addTotalPrice !== 0
             ) {
-                uni.$u.toast("集赏材料价格已溢出");
+                uni.$u.toast("进阶材料价格已溢出");
                 return;
             }
             if (this.selectNums > 2000 && this.addTotalPrice) {
@@ -681,6 +681,7 @@ export default {
             height: 24rpx;
             line-height: 24rpx;
             color: #1A1A1A;
+            width: 400rpx;
         }
 
         .cor {

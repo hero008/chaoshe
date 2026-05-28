@@ -204,7 +204,7 @@
                 @click=" AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 ? (showDiscounts = true) : onpay(1, 2)">
                 <view>立即抽赏</view>
             </view>
-            <!-- <div class="inform">平台发货不设门槛！潮柜内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。</div> -->
+            <!-- <div class="inform">平台发货不设门槛！星仓内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。</div> -->
         </view>
        
         <!-- <movable-area class="movable-draw">

@@ -21,7 +21,7 @@
                         <img class="ico" src="https://img.chaoshewang.com/matt/static/img/chaowanshang/yfs_ts.png" />
                         <span>发货提示</span>
                     </view>
-                    <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12"
+                    <u-notice-bar text="平台发货不设门槛!星仓内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12"
                         color="#fff" bgColor="rgba(0,0,0,0)"></u-notice-bar>
                 </div>
                 <div class="particulars">
@@ -274,7 +274,7 @@
             </view>
         </u-popup>
         <gachaDetails ref="gachaDetails" />
-        <!-- 支付 芒盒赏5 -->
+        <!-- 支付 芒星赏5 -->
         <x-pay @success="onClickDraw" ref="xPay" mtype="5" :probabilityShow="probabilityShow" />
         <!-- 抽赏动效 -->
         <dynamic-effect ref="animation" />
@@ -655,7 +655,7 @@ export default {
         onShare() {
             uniShare(
                 {
-                    tit: "芒盒赏 : " + this.AReward.gacha.themeName,
+                    tit: "芒星赏 : " + this.AReward.gacha.themeName,
                     path: "pages/product/chaosheshang",
                 },
                 { id: this.gachaId, index: this.boxIndex },

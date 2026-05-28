@@ -6,9 +6,9 @@
         </view>
         <view v-show="!dynamicEffectShow" class="card_list_popup flex_c flex_ac flex_jc"
             :style="{ 'pointer-events': shareType ? 'none' : 'auto' }">
-            <view class="title flex_r  flex_ac">
+            <view class="title flex_r  flex_ac " style="justify-content: flex-end;">
                 <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/duoyou/titile.png" class="title_img" /> -->
-                <view @click="close" class="closebtn"></view>
+                <view @click="close" class="closebtn" style="margin-right: 40rpx;"></view>
             </view>
             <view class="card_list  " @touchstart="handleTouchStart" @touchmove="handleTouchMove"
                 @touchend="handleTouchEnd">
@@ -255,7 +255,7 @@ export default {
             if (type == 2) {
                 uniShare(
                     {
-                        tit: `我在娱乐芒盒赏APP抽中了${tit}`,
+                        tit: `我在娱乐芒星赏APP抽中了${tit}`,
                         path: url,
                     },
                     { id, index },
@@ -271,7 +271,7 @@ export default {
                     scene: "WXSceneTimeline",
                     type: 0,
                     href: "http://www.chaoshewang.com",
-                    title: `我在娱乐芒盒赏APP抽中了“${tit}”赶紧来吸吸欧气吧！！！`,
+                    title: `我在娱乐芒星赏APP抽中了“${tit}”赶紧来吸吸欧气吧！！！`,
                 };
                 compressImg(
                     k.coverImage,

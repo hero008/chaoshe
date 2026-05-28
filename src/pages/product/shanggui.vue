@@ -4,7 +4,7 @@
         <view class="top_tabs">
             <!-- <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs> -->
             <!-- <view class="top_btn" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">
-                <span>潮柜规则</span>
+                <span>星仓规则</span>
                 <img class="ico" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_3.png" />
             </view> -->
         </view>

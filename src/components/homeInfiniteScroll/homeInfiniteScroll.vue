@@ -3,16 +3,16 @@
     <view class="scroll-wrapper">
       <view 
         class="scroll-content" 
-        :class="{ 'animate-scroll': items.length >= 4 }"
+        :class="{ 'animate-scroll': true }"
         :style="animationStyle"
       >
         <!-- 原始内容 -->
-        <view v-for="(item, index) in items" :key="'o-' + index" class="scroll-item">
-            <img :src="item.itemCover" alt="">
+        <view @click="toGacha(index)" v-for="(item, index) in items" :key="'o-' + index" class="scroll-item">
+            <img :src="item.url" alt="">
         </view>
         <!-- 复制一份实现无缝 -->
-        <view v-if="items.length >= 4" v-for="(item, index) in items" :key="'c-' + index" class="scroll-item">
-           <img :src="item.itemCover" alt="">
+        <view @click="toGacha(index)" v-for="(item, index) in items" :key="'c-' + index" class="scroll-item">
+           <img :src="item.url" alt="">
         </view>
       </view>
     </view>
@@ -26,7 +26,7 @@ export default {
     // 固定速度（px/秒），默认80
     speed: {
       type: Number,
-      default: 80
+      default: 40
     },
     list: {
       type: Array,
@@ -71,12 +71,17 @@ export default {
       return this.groupWidth / this.speed;
     },
     animationStyle() {
-      if (this.items.length < 4 || this.duration === 0) {
-        return {};
-      }
+    //   if (this.items.length < 4 || this.duration === 0) {
+    //     return {};
+    //   }
       return {
         animationDuration: this.duration + 's'
       };
+    }
+  },
+  methods:{
+    toGacha(index){
+        this.$emit('toGacha',index)
     }
   }
 };
@@ -112,12 +117,12 @@ export default {
 
 .scroll-item {
   flex-shrink: 0;
-width: 88rpx;
-height: 88rpx;
-background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
-border-radius: 16rpx 16rpx 16rpx 16rpx;
-border: 2rpx solid #A1FAE3;
-  margin-right: 16rpx;
+width: 208rpx;
+height: 280rpx;
+// background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+// border-radius: 16rpx 16rpx 16rpx 16rpx;
+// border: 2rpx solid #A1FAE3;
+//   margin-right: 16rpx;
 
   display: flex;
   flex-direction: column;
@@ -126,9 +131,9 @@ border: 2rpx solid #A1FAE3;
 
   color: white;
   img{
-    width: 88rpx;
-    height: 88rpx;
-    border-radius: 16rpx;
+    width: 208rpx;
+    height: 280rpx;
+    // border-radius: 16rpx;
   }
 }
 

@@ -153,7 +153,7 @@
             </div>
             <div class="i_notice flex_r flex_ac">
                 <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico6.png" class="m_ico" />
-                <u-notice-bar text="平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#000"
+                <u-notice-bar text="平台发货不设门槛!星仓内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12" color="#000"
                     bgColor="rgba(0,0,0,0)"></u-notice-bar>
             </div>
 

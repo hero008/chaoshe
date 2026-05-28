@@ -4,7 +4,7 @@
             <div class="details">
                 <div class="top_tit flex_r flex_ac flex_jb">
                     <div class="l_t">恭喜您抽中</div>
-                    <div v-show="!isdemo">赏品已自动放入潮柜</div>
+                    <div v-show="!isdemo">赏品已自动放入星仓</div>
                 </div>
                 <div class="list">
                     <div class="item flex_c flex_ac flex_jc" v-for="(i, s) in awards" :key="s"

@@ -1,13 +1,14 @@
 <template>
     <view class="luck">
-        <u-navbar title="集赏行动" bgColor="transparent" :titleStyle="titleStyle" @leftClick="gateBack" placeholder>
+        <!-- <u-navbar title="集赏行动" bgColor="transparent" :titleStyle="titleStyle" @leftClick="gateBack" placeholder>
             <view class="fenxiang" slot="right" @click="onShare" :style="[
                 SystemInfo.uniPlatform == 'app' ? '' : { display: 'none' },
             ]" />
-        </u-navbar>
+        </u-navbar> -->
+        <x-navbar tit="进阶行动" />
         <div class="con_box" :style="{ height: conHeight }">
             <div class="time flex_r flex_ac flex_jc">
-                <view class="timeTiele">集赏时间：</view>
+                <view class="timeTiele">进阶时间：</view>
                 <template v-if="residuetime > 0">
                     <u-count-down :time="residuetime" @change="rtimeChange">
                         <view class="timetxt">
@@ -58,17 +59,18 @@
                         <view class="progress-bar"
                             :style="{ width: calculateProgress({ current: currentPercent, target: totalPrice }) + '%' }">
                         </view>
-                        <view class="number">{{ calculateProgress({
-                            current: currentPercent, target: totalPrice
-                        }).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1')}}%</view>
+                        <view class="progress-text">点选材料，进度满，可进阶 </view>
                     </view>
                     <!-- <view class="progress-view flex_js">
                         <view class="progress" :style="{ width: setProStyle + 'rpx' }"></view>
                           <view class="progress" :style="{ width: calculateProgress({current: totalPrice,target:currentPercent}) + '%' }"></view>
                         <view class="progress-num">{{ currentPercent / totalPrice * 100 }}/100</view>
                     </view> -->
-                    <view class="progress-text">点选材料，进度满，可集成 </view>
+                   
                 </view>
+                 <view class="number">{{ calculateProgress({
+                            current: currentPercent, target: totalPrice
+                        }).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1')}}%</view>
 
             </view>
             <view class="placement-area">
@@ -89,23 +91,23 @@
                     </swiper>
                 </view>
             </view>
-            <view class="button" :style="[
-                insufficient
-                    ? ''
-                    : {
-                        backgroundImage:
-                            'url(https://img.shinemang.com/gachaStatic/static/img/luck/anclbz.png)',
-                        height: '92rpx',
-                    },
-            ]" @click="goGather"></view>
+            <view v-if="insufficient" class="button btn1" :style="[
+              
+            ]" @click="goGather">确认进阶</view>
+        <view v-else class="button" :style="[
+              
+            ]" @click="goGather">材料不足，去抽赏 <img src="https://img.shinemang.com/gachaStatic/jishang/next.png" alt=""></view>
+      
             <view class="con_box_bottom"></view>
         </div>
         <u-overlay :show="overflowBox == 1">
             <view class="tishi">
-                <view class="title">集赏材料价格已溢出，是否继续集成？</view>
+                <view class="title">进阶材料价格已溢出，是否继续进阶？</view>
                 <view class="tishi-btn">
-                    <x-btn txt="取消" @click="overflowBtn(false)" />
-                    <x-btn txt="确认" @click="overflowBtn(true)" cor="1" />
+                    <view class="btn" @click="overflowBtn(false)">取消</view>
+                    <view class="btn sure"  @click="overflowBtn(true)">确认</view>
+                    <!-- <x-btn style="background-color: #F5F6F8;" txt=""  />
+                    <x-btn txt="" cor="1" /> -->
                 </view>
             </view>
         </u-overlay>
@@ -114,10 +116,10 @@
             <view class="overlay-kp" v-if="Object.keys(conversion).length !== 0">
                 <image class="wp" :src="conversion.thumb" />
                 <view class="kp-name">{{ conversion.name }} </view>
-                <view class="kp-btn" @click="onEmpty"></view>
+                <view class="kp-btn" @click="onEmpty">确定</view>
             </view>
             <div class="go" @click="goChaoGui">
-                <view>赏品已放入潮柜</view>
+                <view>赏品已放入星仓</view>
                 <view class="go-chaoGui"></view>
             </div>
         </u-overlay>
@@ -135,6 +137,7 @@ import { mapState } from "vuex";
 import selectGoods from "@/components/selectGoods/index";
 import xBtn from "@/components/modules/x-btn";
 import { uniShare, calculateProgress } from "@/utils/fun.js";
+import xNavbar from "@/components/modules/x-navbar.vue";
 export default {
     data() {
         return {
@@ -164,6 +167,7 @@ export default {
     components: {
         selectGoods,
         xBtn,
+        xNavbar,
     },
     watch: {},
     computed: {
@@ -191,7 +195,7 @@ export default {
         onShare() {
             uniShare(
                 {
-                    tit: "集赏行动",
+                    tit: "进阶行动",
                     path: "page-a/luck/playingMethod",
                 },
                 { id: "", index: "" },
@@ -306,7 +310,7 @@ export default {
                         this.swiperList = [];
                         // this.showList = 10;
                     } else {
-                        uni.$u.toast("集赏失败,请稍后重试！");
+                        uni.$u.toast("进阶失败,请稍后重试！");
                     }
                 });
             } else this.overflowBox = 0;
@@ -320,13 +324,14 @@ export default {
                     this.overflowBox = 1;
                 } else this.overflowBtn(true);
             } else {
+                 uni.setStorageSync("currentChange", 0);
                 uni.reLaunch({
                     url: "/pages/index/index",
                 });
             }
         },
         goChaoGui() {
-            uni.setStorageSync("currentChange", 3);
+            uni.setStorageSync("currentChange", 2);
             uni.reLaunch({
                 url: "/pages/index/index",
             });
@@ -348,9 +353,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.con_box{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  padding-bottom: 60rpx;
+}
 .con_box_bottom {
     width: 100%;
-    height: 96rpx;
+    height: 80rpx;
+    display: none;
 }
 
 .tishi {
@@ -375,6 +389,23 @@ export default {
         width: 510rpx;
         margin: 0 auto;
         justify-content: space-between;
+        .btn{
+            width: 230rpx;
+            height: 70rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 35rpx;
+            line-height: 70rpx;
+            color: #1A1A1A;
+            font-size: 32rpx;
+            font-weight: bold;
+            background: #F5F6F8;
+            
+            &.sure{
+                background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            }
+        }
     }
 }
 
@@ -399,26 +430,34 @@ export default {
     width: 100%;
     height: 100vh;
     overflow-y: auto;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/bj3x.png");
-    background-size: 100% auto;
-    background-color: rgba(222, 215, 248, 1);
+    // background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/bj3x.png");
+    // background-size: 100% auto;
+    background-color:#DCF9F9;
     font-family: PingFang SC, PingFang SC;
+       &::after {
+        content: "";
+        width: 100vw;
+        height: 584rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('https://img.shinemang.com/gachaStatic/jishang/bg1.png');
+        background-size: 100% 100%;
+      }
 }
 
 .time {
-    width: 478rpx;
-    height: 40rpx;
+    width: 510rpx;
+    height: 48rpx;
     margin: 0 auto;
-    line-height: 40rpx;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 40rpx;
-    border-image: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.5),
-            rgba(255, 255, 255, 0.7)) 2 2;
-
+    line-height: 48rpx;
+    background: rgba(0, 0, 0, 0.2);
+border-radius: 8rpx 8rpx 8rpx 8rpx;
+border: 2rpx solid #FFFFFF;
     font-weight: bold;
     font-size: 24rpx;
-    color: #886be8;
+    color: #FFFFFF;
     text-align: center;
 }
 
@@ -463,9 +502,9 @@ export default {
         width: 320rpx;
         height: 460rpx;
         margin: 0 auto;
-        padding-top: 278rpx;
+        padding-top: 256rpx;
         background: #ffffff;
-        box-shadow: 0rpx 4rpx 8rpx 2rpx rgba(136, 106, 232, 0.25);
+       box-shadow: 0rpx 4rpx 8rpx 2rpx rgba(63,224,228,0.2);
         border-radius: 24rpx;
         position: absolute;
         overflow: visible !important;
@@ -487,9 +526,9 @@ export default {
             height: 64rpx;
             margin: 0 auto;
 
-            font-weight: 500;
+            // font-weight: 500;
             font-size: 24rpx;
-            color: #383228;
+            color: #1A1A1A;
             display: -webkit-box;
             overflow: hidden;
             -webkit-line-clamp: 2;
@@ -502,7 +541,7 @@ export default {
             margin-top: 8rpx;
             font-weight: bold;
             font-size: 28rpx;
-            color: #383228;
+            color: #1A1A1A;
             line-height: 36rpx;
             text-align: center;
             margin-bottom: 16rpx;
@@ -514,11 +553,11 @@ export default {
             line-height: 40rpx;
 
             margin: 0 auto;
-            background: rgba(255, 84, 85, 0.1);
+            background: rgba(255, 147, 43, 0.1);
             border-radius: 20rpx;
             font-weight: 500;
             font-size: 24rpx;
-            color: #ff5455;
+            color: #FF932B;
             text-align: center;
         }
     }
@@ -528,9 +567,9 @@ export default {
     position: absolute;
     left: 64rpx;
     top: 168rpx;
-    width: 120rpx !important;
-    height: 140rpx !important;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jtleft.png") !important;
+    width: 112rpx !important;
+    height: 112rpx !important;
+    background-image: url("https://img.shinemang.com/gachaStatic/jishang/left.png") !important;
     background-size: 100% auto;
 }
 
@@ -538,9 +577,9 @@ export default {
     position: absolute;
     right: 64rpx;
     top: 168rpx;
-    width: 120rpx !important;
-    height: 140rpx !important;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jtright.png") !important;
+    width: 112rpx !important;
+    height: 112rpx !important;
+    background-image: url("https://img.shinemang.com/gachaStatic/jishang/right.png") !important;
     background-size: 100% auto;
 }
 
@@ -549,43 +588,50 @@ export default {
     height: 32rpx;
     display: flex;
     margin: 56rpx auto;
+    align-items: center;
+    line-height: 32rpx;
 
     .schedule-title {
-        width: 120rpx;
+        width: 104rpx;
         height: 28rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jcjd.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/jishang/jcProgress.png");
         background-size: 100% auto;
     }
-
+  .number {
+            margin-left: 8rpx;
+            font-size: 24rpx;
+            color: #01C2D0;
+                // position: absolute;
+                // z-index: 22;
+                // left: 50%;
+                // top: 50%;
+                // transform: translate(-50%, -50%);
+            }
     .jd {
         position: relative;
         font-weight: 500;
         font-size: 20rpx;
         color: #383228;
-
+        margin-left: 16rpx;
+        
         .progress-container {
-            width: 502rpx;
+            width: 424rpx;
             height: 32rpx;
             border-radius: 40rpx;
-            background: #f3e8ff;
+            background: #CEE9E6;
             text-align: center;
             overflow: hidden;
             position: relative;
             border: 2rpx solid #ffffff;
 
-            .number {
-                position: absolute;
-                z-index: 22;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
+         
 
             .progress-bar {
                 height: 100%;
-                background: linear-gradient(90deg, #8769e7 0%, #b462da 100%);
+                background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
                 border-radius: 10rpx;
             }
+            margin-right: 8rpx;
         }
 
         .progress-view {
@@ -618,10 +664,16 @@ export default {
         }
 
         .progress-text {
-            width: 502rpx;
-            top: 32rpx;
+           width: 100%;
+            top: 50%;
+            left: 50%;
+            height: 100%;
+            transform: translate(-50%,-50%);
             position: absolute;
             text-align: center;
+            font-size: 20rpx;
+            color: #1A1A1A;
+            line-height:28rpx;
         }
 
     }
@@ -642,30 +694,30 @@ export default {
 
     .placement-img {
         position: absolute;
-        width: 282rpx;
+        width: 266rpx;
         height: 76rpx;
         left: 0;
         right: 0;
         margin: 0 auto;
         top: -16rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/cltfq.png");
-        background-size: 100% auto;
+        background-image: url("https://img.shinemang.com/gachaStatic/jishang/cltouf.png");
+        background-size: 100% 100%;
     }
 
     .add {
         width: 400rpx;
         height: 160rpx;
-        background: #f3f2f4;
-        border-radius: 12rpx;
-        border: 2rpx dashed #aca9bc;
-        margin: 0 auto;
+        background: #F5F6F8;
+        border-radius: 16rpx 16rpx 16rpx 16rpx;
+        border: 2rpx solid #E5E5E5;
+        margin: auto;
 
         .add-btn {
             width: 48rpx;
             height: 48rpx;
             margin: auto;
             margin-top: 44rpx;
-            background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/tjcl.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/jishang/add.png");
             background-size: 100% auto;
         }
 
@@ -673,6 +725,8 @@ export default {
             width: 100%;
             text-align: center;
             margin-top: 16rpx;
+            font-size: 20rpx;
+            color: #B3B3B3;
         }
     }
 
@@ -690,9 +744,9 @@ export default {
             .placement-item {
                 width: 140rpx !important;
                 height: 140rpx;
-                background: #f3f2f4;
+                background: #F5F6F8;
                 border-radius: 16rpx;
-                border: 2rpx solid #d8d6e2;
+                border: 2rpx solid #E5E5E5;
                 padding: 4rpx;
                 position: relative;
 
@@ -723,12 +777,30 @@ export default {
 }
 
 .button {
-    width: 364rpx;
-    height: 100rpx;
-    margin: 0 auto;
+   width: 360rpx;
+height: 80rpx;
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+border: 2rpx solid #1A1A1A;;
+margin: auto;
     margin-top: 48rpx;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jcbtn.png");
-    background-size: 100% auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 80rpx;
+    font-size: 32rpx;
+    color: #1A1A1A;
+    font-weight: bold;
+    &.btn1{
+        background: #1A1A1A;
+        color: #fff;
+    }
+    img{
+        width: 32rpx;
+        height: 32rpx;
+        margin-left: 8rpx;
+    }
+    // background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/jcbtn.png");
+    // background-size: 100% auto;
 }
 
 .overlay-title {
@@ -736,7 +808,7 @@ export default {
     height: 94rpx;
     margin: 0 auto;
     margin-top: 300rpx;
-    background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/cgan.png");
+    // background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/cgan.png");
     background-size: 100% auto;
 }
 
@@ -780,9 +852,19 @@ export default {
 
     .kp-btn {
         width: 258rpx;
-        height: 92rpx;
+        height: 80rpx;
+        border-radius: 40rpx;
         margin: 0 auto;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/querenanniu.png");
+        display: flex;
+        color: #1A1A1A;
+        align-items: center;
+        justify-content: center;
+        line-height: 80rpx;
+        font-size: 32rpx;
+        font-weight: bold;
+
+        background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+        // background-image: url("https://img.shinemang.com/gachaStatic/static/img/luck/querenanniu.png");
         background-size: 100% auto;
     }
 }

@@ -164,11 +164,11 @@ export default {
                 //     path: "/page-activity/conversion/index",
                 //     title: "福利兑换",
                 // },
-                //   {
-                //     name: "https://img.shinemang.com/gachaStatic/my/centerIcon.png",
-                //     path: '/page-a/luck/index',
-                //     title: "集赏中心",
-                // },
+                  {
+                    name: "https://img.shinemang.com/gachaStatic/my/centerIcon.png",
+                    path: '/page-a/luck/index',
+                    title: "进阶中心",
+                },
                 // {
                 //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico4.png",
                 //     path: "/pages/index/index",

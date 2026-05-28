@@ -64,7 +64,7 @@
                 </view>
                 <!-- #endif -->
                 <div class="pays" v-if="pays.length">
-                    <!--    1一番赏、 2扭蛋 、3潮玩、 4洞乐、 5芒盒、 6集市参与交易 发布 、11是潮币、 12发货转盘  13是一网打尽 -->
+                    <!--    1一番赏、 2扭蛋 、3潮玩、 4洞乐、 5芒星赏、 6集市参与交易 发布 、11是潮币、 12发货转盘  13是一网打尽 -->
                     <div class="pay_item flex_r flex_jb flex_ac" @click="onPaytype(i)" v-for="(i, s) in pays" :key="s"
                         v-show="i.show">
                         <div class="pay_name flex_r flex_ac">
@@ -140,7 +140,7 @@ import { goto } from "../../utils/fun";
 //     GachaType_Gashapon = 2;     // 彩蛋机
 //     GachaType_ChaoPlay = 3;     // 潮玩赏
 //     GachaType_SurpriseBox = 4;  // 洞洞乐
-//     GachaType_ChaoShe = 5;      // 芒盒赏
+//     GachaType_ChaoShe = 5;      // 芒星赏
 //     GachaType_ShareBill = 6;    // 一网打尽
 
 
@@ -157,11 +157,11 @@ export default {
             default: "选择支付方式",
         },
         mtype: {
-            type: String, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒盒赏  //游戏方式
+            type: String, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒星赏  //游戏方式
             default: "",
         },
         probabilityShow: {
-            type: Array, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒盒赏
+            type: Array, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒星赏
             default: [],
         },
     },
@@ -254,7 +254,7 @@ export default {
                 // #endif
             ],
             // #ifndef MP-WEIXIN
-            paytypeList: [4],
+            paytypeList: [1],
             paytype: 0, // 0潮币 1支付宝 2微信 3微信小程序
             // #endif
             // // #ifdef MP-WEIXIN
@@ -372,7 +372,7 @@ export default {
                 this.paytypeList = [1]; //集市不让潮币支付,默认支付宝
             } else {
                 // #ifndef MP-WEIXIN
-                this.paytypeList = [4];
+                this.paytypeList = [1];
                 // #endif
             }
         },

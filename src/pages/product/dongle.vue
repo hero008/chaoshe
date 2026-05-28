@@ -14,12 +14,12 @@
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
-        <!-- <view class="leftBox ico-share">
+       <!-- <view  @click="onShare" class="leftBox ico-share">
               <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
-        </view> -->
+        </view>  -->
         <!-- <div class="hint btns">
             <div class="hint_box flex_r flex_jc flex_ac">
                 <div class="hint_item">
@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="msg" v-if="percentage > 95">
-                        赏品已自动放入潮柜，可在潮柜查看~
+                        赏品已自动放入星仓，可在星仓查看~
                     </div>
                     <!-- <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
                         v-if="spList[WinnInx].levelIndex == 28">
@@ -288,6 +288,7 @@
             :message="AReward.openMessage" />
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
+        <share v-if="shareTo" @closeSharePoupon="shareTo = false" @shareTo="shareToWechat"></share>
     </view>
 </template>
 <script>
@@ -302,9 +303,11 @@ import discounts from "@/components/modules/x-discounts.vue";
 import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
+import share from "./modules/share.vue";
 export default {
     data() {
         return {
+            shareTo:false,
             selectGrid: [], // 选中的格子
             totalAwards: 0, // 洞洞乐总数
             leftAwards: 0, // 洞洞乐剩余数
@@ -328,7 +331,7 @@ export default {
             isRun: true,
             RandomS: [1, 5, 10, 50],
             couponId: 0,
-            inotice: "平台发货不设门槛!潮柜内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。",
+            inotice: "平台发货不设门槛!星仓内提交发货申请后7个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。",
             coverImage: "",
             spList: [],
             AReward: {
@@ -382,7 +385,8 @@ export default {
         cSvga,
         discounts,
         xPrize,
-        scheduleTips
+        scheduleTips,
+        share
     },
     computed: {
         ...mapState(["userInfo", "selectTicket"]),
@@ -680,16 +684,34 @@ export default {
             let type = this.gachainfo.leftAwards !== 0 ? true : false
             this.$refs.drawLog.open(this.gachaId, this.boxIndex, -1, type);
         },
+        shareToWechat(type){
+          console.log(type);
+          this.shareTo = false;
+          if(!window.mgtv)return
+              mgtv.shareTo({
+                title:  "疯狂洞洞乐 : " + this.gachainfo.themeName,
+                url: `https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent('name=ddl&id='+this.gachaId)}`,
+                shareType:type==1? "wechat":'moments',
+                success: () => {
+                    mgtv.showToast({
+                        title: '分享成功!'
+                    })
+                }
+            })
+        },
         // 分享
         onShare() {
-            uniShare(
-                {
-                    tit: "疯狂洞洞乐 : " + this.gachainfo.themeName,
-                    path: "pages/product/dongle",
-                },
-                { id: this.gachaId, index: this.boxIndex },
-                this.coverImage
-            );
+            this.shareTo = true
+            // this.shareType = 1
+            // `https://app.mgtv.com/mgmp-share/?appid=xxx&host=mgtv&path=${encodeURIComponent(“key1=value1&key2=value2”)}`
+            // uniShare(
+            //     {
+            //         tit: "疯狂洞洞乐 : " + this.gachainfo.themeName,
+            //         path: "pages/product/dongle",
+            //     },
+            //     { id: this.gachaId, index: this.boxIndex },
+            //     this.coverImage
+            // );
         },
         // 刷新
         getRefresh() { },
@@ -766,7 +788,7 @@ export default {
             if (type == 2) {
                 uniShare(
                     {
-                        tit: `我在娱乐芒盒赏APP抽中了${itemName}`,
+                        tit: `我在娱乐芒星赏APP抽中了${itemName}`,
                         path: "pages/product/dongle",
                     },
                     { id: this.gachaId, index: this.boxIndex },
@@ -782,7 +804,7 @@ export default {
                     scene: "WXSceneTimeline",
                     type: 0,
                     href: "http://www.chaoshewang.com",
-                    title: `我在娱乐芒盒赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
+                    title: `我在娱乐芒星赏APP抽中了“${itemName}”赶紧来吸吸欧气吧！！！`,
                 };
                 compressImg(
                     coverThumb || itemCover,

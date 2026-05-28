@@ -164,11 +164,14 @@
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
                                     <img v-if="selectRewardIds.includes(item.id)"
-                                        src="https://img.shinemang.com/gachaStatic/static/img/shanggui/xuanzhong.png"  class="box_ico" />
-                                    <view class="box_ico frame" v-else></view>
+                                       class="box_ico"  src="https://img.shinemang.com/gachaStatic/select.png" />
+                                      <img v-else src="https://img.shinemang.com/gachaStatic/notSelect.png"
+                                    class="box_ico" lazy-load="true" /> 
                                     <!-- <img v-else src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico" /> -->
-                                    <view class="item_txt1">{{ item.item.saleType == 1 ? "现货": "预售" }}</view>
+                                       <view :style="{
+                                        backgroundImage: `url(${item.item.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
+                                    }" class="item_txt1"></view>
                                 </view>
                                 <view class="item_name ellipsis">{{ item.item.name}}</view>
                             </view>
@@ -181,7 +184,8 @@
                             <input v-model="keymoney" maxlength="5" max="50000" type="number" placeholder="请输入金额"
                                 @input="onKeymoney" class="input" />
                         </div>
-                        <x-btn txt="确认" @click="confirmSure" cor="1" />
+                        <view @click="confirmSure"  class="confirmSure">确认</view>
+                        <!-- <x-btn txt="确认" cor="1" /> -->
                     </view>
                 </view>
             </div>
@@ -206,7 +210,9 @@
                                         src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
                                         class="box_ico"
                                     /> -->
-                                    <view class="item_txt1">{{item.item.saleType == 1? "现货": "预售"}}</view>
+                                     <view :style="{
+                                        backgroundImage: `url(${item.item.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
+                                    }" class="item_txt1"></view>
                                 </view>
                             </div>
                         </div>
@@ -217,7 +223,8 @@
                     </div>
                 </div>
                 <div class="popup_btn flex_r flex_jc">
-                    <x-btn txt="确认" @click="confirmSelect" cor="1" />
+                    <view  @click="confirmSelect"  class="confirmSure">确认 </view>
+                 
                 </div>
             </div>
         </u-popup>
@@ -609,6 +616,19 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.confirmSure{
+    width: 328rpx;
+height: 80rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 80rpx;
+color: #1A1A1A;
+font-weight: bold;
+font-size: 32rpx;
+}
 .marketDetails {
     width: 100vw;
     height: 100vh;
@@ -629,7 +649,7 @@ export default {
 }
 
 .frame {
-    background: url("@/static/homePage/frame.png");
+    background: url("https://img.shinemang.com/gachaStatic/select.png");
     background-size: 100% 100%;
 }
 
@@ -858,50 +878,64 @@ border: 4rpx solid #EA4CA4;
 }
 
 .tabs_two {
-    margin-top: 40rpx;
-    width: 318rpx;
-    height: 76rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/Rectangle.png");
-    background-size: 100% 100%;
+      color: #fff;
+    width: 440rpx;
+    height: 64rpx;
     font-size: 28rpx;
-    color: #ffffff;
-    line-height: 28rpx;
-    position: relative;
+    // line-height: 28rpx;
+    margin: auto;
+    background:#F5F6F8 ;
+    border-radius: 32rpx;
+    margin-top: 36rpx;
+    margin-bottom: 36rpx;
 
     .tab_item {
-        width: 182rpx;
-        line-height: 60rpx;
-        text-align: center;
-        position: absolute;
+        // width: 182rpx;
+      width: 144rpx;
+        line-height: 64rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1A1A1A;
+        font-weight: bold;
+        // text-align: center;
+        // position: absolute;
 
-        &:first-child {
-            left: -16rpx;
-        }
+        // &:first-child {
+        //     left: -16rpx;
+        // }
 
-        &:last-child {
-            right: -6rpx;
-        }
+        // &:nth-child(2) {
+        //     right: 120rpx;
+        // }
+
+        // &:last-child {
+        //     right: -6rpx;
+        // }
 
         &.active {
-            top: -8rpx;
-            color: #333;
-            height: 84rpx;
-            line-height: 70rpx;
-            font-weight: bold;
-            background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
-            background-size: 100% 100%;
-            font-size: 30rpx;
+            color: #000;
+            background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            border-radius: 32rpx;
+            // top: -8rpx;
+            // color: #333;
+            // height: 84rpx;
+            // line-height: 70rpx;
+            // font-weight: bold;
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/transaction/tab_bg1.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
         }
     }
 }
 
 .p_lists {
-    height: calc(100vh - 230rpx);
+    height: calc(100% - 130rpx);
     position: relative;
     top: -16rpx;
     left: 0;
     border-radius: 0 50rpx 0 0;
-    background: #f4f4f4;
+    // background: #f4f4f4;
     padding: 30rpx 36rpx;
     overflow-y: auto;
 
@@ -943,11 +977,15 @@ border: 4rpx solid #EA4CA4;
                 position: relative;
 
                 .item_txt1 {
-                    color: #ffffff;
-                    font-size: 20rpx;
-                    position: absolute;
-                    right: 6rpx;
-                    top: 0rpx;
+                               color: #ffffff;
+            font-size: 20rpx;
+            position: absolute;
+            right: 0rpx;
+            top: 0rpx;
+            z-index: 7;
+            width: 60rpx;
+            height: 32rpx;
+            background-size: 100% 100%;
                 }
             }
 
@@ -964,8 +1002,12 @@ border: 4rpx solid #EA4CA4;
             }
 
             .box_ico {
-                width: 152rpx;
-                height: 152rpx;
+               position: absolute;
+            width: 40rpx;
+            height: 40rpx;
+            top: 0;
+            left: 0;
+            z-index: 3;
             }
 
             .item_txt {
@@ -982,18 +1024,19 @@ border: 4rpx solid #EA4CA4;
 .select_product_popup {
     height: 1200rpx;
     position: relative;
+    background-color: #fff;
 
     .tabs_two {
-        background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
-        background-size: 100% 100%;
-        width: 372rpx;
-        margin-top: 0;
+        // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
+        // background-size: 100% 100%;
+        // width: 372rpx;
+        // margin-top: 0;
 
         .tab_item {
-            width: 156rpx;
+            // width: 156rpx;
 
             &:nth-child(2) {
-                right: 120rpx;
+                // right: 120rpx;
             }
         }
     }
@@ -1001,13 +1044,13 @@ border: 4rpx solid #EA4CA4;
     .close_btn {
         position: absolute;
         right: 36rpx;
-        top: 0;
+        top: -80rpx;
         width: 56rpx;
         height: 56rpx;
     }
 
     .p_lists {
-        height: calc(100% - 60rpx);
+        // height: calc(100% - 60rpx);
 
         .lists {
             padding: 0;
@@ -1051,6 +1094,7 @@ border: 4rpx solid #EA4CA4;
 
     .money_input {
         position: relative;
+        padding-right: 30rpx;
 
         .m_ico {
             width: 52rpx;
@@ -1063,8 +1107,8 @@ border: 4rpx solid #EA4CA4;
         .input {
             border: none;
             height: 88rpx;
-            width: 220rpx;
-            background-color: #fff;
+            width: 270rpx;
+            background-color: #F5F6F8;
             border-radius: 88rpx;
             font-size: 24rpx;
             padding-left: 100rpx;
@@ -1141,20 +1185,29 @@ border: 4rpx solid #EA4CA4;
                     width: 152rpx;
                     height: 152rpx;
                     border-radius: 16rpx;
+                      background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
                     background-size: 100% 100%;
                     position: relative;
 
                     .box_ico {
-                        height: 152rpx;
-                        width: 152rpx;
+                           position: absolute;
+            width: 40rpx;
+            height: 40rpx;
+            top: 0;
+            left: 0;
+            z-index: 3;
                     }
 
                     .item_txt1 {
                         color: #ffffff;
-                        font-size: 20rpx;
-                        position: absolute;
-                        right: 6rpx;
-                        top: 0rpx;
+            font-size: 20rpx;
+            position: absolute;
+            right: 0rpx;
+            top: 0rpx;
+            z-index: 7;
+            width: 60rpx;
+            height: 32rpx;
+            background-size: 100% 100%;
                     }
                 }
             }

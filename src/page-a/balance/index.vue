@@ -11,11 +11,11 @@
                     <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico5.png" class="m_ico" />
                     <div class="m_num">{{ balance || "0.00" }}</div>
                 </div>
-                <!-- <div class="btns flex_r flex_ac flex_jb">
+                <div class="btns flex_r flex_ac flex_jb">
                     <div class="btn cor" @click="onClickWithdrawal">
                         申请退款
                     </div>
-                </div> -->
+                </div>
             </div>
             <div class="bill_log">
                 <div class="tit flex_r flex_ac flex_jb">
@@ -439,20 +439,18 @@ export default {
             .btn {
                 /* width: 304rpx; */
                 width: calc(100% - 10rpx);
-                height: 76rpx;
-                line-height: 76rpx;
+                height: 80rpx;
+                line-height: 80rpx;
                 text-align: center;
-                background: #e2e1e3;
-                border-radius: 16rpx;
+              background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+                border-radius: 40rpx;
                 font-weight: bold;
-                font-size: 28rpx;
-                color: #626262;
+                font-size: 32rpx;
+                color:  #1A1A1A;;
 
                 &.cor {
-                    color: #fff;
-                    background: linear-gradient(89deg,
-                            #6290fe 0%,
-                            #a439fc 100%);
+                    color: #1A1A1A;
+                     background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
                 }
             }
         }
@@ -542,8 +540,7 @@ export default {
         height: 186rpx;
         padding: 26rpx 36rpx;
         border-radius: 16rpx;
-        background: linear-gradient(104deg, #e1d6f8 0%, #f8e7ed 100%);
-
+    background: linear-gradient( 180deg, #BAFFF9 0%, #F5F6F8 100%);
         .ico_img {
             position: absolute;
             top: 16rpx;

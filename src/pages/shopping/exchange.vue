@@ -89,7 +89,7 @@
                         </div>
                         <div class="freight" v-if="!onlyShipment">
                             <div>兑换方式</div>
-                            <div>兑换至潮柜</div>
+                            <div>兑换至星仓</div>
                         </div>
                         <div class="freight">
                             <div>我的欧气值</div>
