@@ -209,6 +209,7 @@ export default {
 
 .navbar_x {
     margin-bottom: 60rpx;
+    padding-left: 36rpx;
 }
 
 .top_Back {

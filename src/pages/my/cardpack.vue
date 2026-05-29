@@ -1,12 +1,12 @@
 <template>
-	<view class="drawRecord">
-		<div class="navbar_x flex_r flex_jb flex_ac">
+	<view  :style="{ paddingTop: MBInfo().top + 'px' }" class="drawRecord">
+		<div  :style="{ height: MBInfo().height + 'px' }"  class="navbar_x flex_r flex_jb flex_ac">
 			<view class="top_Back" @click.stop="gateBack">
 				<text class="icof Back_ico">&#xe72c;</text>
 				<text class="txt">我的卡包</text>
 			</view>
 		</div>
-		<div class="shanggui_con">
+		<div :style="{ height: conHeight }" class="shanggui_con">
 			<view class="p_lists">
 				<div class="title" v-if="data.state == 1">可用卡包</div>
 				<div class="order_list">
@@ -65,7 +65,15 @@ export default {
 			data: { state: 0, },
 		};
 	},
-	computed: { ...mapState(['selectTicket']) },
+	computed: { ...mapState(['selectTicket']),
+           conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10;
+            let str = h - th + "px";
+            return str;
+        },
+	},
 	onLoad(da) {
 		if (da == {}) {
 			this.data = { state: 0, }

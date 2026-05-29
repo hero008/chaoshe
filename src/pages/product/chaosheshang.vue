@@ -199,7 +199,7 @@
                                     </div>
                                     <div class="goods">
                                         <template v-for="(a, b) in i.awardItems">
-                                            <div class="goods_item flex_r flex_ac" :key="b">
+                                            <div class="goods_item flex_r flex_ac"  :key="b">
                                                 <div class="name ellipsis">
                                                     <span style="color: #fcb25f;">{{ a.levelName }}赏</span>
                                                     <span>{{ a.itemName }}</span>

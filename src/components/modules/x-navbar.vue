@@ -1,12 +1,12 @@
 <template>
-    <u-navbar :height="MBInfo().top +  MBInfo().height + 'px'" :titleStyle="{paddingTop:MBInfo().top + 'px'}"  :title="tit"  bgColor="transparent">
-        <view  :style="{paddingTop:MBInfo().top +  'px'}"   class="u-nav-slot" slot="left">
+    <view class="header" :style="{ paddingTop: MBInfo().top + 'px' }" >
+        <view  :style="{ height: MBInfo().height + 'px' }" >
             <view class="top_Back" @click.stop="gateBack()" :style="{color:tcolor}">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt" v-if="tit==''">返回</text>
+                <text class="txt"> {{tit ? tit : '返回'}}</text>
             </view>
         </view>
-    </u-navbar>
+    </view>
 </template>
 <script>
 export default {
@@ -24,7 +24,9 @@ export default {
         }
     },
     created() {},
-    mounted() {},
+    mounted() {
+        console.log(this.MBInfo());
+    },
     methods: {},
 };
 </script>
@@ -36,8 +38,16 @@ color: #000000;
 text-align: left;
 width: 580rpx !important;
 }
+.header{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
 .top_Back {
     color: #1c1c1c;
+    padding-left: 24rpx;
 
     text {
         vertical-align: middle;

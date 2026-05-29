@@ -34,7 +34,10 @@
             </view>
             <!-- 微信小程序不需要 中间的--> 
             <view class="ad-entry flex_r flex_jb">
-                <homeInfiniteScroll @toGacha="toGacha" :list="gachaList"></homeInfiniteScroll>
+                <scroll-view class="ad_entry_scrollView" style="white-space: nowrap;height: 280rpx;"  scroll-x>
+                     <img  v-for="value in gachaList" :key="value.url" :src="value.url" alt="">
+                </scroll-view>
+                <!-- <homeInfiniteScroll @toGacha="toGacha" :list="gachaList"></homeInfiniteScroll> -->
                 <!-- <view>
                     <image
                         @click.stop = "ontab({index:1,type:'top'})"
@@ -535,7 +538,7 @@ export default {
             let w = this.SystemInfo.windowWidth;
             let va = this.MBInfo().width;
             let str = w - va - 32 + "px";
-            return va > 0 ? str : "542rpx";
+            return va > 0 ? str : "500rpx";
         },
     },
 };
@@ -717,6 +720,13 @@ opacity: 1;
 .ad-entry {
     // margin: 18rpx 0 10rpx;
     margin-top: 32rpx;
+    .ad_entry_scrollView{
+        img{
+            width: 208rpx;
+            height: 280rpx;
+          
+        }
+    }
 
 
     .ads_l,

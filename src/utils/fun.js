@@ -1,6 +1,6 @@
 import { getCache, setCache } from "@/utils/storage.js";
 import { post } from "@/utils/api.js";
-import { isMTVapp,mgTvLogin } from "./mgtv";
+import { isMTVapp,mgTvLogin,isIos } from "./mgtv";
 let goto = (url, json,mgtvIsLogin=true) => {
     if (!url) {
         // uni.$u.toast('该功能暂未开放，敬请期待！');
@@ -57,14 +57,14 @@ let ISmp = () => {
 // 获取胶囊按钮信息
 let getMBInfo = () => {
    if(window.mgtv){
-    // return { top: 40, height: 32, width: 0 }
-    if(mgtv.getMenuButtonBoundingClientRect().top > 10){
-      return mgtv.getMenuButtonBoundingClientRect()
+    const ios=isIos()
+    if(ios){
+       return mgtv.getMenuButtonBoundingClientRect()
     }else{
-      return { top: 30, height: 32, width: 0 }
+      const top = mgtv.getMenuButtonBoundingClientRect().top;
+      const statusBarHeight =(mgtv.getWindowInfo().statusBarHeight)/(mgtv.getWindowInfo().pixelRatio);
+      return { top: top + statusBarHeight, height: 30, width: 0 }
     }
-
-    // return mgtv.getMenuButtonBoundingClientRect()
    }else{
     return { top: 40, height: 32, width: 0 }
    }

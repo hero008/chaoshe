@@ -7,9 +7,7 @@
                 '--selectcolor': tabBarStyle.selectListTxtColor,
                 '--defaultfontsizi': tabBarStyle.defaultFontSizi,
             }"
-            v-for="item in this.SystemInfo.uniPlatform == 'app'
-                ? filteredTodos
-                : tabBarStyle.list"
+            v-for="item in filteredTodos "
             @tap="change(item.va), pagesChange(item)"
             :key="item.va"
             :class="[
@@ -115,6 +113,7 @@ export default {
         for (let num of this.tabBarStyle.list) {
             this.tabBarStyle.iconNumber.push(0);
         }
+
         // this.iconAnimation = this.animationIcon;//动画开关
         // this.getIconNumber(this.iconNumbers);
     },
@@ -163,16 +162,19 @@ export default {
                 this.popupShown = uni.getStorageSync("popupShownTow");
             }
         },
+
+
     },
     computed: {
        
         ...mapState(["userInfo", "popupWebSocket"]),
-        filteredTodos() {
-            // return this.tabBarStyle.list.filter((todo) =>
-            //     todo.txt == "集市"
-            //         ? (todo.isVisible = this.userInfo.showMarket)
-            //         : todo.isVisible
-            // );
+        filteredTodos(val) {
+            console.log(val);
+            return this.tabBarStyle.list.filter((todo) =>
+                todo.txt == "集市"
+                    ? (todo.isVisible = this.userInfo.showMarket)
+                    : todo.isVisible
+            );
         },
    
     },

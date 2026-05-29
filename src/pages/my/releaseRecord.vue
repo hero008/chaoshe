@@ -1,12 +1,12 @@
 <template>
-    <view class="releaseRecord">
-        <div class="navbar_x flex_r flex_jb flex_ac">
+    <view  :style="{ paddingTop: MBInfo().top + 'px' }" class="releaseRecord">
+        <div :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">发货订单</text>
             </view>
         </div>
-        <div class="shanggui_con">
+        <div class="shanggui_con" :style="{ height: conHeight }">
             <view class="tabs_two flex_r flex_jb">
                 <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
                     <text>{{i}}</text>
@@ -76,6 +76,15 @@ export default {
     },
     onLoad(da) {
         this.loadList()
+    },
+    computed: {
+        conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10;
+            let str = h - th + "px";
+            return str;
+        },
     },
     methods: {
         ontab2(item, index) {

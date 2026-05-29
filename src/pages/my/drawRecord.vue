@@ -1,12 +1,12 @@
 <template>
-    <view class="drawRecord">
-        <div class="navbar_x flex_r flex_jb flex_ac">
+    <view :style="{ paddingTop: MBInfo().top + 'px' }" class="drawRecord">
+        <div :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">抽赏记录</text>
             </view>
         </div>
-        <div class="shanggui_con">
+        <div class="shanggui_con" :style="{ height: conHeight }">
             <view class="tabs_two flex_r flex_jb">
                 <view
                     class="tab_item"
@@ -199,6 +199,15 @@ export default {
             }
         },
     },
+     computed: {
+        conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10;
+            let str = h - th + "px";
+            return str;
+        },
+    },
 };
 </script>
 <style lang='scss' scoped>
@@ -206,7 +215,7 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    padding: 100rpx 0 30rpx;
+    // padding: 100rpx 0 30rpx;
       background-color: #fff;
         
     overflow-y: auto;
@@ -323,7 +332,7 @@ text{
     z-index: 2;
 
     .p_lists {
-        height: calc(100% - 66rpx);
+        height: calc(100% - 86rpx);
         border-radius: 0 50rpx 0 0;
         // background: #f4f4f4;
         margin-top: -15rpx;

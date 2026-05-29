@@ -7,6 +7,7 @@
       loadingMode="semicircle"
       loadingColor="#9064FF"
       color="#9064FF"
+      loadingText="登录中..."
       bgColor="rgba(0,0,0,0)"
     />
     <u-modal @confirm="confirm" :show="show" :title="title" :content='content'></u-modal>

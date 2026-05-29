@@ -1,12 +1,12 @@
 <template>
-    <view class="agreementList" :style="{ paddingTop: padTop }">
-        <div class="navbar_x flex_r flex_jb flex_ac">
+    <view class="agreementList" :style="{ paddingTop: MBInfo().top + 'px'  }">
+        <div  :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">关于我们</text>
             </view>
         </div>
-        <div class="agr_con" v-if="tab == 1">
+        <div :style="{ height: conHeight }" class="agr_con" v-if="tab == 1">
             <div class="agr_list">
                 <div class="agr_item flex_r flex_ac flex_jb" v-for="(i, s) in list" :key="s"
                     @click="onClickGoto(i.key)">
@@ -58,7 +58,8 @@ export default {
     computed: {
         padTop() {
             let da = this.MBInfo();
-            return da.top + 2 + "px";
+            
+            return da.top  + "px";
         },
     },
     onLoad(da) {
@@ -69,6 +70,15 @@ export default {
             uni.setStorageSync('vibration', v);
         }
 
+    },
+     computed: {
+        conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10+20;
+            let str = h - th + "px";
+            return str;
+        },
     },
     methods: {
         onClickGoto(key) {

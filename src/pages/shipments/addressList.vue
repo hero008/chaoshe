@@ -1,12 +1,12 @@
 <template>
     <view class="addressList" :style="{ paddingTop: MBInfo().top + 'px' }">
-        <div class="navbar_x flex_r flex_jb flex_ac">
+        <div  :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
                 <text class="txt">收货地址</text>
             </view>
         </div>
-        <div class="selectGoods_con">
+        <div :style="{height:conHeight}" class="selectGoods_con">
             <!-- <div class="top_tit">地址列表</div> -->
             <div class="addr_list">
                 <div
@@ -125,6 +125,15 @@ export default {
     },
     onShow() {
         this.loadList();
+    },
+     computed: {
+        conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10;
+            let str = h - th + "px";
+            return str;
+        },
     },
     methods: {
         loadList() {
