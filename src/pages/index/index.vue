@@ -83,6 +83,21 @@ export default {
         ) {
             getWebSocket(this); // 链接socket
         }
+
+        // 检查mg登录,如果没有登录,去登录
+        if(window.mgtv){
+          let isLogin = mgtv.isLogin();
+          console.log(isLogin,'检查登录')
+          if(!isLogin){
+            localStorage.removeItem('aToken');
+            localStorage.removeItem('rToken');
+            localStorage.removeItem('userInfo');
+            // uni.navigateTo({
+            //   url: '/pages/my/loading'
+            // });
+          }
+        }
+
     },
     onShow() {
         let inx = uni.getStorageSync("currentChange"); //当前底部的tab

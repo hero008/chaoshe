@@ -176,7 +176,7 @@ export default {
             let h = this.SystemInfo.screenHeight;
             let va = this.MBInfo();
             let th = va.height + va.top;
-            let str = h - th - 38 + "px";
+            let str = h - th  + "px";
             return str;
         },
         //设置进度条样式，实时更新进度位置
@@ -359,7 +359,9 @@ export default {
   left: 0;
   width: 100%;
   z-index: 5;
+  padding-top: 70rpx;
   padding-bottom: 60rpx;
+  overflow-y: scroll;
 }
 .con_box_bottom {
     width: 100%;

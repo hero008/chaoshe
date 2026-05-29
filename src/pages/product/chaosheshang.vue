@@ -12,8 +12,8 @@
                         AReward.gacha.themeName
                     }}</text>
                     <!-- #ifndef MP-WEIXIN -->
-                    <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_fx.png" @click="onShare"
-                        class="Back_ico a" />
+                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/chaosheshang_fx.png" @click="onShare"
+                        class="Back_ico a" /> -->
                     <!-- #endif -->
                 </view>
                 <div class="i_notice flex_r flex_ac">

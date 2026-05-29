@@ -57,14 +57,20 @@ let ISmp = () => {
 // 获取胶囊按钮信息
 let getMBInfo = () => {
    if(window.mgtv){
-    return mgtv.getMenuButtonBoundingClientRect()
+    // return { top: 40, height: 32, width: 0 }
+    if(mgtv.getMenuButtonBoundingClientRect().top > 10){
+      return mgtv.getMenuButtonBoundingClientRect()
+    }else{
+      return { top: 30, height: 32, width: 0 }
+    }
+
+    // return mgtv.getMenuButtonBoundingClientRect()
    }else{
     return { top: 40, height: 32, width: 0 }
-
    }
    
     // #ifndef MP-WEIXIN
-    return { top: 40, height: 32, width: 0 }
+    // return { top: 40, height: 32, width: 0 }
     // #endif
 }
 // 播放音效

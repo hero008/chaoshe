@@ -10,8 +10,8 @@
         </view>
         <!-- 二级tab -->
       <div class="navbarSubclass" :style="{
-        height:`calc(100vh - 290rpx - ${MBInfo().top}px)`,
-        top:`calc(290rpx + ${MBInfo().top}px)`
+        height:`calc(100% - 282rpx - ${MBInfo().top}px)`,
+        top:`calc(282rpx + ${MBInfo().top}px)`
       }" v-if='Object.keys(childList).length'>
             <view class='subclass'>
                 <view :class="[text.name == i.name ? ' subclass-tiem ' : 'subclass-tiem tiem1']"
@@ -581,9 +581,9 @@ background-color: #F5F6F8;
 .navbarSubclass {
     position: absolute;
     left: 0;
-    top: 370rpx;
+    top: calc(255rpx);
     width: 100%;
-    height: calc(100vh - 370rpx);
+    height: calc(100vh - 255rpx);
     background: rgba(0, 0, 0, 0.5);
     z-index: 6;
 

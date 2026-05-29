@@ -125,7 +125,7 @@ import xModal from "@/components/modules/x-modal";
 import { service } from '@/utils/fun.js';
 import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
 import homeInfiniteScroll from "../../components/homeInfiniteScroll/homeInfiniteScroll.vue";
-import { goto } from "../../utils/fun.js";
+import { parseQueryString } from "../../utils/mgtv.js";
 export default {
     data() {
         return {
@@ -215,13 +215,23 @@ export default {
         });
         // #endif
 
-        // if(this.userInfo && this.userInfo.id){
-            // if(window.mgtv){
-            //    const data = mgtv.getLaunchOptionsSync()
-            //    console.log(data.query)
-            // }
-          
-        // }
+        if(this.userInfo && this.userInfo.id){
+            if(window.mgtv){
+               const data = mgtv.getLaunchOptionsSync().path;
+               if(data){
+                 const query = parseQueryString(data);
+                 if(query && query.name){
+                    if(query.name == 'ddl'){
+                        this.goto('/pages/product/dongle',{id:query.id})
+                    }else if(query.name == 'ndj'){
+                         this.goto("/pages/product/niudan", { id: query.id });
+                    }else if(query.name == 'wxs'){
+                         this.goto("/pages/product/chaowanshang", { id: query.id });
+                    }
+                 }
+               }
+            }
+        }
     },
     created() {
         this.getBannerList();
@@ -236,7 +246,7 @@ export default {
            }else if(index == 2){
                 this.ontab({index:3,type:'top'})
            }else{
-             goto('/page-a/luck/index')
+             this.goto('/page-a/luck/index')
            }
         },
         scroll(e){

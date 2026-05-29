@@ -229,6 +229,7 @@ export default {
     left: 0;
     z-index: 5;
     width: 100%;
+    padding-top: 30rpx;
 }
 
 .soll-bar {
@@ -286,6 +287,7 @@ export default {
     margin-left: auto;
     // line-height: 65rpx;
     text-align: center;
+    
     // font-weight: 800;
     // font-size: 22rpx;
     // color: #4d2e79;
@@ -305,7 +307,7 @@ border-radius: 8rpx 8rpx 8rpx 8rpx;
     align-items: center;
     justify-content: center;
     font-family: PingFang SC, PingFang SC;
-    margin: 180rpx 0 28rpx 32rpx;
+    margin: 150rpx 0 28rpx 32rpx;
 
     .timeImg {
         width: 32rpx;

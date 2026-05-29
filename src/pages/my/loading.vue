@@ -45,6 +45,8 @@ export default {
   methods: {
     toLogin() {
         if(window.mgtv){
+            // this.webLogin();
+            // return;
           this.loginMgtv((res)=>{
             
             //  let uuid = res.uuid;

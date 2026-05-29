@@ -191,3 +191,17 @@ export const formateGachaLevelName = (levelName) => {
                return '普通'
            }
 }
+
+export const  parseQueryString =(str)=> {
+  const result = {};
+  const pairs = str.split('&');
+  
+  pairs.forEach(pair => {
+    const [key, value] = pair.split('=');
+    if (key) {
+      result[key] = value || '';
+    }
+  });
+  
+  return result;
+}
