@@ -599,16 +599,17 @@ export default {
 }
 
 .tag3 {
-    width: 120rpx;
-    height: 248rpx;
+    width: 132rpx;
+    height: 176rpx;
     font-size: 20rpx;
     position: absolute;
     color: #000;
     background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/tag-2.png");
     background-size: 100% 100%;
-    right: 8rpx;
+    left: 50%;
+    transform: translateX(-50%);
     top: 0;
-    padding-top: 114rpx;
+    padding-top: 55rpx;
     text-align: center;
 
     .txt2 {
@@ -619,16 +620,17 @@ export default {
     .txt3 {
         font-weight: 800;
         line-height: 20rpx;
-        margin: 10rpx 0 24rpx;
+        margin:0rpx 0 10rpx;
     }
 
     .txt1 {
-        width: 88rpx;
+        // width: 88rpx;
         text-align: center;
         font-weight: 500;
-        font-size: 16rpx;
-        background: #fff;
+        font-size: 24rpx;
+        // background: #fff;
         padding: 0 12rpx;
+        color: #31E597;
         border-radius: 12rpx;
         margin: 0 auto;
     }

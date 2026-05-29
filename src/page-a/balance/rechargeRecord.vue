@@ -210,7 +210,7 @@ export default {
         width: 100vw;
         height: 1000rpx;
         position: absolute;
-        background-image: url("https://img.chaoshewang.com/matt/static/img/index/account_bg.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/account_bg.png");
         background-size: 100% 100%;
     }
 }
@@ -241,7 +241,7 @@ export default {
                     margin-left: 8rpx;
                     width: 32rpx;
                     height: 32rpx;
-                    background-image: url("https://img.chaoshewang.com/matt/static/img/index/group_3.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/group_3.png");
                     background-size: 100% 100%;
                 }
             }

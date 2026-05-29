@@ -9,8 +9,8 @@
                     class="Back_ico" />
                 <text class="title ellipsis">{{ title }}</text>
                 <!-- #ifndef MP-WEIXIN -->
-                <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allFx.png" @click="onShare"
-                    class="Back_ico a" />
+                <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/allFx.png" @click="onShare"
+                    class="Back_ico a" /> -->
                 <!-- #endif -->
             </view>
             <div class="particulars">

@@ -247,7 +247,7 @@ export default {
                     .delete_img {
                         width: 42rpx;
                         height: 42rpx;
-                        background: url("https://img.chaoshewang.com/matt/static/img/index/cha.png");
+                        background: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/cha.png");
                         background-size: 100% 100%;
                     }
                 }

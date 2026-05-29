@@ -51,23 +51,23 @@
                 <div class="tit"><div class="img"></div></div>
                 <div class="flow flex_r flex_ac flex_jb">
                     <img
-                        src="https://img.chaoshewang.com/matt/static/img/index/friend_icon.png"
+                        src="https://img.shinemang.com/gachaStatic/matt/static/img/index/friend_icon.png"
                         class="ico"
                     />
                     <img
-                        src="https://img.chaoshewang.com/matt/static/img/index/next_step.png"
+                        src="https://img.shinemang.com/gachaStatic/matt/static/img/index/next_step.png"
                         class="ico1"
                     />
                     <img
-                        src="https://img.chaoshewang.com/matt/static/img/index/app_icon.png"
+                        src="https://img.shinemang.com/gachaStatic/matt/static/img/index/app_icon.png"
                         class="ico"
                     />
                     <img
-                        src="https://img.chaoshewang.com/matt/static/img/index/next_step.png"
+                        src="https://img.shinemang.com/gachaStatic/matt/static/img/index/next_step.png"
                         class="ico1"
                     />
                     <img
-                        src="https://img.chaoshewang.com/matt/static/img/index/gift_icon.png"
+                        src="https://img.shinemang.com/gachaStatic/matt/static/img/index/gift_icon.png"
                         class="ico"
                     />
                 </div>
@@ -239,7 +239,7 @@ export default {
 .invite {
     // height: 2000rpx;
     height: 100%;
-    background-image: url("https://img.chaoshewang.com/matt/static/img/index/share_bg.png");
+    background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/share_bg.png");
     background-size: cover; /* 图片覆盖整个容器 */
     background-position: top;
     background-repeat: no-repeat; /* 不重复 */
@@ -277,19 +277,19 @@ export default {
     .award_card {
         width: 100%;
         height: 768rpx;
-        background-image: url("https://img.chaoshewang.com/matt/static/img/index/card.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/card.png");
         background-size: 100% 100%;
         .tit {
             width: 260rpx;
             height: 60rpx;
-            background-image: url("https://img.chaoshewang.com/matt/static/img/index/QR_code.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/QR_code.png");
             background-size: 100% 100%;
             margin-top: 32rpx;
         }
         .qr {
             width: 320rpx;
             height: 320rpx;
-            background-image: url("https://img.chaoshewang.com/matt/static/img/index/qr_box.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/qr_box.png");
             background-size: 100% 100%;
             margin-top: 24rpx;
             position: relative;
@@ -326,7 +326,7 @@ export default {
                 .cp_icon {
                     width: 24rpx;
                     height: 24rpx;
-                    background-image: url("https://img.chaoshewang.com/matt/static/img/index/cp_icon.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/cp_icon.png");
                     background-size: 100% 100%;
                     margin-right: 4rpx;
                 }
@@ -398,12 +398,12 @@ export default {
             margin: auto;
             width: 176rpx;
             height: 60rpx;
-            background-image: url("https://img.chaoshewang.com/matt/static/img/index/flow.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/flow.png");
             background-size: 100% 100%;
             margin-top: 32rpx;
         }
         .img1 {
-            background-image: url("https://img.chaoshewang.com/matt/static/img/index/Invitation_record.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/Invitation_record.png");
             background-size: 100% 100%;
         }
     }
@@ -474,7 +474,7 @@ export default {
     // .btn {
     //         width: 582rpx;
     //     height: 80rpx;
-    // background-image: url("https://img.chaoshewang.com/matt/static/img/index/inviteFriends_btn.png");
+    // background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/inviteFriends_btn.png");
     //  background-size: 100% 100%;
     // }
     .btn {

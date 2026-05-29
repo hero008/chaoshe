@@ -78,8 +78,8 @@
                             " src="https://img.shinemang.com/gachaStatic/static/img/pay/ico2.png" class="ico2" />
                         </div>
                         <div class="reduce_pay flex_r flex_je">
-                            <div class="reduce"
-                                v-if="['1', '2', '3', '4', '5'].includes(mtype) && subtract && i.randomShow">随机立减</div>
+                            <!-- <div class="reduce"
+                                v-if="['1', '2', '3', '4', '5'].includes(mtype) && subtract && i.randomShow">随机立减</div> -->
                             <view class="consume" v-if="i.type && i.consume">支付￥{{ i.consume }}</view>
                             <!-- 默认金币 -->
                             <div class="select" :class="{
@@ -206,18 +206,18 @@ export default {
                     number: 0,
                     payType: 1,
                 },
-                {
-                    name: "金币余额",
-                    type: 4,
-                    img: "gold",
-                    show: false,
-                    msg: "金币支付",
-                    randomShow: false,
-                    consume: 0,
-                    // number: this.$gl("userInfo").gold,
-                    number: 0,
-                    payType: 3,
-                },
+                // {
+                //     name: "金币余额",
+                //     type: 4,
+                //     img: "gold",
+                //     show: false,
+                //     msg: "金币支付",
+                //     randomShow: false,
+                //     consume: 0,
+                //     // number: this.$gl("userInfo").gold,
+                //     number: 0,
+                //     payType: 3,
+                // },
                 {
                     name: "芒果支付",
                     type: 1,
@@ -562,8 +562,8 @@ export default {
                              signData:res.res.createPaymentReply.signData,
                              sign:res.res.createPaymentReply.sign,
                              timestamp:Number(res.res.createPaymentReply.timestamp),
-                             success:(res)=>{
-                                console.log(res,'成功')
+                             success:(eq)=>{
+                                // console.log(res,'成功')
                                    that.$emit( "success", res,  that.showAnimation, click_type );
                                    that.close();
 
@@ -884,11 +884,11 @@ export default {
             margin-left: 16rpx;
             width: 88rpx;
             height: 48rpx;
-            background-image: url("https://img.chaoshewang.com/matt/static/img/index/integral_btn1.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/integral_btn1.png");
             background-size: 100% 100%;
 
             &.av {
-                background-image: url("https://img.chaoshewang.com/matt/static/img/index/integral_btn.png");
+                background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/integral_btn.png");
                 background-size: 100% 100%;
             }
         }

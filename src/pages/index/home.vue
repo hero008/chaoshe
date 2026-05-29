@@ -561,19 +561,22 @@ export default {
 .home-con {
     width: 100vw;
     height: 100vh;
+    background-color: #fff;
     padding: 96rpx 0;
     padding-bottom: 0;
     position: relative;
     z-index: 2;
       &::after {
         content: "";
-        width: 100vw;
-        height: 600rpx;
+        width:750rpx;
+        height: 700rpx;
         left: 0;
         top: 0;
         position: absolute;
         z-index: 1;
-        background: linear-gradient( 269deg, #9CF9F1 0%, #ACFDBD 100%);    }
+        background: url('https://img.shinemang.com/gachaStatic/static/tabBar/tab/homeTopBgc.png');  
+        background-size: 100% 100%;  
+    }
 }
 
 .notice_top {
@@ -657,7 +660,7 @@ export default {
 .home-scroll {
     z-index: 4;
     // height: calc(100% - 32px - 28rpx);
-    background: #F5F6F8;
+background:  linear-gradient( 180deg, rgba(255,255,255,0.3) 0%, #F5F6F8 20%, #F5F6F8 100%);
 border-radius: 32rpx 32rpx 32rpx 32rpx;
 padding: 32rpx;
 padding-bottom: 0;

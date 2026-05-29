@@ -146,7 +146,7 @@
                             </template>
                             <div :class="[active == 0 ? 'btn' : 'btn1']"
                                 @click="onClickBuy(item.buyPrice, item.id, item.userId, a)">
-                                <div>{{ active != 0 ? '查看' : "参与交易" }}</div>
+                                <div>{{ active != 0 ? '查看' : "查看交易" }}</div>
                                 <div class="icof" v-if="active !== 0">&#xe72b;</div>
                                 <u-badge max="99" :value="item.joinNums"></u-badge>
                             </div>

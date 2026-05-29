@@ -27,8 +27,8 @@
                                 <view class="name ellipsis2">{{ k.itemName }} </view>
                             </view>
                             <!-- #ifndef MP-WEIXIN -->
-                            <view v-if="k.levelName == 'SP' && k.rotated"
-                                @click="onShare(k.itemName, k.itemId, k.levelIndex, k)" class="share_btn" />
+                            <!-- <view v-if="k.levelName == 'SP' && k.rotated"
+                                @click="onShare(k.itemName, k.itemId, k.levelIndex, k)" class="share_btn" /> -->
                             <!-- #endif -->
                             <view class="cl_" :class="['cl_' + k.levelName]"></view>
                         </view>

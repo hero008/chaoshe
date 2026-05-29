@@ -18,7 +18,7 @@
                 </view>
                 <div class="i_notice flex_r flex_ac">
                     <view class="r_ico flex_r flex_ac">
-                        <img class="ico" src="https://img.chaoshewang.com/matt/static/img/chaowanshang/yfs_ts.png" />
+                        <img class="ico" src="https://img.shinemang.com/gachaStatic/matt/static/img/chaowanshang/yfs_ts.png" />
                         <span>发货提示</span>
                     </view>
                     <u-notice-bar text="平台发货不设门槛!星仓内提交发货申请后3-5个工作日安排发货。每单满5件包邮，不满5件需支付10元运费。" :fontSize="12"
@@ -1615,7 +1615,7 @@ font-size: 22rpx;
             position: absolute;
             width: 104rpx;
             height: 104rpx;
-            background-image: url("https://img.chaoshewang.com/matt/static/img/chaowanshang/yfs_ysx.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/chaowanshang/yfs_ysx.png");
             background-position: center;
             background-size: 100% 100%;
             z-index: 99 !important;
@@ -1664,7 +1664,7 @@ font-size: 22rpx;
         margin: 0 auto;
         width: 504rpx;
         height: 344rpx;
-        background-image: url("https://img.chaoshewang.com/matt/static/img/chaowanshang/css_kxz.png");
+        background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/chaowanshang/css_kxz.png");
         background-size: 100% 100%;
     }
 

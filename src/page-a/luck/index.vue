@@ -196,7 +196,7 @@ export default {
                     path: "page-a/luck/index",
                 },
                 { id: "", index: "" },
-                "https://img.chaoshewang.com/matt/static/img/index/fenxiangjcbg.png"
+                "https://img.shinemang.com/gachaStatic/matt/static/img/index/fenxiangjcbg.png"
             );
         },
     },

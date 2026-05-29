@@ -126,11 +126,11 @@ export default {
             message: {},
             failing: false,
             residuetime: 0,
-            imgList: [{ imgSrc: 'https://img.chaoshewang.com/matt/static/img/index/friend_icon.png', class: 'ico' },
-            { imgSrc: 'https://img.chaoshewang.com/matt/static/img/index/next_step.png', class: 'ico1' },
-            { imgSrc: 'https://img.chaoshewang.com/matt/static/img/index/app_icon.png', class: 'ico' },
-            { imgSrc: 'https://img.chaoshewang.com/matt/static/img/index/next_step.png', class: 'ico1' },
-            { imgSrc: 'https://img.chaoshewang.com/matt/static/img/index/gift_icon.png', class: 'ico' },]
+            imgList: [{ imgSrc: 'https://img.shinemang.com/gachaStatic/matt/static/img/index/friend_icon.png', class: 'ico' },
+            { imgSrc: 'https://img.shinemang.com/gachaStatic/matt/static/img/index/next_step.png', class: 'ico1' },
+            { imgSrc: 'https://img.shinemang.com/gachaStatic/matt/static/img/index/app_icon.png', class: 'ico' },
+            { imgSrc: 'https://img.shinemang.com/gachaStatic/matt/static/img/index/next_step.png', class: 'ico1' },
+            { imgSrc: 'https://img.shinemang.com/gachaStatic/matt/static/img/index/gift_icon.png', class: 'ico' },]
         };
     },
     components: { xNavbar },
@@ -326,7 +326,7 @@ export default {
                 .cp_icon {
                     width: 24rpx;
                     height: 24rpx;
-                    background-image: url("https://img.chaoshewang.com/matt/static/img/index/cp_icon.png");
+                    background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/cp_icon.png");
                     background-size: 100% 100%;
                     margin-right: 4rpx;
                 }
@@ -519,7 +519,7 @@ export default {
     // .btn {
     //         width: 582rpx;
     //     height: 80rpx;
-    // background-image: url("https://img.chaoshewang.com/matt/static/img/index/inviteFriends_btn.png");
+    // background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/inviteFriends_btn.png");
     //  background-size: 100% 100%;
     // }
     .btn {

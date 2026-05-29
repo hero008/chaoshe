@@ -66,12 +66,12 @@
                         </template>
                         <div class="btn" @click="onclickDeal" v-if="
                             !ishistory &&
-                            orderinfo.state == 'MarketOrderState_Open'
+                            orderinfo.state == 'MarketOrderState_Open' && orderinfo.userId == userInfo.id
                         ">
                             {{
                                 orderinfo.userId == userInfo.id
                                     ? "撤回赏品"
-                                    : "参与交易"
+                                    : ""
                             }}
                         </div>
                     </div>

@@ -94,7 +94,7 @@
                     class="ios"
                     mode="aspectFit"
                     show-menu-by-longpress="true"
-                    src="https://img.chaoshewang.com/matt/static/img/index/ios_QR.png"
+                    src="https://img.shinemang.com/gachaStatic/matt/static/img/index/ios_QR.png"
                 />
                 <view class="ts">长按保存图片微信识别二维码下载芒星赏APP</view>
             </view>
@@ -509,7 +509,7 @@ export default {
         .cp_icon {
             width: 24rpx;
             height: 24rpx;
-            background-image: url("https://img.chaoshewang.com/matt/static/img/index/cp_icon.png");
+            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/cp_icon.png");
             background-size: 100% 100%;
             margin-right: 4rpx;
         }

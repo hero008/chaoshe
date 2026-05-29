@@ -71,38 +71,36 @@ export default {
                     //     va: 0,
                     //     isVisible: true,
                     // },
-                  {
-                        image: "/static/tabBar/tab/tab3-1.png",
-                        selectImage: "/static/tabBar/tab/tab3-2.png",
+                    {
+                        image: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab3-1.png",
+                        selectImage: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab3-2.png",
                         txt: "首页",
                         va: 0,
                         isVisible: true,
                     },
                     {
-                        image: "/static/tabBar/tab/tab2-1.png",
-                        selectImage: "/static/tabBar/tab/tab2-2.png",
+                        image: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab2-1.png",
+                        selectImage: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab2-2.png",
                         txt: "集市",
                         va:1,
                         isVisible: true,
                     },
-                  
-                  
                     {
-                        image: "/static/tabBar/tab/tab4-1.png",
-                        selectImage: "/static/tabBar/tab/tab4-2.png",
+                        image: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab4-1.png",
+                        selectImage: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab4-2.png",
                         txt: "星仓",
                         va: 2,
                         isVisible: true,
                     },
                     {
-                        image: "/static/tabBar/tab/tab5-1.png",
-                        selectImage: "/static/tabBar/tab/tab5-2.png",
+                        image: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab5-1.png",
+                        selectImage: "https://img.shinemang.com/gachaStatic/static/tabBar/tab/tab5-2.png",
                         txt: "我的",
                         va: 3,
                         isVisible: true,
                     },
                 ],
-                defaultcolor: "#B6B6B6", //默认字体颜色
+                defaultcolor: "#FFFFFF", //默认字体颜色
                 selectListTxtColor: "#FFFFFF", //选中后字体颜色
                 defaultFontSizi: "12px", //字体大小
                 selectIndex: 2, //选中之后得下标
@@ -188,7 +186,9 @@ export default {
     left: 32rpx;
     height: 120rpx;
     width: 686rpx;
-    background-color: #2A2A2A;
+    // background-color: #2A2A2A;
+    background: url('https://img.shinemang.com/gachaStatic/static/tabBar/tab/tabBarBgc.png');
+    background-size: 100% 100%;
     display: flex;
     border-radius: 64rpx;
     // padding: 5rpx 0 30rpx;
