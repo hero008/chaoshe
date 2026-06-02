@@ -611,7 +611,7 @@ background-color: #F5F6F8;
 
 	&.usedTicket {
 		.rowl {
-			background: linear-gradient(180deg, #E4E4E4 0%, #959595 100%);
+			// background: linear-gradient(180deg, #E4E4E4 0%, #959595 100%);
 		}
 
 		.row_r {

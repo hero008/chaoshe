@@ -34,7 +34,7 @@
                             " src="https://img.shinemang.com/gachaStatic/static/img/my/shuoming.png" class="shuoming" /> -->
                     </div>
                     <view class="user_name">
-                        <div class="u_ID">{{ userInfo.id || "" }}</div>
+                        <div class="u_ID">ID:{{ userInfo.id || "" }}</div>
                         <!-- 先出现不需要 -->
                      
                         <!-- #endif -->

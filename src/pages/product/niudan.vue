@@ -216,14 +216,14 @@
                 </view>
             </view>
         </u-popup>
-        <!-- #ifndef MP-WEIXIN -->
-        <movable-area class="movable-draw">
+     
+        <!-- <movable-area class="movable-draw">
             <movable-view v-if="chqShow" class="movable-ball" direction="all" :style="`left: ${ballLeft}; top:450rpx;`"
                 @click="changeTop">
                 <ball :afterTop="afterTop"></ball>
             </movable-view>
-        </movable-area>
-        <!-- #endif -->
+        </movable-area> -->
+      
         <view class="mask" v-if="show"></view>
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />
@@ -410,16 +410,16 @@ export default {
 
                 }
             });
-            post("v1/activity/chaoyou", { gacha_id: this.gachaId, box_index: this.boxIndex }).then((res) => {
-                if (!res.code) {
-                    if (Number(res.phaseId)) {
-                        this.chqShow = true
-                        const maxValue = Math.min(...res.cell.map(item => item.flowAmount));
-                        const schedule = 40 - (((res.historyFlowAmount / maxValue) * 100) / 100) * 100
-                        this.afterTop = Math.max(-60, Math.min(40, Math.ceil(schedule)))
-                    }
-                }
-            });
+            // post("v1/activity/chaoyou", { gacha_id: this.gachaId, box_index: this.boxIndex }).then((res) => {
+            //     if (!res.code) {
+            //         if (Number(res.phaseId)) {
+            //             this.chqShow = true
+            //             const maxValue = Math.min(...res.cell.map(item => item.flowAmount));
+            //             const schedule = 40 - (((res.historyFlowAmount / maxValue) * 100) / 100) * 100
+            //             this.afterTop = Math.max(-60, Math.min(40, Math.ceil(schedule)))
+            //         }
+            //     }
+            // });
 
         },
         onpay(num, special = 0) {
