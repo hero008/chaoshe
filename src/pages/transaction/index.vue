@@ -58,9 +58,9 @@
                             
                         </div> -->
 
-                        <div class="form_item " style="margin-bottom: 30rpx" v-if="isSetPrice">
-                            <div class="txt flex_r flex_ac"><span style="margin-right: 5rpx;">设置一口价</span><u-switch v-model="isSetPrice" :size="18" inactiveColor="#31E597"></u-switch></div>
-                            <div class="inp_box flex_r flex_ac">
+                        <div class="form_item " style="margin-bottom: 30rpx" >
+                            <div class="txt flex_r flex_ac"><span style="margin-right: 5rpx;">设置一口价</span><u-switch v-model="isSetPrice" :size="18" inactiveColor="#ccc"></u-switch></div>
+                            <div v-if="isSetPrice" class="inp_box flex_r flex_ac">
                                 <u--input placeholder="请输入金额" type="number" style="height: 80rpx;" maxlength="5" v-model="onePrice"
                                     @change="clickOnePrice" @input="
                                         onePrice = onePrice.replace(/[^\d]/g, '')
