@@ -305,10 +305,10 @@ export default {
         },
         // 申请退款
         onClickWithdrawal() {
-            if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
-                this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
-                return;
-            }
+            // if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
+            //     this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
+            //     return;
+            // }
             if (!this.refund.refundResidueCnt) {
                 uni.$u.toast("今日提现次数已达上限！");
                 return;

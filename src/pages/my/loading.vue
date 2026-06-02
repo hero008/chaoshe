@@ -56,16 +56,6 @@ export default {
             // let avatarUrl = res.avatarUrl;
             // this.webLogin();
 
-            console.log( {
-                phone_num: "",
-                type: 8,
-                code:res.ticket,
-                login_platform: 0,
-                device_id: this.SystemInfo.deviceId,
-                invite_code: this.inviteCode,
-                channel_id: 1,
-                uuid:res.uuid
-            })
                post("v1/user/login", {
                 phone_num: "",
                 type: 8,
@@ -74,7 +64,9 @@ export default {
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
                 channel_id: 1,
-                uuid:res.uuid
+                uuid:res.uuid,
+                nickname:res.nickName,
+                avatar_url:res.avatarUrl
             }).then((res) => {
                 if (res.code) {
                 uni.$u.toast(res.message);

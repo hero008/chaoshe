@@ -259,10 +259,10 @@ export default {
             this.valueMoney = undefined;// 充值金额
         },
         onClickWithdrawal() {
-            if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
-                this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
-                return;
-            }
+            // if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
+            //     this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
+            //     return;
+            // }
             post("v1/pay/withdraw/info/get").then((res) => {
                 if (!res.code) {
                     const {

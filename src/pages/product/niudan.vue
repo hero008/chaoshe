@@ -107,7 +107,7 @@
                 </view> -->
               
             </view>
-            <view style="padding-top: 10rpx;" class="actionBtn">
+            <view v-if="gachainfo && gachainfo.id" style="padding-top: 10rpx;" class="actionBtn">
                  <view class="foot-btn flex_r flex_jc" v-if="isWelfare">
                 <view class="btn-item" @click="onpay(1)">抽奖</view>
             </view>
@@ -147,8 +147,8 @@
                 </view>
                 <!-- <img class="cut " :src="`https://img.shinemang.com/gachaStatic/static/img/cw-new/${cutPattern}.png`"  :key="cutPattern"   @click="oncut" /> -->
                 <!-- { forbid_btn: probability > 10 && value.text == '全包' } -->
-                <view v-for="(value, index) in payOptions" :key="index" class="btn-item "
-                    :class="[value.className, ]"
+                <view v-for="(value, index) in payOptions" :key="index" class="btn-item"
+                    :class="[value.className, {forbid_btn: probability > 10 && value.text == '全包'}]"
                     
                     @click="onpay(value.num)">
                     {{ value.text }}</view>
@@ -693,7 +693,7 @@ export default {
         onShare() {
             uniShare(
                 {
-                    tit: "潮魂扭蛋机 : " + this.gachainfo.themeName,
+                    tit: "潮魂扭蛋赏 : " + this.gachainfo.themeName,
                     path: "pages/product/niudan",
                 },
                 { id: this.gachaId, index: this.boxIndex },

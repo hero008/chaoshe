@@ -40,10 +40,10 @@ export default {
                 { name: "隐私政策", key: { val: 'PrivacyClause' } },
                 { name: "用户服务协议", key: { val: 'UserAgreement' } },
                 // #ifndef MP-WEIXIN
-                { name: "集市服务协议", key: { val: 'MarketAgreement' } },
+                // { name: "集市服务协议", key: { val: 'MarketAgreement' } },
                 // #endif
                 // { name: "营业执照", key: { val: 'BusinessLicense' } },
-                { name: "概率公正", key: { val: 'SystemProbabilityDetection' } },
+                // { name: "概率公正", key: { val: 'SystemProbabilityDetection' } },
             ],
             // #ifndef MP-WEIXIN
             text: '粤ICP备2023103620号-3A', // app

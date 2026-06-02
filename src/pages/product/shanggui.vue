@@ -241,7 +241,7 @@ export default {
                 } else {
                     that.$showModal({
                         title: "物品二次回收确认",
-                        content: `本次将回收${res.itemNum}件赏品<br/>共获得${res.recyclingPrice}潮币余额`,
+                        content: `本次将回收${res.itemNum}件赏品<br/>共获得${res.recyclingPrice}余额`,
                         hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
                         success(res1) {
                             if (res1.confirm) {

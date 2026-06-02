@@ -124,7 +124,7 @@
                 </view>
             </view>
         </scroll-view>
-        <view class="footBox dyzt">
+        <view v-if="gachainfo && gachainfo.id" class="footBox dyzt">
             <!-- <view v-if="activityOpen" class="coupon  flex_r flex_ac" :class="[getCouponType]">
                 <view class="particulars">
                     <view class="content flex_r flex_wrap flex_ac">

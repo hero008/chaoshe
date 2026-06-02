@@ -3,7 +3,7 @@
         <view class="top_Back flex_r flex_js flex_ac"
             :style="{ top: MBInfo().top + 'px', height: MBInfo().height + 'px' }">
             <img src="https://img.shinemang.com/gachaStatic/back.png" @click="gateBack" class="Back_ico" />
-            <text class="title">洞洞乐</text>
+            <text class="title">炸弹赏</text>
         </view>
          <div class="i_notice flex_r flex_ac">
             <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico" />
@@ -49,6 +49,7 @@
                 <view class="number">{{ gachainfo.costAwardMultiple }}</view>
             </view>
 
+       
                <view class="tit">
                      <view class="price">
                         ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }} / 抽
@@ -96,12 +97,20 @@
                 <view class="bomb"></view>
                 <view class="bomb_text"> {{ gachainfo.bombNum }}枚</view>
             </view>
+            <view class="ddlProgress"> 
+                <view>抽赏进度</view>
+                <view class="progress">
+                    <text>{{ Math.ceil((leftAwards / totalAwards) * 100) || 0 }}%</text>
+                    <view :style="{width:(Math.ceil((leftAwards / totalAwards) * 100) || 0) + '%'}" class="activeProgress"></view>
+                </view>
+            </view>
+
             <div class="list clearfix">
                 <div class="item  " :class="{
                     bg2: emptyCellIndexes.includes(s + 1),
                     bg3: selectGrid.includes(s + 1),
                 }" v-for="(i, s) in totalAwards" :key="i" @click="getIndexAraeds(s + 1)">
-                    <view style="width: 60rpx;height: 60rpx;position: relative;">{{ s + 1 }}
+                    <view style="width: 50rpx;height: 50rpx;position: relative;">{{ s + 1 }}
 
                      <view class="max_bomb" v-if="gachaBombRecord.cellIndex.includes(s + 1)"></view>
                        <view class="bomb_bg "
@@ -110,13 +119,15 @@
                     
                     </view>
                  
-                    <view v-if="((s + 1) % 8 == 0) || (s-1 == (totalAwards.length))" class="line"></view>
+                    <view v-if="((s + 1) % 10 == 0) || (s-1 == (totalAwards.length))" class="line"></view>
                 </div>
             </div>
           
 
          
-          <view @click="onpay(0, 1)" class="foot-btn" style="padding-top: 56rpx;" v-if="showBtn">
+          <block v-if="totalAwards">
+
+           <view @click="onpay(0, 1)" class="foot-btn" style="padding-top: 56rpx;" v-if="showBtn">
             <view class="special_btn1 flex_c">
                 <view class="">立即抽赏</view>
                 <view class="number">￥{{
@@ -141,34 +152,35 @@
                     )
                 }}抽起）</view>
             </view>
-        </view>
-        <view class="foot-btn flex_r flex_jb flex_ac" v-else-if="
-            AReward.userBetCount == -1 && AReward.userBetCountDaily == -1
-        ">
-          
-            <view class="flex_r">
-                <view class="btn-item suiji" @click="RandomShow = true"></view>
-                <view class="btn-item btn-item2 all" @click="onpay(2)"></view>
+           </view>
+            <view class="foot-btn flex_r flex_jb flex_ac" v-else-if="
+                AReward.userBetCount == -1 && AReward.userBetCountDaily == -1
+            ">
+            
+                <view class="flex_r">
+                    <view class="btn-item suiji" @click="RandomShow = true"></view>
+                    <view class="btn-item btn-item2 all" @click="onpay(2)"></view>
+                </view>
+                <view class="btn-item confirm" @click="onpay(0)">确定</view>
             </view>
-              <view class="btn-item confirm" @click="onpay(0)">确定</view>
-        </view>
-        <view class="foot-btn" style="padding-top: 56rpx;"  v-else
-            :class="{ forbid_bg: AReward.userBetCount == 0 || AReward.userBetCountDaily == 0, }"
-            @click="AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 ? (showDiscounts = true) : onpay(0, 3)">
-            <view class="special_btn1 flex_c">
-                <view class="">立即抽赏</view>
+            <view class="foot-btn" style="padding-top: 56rpx;"  v-else
+                :class="{ forbid_bg: AReward.userBetCount == 0 || AReward.userBetCountDaily == 0, }"
+                @click="AReward.userBetCount == 0 || AReward.userBetCountDaily == 0 ? (showDiscounts = true) : onpay(0, 3)">
+                <view class="special_btn1 flex_c">
+                    <view class="">立即抽赏</view>
+                </view>
             </view>
-        </view>
+          </block>
         </div>
       
 
-        <div class="yunlanBtn" @click="visible = true">
+        <!-- <div class="yunlanBtn" @click="visible = true"> -->
             <!-- <div class="l_dit"></div>
             <div class="r_dit"></div>
             <img class="ico_img" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_small.png" alt="" />
             <img class="ico_txt" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_txt.png" alt="" />
             <img class="ico_light" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_light.png" alt="" /> -->
-        </div>
+        <!-- </div> -->
         <div class="recordBtn" @click="getRewardHistory"></div>
         <!-- 过场动画 , { opacity: !cartoonShow } -->
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
@@ -689,7 +701,7 @@ export default {
           this.shareTo = false;
           if(!window.mgtv)return
               mgtv.shareTo({
-                title:  "疯狂洞洞乐 : " + this.gachainfo.themeName,
+                title:  "疯狂炸弹赏 : " + this.gachainfo.themeName,
                 url: `https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent('name=ddl&id='+this.gachaId)}`,
                 shareType:type==1? "wechat":'moments',
                 success: () => {
@@ -999,12 +1011,50 @@ export default {
     position: relative;
     padding-top: 47rpx;
     // padding-top: 186rpx;
-
+   .ddlProgress{
+    display: flex;
+    align-items: center;
+    color: #494C5A;
+    top: 50rpx;
+    font-size: 24rpx;
+    position: absolute;
+    //    top: 120rpx;
+        left: 23%;
+        // transform: translateX(-50%);
+    .progress{
+        margin-left: 8rpx;
+        width: 210rpx;
+        height: 28rpx;
+        background: #FFFAE4;
+        border-radius: 24rpx;
+        border: 2rpx solid #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 24rpx;
+        font-size: 28rpx;
+        font-family: '倍数欧气值';
+        position: relative;
+        .activeProgress{
+            height: 24rpx;
+            background: linear-gradient( 90deg, #FCF85D 0%, #FFD200 100%);
+            border-radius: 24rpx;
+            position: absolute;
+            top: 0rpx;
+            left: 0rpx;
+        }   
+        text{
+            position: relative;
+            z-index: 4;
+        }
+    }
+   }
     .bomb_box {
         position: absolute;
         // top: 120rpx;
-        left: 50%;
-        transform: translateX(-50%);
+        // left: 50%;
+        // transform: translateX(-50%);
+        right: 32rpx;
         display: flex;
         width: fit-content;
 
@@ -1315,7 +1365,7 @@ export default {
 
     .tit {
         position: absolute;
-        left: 44rpx;
+        left: -14rpx;
         top: 4rpx;
         font-weight: 800;
         font-size: 24rpx;
@@ -1364,21 +1414,21 @@ export default {
         // padding-top: 100px;
 
         .item {
-            width: 60rpx;
-            height: 60rpx;
+            width: 50rpx;
+            height: 50rpx;
             text-align: center;
-            line-height: 60rpx;
-            font-size: 24rpx;
+            line-height: 50rpx;
+            font-size: 18rpx;
             background-size: 100% 100%;
-            margin-left: 6rpx;
+            margin-left: 2rpx;
           text-shadow: 1px 1px 2px rgba(73,146,181,0.7);
-text-stroke: 0.4px #1E92CA;
-text-align: center;
-font-style: normal;
-text-transform: none;
--webkit-text-stroke:  0.4px #1E92CA;
-color: #fff;
-font-family: '倍数欧气值';
+            text-stroke: 0.4px #1E92CA;
+            text-align: center;
+            font-style: normal;
+            text-transform: none;
+            -webkit-text-stroke:  0.4px #1E92CA;
+            color: #fff;
+            font-family: '倍数欧气值';
             float: left;
             background: url("https://img.shinemang.com/gachaStatic/ddl/bg0.png");
           
@@ -1427,8 +1477,8 @@ font-family: '倍数欧气值';
             position: absolute;
             top: 0;
             left: 0;
-            width: 60rpx;
-            height: 60rpx;
+            width: 50rpx;
+            height: 50rpx;
             background: url("https://img.shinemang.com/gachaStatic/ddl/zd.png");
             background-size: 100% 100%;
         }

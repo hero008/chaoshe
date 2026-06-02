@@ -569,7 +569,7 @@ export default {
 
                              },
                              fail:(err)=>{
-                                console.log(err)
+                              that.close();
                                  
                              }
 

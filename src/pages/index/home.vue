@@ -8,11 +8,11 @@
                 :style="{ height: MBInfo().height - 2 + 'px' }" /> -->
             <!-- 微信小程序不用-->
             <view class="notice-bar flex_r flex_jb flex_ac" :style="{ height: MBInfo().height + 'px', width: boundW }">
-                <view class="notice_con flex_r flex_ac"
-                    @click="goto('/page-activity/notice/notice-details', { id: noticeList[0].id })">
+                <view @click="goto('/page-activity/notice/notice-list')"class="notice_con flex_r flex_ac"
+                   >
                     <view class="l_ico flex_jc flex_ac">
                         <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico">
-                        <view>公告栏</view>
+                        <view>消息中心</view>
                     </view>
                     <u-notice-bar v-if="notices.length" :text="notices[0]" :fontSize="11" color="#1A1A1A" bgColor="transparent"></u-notice-bar>
                 </view>
@@ -35,7 +35,7 @@
             <!-- 微信小程序不需要 中间的--> 
             <view class="ad-entry flex_r flex_jb">
                 <scroll-view class="ad_entry_scrollView" style="white-space: nowrap;height: 280rpx;"  scroll-x>
-                     <img  v-for="value in gachaList" :key="value.url" :src="value.url" alt="">
+                     <img @click.stop="toGacha(index)" v-for="(value,index) in gachaList" :key="value.url" :src="value.url" alt="">
                 </scroll-view>
                 <!-- <homeInfiniteScroll @toGacha="toGacha" :list="gachaList"></homeInfiniteScroll> -->
                 <!-- <view>
@@ -163,7 +163,7 @@ export default {
                     name: "无限赏",
                 },
                  {
-                    name: "洞洞赏",
+                    name: "炸弹赏",
                 },
             ],
             // navbar: [
@@ -269,7 +269,7 @@ export default {
                 if(item.type == 'top'){
                    this.scrollTop = this.scrollTop1
                    this.$nextTick(() => {
-                        let px = 656 * this.SystemInfo.screenWidth /750 ;
+                        let px = 640 * this.SystemInfo.screenWidth /750 ;
                         this.scrollTop=px
                    })
             }
@@ -606,7 +606,7 @@ export default {
 
 
             .l_ico {
-                width: 132rpx;
+                width: 152rpx;
                 line-height: 100%;
                 background: #1A1A1A;
                 border-radius: 32rpx 32rpx 32rpx 32rpx;

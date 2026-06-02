@@ -3,30 +3,30 @@
     <view class="my" :class="{ mpWeixin: ISmp() }">
         <div class="user_sugar flex_r flex_ac flex_jb" v-if="userInfo.name">
             <div class="user_info flex_r flex_ac">
-               <view  @click="updateUser" style="height: 164rpx;height: 164rpx;border:4rpx solid #fff;border-radius: 50%;position: relative;">
+                 <!-- @click="updateUser"  -->
+               <view style="height: 164rpx;height: 164rpx;border:4rpx solid #fff;border-radius: 50%;position: relative;">
                  <image :src="userInfo.avatarUrl | active" class="profile" mode="aspectFill" />
-                 <view class="edit">
+                 <!-- <view class="edit">
                     <image
                         src="https://img.shinemang.com/gachaStatic/my/editIcon.png"
                         mode="scaleToFill"
                     />
-                 </view>
+                 </view> -->
                </view>
                 <div class="info">
                     <div class="u_name">
-                        <div>{{ userInfo.name }}</div>
+                        <div class="ellipsis">{{ userInfo.name }}</div>
 
-                        <div @click="
+                        <!-- <div @click="
                             goto('/pages/common/rulepop', {
                                 val: 'PayoutLevel',
                             }) " class="vip">
                            <view class="vip_icon" >
-                            <!-- <img class="icon"
-                                :src="`https://img.shinemang.com/gachaStatic/static/img/my/Lv.${userInfo.level}.png`" /> -->
+                         
                             <view class="class">Lv.{{ userInfo.level }}</view>
                         </view>
                        
-                        </div>
+                        </div> -->
                          <!-- <img @click="
                             goto('/pages/common/rulepop', {
                                 val: 'PayoutLevel',
@@ -43,14 +43,14 @@
             </div>
             <!-- <div class="editInfo" @click="updateUser">编辑资料</div> -->
         </div>
-        <div class="user_sugar" v-else>
+        <!-- <div class="user_sugar" v-else>
             <div class="user_info flex_r flex_ac">
                 <image class="profile" mode="aspectFill" />
                 <div class="login_btn" @click="login">
                     请登录
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="module_bar">
             <!-- #ifndef MP-WEIXIN -->
             <!-- <div class="gold flex_r flex_ac flex_jb" @click="userInfo.id ? goto('/page-a/balance/topUp') : null">
@@ -195,11 +195,11 @@ export default {
                
               
               
-                {
-                    name: "https://img.shinemang.com/gachaStatic/my/loginOutIcon.png",
-                    path: "/pages/index/index",
-                    title: "注销账户",
-                },
+                // {
+                //     name: "https://img.shinemang.com/gachaStatic/my/loginOutIcon.png",
+                //     path: "/pages/index/index",
+                //     title: "注销账户",
+                // },
                 // {
                 //     name: "https://img.shinemang.com/gachaStatic/static/img/my/vibrate.png",
                 //     path: "/pages/my/agreementList",
@@ -211,11 +211,11 @@ export default {
                 //     path: "/page-activity/welfare/index",
                 //     title: "任务活动",
                 // },
-                {
-                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico17.png",
-                    // path:"/pages/my/agreementList",
-                    title: "实名认证",
-                },
+                // {
+                //     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico17.png",
+                //     // path:"/pages/my/agreementList",
+                //     title: "实名认证",
+                // },
             ],
             downShow: false,
             appversion: this.appversion,
@@ -386,6 +386,7 @@ export default {
 }
 
 .user_sugar {
+    padding-top: 20rpx;
     .user_info {
         .profile {
             width: 160rpx;
@@ -419,9 +420,10 @@ export default {
             font-weight: 800;
             margin-bottom: 8rpx;
             color: #1A1A1A;
+            max-width: 500rpx;
             display: flex;
             align-items: center;
-            justify-content: center;
+            // justify-content: center;
             .vip{
                 width: 116rpx;
                 height: 56rpx;
@@ -441,7 +443,7 @@ export default {
 
         .user_name {
             display: flex;
-            align-items: flex-end;
+            // align-items: flex-end;
 
             .u_ID {
                 color: #1A1A1A;

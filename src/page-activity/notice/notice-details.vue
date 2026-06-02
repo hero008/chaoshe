@@ -1,6 +1,6 @@
 <template>
-    <view class="notice-details">
-        <view class="icon" @click.stop="gateBack"></view>
+    <view class="notice-details" :style="{paddingTop: MBInfo().top + 'px'}">
+        <view class="icof" style="font-size: 50rpx; margin-right: 8px;margin-left: 16px;" @click.stop="gateBack">&#xe72c;</view>
         <view class="n_info" :style="{ height: conHeight }">
             <view class="l_tit">
                 <view class="n_name ellipsis2">{{ content.title }}</view>

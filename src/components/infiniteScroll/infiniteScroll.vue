@@ -26,7 +26,7 @@ export default {
     // 固定速度（px/秒），默认80
     speed: {
       type: Number,
-      default: 80
+      default: 40
     },
     list: {
       type: Array,

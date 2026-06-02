@@ -146,9 +146,9 @@ export default {
         return {
             navbar: [
                 // { txt: "一番赏", val: 1 },
-                { txt: "扭蛋机", val: 2 },
+                { txt: "扭蛋赏", val: 2 },
                 { txt: "无限赏", val: 3 },
-                { txt: "洞洞乐", val: 4 },
+                { txt: "炸弹赏", val: 4 },
                 // { txt: "芒星赏", val: 5 },
                 // { txt: "一网打尽", val: 6 },
             ],

@@ -153,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form_item" style="margin-top: 48rpx;">
+                    <!-- <div class="form_item" style="margin-top: 48rpx;">
                         <div class="txt">加钱换购</div>
                         <div class="inp_box flex_r flex_ac">
                             <u--input placeholder="请输入金额" type="number" :maxlength="5" v-model="addMoney"
@@ -162,7 +162,7 @@
                                     " />
                             <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico2.png" class="ico" />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form_item" style="margin-top: 48rpx;">
                         <div class="txt flex_r flex_ac flex_jb">
                             <span>留言</span>
@@ -328,10 +328,10 @@
                         </div>
                         <view v-else class="random box_ico"></view>
                     </div>
-                    <div class="money_box flex_r flex_ac">
+                    <!-- <div class="money_box flex_r flex_ac">
                         <div class="tit">出价金额：</div>
                         <div class="money">{{ Number(addMoney) || "无" }}</div>
-                    </div>
+                    </div> -->
                     <view class="" v-show="one_leaveMessage.length > 0">
                         <div class="tit">留言：</div>
                         <div class="leave">{{ one_leaveMessage }}</div>
@@ -510,10 +510,10 @@ export default {
             this.popupShow2 = false;
         },
         onClickRelTransaction() {
-            if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
-                this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
-                return;
-            }
+            // if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
+            //     this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
+            //     return;
+            // }
             if (this.transactionType == 1) {
                 // 一口价
                 if (!this.isTransaction) return;

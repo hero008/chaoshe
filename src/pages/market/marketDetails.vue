@@ -417,10 +417,10 @@ export default {
                     },
                 });
             } else {
-                if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
-                    this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
-                    return;
-                }
+                // if (!this.userInfo.isAuthenticated && !this.closeAutonym) {
+                //     this.showAutonym = !this.userInfo.isAuthenticated; // 是否已实名认证;
+                //     return;
+                // }
                 let enable = true;
                 for (let v of this.otherList) {
                     if (v.userId == this.userInfo.id) enable = false;

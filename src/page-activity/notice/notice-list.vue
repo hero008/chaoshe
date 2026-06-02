@@ -1,13 +1,13 @@
 <template>
     <view class="notice-list">
-        <view class="header">
+        <view :style="{paddingTop: MBInfo().top + 'px' }" class="header">
             <view class="title flex_r flex_ac"
-                ><view class="icon" @click.stop="gateBack"></view>
+                ><view style="font-size: 50rpx; margin-right: 8px;" class="icof" @click.stop="gateBack">&#xe72c;</view>
                 <view class="txt">资讯中心</view>
                 <!-- #ifndef MP-WEIXIN -->
-                <view class="icon1 flex_r flex_ac" @click="onDeleteAll"
+                <!-- <view class="icon1 flex_r flex_ac" @click="onDeleteAll"
                     ><view class="sba"></view><view class="text">全部已读</view>
-                </view>
+                </view> -->
                 <!-- #endif -->
             </view>
             <view class="wrapper">
@@ -36,7 +36,7 @@
                 </u-sticky>
             </view>
         </view>
-        <!-- #ifndef MP-WEIXIN -->
+
         <scroll-view
             scroll-y="true"
             class="list"
@@ -46,14 +46,17 @@
             @touchmove.stop="touchmove"
             @touchend.stop="touchend"
             v-if="showList"
+            :style="{
+                height:conHeight
+            }"
         >
-        <!-- #endif -->
+       <!-- #endif -->
         <!-- #ifdef MP-WEIXIN -->
         <!-- <scroll-view
             scroll-y="true"
             class="list"
             @scrolltolower="onReachScollBottom"
-            :lower-threshold="400"
+            :lower-threshold="4 00"
             v-if="showList"
         > -->
          <!-- #endif -->
@@ -228,6 +231,15 @@ export default {
     },
     computed: {
         ...mapState(["mail"]),
+    
+        conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th =  va.top + 95;
+            let str = h - th + "px";
+            return str;
+       
+    },
     },
 };
 </script>
@@ -245,16 +257,16 @@ export default {
     height: 100vh;
     overflow: hidden;
     padding-bottom: 40rpx;
-    background: linear-gradient(72deg, #e1d6f8 0%, #f8e7ed 100%);
-    &::before {
-        content: "";
-        width: 100vw;
-        height: calc(100vh - 0rpx);
-        position: absolute;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
-    }
+    background-color: #F5F6F8;
+    // &::before {
+    //     content: "";
+    //     width: 100vw;
+    //     height: calc(100vh - 0rpx);
+    //     position: absolute;
+    //     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
+    // }
     .header {
-        position: sticky;
+        position: relative;
         top: 0; /* 固定在顶部 */
         z-index: 100; /* 确保在内容上方 */
         width: 100%;

@@ -125,7 +125,7 @@ export default {
                     path: "/pages/chaowan/gachasList",
                 },
                 {
-                    name: "疯狂洞洞乐",
+                    name: "疯狂炸弹赏",
                     tegs: ["Lucky"],
                     txt: "童年经典再现",
                     adimg: "https://img.shinemang.com/gachaStatic/static/img/cw-new/c8.png",
