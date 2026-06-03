@@ -2,8 +2,9 @@
 <script>
 import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
-import { isMTVapp, mgTvIsLogin } from "./utils/mgtv";
+import { isMTVapp, mgTvIsLogin,parseQueryString } from "./utils/mgtv";
 import store from "./store";
+
 export default {
     data() {
         return {
@@ -118,7 +119,94 @@ export default {
         },
     },
     onLaunch: function () {
-        uni.setStorageSync("currentChange", 0);
+          uni.setStorageSync("currentChange", 0);
+         
+         if(window.mgtv){
+            const parmas  = mgtv.getLaunchOptionsSync()
+         
+             const data =parmas ? parmas.path :'';
+             uni.setStorageSync('parmasPath',data);
+               if(data){
+                 const query = parseQueryString(data);
+                 if(query && query.inviteCode){
+                     uni.setStorageSync('inviteCode',query.inviteCode)
+                 }
+                 if(query && query.gachaName){
+                     uni.setStorageSync('gachaName',query.gachaName)
+                 }
+                 if(query && query.gachaId){
+                     uni.setStorageSync('gachaId',query.gachaId)
+                 }
+               }
+
+               const query = mgtv.getLaunchOptionsSync().query;
+               uni.setStorageSync('query',JSON.stringify(query));
+               if(query && query.inviteCode){
+                   uni.setStorageSync('inviteCode',query.inviteCode)
+               }
+               if(query.gachaName){
+                   uni.setStorageSync('gachaName',query.gachaName)
+               }
+               if(query.gachaId){
+                   uni.setStorageSync('gachaId',query.gachaId)
+               }
+             
+
+          let isLogin = mgtv.isLogin();
+          console.log(isLogin,'isLogin')
+          if(!isLogin){
+                uni.removeStorageSync("aToken");
+                uni.removeStorageSync("rToken");
+                uni.removeStorageSync("userInfo");
+                uni.removeStorageSync('uuid')
+                this.goto("/pages/my/loading")
+           
+          }else{
+            if(this.userInfo){
+                mgtv.getSetting({
+                success(res) {
+                if (!res.authSetting["scope.userProfile"]) {
+                        uni.removeStorageSync("aToken");
+                        uni.removeStorageSync("rToken");
+                        uni.removeStorageSync("userInfo");
+                        uni.removeStorageSync('uuid')
+                         this.goto("/pages/my/loading")
+                        // console.log('resres')
+                        //  goto("/pages/my/loading")
+                } else {
+                    mgtv.getUserProfile({
+                    success(res) {
+                            const uuid = res.data.uuid;
+                            const localUUid = uni.getStorageSync('uuid')
+                            console.log(localUUid);
+                         if(localUUid != uuid){
+                            uni.removeStorageSync("aToken");
+                            uni.removeStorageSync("rToken");
+                            uni.removeStorageSync("userInfo");
+                            uni.removeStorageSync('uuid')
+                             this.goto("/pages/my/loading")
+                            // goto("/pages/my/loading")
+                          }
+
+                    },
+                    fail(res) {
+                      
+                    },
+                    });
+                }
+                },
+                fail(res) {
+              
+                },
+            });
+            }
+          }
+         }
+  
+  
+        
+
+
         // #ifdef APP-PLUS
         let that = this;
         // 获取网络类型（4G,5G,wifi,none[无网络]）
@@ -135,7 +223,7 @@ export default {
         // ...mapMutations(["updateMgTvLogin"]),
     },
     onLoad() {},
-    computed: { ...mapState(["popupWebSocket"]) },
+    computed: { ...mapState(["popupWebSocket","userInfo"]) },
     onShow: function () {
         if (
             !this.popupWebSocket &&

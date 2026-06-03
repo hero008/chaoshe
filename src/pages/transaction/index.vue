@@ -383,7 +383,7 @@ export default {
             buyRewardIds: [],
             searchTxt: undefined, // 搜索赏品名称
             searchItem: [], // 搜索到的赏品结果
-            isSetPrice: true, // 是否设置一口价
+            isSetPrice: false, // 是否设置一口价
             onePrice: undefined, // 一口价
             addMoney: undefined, // 加钱换购
             one_leaveMessage: "", // 留言

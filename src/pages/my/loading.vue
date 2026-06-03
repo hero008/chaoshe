@@ -49,6 +49,7 @@ export default {
             // this.webLogin();
             // return;
           this.loginMgtv((res)=>{
+             console.log('数据分类撒酒疯垃圾22')
             
             //  let uuid = res.uuid;
             // let ticket = res.ticket;
@@ -68,6 +69,7 @@ export default {
                 nickname:res.nickName,
                 avatar_url:res.avatarUrl
             }).then((res) => {
+              console.log(res);
                 if (res.code) {
                 uni.$u.toast(res.message);
                 this.show = true;
@@ -75,12 +77,14 @@ export default {
                 } else {
                 uni.setStorageSync("aToken", res.accessToken);
                 uni.setStorageSync("rToken", res.refreshToken);
+                uni.setStorageSync("uuid", res.uuid);
                 that.$store.commit("updateInfo", res);
                 that.backtrack();
                 }
             });
                // 登录成功// 获取到res 的用户信息,在去登录
           },(err)=>{
+            console.log('数据分类撒酒疯垃圾')
                  //登录失败 
                 // uni.$u.toast('登录失败');
                 // that.backtrack();
@@ -102,7 +106,6 @@ export default {
         }
     },
     loginMgtv(success_, fail_) {
-
       let isLogin = mgtv.isLogin();
       if (!isLogin) {
         mgtv.login({
@@ -121,7 +124,6 @@ export default {
     getUserInfo(success_, fail_) {
       mgtv.getSetting({
         success(res) {
-          console.log("getSetting:" + JSON.stringify(res.authSetting));
           if (!res.authSetting["scope.userProfile"]) {
             mgtv.authorize({
               scope: "scope.userProfile",

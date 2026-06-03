@@ -70,6 +70,8 @@ let logout = () => {
     uni.removeStorageSync("aToken")
     uni.removeStorageSync("userInfo")
 
+    uni.removeStorageSync('uuid')
+
     // 登出,判断是否是 是芒果环境,如果过是芒果环境,
     // 判断是否登录,如果没登录,不管他,如果登录了, 到pages/my/loading 调用 芒果登录.
     // setTimeout(() => { goto("/pages/login/login") }, 0)

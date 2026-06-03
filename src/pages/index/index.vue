@@ -33,6 +33,7 @@ import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { mapState } from "vuex";
 import { post } from "@/utils/api.js";
 import { getWebSocket } from "../../utils/webSocket";
+import { goto } from "../../utils/fun";
 export default {
     data() {
         return {
@@ -62,6 +63,69 @@ export default {
         ...mapState(["popupWebSocket", 'userInfo']),
     },
     async onLoad(da) {
+         if(this.userInfo && this.userInfo.id){
+            let gachaName = uni.getStorageSync('gachaName');
+            let gachaId = uni.getStorageSync('gachaId');
+            if(gachaName && gachaId){
+                uni.removeStorageSync('gachaName');
+                uni.removeStorageSync('gachaId');
+                if(gachaName == 'ddl'){
+                    this.goto('/pages/product/dongle',{id:gachaId})
+                }else if(gachaName == 'ndj'){
+                     this.goto("/pages/product/niudan", { id: gachaId });
+                }else if(gachaName == 'wxs'){
+                     this.goto("/pages/product/chaowanshang", { id: gachaId });
+                }
+              }
+         }
+           // 检查mg登录,如果没有登录,去登录
+        // if(window.mgtv){
+        //   let isLogin = mgtv.isLogin();
+        //   if(!isLogin){
+        //         uni.removeStorageSync("aToken");
+        //         uni.removeStorageSync("rToken");
+        //         uni.removeStorageSync("userInfo");
+        //         uni.removeStorageSync('uuid')
+           
+        //   }else{
+        //     if(this.userInfo){
+        //         mgtv.getSetting({
+        //         success(res) {
+        //         if (!res.authSetting["scope.userProfile"]) {
+        //                 uni.removeStorageSync("aToken");
+        //                 uni.removeStorageSync("rToken");
+        //                 uni.removeStorageSync("userInfo");
+        //                 uni.removeStorageSync('uuid')
+        //                 console.log('resres')
+        //                  goto("/pages/my/loading")
+        //         } else {
+        //             mgtv.getUserProfile({
+        //             success(res) {
+        //                  console.log('resr3333es')
+        //                     const uuid = res.data.uuid;
+        //                     const localUUid = uni.getStorageSync('uuid')
+        //                  if(localUUid != uuid){
+        //                     uni.removeStorageSync("aToken");
+        //                     uni.removeStorageSync("rToken");
+        //                     uni.removeStorageSync("userInfo");
+        //                     uni.removeStorageSync('uuid')
+        //                     goto("/pages/my/loading")
+        //                   }
+
+        //             },
+        //             fail(res) {
+                      
+        //             },
+        //             });
+        //         }
+        //         },
+        //         fail(res) {
+              
+        //         },
+        //     });
+        //     }
+        //   }
+        // }
         if (da.chaowanInx) this.chaowanInx = Number(da.chaowanInx); // 潮玩的tab 传进来
         let a = 0;
         a = Object.keys(this.userInfo).length;
@@ -84,19 +148,7 @@ export default {
             getWebSocket(this); // 链接socket
         }
 
-        // 检查mg登录,如果没有登录,去登录
-        if(window.mgtv){
-          let isLogin = mgtv.isLogin();
-          console.log(isLogin,'检查登录')
-          if(!isLogin){
-            localStorage.removeItem('aToken');
-            localStorage.removeItem('rToken');
-            localStorage.removeItem('userInfo');
-            // uni.navigateTo({
-            //   url: '/pages/my/loading'
-            // });
-          }
-        }
+     
 
     },
     onShow() {

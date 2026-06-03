@@ -314,6 +314,7 @@ export default {
                         uni.removeStorageSync("aToken");
                         uni.removeStorageSync("rToken");
                         uni.removeStorageSync("userInfo");
+                        uni.removeStorageSync('uuid')
                         that.$store.commit("updateInfo", {});
                     }
                     if (

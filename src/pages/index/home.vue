@@ -218,23 +218,8 @@ export default {
         });
         // #endif
 
-        if(this.userInfo && this.userInfo.id){
-            if(window.mgtv){
-               const data = mgtv.getLaunchOptionsSync().path;
-               if(data){
-                 const query = parseQueryString(data);
-                 if(query && query.name){
-                    if(query.name == 'ddl'){
-                        this.goto('/pages/product/dongle',{id:query.id})
-                    }else if(query.name == 'ndj'){
-                         this.goto("/pages/product/niudan", { id: query.id });
-                    }else if(query.name == 'wxs'){
-                         this.goto("/pages/product/chaowanshang", { id: query.id });
-                    }
-                 }
-               }
-            }
-        }
+       
+      
     },
     created() {
         this.getBannerList();

@@ -18,7 +18,7 @@ export default {
         }
     },
     onLoad(da) {
-        if (da.inviteCode) uni.setStorageSync('inviteCode', da.inviteCode);
+        // if (da.inviteCode) uni.setStorageSync('inviteCode', da.inviteCode);
     },
     //1.配置发送给朋友
     onShareAppMessage() {
