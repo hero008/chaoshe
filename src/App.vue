@@ -4,6 +4,8 @@ import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
 import { isMTVapp, mgTvIsLogin,parseQueryString } from "./utils/mgtv";
 import store from "./store";
+import {goto} from "./utils/fun";
+
 
 export default {
     data() {
@@ -139,6 +141,9 @@ export default {
                  }
                }
 
+
+            //    console.log(mgtv.getLaunchOptionsSync())
+
                const query = mgtv.getLaunchOptionsSync().query;
                uni.setStorageSync('query',JSON.stringify(query));
                if(query && query.inviteCode){
@@ -153,13 +158,12 @@ export default {
              
 
           let isLogin = mgtv.isLogin();
-          console.log(isLogin,'isLogin')
           if(!isLogin){
                 uni.removeStorageSync("aToken");
                 uni.removeStorageSync("rToken");
                 uni.removeStorageSync("userInfo");
                 uni.removeStorageSync('uuid')
-                this.goto("/pages/my/loading")
+                // goto("/pages/my/loading")
            
           }else{
             if(this.userInfo){
@@ -170,9 +174,9 @@ export default {
                         uni.removeStorageSync("rToken");
                         uni.removeStorageSync("userInfo");
                         uni.removeStorageSync('uuid')
-                         this.goto("/pages/my/loading")
-                        // console.log('resres')
                         //  goto("/pages/my/loading")
+                    
+                      
                 } else {
                     mgtv.getUserProfile({
                     success(res) {
@@ -184,8 +188,8 @@ export default {
                             uni.removeStorageSync("rToken");
                             uni.removeStorageSync("userInfo");
                             uni.removeStorageSync('uuid')
-                             this.goto("/pages/my/loading")
-                            // goto("/pages/my/loading")
+                            //  goto("/pages/my/loading")
+                          
                           }
 
                     },

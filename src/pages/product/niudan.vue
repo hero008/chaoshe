@@ -49,12 +49,12 @@
                         mode="scaleToFill"
                     /><text>规则</text>
                 </view>
-                 <!-- <view class="ico-share ico-t" >
+               <view @click="toShare" class="ico-share ico-t" >
                     <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
-                </view> -->
+                </view>
                 <!-- <view class="ico-r">点击试玩</view> -->
                 <view class="tit">
                      <view class="price">
@@ -369,6 +369,15 @@ export default {
         this.saveFile();
     },
     methods: {
+         toShare(){
+            if(window.mgtv){
+                mgtv.showShareMenu({
+                    title: "扭蛋赏 : " + this.gachainfo.themeName,
+                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ndj&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode)}`
+                })
+            }
+        },
         ...mapMutations(["UppayMessage"]),
         async saveFile() {
             this.newFilePath = await saveFileToLocal(

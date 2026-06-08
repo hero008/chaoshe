@@ -49,7 +49,6 @@ export default {
             // this.webLogin();
             // return;
           this.loginMgtv((res)=>{
-             console.log('数据分类撒酒疯垃圾22')
             
             //  let uuid = res.uuid;
             // let ticket = res.ticket;

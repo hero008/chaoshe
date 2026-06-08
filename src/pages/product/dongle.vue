@@ -14,12 +14,12 @@
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
-       <!-- <view  @click="onShare" class="leftBox ico-share">
+       <view  @click="toShare" class="leftBox ico-share">
               <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
-        </view>  -->
+        </view> 
         <!-- <div class="hint btns">
             <div class="hint_box flex_r flex_jc flex_ac">
                 <div class="hint_item">
@@ -420,6 +420,15 @@ export default {
         this.saveFile();
     },
     methods: {
+     toShare(){
+            if(window.mgtv){
+                mgtv.showShareMenu({
+                    title:"炸弹赏 : " + this.gachainfo.themeName,
+                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddl&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode)}`
+                })
+            }
+        },
         ...mapMutations(["UppayMessage"]),
         async saveFile() {
             this.newFilePath = await saveFileToLocal(

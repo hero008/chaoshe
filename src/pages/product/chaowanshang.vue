@@ -10,12 +10,12 @@
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
-        <!-- <view class="leftBox ico-share">
+     <view @click="toShare" class="leftBox ico-share">
               <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
                     /><text>分享</text>
-        </view> -->
+        </view> 
         <scroll-view :style="{ height: conHeight, }" scroll-y="true" @scroll="onScroll">
             <view class="chaowanshang_con">
                 <view class="gashapon_machine_box">
@@ -292,10 +292,11 @@
 <script>
 import { post } from "@/utils/api.js";
 import { uniShare } from "@/utils/fun.js";
-import { mapMutations } from "vuex";
+import { mapMutations,mapState } from "vuex";
 import { Postpayment } from "@/utils/pay.js";
 import discounts from "@/components/modules/x-discounts.vue";
 import ball from "@/page-activity/ball/ball.vue";
+
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
@@ -374,6 +375,7 @@ export default {
         xPrize
     },
     computed: {
+       ...mapState(["userInfo"]),
         conHeight() {
             let h = this.SystemInfo.screenHeight;
             let va = this.MBInfo();
@@ -392,6 +394,19 @@ export default {
         this.loadDetail();
     },
     methods: {
+    //     onShareMessage(){
+          
+    //     }
+    //    ,
+     toShare(){
+            if(window.mgtv){
+                mgtv.showShareMenu({
+                    title:"无限赏 : " + this.gachainfo.themeName,
+                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode)}`
+                })
+            }
+        },
         recordsTab(value){
             console.log(value);
             this.recordLevelName = value
@@ -433,6 +448,15 @@ export default {
                     this.chaoPlay(this.previewType);
                     this.getChaoyou()
                     this.getData()
+
+                //   mgtv.onShareAppMessage(() => {
+                //       console.log('分享了')
+                //        return {
+                //         path:encodeURIComponent("gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode)
+                //         //    query:"gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode,
+                //       }
+                //  })
+                    // this.onshareMessage()
                 }
             });
 
@@ -469,16 +493,16 @@ export default {
             this.getData();
         },
         getChaoyou() {
-            post("v1/activity/chaoyou", { gacha_id: this.gachaId, box_index: this.boxId }).then((res) => {
-                if (!res.code) {
-                    if (Number(res.phaseId)) {
-                        this.chqShow = true
-                        const maxValue = Math.min(...res.cell.map(item => item.flowAmount));
-                        const schedule = 40 - (((res.historyFlowAmount / maxValue) * 100) / 100) * 100
-                        this.afterTop = Math.max(-60, Math.min(40, Math.ceil(schedule)))
-                    }
-                }
-            });
+            // post("v1/activity/chaoyou", { gacha_id: this.gachaId, box_index: this.boxId }).then((res) => {
+            //     if (!res.code) {
+            //         if (Number(res.phaseId)) {
+            //             this.chqShow = true
+            //             const maxValue = Math.min(...res.cell.map(item => item.flowAmount));
+            //             const schedule = 40 - (((res.historyFlowAmount / maxValue) * 100) / 100) * 100
+            //             this.afterTop = Math.max(-60, Math.min(40, Math.ceil(schedule)))
+            //         }
+            //     }
+            // });
         },
         // gachas() {
         //     let obj = {};
