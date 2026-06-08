@@ -58,7 +58,7 @@
                 <!-- <view class="ico-r">点击试玩</view> -->
                 <view class="tit">
                      <view class="price">
-                        ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }} / 抽
+                        ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }}/抽
                      </view>
                 </view>
                 <view class="multiple nb" v-if="gachainfo.costAwardMultiple > 1">

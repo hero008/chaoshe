@@ -45,7 +45,7 @@
                         </view> -->
                         <!-- #endif -->
                     
-                        <view class="price dyzt" :style="{ '--after-content': `'.${mantissa}'` }"><view>￥{{ (price)
+                        <view class="price dyzt" ><view>￥{{ (price)
                         }}/抽</view> </view>
 <!--                     
                         <view class="multiple " v-if="gachainfo.costAwardMultiple > 1">

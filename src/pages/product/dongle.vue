@@ -52,7 +52,7 @@
        
                <view class="tit">
                      <view class="price">
-                        ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }} / 抽
+                        ￥{{ (discountPrice > 0 && discountPrice) || price || "0.00" }}/抽
                      </view>
                 </view>
             <!-- <div class="pro">
