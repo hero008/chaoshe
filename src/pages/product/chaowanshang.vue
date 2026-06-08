@@ -45,7 +45,7 @@
                         </view> -->
                         <!-- #endif -->
                     
-                        <view class="price dyzt" :style="{ '--after-content': `'.${mantissa}'` }"><view>￥{{ Math.floor(price)
+                        <view class="price dyzt" :style="{ '--after-content': `'.${mantissa}'` }"><view>￥{{ (price)
                         }}/抽</view> </view>
 <!--                     
                         <view class="multiple " v-if="gachainfo.costAwardMultiple > 1">
@@ -98,7 +98,7 @@
                                         <span>单抽价：</span>
                <!-- :style="{ '--after-content': `'.${mantissa}'` }" -->
                                         <span class="corr" >￥{{
-                                            Math.floor(price)
+                                           (price)
                                         }}</span>
                                      
                                     </div>
