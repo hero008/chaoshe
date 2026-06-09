@@ -111,11 +111,19 @@
 
             </view>
         </scroll-view>
-        <!-- <x-first :visible.sync="firstShow" /> -->
+       <!-- <x-first :visible.sync="firstShow" />  -->
          <!-- 没用到 -->
         <x-pay ref="xPay" :probabilityShow=[] />
         <!-- 下载app弹窗-->
         <x-modal :visible.sync="downShow" />
+        
+
+
+
+
+    
+
+
     </view>
 </template>
 <script>
@@ -132,6 +140,7 @@ import { parseQueryString } from "../../utils/mgtv.js";
 export default {
     data() {
         return {
+          
              gachaList:[{
                 url:'https://img.shinemang.com/gachaStatic/ndj.png',
              },{
@@ -224,8 +233,10 @@ export default {
     created() {
         this.getBannerList();
         this.showFirstActive();
+      
     },
     methods: {
+      
         toGacha(index){
            if(index == 0){
             this.ontab({index:1,type:'top'})
@@ -529,6 +540,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+
 ::v-deep .u-count-down__text {
     color: #ffffff;
     font-weight: 500;

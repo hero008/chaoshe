@@ -15,6 +15,21 @@
             <!-- #ifdef MP-WEIXIN  -->
             <!-- <mp-privacy initiative /> -->
             <!-- #endif -->
+
+           <u-popup random="32" :show="showBannersActivity" @close="showBannersActivity=false" mode="center">
+            <view class="showBannerActivityContent">
+                <!-- <text>出淤泥而不染，濯清涟而不妖</text> -->
+                 <swiper
+                    :indicator-dots="false"
+                    autoplay
+                    circular
+                 >
+                    <swiper-item>
+                        <img src="" />
+                    </swiper-item>
+                 </swiper>
+            </view>
+		</u-popup>
         </view>
     </view>
 </template>
@@ -37,6 +52,8 @@ import { goto } from "../../utils/fun";
 export default {
     data() {
         return {
+            showBannersActivity: false,
+            bannersActivityList:[],
             tbStyle: {
                 selectIndex: 2,  // 默认展示首页
             },
@@ -64,6 +81,7 @@ export default {
     },
     async onLoad(da) {
          if(this.userInfo && this.userInfo.id){
+            this.getActivityBannerList();
             let gachaName = uni.getStorageSync('gachaName');
             let gachaId = uni.getStorageSync('gachaId');
             if(gachaName && gachaId){
@@ -76,56 +94,8 @@ export default {
                 }else if(gachaName == 'wxs'){
                      this.goto("/pages/product/chaowanshang", { id: gachaId });
                 }
-              }
+            }
          }
-           // 检查mg登录,如果没有登录,去登录
-        // if(window.mgtv){
-        //   let isLogin = mgtv.isLogin();
-        //   if(!isLogin){
-        //         uni.removeStorageSync("aToken");
-        //         uni.removeStorageSync("rToken");
-        //         uni.removeStorageSync("userInfo");
-        //         uni.removeStorageSync('uuid')
-           
-        //   }else{
-        //     if(this.userInfo){
-        //         mgtv.getSetting({
-        //         success(res) {
-        //         if (!res.authSetting["scope.userProfile"]) {
-        //                 uni.removeStorageSync("aToken");
-        //                 uni.removeStorageSync("rToken");
-        //                 uni.removeStorageSync("userInfo");
-        //                 uni.removeStorageSync('uuid')
-        //                 console.log('resres')
-        //                  goto("/pages/my/loading")
-        //         } else {
-        //             mgtv.getUserProfile({
-        //             success(res) {
-        //                  console.log('resr3333es')
-        //                     const uuid = res.data.uuid;
-        //                     const localUUid = uni.getStorageSync('uuid')
-        //                  if(localUUid != uuid){
-        //                     uni.removeStorageSync("aToken");
-        //                     uni.removeStorageSync("rToken");
-        //                     uni.removeStorageSync("userInfo");
-        //                     uni.removeStorageSync('uuid')
-        //                     goto("/pages/my/loading")
-        //                   }
-
-        //             },
-        //             fail(res) {
-                      
-        //             },
-        //             });
-        //         }
-        //         },
-        //         fail(res) {
-              
-        //         },
-        //     });
-        //     }
-        //   }
-        // }
         if (da.chaowanInx) this.chaowanInx = Number(da.chaowanInx); // 潮玩的tab 传进来
         let a = 0;
         a = Object.keys(this.userInfo).length;
@@ -147,8 +117,7 @@ export default {
         ) {
             getWebSocket(this); // 链接socket
         }
-
-     
+       
 
     },
     onShow() {
@@ -161,6 +130,11 @@ export default {
         if (this.$refs.shangGui && inx == 3) this.$refs.shangGui.loadDetail(1);//刷新对应的界面
     },
     methods: {
+        getActivityBannerList(){
+            post("v1/publicize/window/list").then(res=>{
+                // this.bannersActivityList = res.banners
+            })
+        },
         currentChange(va) { //tab切换
             this.tbStyle.selectIndex = va;
             setTimeout(() => {
@@ -228,6 +202,9 @@ export default {
 };  
 </script>
 <style lang='scss' scoped>
+.showBannerActivityContent{
+  
+}
 .index_page {
     width: 100vw;
     height: 100vh;
