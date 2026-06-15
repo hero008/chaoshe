@@ -16,19 +16,13 @@
             <!-- <mp-privacy initiative /> -->
             <!-- #endif -->
 
-           <u-popup random="32" :show="showBannersActivity" @close="showBannersActivity=false" mode="center">
-            <view class="showBannerActivityContent">
+           <u-popup :closeable="true" round="24" :show="showBannersActivity" @close="closeBannerActivityPoupon" mode="center">
+            <scroll-view v-if="showBannerActivityDetail" scroll-y class="showBannerActivityContent">
                 <!-- <text>出淤泥而不染，濯清涟而不妖</text> -->
-                 <swiper
-                    :indicator-dots="false"
-                    autoplay
-                    circular
-                 >
-                    <swiper-item>
-                        <img src="" />
-                    </swiper-item>
-                 </swiper>
-            </view>
+                 <div @click="toTarget(showBannerActivityDetail)" v-html="showBannerActivityDetail.content">
+
+                 </div>
+            </scroll-view>
 		</u-popup>
         </view>
     </view>
@@ -53,6 +47,8 @@ export default {
     data() {
         return {
             showBannersActivity: false,
+            showBannerIndex:0,
+            showBannerActivityDetail:null,
             bannersActivityList:[],
             tbStyle: {
                 selectIndex: 2,  // 默认展示首页
@@ -130,8 +126,90 @@ export default {
         if (this.$refs.shangGui && inx == 3) this.$refs.shangGui.loadDetail(1);//刷新对应的界面
     },
     methods: {
+        toTarget(value){
+            if(value.targetId){
+                if(value.targetType == 'WindowTargetType_Gashapon'){
+                        this.goto('/pages/product/niudan',{id:value.targetId})
+                }else if(value.targetType == 'WindowTargetType_ChaoPlay'){
+                      this.goto('/pages/product/chaowanshang',{id:value.targetId})
+                }else if(value.targetType == 'WindowTargetType_SurpriseBox'){
+                       this.goto('/pages/product/dongle',{id:value.targetId})
+                }
+            }
+        },
+        closeBannerActivityPoupon(){
+              var isSeeList = uni.getStorageSync('seeActivityBannerList') || [];
+              if(this.showBannerActivityDetail.type == 'WindowType_NormalDailyOnce'){
+                const index = isSeeList.findIndex(seen => seen.id === this.showBannerActivityDetail.id);
+                if(index != -1){
+                    isSeeList[index].seeTime = this.getNowDate();
+                  
+                }else{
+                    isSeeList.push({id:this.showBannerActivityDetail.id,seeTime:this.getNowDate()})
+                }
+                uni.setStorageSync('seeActivityBannerList', isSeeList);
+              }else if(this.showBannerActivityDetail.type == 'WindowType_NormalFirstLogin'){
+                     uni.removeStorageSync('isNew');
+              }
+           if(this.showBannerIndex + 1 == this.bannersActivityList.length){
+            this.showBannersActivity = false;
+           }else{
+            this.showBannerIndex = this.showBannerIndex + 1;
+            this.showBannerActivityDetail = this.bannersActivityList[this.showBannerIndex];
+           }
+        },
+
+        getNowDate(){
+            const now = new Date();
+        const year = now.getFullYear();     // 年份，如 2024
+        const month = now.getMonth() + 1;   // 月份（0-11，需要+1）
+        const day = now.getDate();      
+
+        return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        },
         getActivityBannerList(){
             post("v1/publicize/window/list").then(res=>{
+                let arr = []
+                res.window.forEach(item=>{
+                    if(item.type != 'WindowType_Nil'){
+                       var isSeeList = uni.getStorageSync('seeActivityBannerList') || [];
+                       if((item.condition == 'WindowCondition_NoFirstBuy' && !this.userInfo.isFirstBuy) || item.condition != 'WindowCondition_NoFirstBuy'){
+                            if(item.type == 'WindowType_NormalDailyOnce'){
+                                if(isSeeList.length > 0){
+                                    const index = isSeeList.findIndex(seen => seen.id === item.id);
+                                    if(index ==-1){
+                                        arr.push(item)
+                                    }else{
+                                        if(isSeeList[index].seeTime != this.getNowDate()){
+                                            arr.push(item)
+                                        }
+                                    }
+                                }else{
+                                    arr.push(item)
+                                }
+                            }else{
+                                const isNew = uni.getStorageSync('isNew');
+                                console.log( isNew == 1,'是否新用户');
+                                if(item.type == 'WindowType_NormalFirstLogin'){
+                                    if(item.type == 'WindowType_NormalFirstLogin' && isNew == 1){
+                                       arr.push(item)
+                                    }else{
+                                    }
+                                }else{
+                                    arr.push(item)
+                                }
+                            }
+                       }
+                    }
+                })
+                this.bannersActivityList = arr;
+
+              
+                if(this.bannersActivityList.length > 0){
+                    this.showBannerActivityDetail = this.bannersActivityList[0];
+                      this.showBannersActivity = true;
+                    this.showBannerIndex = 0;
+                }   
                 // this.bannersActivityList = res.banners
             })
         },
@@ -203,6 +281,14 @@ export default {
 </script>
 <style lang='scss' scoped>
 .showBannerActivityContent{
+    max-height: 80vh;
+    padding: 20px;
+    width: 90vw;
+    box-sizing: border-box;
+   :v-deep img{
+        width: 100% !important;
+        height: auto !important;
+    }
   
 }
 .index_page {

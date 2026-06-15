@@ -10,7 +10,7 @@
                         mode="scaleToFill"
                     /><text>规则</text></view>
                      <!-- @click="goChaoGui" -->
-     <view @click="toShare" class="leftBox ico-share">
+        <view @click="toShare" class="leftBox ico-share">
               <image
                         src="https://img.shinemang.com/gachaStatic/niudanji/shareIcon.png"
                         mode="scaleToFill"
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <view class="spShow">
-                             距上次出SP赏已过<text class="num">x{{ spNum }}</text>
+                             距上次出传说已过<text class="num">x{{ spNum }}</text>
                         </view>
                         <scroll-view scroll-y style="height:740rpx;padding-top: 12rpx;">
                            <view class="list">

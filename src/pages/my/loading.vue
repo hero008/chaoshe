@@ -74,6 +74,7 @@ export default {
                 this.show = true;
                 // that.backtrack();
                 } else {
+                uni.setStorageSync('isNew',res.isNew);
                 uni.setStorageSync("aToken", res.accessToken);
                 uni.setStorageSync("rToken", res.refreshToken);
                 uni.setStorageSync("uuid", res.uuid);
@@ -166,7 +167,7 @@ export default {
 
     webLogin(){
         post("v1/user/login", {
-                phone_num: "13888888888",
+                phone_num: "19999999995",
                 type: 0,
                 code: "260106",
                 login_platform: 0,
@@ -178,10 +179,11 @@ export default {
                 // uni.$u.toast(res.message);
                 // that.backtrack();
                 } else {
-                uni.setStorageSync("aToken", res.accessToken);
-                uni.setStorageSync("rToken", res.refreshToken);
-                that.$store.commit("updateInfo", res);
-                that.backtrack();
+                  uni.setStorageSync('isNew',res.isNew);  
+                  uni.setStorageSync("aToken", res.accessToken);
+                  uni.setStorageSync("rToken", res.refreshToken);
+                  that.$store.commit("updateInfo", res);
+                  that.backtrack();
                 }
             });
     },
