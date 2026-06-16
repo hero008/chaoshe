@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <view class="spShow">
-                             距上次出传说已过<text class="num">x{{ spNum }}</text>
+                             距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text>
                         </view>
                         <scroll-view scroll-y style="height:740rpx;padding-top: 12rpx;">
                            <view class="list">
@@ -1280,6 +1280,16 @@ align-items: center;
 justify-content: center;
 line-height: 48rpx;
 margin-bottom: 12rpx;
+.cs{
+    font-family: "倍数欧气值";
+    font-size: 14px;
+    text-stroke:  0.5px #000000;
+    -webkit-text-stroke: 0.5px #000000;
+    text-align: center;
+    font-style: normal;
+    text-transform: none;
+    color:#FF93C7;
+}
 
             .num {
        
