@@ -506,6 +506,7 @@ export default {
                 path: "pages/product/yifanshang",
                 id: this.gachaId,
                 index: this.boxIndex,
+                
             });
             let a = this.verdictBig(showAnim ? awards : [awards[0]]) ? 2 : 1;
             if (showAnim) {

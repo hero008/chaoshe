@@ -99,12 +99,16 @@ const store = new Vuex.Store({
         // },
        
         updateInfo(state, info) {
+            if(state.userInfo){
+                info.xCoin = state.userInfo.xCoin
+            }
             state.userInfo = info;
             setCache("userInfo", info, 60 * 60 * 24 * 7)
         },
         UpBalance(state, va) {
             state.userInfo.coin = va.balance;
             state.userInfo.gold = va.gold;
+            state.userInfo.xCoin = va.xCoin
             setCache("userInfo", state.userInfo, 60 * 60 * 24 * 7)
         },
         UpselectTicket(state, va) {
@@ -170,7 +174,7 @@ const store = new Vuex.Store({
             let userInfo = getCache("userInfo") || {};
             post("v1/wallet/balance", { user_id: userInfo.id }).then(res => {
                 if (!res.code) {
-                    let a = { balance: res.wallet['0'].balance, gold: res.wallet['2'].balance }
+                    let a = { balance: res.wallet['0'].balance, gold: res.wallet['2'].balance, xCoin:res.wallet['4'].balance }
                     context.commit('UpBalance', a)
                 }
             })

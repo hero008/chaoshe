@@ -14,15 +14,15 @@
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
                         v-for="(i, s) in navbar2" :key="s">{{ i }}</view>
                 </view>
+               
+               <!-- v-if="recycleState" -->
+                <view class="recycle flex_r flex_ac" @click="onGoRecycle()" >
+                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/recycle.png" />
+                    <view class="text">放生</view>
+                </view> 
                 <view  @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })" class="rules">
 
                 </view>
-              
-                <!-- <view class="recycle flex_r flex_ac" @click="onGoRecycle()"  v-if="recycleState">
-                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/recycle.png" />
-                    <view class="text">回收</view>
-                </view> -->
-               
             </view>
             <view class="p_lists">
                 <view class="tab flex_r flex_ac flex_jb">
@@ -43,7 +43,10 @@
                           />
                         </view>
                     </view>
-                     <view class="teg">赏品共{{ totalReward || 0 }}个</view>
+                    <view class="flex_r">
+                       <view class="teg">赏品共{{ totalReward || 0 }}个</view>
+                       <view @click='toSendOther' class="teg" style='width:150rpx;background:linear-gradient(90deg, #31E597 0%, #40E0EA 100%)'>转赠</view>
+                    </view>
                 </view>
                 <scroll-view @scrolltolower="onReachScollBottom" v-if="cabinetData && cabinetData.length"
                     class="ListScroll" :lower-threshold="400" :scroll-y="true">
@@ -109,17 +112,51 @@
         <gachaDetails ref="gachaDetails" />
         <select-goods ref="addStock" @totalNums="(va) => { totalNums = va; }" @confirmSelect="SelectIds" isfilt="1"
             typeClass="0" />
+
         <show-modal></show-modal>
+
+          <u-popup mode='center' :show="confirmSendOthers" @close="confirmSendOthers = false"  :closeable="true" round="20"
+            bgColor="#fff">
+            <div class="send_con">
+                <div class="title">确认将一下商品转赠?</div>
+                <scroll-view
+                    class="sendList"
+                    scroll-y
+                >
+                <view class="list">
+                     <view v-for="value in sendInfo.info" :key="value.itemId" class="item">
+                         <view class="name over">{{value.name}}</view>
+                         <view class="count">x{{value.num}}</view>
+                     </view>
+
+                </view>
+                    
+                </scroll-view>
+
+                <input v-model="sendOtherId" type="text" placeholder="请输入转赠用户ID">
+                
+                <div class="random_btn" @click="sureSend">确认转赠</div>
+            </div>
+        </u-popup>
     </view>
 </template>
 <script>
 import { mapState } from "vuex";
 import { post } from "@/utils/api.js";
+
 import xBtn from "@/components/modules/x-btn";
 import selectGoods from "@/components/selectGoods/index";
+import { groupByItemId ,groupByItemName} from '../../utils/mgtv';
 export default {
     data() {
         return {
+            sendOtherId:'',
+            sendInfo:{
+               ids:[],
+               info:[],
+            },
+            confirmSendOthers:false,
+            selectType:1, //1,转赠,2,放生
             ISmp: this.ISmp,
             activeStyl: {
                 color: "#333",
@@ -175,6 +212,32 @@ export default {
         if (!this.userInfo.showMarket) this.navbar = [{ name: "全部" }];
     },
     methods: {
+        sureSend(){
+             if(!this.sendOtherId){
+                uni.$u.toast("请输入用户ID");
+                return;
+             }
+             post('v1/cabinet/donation',{
+                target_user_id:this.sendOtherId,
+                stock_id:this.sendInfo.ids
+             }).then(res=>{
+                if(!res.code){
+                  uni.$u.toast("转赠成功");
+                  this.confirmSendOthers = false;
+                    this.pageda.page = 1;
+                     this.loadDetail(1);
+                     // 刷新 selectGoods 组件数据
+                     this.$refs.addStock.getSubclassReward()
+                }else{
+                     uni.$u.toast(res.message);
+                }
+
+             })
+        },
+        toSendOther(){
+            this.selectType = 1
+          this.$refs.addStock.open([], -1);
+        },
         ontab(item) {
             this.pageda.page = 1;
             this.secondCondition = item.index;
@@ -227,43 +290,88 @@ export default {
                 this.loadDetail(1)
         },
         onGoRecycle() {
+            this.selectType = 2
             this.$refs.addStock.open([], -1);
             // uni.navigateTo({ url: "/pages/transaction/index?openStock=true" });
         },
           SelectIds(ids, infos) {
-            let that = this;
-            const data =ids.length==that.totalReward?[]:ids
-            post("v1/cabinet/stock/recycle/preview", {
-                stock_id: data,
-            }).then((res) => {
-                if (res.code) {
-                    uni.$u.toast(res.message);
-                } else {
-                    that.$showModal({
-                        title: "物品二次回收确认",
-                        content: `本次将回收${res.itemNum}件赏品<br/>共获得${res.recyclingPrice}余额`,
+            const that = this;
+
+            if(this.selectType == 1){
+                console.log(infos,ids)
+                this.confirmSendOthers = true;
+                let sendInfo = groupByItemName(infos);
+                 console.log(sendInfo)
+                this.sendInfo = {
+                    ids:ids,
+                    info:sendInfo
+                }
+                return;
+
+            }
+            const result = groupByItemId(infos);
+           post('v1/cabinet/decompose/cal-obtained',{item_dict:result}).then((res) => {
+            if(!res.code){
+                     that.$showModal({
+                        title: "放生",
+                        content: `本次放生共获得${res.balance}星币`,
                         hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
-                        success(res1) {
+                        success:(res1)=> {
                             if (res1.confirm) {
-                                post("v1/cabinet/stock/recycle", {
-                                    stock_id: data,
+                                post("v1/cabinet/decompose/by-stock", {
+                                    stock_id: ids,
                                 }).then((res2) => {
                                     if (res2.code) {
                                         uni.$u.toast(res2.message);
                                     } else {
-                                        uni.$u.toast("回收成功！");
-                                        // 刷新列表
+                                        uni.$u.toast("放生成功");
                                         that.pageda.page = 1;
                                         that.loadDetail(1);
                                         // 刷新 selectGoods 组件数据
-                                        that.$refs.addStock.getSubclassReward();
+                                        that.$refs.addStock.getSubclassReward()
                                     }
                                 });
                             }
                         },
                     });
-                }
-            });
+              }
+           })
+
+
+            return;
+            // let that = this;
+            // const data =ids.length==that.totalReward?[]:ids
+            // post("v1/cabinet/stock/recycle/preview", {
+            //     stock_id: data,
+            // }).then((res) => {
+            //     if (res.code) {
+            //         uni.$u.toast(res.message);
+            //     } else {
+            //         that.$showModal({
+            //             title: "物品二次回收确认",
+            //             content: `本次将回收${res.itemNum}件赏品<br/>共获得${res.recyclingPrice}余额`,
+            //             hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
+            //             success(res1) {
+            //                 if (res1.confirm) {
+            //                     post("v1/cabinet/stock/recycle", {
+            //                         stock_id: data,
+            //                     }).then((res2) => {
+            //                         if (res2.code) {
+            //                             uni.$u.toast(res2.message);
+            //                         } else {
+            //                             uni.$u.toast("回收成功！");
+            //                             // 刷新列表
+            //                             that.pageda.page = 1;
+            //                             that.loadDetail(1);
+            //                             // 刷新 selectGoods 组件数据
+            //                             that.$refs.addStock.getSubclassReward();
+            //                         }
+            //                     });
+            //                 }
+            //             },
+            //         });
+            //     }
+            // });
 
         }
     },
@@ -573,6 +681,67 @@ background-size: cover;
     .top_tabs .top_btn {
         top: 108rpx;
         z-index: 12000;
+    }
+}
+
+.send_con{
+    width: 676rpx;
+    padding: 36rpx 24rpx;
+  .title{
+    color: #1A1A1A;
+    font-size: 32rpx;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 24rpx;
+  }
+  .sendList{
+   max-height: 800rpx;
+   margin-bottom: 40rpx;
+    .list{
+        .item{
+          display: flex;
+          justify-content: space-between;
+          margin: 12rpx 0;
+          align-items: center;
+          background: rgba(0, 0, 0, 0.03);
+          padding: 24rpx 24rpx;
+          border-radius: 12rpx;
+          .name{
+            font-size: 28rpx;
+            color: #1A1A1A;
+            font-weight: bold;
+            max-width: 500rpx;
+          }
+          .count{
+            font-size: 24rpx;
+            color: #8D8D94;
+          }
+        }
+    }
+   
+  }
+  input{
+     border:1px solid rgba(0, 0, 0, 0.1);
+     height: 72rpx;
+      width: calc(100% - 5px);
+     text-align: center;
+     background: #F5F6F8 !important;
+     padding-left: 16rpx;
+     border-radius: 12rpx;
+     margin-bottom: 24rpx;
+
+  }
+   .random_btn{
+        color: #1A1A1A;
+    background: linear-gradient(90deg, #31E597 0%, #40E0EA 100%);
+        width: calc(100% - 5px);
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: linear-gradient(90deg, #31E597 0%, #40E0EA 100%);
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
     }
 }
 </style>

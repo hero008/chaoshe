@@ -531,6 +531,10 @@ export default {
         },
         // 提取公共方法
         handleDrawResult(res, showAnim) {
+            if(res.awards && res.awards.length > 0){
+                res.awards[0].requestId = res.requestId
+                // res.awards[]
+            }
             this.Winning = res.awards;
             if (res.isBomb) {
                 this.showAnim = showAnim;

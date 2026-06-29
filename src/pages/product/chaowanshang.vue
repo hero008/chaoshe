@@ -674,6 +674,10 @@ export default {
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
                 if (!Array.isArray(res.awards)) return
+                 if(res.awards && res.awards.length > 0){
+                    res.awards[0].requestId = res.requestId
+                // res.awards[]
+                  }
                 this.awardsList = res.awards;
                 this.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
                 // this.loadDetail();
@@ -688,6 +692,10 @@ export default {
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                     if (!Array.isArray(res.awards)) return
+                     if(res.awards && res.awards.length > 0){
+                      res.awards[0].requestId = res.requestId
+                // res.awards[]
+                  }
                     that.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
                     // that.loadDetail();
                     // that.chaoPlay(that.previewType);

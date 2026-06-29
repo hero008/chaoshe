@@ -12,9 +12,15 @@ Vue.component('gachaDetails', gachaDetails);
 
 // 公共方法
 import { canShowGachaButton, goto, copyCode, remove, ISmp, getMBInfo, toTime, noMultipleClicks, remainingTime, monthAndndDay, floatingPoint, numberToChinese} from '@/utils/fun.js';
+
+import {timesAmount,subAmount,addAmount} from '@/utils/mgtv.js';
 import { gachaDetailsMethod } from './utils/getData'
 Vue.prototype.goto = goto; // 页面跳转
+Vue.prototype.timesAmount = timesAmount; // 页面跳转
+Vue.prototype.subAmount = subAmount; // 页面跳转
+Vue.prototype.addAmount = addAmount; // 页面跳转
 Vue.prototype.copy = copyCode; // 复制
+
 Vue.prototype.remove = remove; // 删除数组指定值
 Vue.prototype.ISmp = ISmp; // 判断是否是微信小程序
 Vue.prototype.MBInfo = getMBInfo; // 获取胶囊按钮信息

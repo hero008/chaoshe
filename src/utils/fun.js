@@ -1,6 +1,7 @@
 import { getCache, setCache } from "@/utils/storage.js";
 import { post } from "@/utils/api.js";
 import { isMTVapp,mgTvLogin,isIos } from "./mgtv";
+
 let goto = (url, json,mgtvIsLogin=true) => {
     if (!url) {
         // uni.$u.toast('该功能暂未开放，敬请期待！');

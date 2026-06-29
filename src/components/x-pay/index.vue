@@ -7,7 +7,7 @@
                 <span>请核对支付信息无误后再支付</span>
             </div>
             <div class="pay_money" :class="{ active: mtype == '13' && allDiscount.discount }">
-                {{ amount }}
+                {{amount }}
             </div>
             <view v-if="mtype == '13' && allDiscount.original" class="all_discount">
                 {{ allDiscount.original }}元</view>
@@ -38,15 +38,27 @@
                         <span class="icof">&#xe72b;</span>
                     </div>
                 </div>
+
+                <!-- 没有折扣,没有优惠券 开启了欧气抵扣,才能使用 -->
                 <view class="integral flex_r flex_jb" v-if="
                     offsetInfo.status &&
-                    amount &&
+                    oldamount &&
                     couponId == 0 && ['1', '2', '3', '4', '5'].includes(mtype) && discount == 0">
                     <span class="txt">欧气值抵扣</span>
                     <view class="integral_r flex_r flex_ac">
-                        <view class="integral_num">{{ mitigate * offsetInfo.config[0].offsetAmount }}欧气值</view>
+                        <view class="integral_num">{{timesAmount(mitigate,offsetInfo.config[0].offsetAmount)}}欧气值</view>
                         <view class="integral_nums" v-if="Number(mitigate) > 0.0">-￥{{ mitigate }}</view>
                         <view class="integral_btn" :class="{ av: goMitigate }" @click="onGoMitigate"></view>
+                    </view>
+                </view>
+
+                 <view  class="integral flex_r flex_jb" v-if="userInfo.xCoin && oldamount &&
+                    couponId == 0 && ['1', '2', '3', '4', '5'].includes(mtype) && discount == 0">
+                    <span class="txt">星币抵扣</span>
+                    <view class="integral_r flex_r flex_ac">
+                        <view class="integral_num" v-if="xCoinDisountPrice">{{xCoinDisountPrice.consume}}星币</view>
+                        <view class="integral_nums" v-if="xCoinDisountPrice">-￥{{ xCoinDisountPrice.discount }}</view>
+                        <view class="integral_btn" :class="{ av: goXcoin }" @click="onGoXcoin"></view>
                     </view>
                 </view>
                 <!-- 惊趣赏 满足条件赠送/ last赏最后一抽赠送/ lucky赏参与抽赏玩家随机赠送  -->
@@ -168,6 +180,9 @@ export default {
     components: { mpPrivacy },
     data() {
         return {
+
+            xCoinDisountPrice:null,
+            XCoin:0,
             showToRecharge:false,
             show: false, // 显示组件
             amount: 0, // 支付总额
@@ -210,7 +225,7 @@ export default {
                 //     name: "金币余额",
                 //     type: 4,
                 //     img: "gold",
-                //     show: false,
+                //     show: true,
                 //     msg: "金币支付",
                 //     randomShow: false,
                 //     consume: 0,
@@ -270,6 +285,7 @@ export default {
             integralAll: 0,
             mitigate: 0,
             goMitigate: null,
+            goXcoin:null,
             box_index: 0,
             goldNumber: 0,
             residue: 0,
@@ -285,10 +301,38 @@ export default {
             theme_id: ''
         };
     },
+//     config
+// : 
+// [{id: "1", state: 1, offsetAmount: "500", offsetMax: 10, minDeductionAmount: 1}]
+// 0
+// : 
+// {id: "1", state: 1, offsetAmount: "500", offsetMax: 10, minDeductionAmount: 1}
+// id
+// : 
+// "1"
+// minDeductionAmount
+// : 
+// 1
+// offsetAmount
+// : 
+// "500"
+// offsetMax
+// : 
+// 10
+// state
+// : 
+// 1
+// status
+// : 
+// true
+// total
+// : 
+// "1"
     computed: {
         ...mapState(["userInfo", "selectTicket", "offsetInfo", "payMessage", 'subtract']),
     },
     created() {
+        // console.log(this.userInfo);
         that = this;
         this.UpselectTicket({});
         this.showAnimation = this.$gl("IsAnimation") || false;
@@ -321,6 +365,7 @@ export default {
             }
             this.goldNumber = this.userInfo.gold; // 金币
             this.goMitigate = false;
+            this.goXcoin = false
             this.amount = amount; // 传过来的金额
             this.oldamount = amount; // 传过来的金额
             this.payNum = num; // 数量
@@ -383,6 +428,8 @@ export default {
         close() {
             this.show = false;
             this.UpselectTicket({});
+            this.xCoinDisountPrice=null;
+            this.goXcoin = false
             this.UppayMessage({ url: "", message: {}, discount: true });
             this.pays.forEach((i) => (i.consume = 0));
         },
@@ -424,11 +471,13 @@ export default {
             // 欧气值抵扣
             if (this.amount && this.offsetInfo.status) {
                 this.mitigate = 0;
+                // 最大抵扣500                    最多抵扣10
                 const { offsetAmount, offsetMax } = this.offsetInfo.config[0];
                 let pc = this.integralAll.point / Number(offsetAmount) > this.amount * (offsetMax / 100) ? this.amount * (offsetMax / 100) : this.integralAll.point / Number(offsetAmount);
                 this.mitigate = pc > 1 ? Math.floor(pc) : (Math.floor(pc * 10) / 10).toFixed(1);
             }
         },
+
         async onPay() {
             // 是否支付宝支付1 其它支付0
             // #小程序不需要ifndef MP-WEIXIN
@@ -444,8 +493,13 @@ export default {
             this.pays.map((i) => {
                 if (i.type == 4) goldNum = i.consume;
                 if (i.type == 1) {
+                    //折扣后的金额加上欧气
                     if (i.consume) allNum = this.goMitigate ? this.floatingPoint(i.consume, "+", this.mitigate) : i.consume;
                     else allNum = this.goMitigate ? this.floatingPoint(this.amount, "+", this.mitigate) : this.amount;
+
+                    if(this.goXcoin){
+                      allNum = this.floatingPoint(allNum, "+",  this.xCoinDisountPrice?this.xCoinDisountPrice.consume:0) 
+                    }
                 }
             });
             this.selectTicket.type == "COUPON_TYPE_FREE" ? (this.amount = 0) : this.amount;
@@ -503,6 +557,7 @@ export default {
                             user_coupon_id: this.selectTicket.id,
                             is_offset: this.goMitigate ? 1 : 0, // 欧气值抵扣
                             offset_money: this.goMitigate ? this.mitigate : 0,// 欧气值抵扣
+                            x_coin_discount:this.xCoinDisountPrice ? this.xCoinDisountPrice.consume : 0
                         },
                     });
                 }
@@ -515,6 +570,7 @@ export default {
                             user_coupon_id: this.selectTicket.id,
                             is_offset: this.goMitigate ? 1 : 0,
                             offset_money: this.goMitigate ? this.mitigate : 0,
+                            x_coin_discount:this.xCoinDisountPrice ? this.xCoinDisountPrice.consume : 0
                         },
                     });
                 }
@@ -545,6 +601,7 @@ export default {
                                 source_type: this.source_type,
                                 source_id: this.source_id,
                                 balance_amount: goldNum, //金币支付的金额
+                                x_coin_discount:this.xCoinDisountPrice ? this.xCoinDisountPrice.consume : 0
                             },
                         },
                         click_type
@@ -620,7 +677,53 @@ export default {
                 return;
             }
         },
+
+        getUserSelectDiscount(){
+          const ticketPrice = this.selectTicket ? this.selectTicket.discountPrice : 0;
+          
+        },
+        xCoinBanlance(){
+           const ticketPrice = this.selectTicket.id ? this.selectTicket.discountPrice : 0;
+            const discountPrice = this.addAmount(ticketPrice,this.goMitigate ? this.mitigate : 0)
+            const amount = this.subAmount(this.oldamount,discountPrice)
+          
+           post('v1/wallet/x-coin-discount/evaluate',{
+            source_type:100,
+            source_id:this.source_id,
+            amount:amount,
+            discount:0,
+           }).then(res=>{
+            this.xCoinDisountPrice = res;
+            this.amount = res.discountedAmount
+           })
+        },
+    
+        onGoXcoin(){
+            if(!this.goXcoin){
+               if(this.amount == 0){
+                 uni.$u.toast("金额为0,不用抵扣了");
+                return;
+            }
+            }
+          
+           this.goXcoin = !this.goXcoin;
+           if(this.goXcoin){
+             this.xCoinBanlance()
+           }else{
+            this.xCoinDisountPrice = null;
+             this.amount = this.selectTicket.id ? this.subAmount(this.oldamount,this.selectTicket.discountPrice) : this.oldamount;
+             this.getDiscounts();
+           }
+        },
         onGoMitigate() {
+            // if(!this.goMitigate){
+            //     if(this.amount == 0){
+            //         uni.$u.toast("金额为0,不用抵扣了");
+            //         return;
+            //     }
+            // }
+
+          
             if (Number(this.mitigate) < 0.1) {
                 if (
                     Number(this.integralAll.point) <
@@ -633,6 +736,10 @@ export default {
                 return;
             }
             this.goMitigate = !this.goMitigate;
+              if(this.goXcoin){
+                this.xCoinBanlance()
+                return;
+            }
             this.amount = this.goMitigate ? this.floatingPoint(this.amount, "-", this.mitigate) : this.floatingPoint(this.amount, "+", this.mitigate);
             this.onGoldPay();
         },
@@ -642,7 +749,7 @@ export default {
                 const { offsetAmount, offsetMax } = this.offsetInfo.config[0];
                 let pc = this.integralAll.point / offsetAmount > this.amount * (offsetMax / 100) ? this.amount * (offsetMax / 100) : this.integralAll.point / offsetAmount;
                 this.mitigate = pc > 1 ? Math.floor(pc) : (Math.floor(pc * 10) / 10).toFixed(1);
-                if (this.goMitigate) this.amount = this.floatingPoint(this.amount, "-", this.mitigate);
+                if (this.goMitigate) this.amount = this.floatingPoint(this.amount, "-", this.mitigate); // 减去欧气值
             } else {
                 this.goMitigate = false;
                 this.mitigate = 0;
@@ -749,9 +856,15 @@ export default {
             handler(va) {
                 va = va || 0;
                 let a = this.$h.Sub(this.oldamount, va);
-                this.amount = a > 0 ? a : 0;
-                this.amount = this.selectTicket.type == "COUPON_TYPE_FREE" ? 0 : this.amount;
-                this.getDiscounts();
+
+                if(this.goXcoin){
+                    this.xCoinBanlance();
+                }else{
+                    this.amount = a > 0 ? a : 0;
+                    this.amount = this.selectTicket.type == "COUPON_TYPE_FREE" ? 0 : this.amount;
+                    this.getDiscounts();
+                }
+
             },
         },
         "$store.state.userInfo.gold": {
@@ -771,6 +884,11 @@ export default {
                         user.number = newVal; // 直接修改原对象
                     }
                 });
+            },
+        },
+        "$store.state.userInfo.xCoin": {
+            handler(newVal) {
+              this.XCoin = newVal
             },
         },
     },

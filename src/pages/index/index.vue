@@ -126,6 +126,7 @@ export default {
         if (this.$refs.shangGui && inx == 3) this.$refs.shangGui.loadDetail(1);//刷新对应的界面
     },
     methods: {
+        
         toTarget(value){
             if(value.targetId){
                 if(value.targetType == 'WindowTargetType_Gashapon'){

@@ -51,6 +51,32 @@
                 </div>
             </div>
         </div> -->
+          <div class="top_cord">
+                <div class="tit flex_r flex_ac flex_jb">
+                    <view
+                        class="t_msg1 flex_r flex_ac"
+                        @click="
+                            goto('/pages/common/rulepop', {
+                                val: 'ServiceAgreement',
+                            })
+                        "
+                        >余额<view class="ico"></view
+                    ></view>
+                    <view class="t_msg flex_r flex_ac" @click="goRechargeRecord"
+                        ><view>交易记录</view> <view class="ico"></view
+                    ></view>
+                </div>
+                <div class="B_num flex_r flex_jb flex_ac">
+                    <!-- <img
+                        src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
+                        class="m_ico"
+                    /> -->
+                    <div class="m_num">{{ point || "0.00" }}</div>
+                    <div class="m_num1">{{ userInfo.xCoin || "0.00" }}</div>
+                </div>
+                <!-- <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view> -->
+                <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
+          </div>
         <div class="module_bar">
             <!-- #ifndef MP-WEIXIN -->
             <!-- <div class="gold flex_r flex_ac flex_jb" @click="userInfo.id ? goto('/page-a/balance/topUp') : null">
@@ -116,12 +142,15 @@ import { mapState, mapActions } from "vuex";
 import xModal from "@/components/modules/x-modal";
 import { getMsg } from "../../utils/webSocket";
 import { service } from '@/utils/fun.js';
+import { integralPrice } from "@/utils/getData.js";
 import autonym from "@/components/autonym/index.vue";
 import { mgTvLogin } from "../../utils/mgtv";
+import { goto } from '../../utils/fun';
 let that;
 export default {
     data() {
         return {
+             point:0,
             balance: 0,
             baseList1: [
                 {
@@ -143,11 +172,11 @@ export default {
                     path: "/pages/shipments/addressList",
                     title: "地址管理",
                 },
-                // {
-                //     name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico2.png',
-                //     path: '/pages/index/index',
-                //     title: '进群交流'
-                // },
+                {
+                    name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico2.png',
+                    path: '/page-a/balance/transferGift',
+                    title: '转赠记录'
+                },
                 // {
                 //     name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico3.png',
                 //     path: '/pages/index/index',
@@ -228,8 +257,12 @@ export default {
     computed: { ...mapState(["userInfo", "popupWebSocket"]) },
     created() {
         that = this;
-        this.asyncUpdateInfo();
+       
         this.asyncUpBalance();
+         this.asyncUpdateInfo();
+         integralPrice().then((res)=>{
+            this.point = res.point
+         })
     },
     mounted() {
         this.balance = this.userInfo.gold;
@@ -238,6 +271,9 @@ export default {
         // #endif
     },
     methods: {
+        goRechargeRecord(){
+          this.goto("/page-a/balance/rechargeRecord");
+        },
         ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
         tabload() {
             // this.asyncUpBalance();
@@ -359,6 +395,114 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+  .top_cord {
+        width: 686rpx;
+        height: 264rpx;
+        background-image: url("https://img.shinemang.com/gachaStatic/my/rechargeBgc.png");
+        background-size: 100% 100%;
+        padding: 32rpx;
+        margin: 36rpx auto 0;
+        margin-bottom: 24rpx;
+        color: #1A1A1A;
+        font-weight: 500;
+        font-size: 24rpx;
+        position: relative;
+
+        .tit {
+            font-weight: 500;
+            font-size: 28rpx;
+            .t_msg1 {
+                .ico {
+                    margin-left: 8rpx;
+                    width: 24rpx;
+                    height: 24rpx;
+                    background-image: url("https://img.shinemang.com/gachaStatic/my/rechargeTips.png");
+                    background-size: 100% 100%;
+                }
+            }
+            .t_msg {
+                font-weight: 500;
+                font-size: 24rpx;
+                color: #fff;
+                margin-top: -24rpx;
+                display: flex;
+                align-items: center;
+              
+                .ico {
+                    margin-left: 8rpx;
+                    width: 32rpx;
+                    height: 32rpx;
+                    background-image: url("https://img.shinemang.com/gachaStatic/my/toIcon.png");
+                    background-size: 100% 100%;
+                    margin-top: 6rpx;
+                }
+            }
+        }
+
+        .B_num {
+            margin: 60rpx 0 8rpx;
+
+            .m_ico {
+                width: 48rpx;
+                height: 48rpx;
+                margin-right: 16rpx;
+            }
+
+            .m_num {
+                font-weight: bold;
+                font-size: 48rpx;
+              
+                &::after {
+                    content: "欧气值";
+                    font-weight: 500;
+                    font-size: 24rpx;
+                    margin-left: 8rpx;
+                }
+            }
+            .m_num1{
+                 font-weight: bold;
+                font-size: 48rpx;
+              
+                &::after {
+                    content: "星币";
+                    font-weight: 500;
+                    font-size: 24rpx;
+                    margin-left: 8rpx;
+                }
+            }
+        }
+        .nums {
+            // text-align: center;
+            margin-bottom: 32rpx;
+            color: #266B59;
+            font-size: 24rpx;
+        }
+        .btns {
+            // margin: auto;
+            // width: 220rpx;
+            // height: 64rpx;
+            // line-height: 64rpx;
+            // text-align: center;
+            // font-weight: bold;
+            // font-size: 28rpx;
+            // color: #000000;
+            // background: #fff;
+            // border-radius: 32rpx;
+            width: 160rpx;
+            height: 56rpx;
+            background: #1A1A1A;
+            border-radius: 28rpx 28rpx 28rpx 28rpx;
+            font-size: 28rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: absolute;
+            top: 168rpx;
+            right: 32rpx;
+
+        }
+   }
 .my {
     width: 100vw;
     height: 100vh;
@@ -366,7 +510,7 @@ export default {
     padding: 120rpx 32rpx 190rpx;
     overflow-y: auto;
     background-color: #F5F6F8;
-          &::after {
+      &::after {
         content: "";
         width: 100vw;
         height: 800rpx;

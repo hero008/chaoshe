@@ -16,16 +16,21 @@
                     </div>
                 </div>
                 <div class="foot_btn flex_r flex_jc">
+                     <view v-if='awards.length > 0 && awards[0].requestId' @click='fangsheng' class="fangsheng">放生</view>
                     <view class="btn" @click="confirmBtn" >确定</view>
                     <!-- <x-btn txt="确定" @click="confirmBtn" cor="3" /> -->
                 </div>
             </div>
         </div>
         <gachaDetails ref="gachaDetails" />
+             <!-- 通用提示框 -->
+        <show-modal></show-modal> 
     </view>
 </template>
 <script>
 import xBtn from "@/components/modules/x-btn";
+import {groupByItemId} from '@/utils/mgtv'
+import { post } from '../../utils/api';
 export default {
     data() {
         return {
@@ -53,8 +58,41 @@ export default {
         this.loadAwards();
     },
     methods: {
+        fangsheng() {
+           
+            const that = this;
+           const result = groupByItemId(this.awards)
+           console.log(result)
+           post('v1/cabinet/decompose/cal-obtained',{item_dict:result}).then((res) => {
+            console.log(res);
+            if(!res.code){
+                     that.$showModal({
+                        title: "放生",
+                        content: `本次放生共获得${res.balance}星币`,
+                        hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
+                        success:(res1)=> {
+                            if (res1.confirm) {
+                                post("v1/cabinet/decompose/by-gacha-order", {
+                                    request_id: that.awards[0].requestId,
+                                }).then((res2) => {
+                                    if (res2.code) {
+                                        uni.$u.toast(res2.message);
+                                    } else {
+                                        uni.$u.toast("放生成功");
+                                        setTimeout(()=>{
+                                             that.confirmBtn()
+                                        },2000)
+                                    }
+                                });
+                            }
+                        },
+                    });
+              }
+           })
+        },
         loadAwards() {
             this.Xdata = this.$gl("extractAwards"); // 获取本地存储
+            console.log(this.Xdata)
             this.awards = this.Xdata.da;
         },
         confirmBtn() {
@@ -179,8 +217,10 @@ export default {
         position: absolute;
         bottom: 60rpx;
         left: 0;
+        display: flex;
+        align-items: center;
         .btn{
-            width: 328rpx;
+            width: 228rpx;
             height: 80rpx;
             background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
             border-radius: 40rpx 40rpx 40rpx 40rpx;
@@ -189,6 +229,19 @@ export default {
             justify-content: center;
             font-size: 32rpx;
             font-weight: bold;
+         
+        }
+        .fangsheng{
+              width: 228rpx;
+            height: 80rpx;
+            background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);
+            border-radius: 40rpx 40rpx 40rpx 40rpx;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32rpx;
+            font-weight: bold;
+            margin-right: 20rpx;
         }
     }
 }

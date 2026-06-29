@@ -84,7 +84,7 @@
                                 <view class="type">{{ item.levelName }}</view>
                                 <view class="sort">{{item.luckyNo}}赏</view>
                             </view> 
-                            <img v-else class="ico3":class="[item.levelName == '冲冲' ? 'rotated' : '']"
+                            <img v-else class="ico3" :class="[item.levelName == '冲冲' ? 'rotated' : '']"
                                 :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
                             <view v-if="item.levelName == 'Lucky' && item.luckyPhase"
                                 class="schedule flex_r flex_jb flex_ac" @click.stop="onScheduleTips(item.luckyPhase)">
@@ -453,6 +453,9 @@ export default {
         },
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
+                if(res.awards && res.awards.length>0){
+                    res.awards[0].requestId = res.requestId
+                }
                 this.Winning = res.awards;
                 this.$refs.capsuleToys.eggPlay(1); // 执行摇球动画3s
                 this.onClickPay(showAnim);
@@ -464,6 +467,9 @@ export default {
         onClickPrize(payId, showAnim) {
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
+                   if(res.awards && res.awards.length>0){
+                    res.awards[0].requestId = res.requestId
+                   }
                     this.Winning = res.awards;
                     this.onClickPay(showAnim);
                 } else uni.$u.toast(res.message);
@@ -629,6 +635,7 @@ export default {
             this.istry = true;
             let i = this.getRandomInt();
             let da = this.eggTwister.gachaAwards[i];
+            da.requestId=''
             this.Winning = [da];
             this.spList = [da];
             this.$sl("extractAwards", {

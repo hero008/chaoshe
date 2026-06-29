@@ -1,6 +1,6 @@
 <template>
     <view class="balance">
-        <x-navbar tit="交易记录" />
+        <x-navbar tit="转赠记录" />
         <div class="balance_con" :style="{ paddingTop: padTop }">
             <!-- <div class="top_cord">
                 <div class="tit flex_r flex_ac flex_jb">
@@ -35,21 +35,24 @@
                         :lower-threshold="400"
                     >
                         <div
-                            class="li_item flex_r flex_jb"
+                            class="li_item "
                             v-for="(item, index) in transactionList"
                             :key="index"
                         >
-                            <view class="itb flex_c flex_jb">
-                                <view class="itb2">{{
-                                    getOpraType(item.sourceType)
-                                }}</view>
-                                <view class="itb1">{{ item.createTime }}</view>
+                            <view class="itb flex_jb flex_r">
+                                <view class="itb2">转赠给({{
+                                   item.targetUserId
+                                }})</view>
+                                <view class="itb1">{{ item.createdAt }}</view>
+                            </view>
+                            <view class="listItems">
+                                <view :key="index" v-for="(value,index) in item.item" class="item">
+                                    <view class="name ellipsis">{{value.name}}</view>
+                                    <view class="count">x{{value.num}}</view>
+                                </view>
                             </view>
 
-                            <view class="itb3"
-                                >{{ item.amount > 0 ? "+" : ""
-                                }}{{ item.amount }} 星币</view
-                            >
+                         
                             <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
                         </div>
                     </scroll-view>
@@ -73,6 +76,8 @@ import xPay from "@/components/x-pay/index.vue";
 // import autonym from "@/components/autonym/index.vue";
 import { mapState, mapActions } from "vuex";
 import popUpVue from "./popUp.vue";
+import {groupByItemName1} from '../../utils/mgtv';
+
 export default {
     data() {
         return {
@@ -129,15 +134,20 @@ export default {
         // 获取流水
         getTransaction() {
             this.balance = this.userInfo.gold;
-            post("v1/wallet/transaction/list", {
-                type: 4,
+            post("v1/cabinet/donation/record/list", {
+            
                 ...this.pageda,
             }).then((res) => {
                 console.log(res);
                 if (this.pageda.page == 1) this.transactionList = [];
+                res.list.forEach((item)=>{
+                    item.item = groupByItemName1(item.item)
+                })
+
                 this.transactionList = this.transactionList.concat(
-                    res.transactions
+                    res.list
                 );
+                console.log( this.transactionList)
                 this.pageda.total = res.total;
             });
         },
@@ -330,6 +340,24 @@ export default {
                 padding: 16rpx 0;
                 &:last-child{
                 	border: none;
+                }
+                .listItems{
+                    margin-top: 20rpx;
+                    .item{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        line-height: 36rpx;
+                        .name{
+                            font-size: 24rpx;
+                            color: #1A1A1A;
+                            max-width: 500rpx;
+                        }
+                        .count{
+                            font-size: 22rpx;
+
+                        }
+                    }
                 }
             }
         }

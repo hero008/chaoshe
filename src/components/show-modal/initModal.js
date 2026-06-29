@@ -42,6 +42,7 @@ export default function initModal(v) {
         }
     })
     v.prototype.$showModal = function(option) {
+        console.log('sjflsjfljsdl ')
         if (typeof option === 'object') {
             // #ifndef H5
             if (option.hideTabBar) {

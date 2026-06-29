@@ -1,6 +1,7 @@
 import { post } from "./api";
 import { goto } from "./fun";
 import store from "../store";
+import BigNumber from "bignumber.js";
 export const isMTVapp = () => {
   return /imgo/i.test(window.navigator.userAgent);
 };
@@ -204,4 +205,72 @@ export const  parseQueryString =(str)=> {
   });
   
   return result;
+}
+
+
+export const timesAmount = (value1,value2)=>{
+  return  new BigNumber(value1).times(new BigNumber(value2)).toFixed()
+}
+
+
+export const  groupByItemId = (data) =>{
+  const result = {};
+  data.forEach(item => {
+    const itemId = item.itemId;
+    if (!result[itemId]) {
+      result[itemId] = 0;
+    }
+    result[itemId]++;
+  });
+  return result;
+}
+
+export const  groupByItemName = (data)=> {
+  const map = new Map();
+  
+  data.forEach(item => {
+    const itemId = item.itemId;
+    const name = item.item.name;
+    
+    if (map.has(itemId)) {
+      map.get(itemId).num += 1;
+    } else {
+      map.set(itemId, {
+        itemId: itemId,
+        name: name,
+        num: 1
+      });
+    }
+  });
+  
+  return Array.from(map.values());
+}
+
+export const  groupByItemName1 = (data)=> {
+  const map = new Map();
+  
+  data.forEach(item => {
+    const id = item.id;
+    const name = item.name;
+    
+    if (map.has(id)) {
+      map.get(id).num += 1;
+    } else {
+      map.set(id, {
+        id: id,
+        name: name,
+        num: 1
+      });
+    }
+  });
+  
+  return Array.from(map.values());
+}
+export const subAmount = (value1,value2)=>{
+    return  new BigNumber(value1).minus(new BigNumber(value2)).toFixed()
+
+}
+export const addAmount = (value1,value2)=>{
+    return  new BigNumber(value1).plus(new BigNumber(value2)).toFixed()
+
 }

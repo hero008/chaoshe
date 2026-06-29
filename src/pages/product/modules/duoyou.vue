@@ -49,16 +49,22 @@
             </view>
             <view class="footer">
                 <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view>
-                <view class="all_btn" @click="getAll">{{ allShow ? '确定' : '一键开奖' }}</view>
+                <view  class="box">
+                     <view @click='fangsheng' v-if="allShow && awardList && awardList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
+                     <view class="all_btn" @click="getAll">{{ allShow ? '确定' : '一键开奖' }}</view>
+                </view>
             </view>
         </view>
         <gachaDetails ref="gachaDetails" />
+          <show-modal></show-modal> 
     </u-popup>
 
 </template>
 <script>
 import cSvga from "@/components/c-svga/c-svga.vue";
 import { playDede, uniShare, compressImg, vibratePhone } from "@/utils/fun.js";
+import { groupByItemId } from '@/utils/mgtv.js'
+import { post } from '../../../utils/api';
 export default {
     data() {
         return {
@@ -93,6 +99,38 @@ export default {
     },
     components: { cSvga },
     methods: {
+          fangsheng() {
+           
+            const that = this;
+           const result = groupByItemId(this.awardList)
+           console.log(result)
+           post('v1/cabinet/decompose/cal-obtained',{item_dict:result}).then((res) => {
+            console.log(res);
+            if(!res.code){
+                     that.$showModal({
+                        title: "放生",
+                        content: `本次放生共获得${res.balance}星币`,
+                        hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
+                        success:(res1)=> {
+                            if (res1.confirm) {
+                                post("v1/cabinet/decompose/by-gacha-order", {
+                                    request_id: that.awardList[0].requestId,
+                                }).then((res2) => {
+                                    if (res2.code) {
+                                        uni.$u.toast(res2.message);
+                                    } else {
+                                        uni.$u.toast("放生成功");
+                                        setTimeout(()=>{
+                                            that.close()
+                                        },2000)
+                                    }
+                                });
+                            }
+                        },
+                    });
+              }
+           })
+        },
         open(da, showAnim, id, index) {
             this.show = true;
             this.dynamicEffectShow = true;
@@ -779,6 +817,14 @@ export default {
     .page {
         margin-top: 20rpx;
     }
+    .box{
+        align-items: center;
+        width: 100%;
+        margin-top: 20rpx;
+        display: flex;
+        justify-content: center;
+
+    }
 
     .all_btn {
         width: 238rpx;
@@ -786,7 +832,7 @@ export default {
         line-height: 80rpx;
         background: #9378F9;
         border-radius: 20rpx;
-        margin: 20rpx auto 0;
+        // margin: 20rpx auto 0;
     }
 }
 </style>

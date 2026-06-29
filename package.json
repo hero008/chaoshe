@@ -69,6 +69,7 @@
     "@dcloudio/uni-stat": "^2.0.2-3071120230427001",
     "@vue/shared": "^3.0.0",
     "add": "^2.0.6",
+    "bignumber.js": "^11.1.4",
     "cordova": "^13.0.0",
     "cordova-plugin-vibration": "^3.1.1",
     "core-js": "^3.8.3",

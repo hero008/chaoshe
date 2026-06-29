@@ -235,6 +235,12 @@
 						"navigationStyle": "custom"
 					}
 				},
+				{
+				"path": "balance/transferGift",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
 				// #endif
 				{
 					"path": "luck/index",
