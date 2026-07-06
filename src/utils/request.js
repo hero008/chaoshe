@@ -62,7 +62,9 @@ uni.addInterceptor('request', {
     // 请求失败
     fail(err) {},
     // 成功|失败
-    complete(res) { }
+    complete(res) {
+        
+     }
 })
 
 let logout = () => {

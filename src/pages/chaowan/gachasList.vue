@@ -518,7 +518,7 @@ export default {
                 line-height: 36rpx;
 
                 &::after {
-                    content: '欧气值';
+                    content: '星光积分';
                     background: linear-gradient(180deg, #A53A3F 0%, #3F1618 100%);
                     -webkit-background-clip: text;
                     background-clip: text;

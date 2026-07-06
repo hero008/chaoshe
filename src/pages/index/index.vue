@@ -16,13 +16,15 @@
             <!-- <mp-privacy initiative /> -->
             <!-- #endif -->
 
-           <u-popup :closeable="true" round="24" :show="showBannersActivity" @close="closeBannerActivityPoupon" mode="center">
+           <u-popup zIndex='999999999' bgColor='transparent' class="bannerPoupon"  :overlayStyle="{background:'rgba(0,0,0,0.7)'}"  round="24" :show="showBannersActivity"  mode="center">
             <scroll-view v-if="showBannerActivityDetail" scroll-y class="showBannerActivityContent">
                 <!-- <text>出淤泥而不染，濯清涟而不妖</text> -->
                  <div @click="toTarget(showBannerActivityDetail)" v-html="showBannerActivityDetail.content">
 
                  </div>
+                
             </scroll-view>
+             <div @click="closeBannerActivityPoupon" class="closeIcon"></div>
 		</u-popup>
         </view>
     </view>
@@ -135,6 +137,12 @@ export default {
                       this.goto('/pages/product/chaowanshang',{id:value.targetId})
                 }else if(value.targetType == 'WindowTargetType_SurpriseBox'){
                        this.goto('/pages/product/dongle',{id:value.targetId})
+                }else{
+
+                    console.log(value.targetId,value.targetId == -1,'targetId');
+                    if(value.targetId == -1){
+                        this.goto('/pages/my/cardpack')
+                    }
                 }
             }
         },
@@ -283,15 +291,33 @@ export default {
 <style lang='scss' scoped>
 .showBannerActivityContent{
     max-height: 80vh;
-    padding: 20px;
-    width: 90vw;
+    // padding: 20px;
+    width: 100vw;
     box-sizing: border-box;
+    background-color: transparent !important;
+    position: relative;
+    z-index: 99999999;
    :v-deep img{
         width: 100% !important;
         height: auto !important;
     }
+   
   
 }
+ .closeIcon{
+        // position: absolute;
+        // bottom: -40rpx;
+        width: 56rpx;
+        height: 56rpx;
+     
+        margin: 0 auto;
+        margin-top: 30rpx;
+        background: url('@/static/close.png');
+        background-size: 100% 100%;
+        z-index: 999;
+        
+
+    }
 .index_page {
     width: 100vw;
     height: 100vh;

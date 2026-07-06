@@ -86,7 +86,7 @@
                     <view class="money">{{ item.price }}</view>
                 </view>
                 <view class="integral" v-if="item.value !== '0'">
-                    <view class="integralImg">欧气值</view>
+                    <view class="integralImg">星光积分</view>
                     <view class="number">{{ item.value }}</view>
                 </view>
             </view>
@@ -156,7 +156,7 @@
                 </view>
 
                 <view class="integral" v-if="item.value !== '0'">
-                    <view class="integralImg">欧气值</view>
+                    <view class="integralImg">星光积分</view>
                     <view class="number">{{ item.value }}</view>
                 </view>
             </view>
@@ -755,7 +755,7 @@ image{
             line-height: 48rpx;
 
             &::after {
-                content: '欧气值';
+                content: '星光积分';
                 background: linear-gradient(180deg, #A53A3F 0%, #3F1618 100%);
                 -webkit-background-clip: text;
                 background-clip: text;

@@ -6,7 +6,7 @@
             <view class="a" v-if="itemPrice !== '0'">￥</view>
             <view class="number" v-if="itemPrice !== '0'">{{ itemPrice }}</view>
             <view class="integral" v-if="itemValue !== '0'">
-                <view class="integralImg">欧气值</view>
+                <view class="integralImg">星光积分</view>
                 <view class="">{{ itemValue }}</view>
             </view>
         </view>
@@ -58,7 +58,7 @@
             <!-- #endif -->
             <x-btn
                 v-if="itemValue > 0"
-                txt="欧气值兑换"
+                txt="星光积分兑换"
                 cor="3"
                 @click="
                     goto('/pages/shopping/exchange', {
@@ -81,7 +81,7 @@
             />
             <x-btn
                 v-if="itemValue > 0"
-                txt="欧气值兑换"
+                txt="星光积分兑换"
                 cor="3"
                 @click="onTime"
                 :style="{ opacity: '0.5' }"

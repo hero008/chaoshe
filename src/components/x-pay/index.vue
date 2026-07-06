@@ -44,9 +44,9 @@
                     offsetInfo.status &&
                     oldamount &&
                     couponId == 0 && ['1', '2', '3', '4', '5'].includes(mtype) && discount == 0">
-                    <span class="txt">欧气值抵扣</span>
+                    <span class="txt">星光积分抵扣</span>
                     <view class="integral_r flex_r flex_ac">
-                        <view class="integral_num">{{timesAmount(mitigate,offsetInfo.config[0].offsetAmount)}}欧气值</view>
+                        <view class="integral_num">{{timesAmount(mitigate,offsetInfo.config[0].offsetAmount)}}星光积分</view>
                         <view class="integral_nums" v-if="Number(mitigate) > 0.0">-￥{{ mitigate }}</view>
                         <view class="integral_btn" :class="{ av: goMitigate }" @click="onGoMitigate"></view>
                     </view>
@@ -729,10 +729,10 @@ export default {
                     Number(this.integralAll.point) <
                     Number(this.offsetInfo.config[0].offsetAmount)
                 ) {
-                    uni.$u.toast("欧气值不足，暂时无法抵扣！");
+                    uni.$u.toast("星光积分不足，暂时无法抵扣！");
                     return;
                 }
-                uni.$u.toast("不参与欧气值活动！");
+                uni.$u.toast("不参与星光积分活动！");
                 return;
             }
             this.goMitigate = !this.goMitigate;

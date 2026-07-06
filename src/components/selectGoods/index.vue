@@ -75,6 +75,7 @@ import xBtn from "@/components/modules/x-btn";
 export default {
     data() {
         return {
+            mode:'',
             navbar: [
                 { txt: "全部", val: 0 },
                 { txt: "现货", val: 1 },
@@ -192,10 +193,10 @@ export default {
         },
         ontab(va) {
             this.selectType = va;
-            this.getSubclassReward();
+            this.getSubclassReward(this.mode?true:false);
         },
-        open(ids = [], nums = 0, index = false) {
-            this.gather = index;
+        subOpen(ids = [], nums = 0, index = false,type=false){
+           this.gather = index;
             this.totalPrice = nums;
             if (this.totalPrice !== 0) {
                 this.popupShow = true;
@@ -237,13 +238,54 @@ export default {
             }
             this.popupShow = true;
         },
-        getSubclassReward() {
+        open(ids = [], nums = 0, index = false,type=false) {
+            uni.showLoading()
+            // if(type){
+                this.multi = [];
+            this.multiinfo = [];
+            if(type){
+                this.mode = 'SourceType_Donation'
+            }else{
+                this.mode = ''
+            }
+            post("v1/cabinet/stock/merge_list", {
+                sale_type: this.typeClass > 0 ? this.typeClass : this.selectType,
+                mode:this.mode
+            }).then((res) => {
+                 uni.hideLoading()
+                if (!res.code) {
+                    this.totalNums = 0;
+                    this.multi = JSON.parse(JSON.stringify(res.cabinetStocks));
+                    res.cabinetStocks.forEach((it, s) => {
+                        this.totalNums += it.stockIds.length;
+                        this.multiIds[s] = [];
+                        this.multiinfo[s] = {};
+                        it.stockIds = it.stockIds.slice(0, 4);
+                    });
+                    if (this.selectType === 0) this.$emit("totalNums", this.totalNums);
+                    this.sliceList = JSON.parse(JSON.stringify(res.cabinetStocks));
+                    // 恢复切换前的选中状态
+                    this._restoreSelections();
+                    this.subOpen(ids = [], nums = 0, index = false,type=false)
+                }
+            }).catch((err) => {
+                uni.hideLoading()
+            })
+            // }else{
+            //     this.subOpen(ids = [], nums = 0, index = false,type=false)
+            // }
+         
+        },
+        getSubclassReward(type=false) {
             // this.sliceList = [];
             this.multi = [];
             this.multiinfo = [];
+          
             post("v1/cabinet/stock/merge_list", {
                 sale_type: this.typeClass > 0 ? this.typeClass : this.selectType,
+                mode: type? 'SourceType_Donation':''
             }).then((res) => {
+               
                 if (!res.code) {
                     this.totalNums = 0;
                     this.multi = JSON.parse(JSON.stringify(res.cabinetStocks));

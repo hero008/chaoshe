@@ -74,9 +74,9 @@
                               <div class="p-probability flex_r flex_ac ">
                                 <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
                            
-                                    <div :class="['prob_name',s]"> 
+                                    <text :class="['prob_name',s]"> 
                                           {{ formatName(s) }}
-                                    </div>
+                                    </text>
                                 <!-- <div class="prob_num">{{ ($h.Div(i, gachainfo.totalNum) * 100).toFixed(2) }}%</div> -->
                                 <div class="prob_num" v-if="i">{{ i }}%</div>
                             </div>

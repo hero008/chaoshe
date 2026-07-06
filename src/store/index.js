@@ -174,7 +174,7 @@ const store = new Vuex.Store({
             let userInfo = getCache("userInfo") || {};
             post("v1/wallet/balance", { user_id: userInfo.id }).then(res => {
                 if (!res.code) {
-                    let a = { balance: res.wallet['0'].balance, gold: res.wallet['2'].balance, xCoin:res.wallet['4'].balance }
+                    let a = { balance: res.wallet['0'].balance, gold: res.wallet['2'].balance, xCoin:res.wallet['4']?res.wallet['4'].balance:0 }
                     context.commit('UpBalance', a)
                 }
             })

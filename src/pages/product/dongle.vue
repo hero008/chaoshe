@@ -174,13 +174,13 @@
         </div>
       
 
-        <!-- <div class="yunlanBtn" @click="visible = true"> -->
+        <div class="yunlanBtn" @click="visible = true">
             <!-- <div class="l_dit"></div>
             <div class="r_dit"></div>
             <img class="ico_img" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_small.png" alt="" />
             <img class="ico_txt" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_txt.png" alt="" />
             <img class="ico_light" src="https://img.shinemang.com/gachaStatic/static/img/dongle/img_light.png" alt="" /> -->
-        <!-- </div> -->
+        </div>
         <div class="recordBtn" @click="getRewardHistory"></div>
         <!-- 过场动画 , { opacity: !cartoonShow } -->
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">

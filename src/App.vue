@@ -60,7 +60,7 @@ export default {
             PointType_Gold: "金币钱包", // 2
             PointType_Point: "积分", // 3
             PointType_AmountPoint: "现金点", // 10
-            PointType_CostAwardPoint: "欧气值", // 11
+            PointType_CostAwardPoint: "星光积分", // 11
             PointType_Free: "免费抽奖", //免费
             PointType_Disable: "已达上限", //禁用
         },
@@ -78,7 +78,7 @@ export default {
             2: "金币钱包",
             3: "积分",
             10: "现金点",
-            11: "欧气值",
+            11: "星光积分",
         },
         BannerTargetType: {
             BannerTargetType_Nil: 0, // 无

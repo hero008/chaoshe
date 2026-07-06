@@ -1,7 +1,7 @@
 <template>
     <view class="balance">
         <x-navbar tit="转赠记录" />
-        <div class="balance_con" :style="{ paddingTop: padTop }">
+        <div class="balance_con" :style="{ height: conHeight }">
             <!-- <div class="top_cord">
                 <div class="tit flex_r flex_ac flex_jb">
                     <view
@@ -23,6 +23,12 @@
                     <div class="m_num">{{ balance || "0.00" }}</div>
                 </div>
             </div> -->
+            <view class="tabs_two flex_r">
+                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i}}</text>
+                    <view v-if="i==active" class="line"></view>
+                </view>
+            </view>
             <div class="bill_log">
                 <!-- <div class="tit flex_r flex_ac flex_jb">
                     <span>存储记录</span>
@@ -40,9 +46,12 @@
                             :key="index"
                         >
                             <view class="itb flex_jb flex_r">
-                                <view class="itb2">转赠给({{
+                                <view v-if="active == '转赠记录'" class="itb2">转赠给({{
                                    item.targetUserId
                                 }})</view>
+                                  <view v-else class="itb2">({{
+                                   item.userId
+                                }})转赠给我</view>
                                 <view class="itb1">{{ item.createdAt }}</view>
                             </view>
                             <view class="listItems">
@@ -81,6 +90,8 @@ import {groupByItemName1} from '../../utils/mgtv';
 export default {
     data() {
         return {
+              navbar: [ "转赠记录","获赠记录",],
+            active: "转赠记录",
             balance: 0,
             pageda: {
                 page: 1,
@@ -112,6 +123,13 @@ export default {
             let da = this.MBInfo();
             return da.top + da.height + "px";
         },
+           conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10;
+            let str = h - th + "px";
+            return str;
+        },
     },
     mounted() {
         this.closeAutonym = this.userInfo.isAuthenticated;
@@ -122,6 +140,12 @@ export default {
         },
     },
     methods: {
+       ontab2(i, s) {
+            this.transactionList = [];
+            this.active = i;
+            this.pageda.page = 1;
+            this.getTransaction();
+        },
         ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
         async onClickAutonym() {
             this.showAutonym = false;
@@ -135,10 +159,10 @@ export default {
         getTransaction() {
             this.balance = this.userInfo.gold;
             post("v1/cabinet/donation/record/list", {
+                mode:this.active == '转赠记录' ? 1:2, 
             
                 ...this.pageda,
             }).then((res) => {
-                console.log(res);
                 if (this.pageda.page == 1) this.transactionList = [];
                 res.list.forEach((item)=>{
                     item.item = groupByItemName1(item.item)
@@ -147,7 +171,6 @@ export default {
                 this.transactionList = this.transactionList.concat(
                     res.list
                 );
-                console.log( this.transactionList)
                 this.pageda.total = res.total;
             });
         },
@@ -194,6 +217,71 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.tabs_two {
+    margin-bottom: 24rpx;
+    // width: 650rpx;
+    // background: #ac8afc;
+    // border-radius: 0 30rpx 0 0;
+    // padding-right: 20rpx;
+    // width: 468rpx;
+    height: 56rpx;
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
+    // background-size: 100% 100%;
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 28rpx;
+       padding-left: 24rpx;
+    // padding-right: 62rpx;
+
+    .tab_item {
+      width: 136rpx;
+height: 56rpx;
+// background: #EEEEEE;
+// border-radius: 28rpx 28rpx 28rpx 28rpx;
+display: flex;
+color: #8D8D94;
+font-weight: bold;
+align-items: center;
+justify-content: center;
+line-height: 56rpx;
+margin-right: 16rpx;
+position: relative;
+.line{
+    width: 64rpx;
+height: 12rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 6rpx 6rpx 6rpx 6rpx;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+bottom: 4rpx;
+}
+text{
+    position: relative;
+    z-index: 2;
+}
+        &:first-child {
+            // margin-left: -16rpx;
+        }
+        &:last-of-type {
+            // margin-right: 10rpx;
+        }
+
+        &.active {
+            // background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #1A1A1A;
+            // margin-top: -10rpx;
+            // color: #333;
+            // width: 156rpx;
+            // height: 86rpx;
+            // line-height: 76rpx;
+            // font-weight: bold;
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
+        }
+    }
+}
 ::v-deep .u-form-item__body__left__content__label {
     font-weight: bold;
     font-size: 28rpx;
@@ -311,7 +399,7 @@ export default {
 
 .bill_log {
     width: 100%;
-    height: calc(100%);
+     height: calc(100% - 80rpx);
     background-color: #fff;
     border-radius: 32rpx 32rpx 0 0;
 
@@ -331,7 +419,7 @@ export default {
             height: calc(100% - 30rpx);
 
             .li_item {
-                height: 112rpx;
+                // height: 112rpx;
                 width: 100%;
                 font-weight: 500;
                 font-size: 20rpx;

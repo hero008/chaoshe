@@ -34,7 +34,7 @@
                             " src="https://img.shinemang.com/gachaStatic/static/img/my/shuoming.png" class="shuoming" /> -->
                     </div>
                     <view class="user_name">
-                        <div class="u_ID">ID:{{ userInfo.id || "" }}</div>
+                        <div @click="copy" class="u_ID">ID: <span :style="{textDecoration: 'underline'}">{{ userInfo.id || "" }}</span></div>
                         <!-- 先出现不需要 -->
                      
                         <!-- #endif -->
@@ -145,7 +145,8 @@ import { service } from '@/utils/fun.js';
 import { integralPrice } from "@/utils/getData.js";
 import autonym from "@/components/autonym/index.vue";
 import { mgTvLogin } from "../../utils/mgtv";
-import { goto } from '../../utils/fun';
+import { copyCode, goto } from '../../utils/fun';
+
 let that;
 export default {
     data() {
@@ -173,7 +174,7 @@ export default {
                     title: "地址管理",
                 },
                 {
-                    name: 'https://img.shinemang.com/gachaStatic/static/img/my/ico2.png',
+                    name: 'https://img.shinemang.com/gachaStatic/zhuanzeng.png',
                     path: '/page-a/balance/transferGift',
                     title: '转赠记录'
                 },
@@ -271,6 +272,9 @@ export default {
         // #endif
     },
     methods: {
+        copy(){
+            copyCode(this.userInfo.id)
+        },
         goRechargeRecord(){
           this.goto("/page-a/balance/rechargeRecord");
         },
@@ -453,7 +457,7 @@ export default {
                 font-size: 48rpx;
               
                 &::after {
-                    content: "欧气值";
+                    content: "星光积分";
                     font-weight: 500;
                     font-size: 24rpx;
                     margin-left: 8rpx;

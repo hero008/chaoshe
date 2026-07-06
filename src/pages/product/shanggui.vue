@@ -16,10 +16,10 @@
                 </view>
                
                <!-- v-if="recycleState" -->
-                <view class="recycle flex_r flex_ac" @click="onGoRecycle()" >
+                <!-- <view class="recycle flex_r flex_ac" @click="onGoRecycle()" >
                     <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/recycle.png" />
                     <view class="text">放生</view>
-                </view> 
+                </view>  -->
                 <view  @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })" class="rules">
 
                 </view>
@@ -45,7 +45,7 @@
                     </view>
                     <view class="flex_r">
                        <view class="teg">赏品共{{ totalReward || 0 }}个</view>
-                       <view @click='toSendOther' class="teg" style='width:150rpx;background:linear-gradient(90deg, #31E597 0%, #40E0EA 100%)'>转赠</view>
+                       <!-- <view @click='toSendOther' class="teg" style='width:150rpx;background:linear-gradient(90deg, #31E597 0%, #40E0EA 100%)'>转赠</view> -->
                     </view>
                 </view>
                 <scroll-view @scrolltolower="onReachScollBottom" v-if="cabinetData && cabinetData.length"
@@ -53,10 +53,16 @@
                     <view class="lists_box">
                         <view class="lists">
                             <view class="item" v-for="(item, index) in cabinetData" :key="index">
+                               
+                                <view class="donation" v-if="item.themeType == 'ItemThemeType_Donation'">
+
+
+                                </view>
                                 <view class="item_img_box">
                                  <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }" @click="ondetail(item.itemId)">
+
                                     <!-- <view class="box_ico frame" v-if="item.state == 'CabinetStockState_InStock'"></view> -->
                                     <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"  class="box_ico" v-if="item.state =='CabinetStockState_InStock' " /> -->
                                     <!-- <view class="" v-if="
@@ -98,6 +104,11 @@
                 </scroll-view>
                 <u-empty v-else text="暂无赏品~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
+            </view>
+
+            <view class="activityBtn">
+                <view  @click="onGoRecycle()" class="btn"></view>
+                <view @click='toSendOther' class="btn"></view>
             </view>
             <view class="foot_btn">
 
@@ -227,7 +238,7 @@ export default {
                     this.pageda.page = 1;
                      this.loadDetail(1);
                      // 刷新 selectGoods 组件数据
-                     this.$refs.addStock.getSubclassReward()
+                     this.$refs.addStock.getSubclassReward(true)
                 }else{
                      uni.$u.toast(res.message);
                 }
@@ -235,8 +246,10 @@ export default {
              })
         },
         toSendOther(){
-            this.selectType = 1
-          this.$refs.addStock.open([], -1);
+           
+           this.selectType = 1
+          this.$refs.addStock.open([], -1,false,true);
+   
         },
         ontab(item) {
             this.pageda.page = 1;
@@ -291,12 +304,14 @@ export default {
         },
         onGoRecycle() {
             this.selectType = 2
-            this.$refs.addStock.open([], -1);
+            this.$refs.addStock.open([], -1,false,false);
             // uni.navigateTo({ url: "/pages/transaction/index?openStock=true" });
         },
           SelectIds(ids, infos) {
             const that = this;
-
+           if(!ids || !ids.length) {
+                return;
+            }
             if(this.selectType == 1){
                 console.log(infos,ids)
                 this.confirmSendOthers = true;
@@ -315,7 +330,7 @@ export default {
                      that.$showModal({
                         title: "放生",
                         content: `本次放生共获得${res.balance}星币`,
-                        hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
+                        hint: '温馨提示：放生后将无法恢复，请谨慎操作~',
                         success:(res1)=> {
                             if (res1.confirm) {
                                 post("v1/cabinet/decompose/by-stock", {
@@ -599,6 +614,7 @@ margin-right: 16rpx;
             
         }
         margin-bottom: 18rpx;
+        position: relative;
         // .item_img_box{
        
         // }
@@ -617,6 +633,16 @@ border-radius: 16rpx 16rpx 16rpx 16rpx;
 position: relative;
 background-size: cover;
 
+        }
+        .donation{
+            width: 66rpx;
+            height: 32rpx;
+            background: url('https://img.shinemang.com/gachaStatic/zz_1.png');
+            background-size: 100% 100%;
+            position: absolute;
+            z-index: 3;
+            left: 0;
+            top: 180rpx;
         }
 
         .item_name {
@@ -676,6 +702,31 @@ background-size: cover;
     }
 
 }
+.activityBtn{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 16rpx;
+    right: 0rpx;
+    bottom:600rpx;
+    .btn{
+        width: 112rpx;
+        height: 116rpx;
+
+        &:first-child{
+            background: url('https://img.shinemang.com/gachaStatic/fs.png');
+            background-size: 100% 100%;
+
+        }
+        &:last-child{
+            background: url('https://img.shinemang.com/gachaStatic/zz.png');
+             background-size: 100% 100%;
+        }
+    }
+
+
+}
+
 
 .mpWeixin {
     .top_tabs .top_btn {

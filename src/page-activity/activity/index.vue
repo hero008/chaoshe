@@ -99,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="r flex_r flex_ac flex_je">
-                                <span :style="{ color: colorList.img_ts }" class="txt">欧气值</span>
+                                <span :style="{ color: colorList.img_ts }" class="txt">星光积分</span>
                                 <span class="num">{{ i.point }}</span>
                                 <image src="https://img.shinemang.com/gachaStatic/static/img/activity/ioc2.png" class="ico" />
                             </div>
@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                             <div class="r flex_r flex_ac flex_je">
-                                <span class="txt">欧气值</span>
+                                <span class="txt">星光积分</span>
                                 <span class="num">{{ myrank.point }}</span>
                                 <image src="https://img.shinemang.com/gachaStatic/static/img/activity/ioc2.png" class="ico" />
                             </div>
@@ -148,6 +148,7 @@
 <script>
 // 荣耀排行榜
 import { post, activityLIst } from "@/utils/api.js";
+
 export default {
     data() {
         return {

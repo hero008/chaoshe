@@ -50,14 +50,14 @@
                                     }}</view>
                             </view>
                             <view class="box">
-                                <view class="text1">返利欧气值</view>
+                                <view class="text1">返利星光积分</view>
                                 <view class="number">{{
                                     pointData.pointToday || 0
                                     }}</view>
                             </view>
                         </view>
                         <div class="msg flex_r flex_jb flex_ac">
-                            <view>累计返利欧气值</view>
+                            <view>累计返利星光积分</view>
                             <view class="texn">{{ pointData.point }}</view>
                         </div>
                     </view>

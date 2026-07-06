@@ -1,7 +1,7 @@
 <template>
     <view class="balance">
         <x-navbar tit="交易记录" />
-        <div class="balance_con" :style="{ paddingTop: padTop }">
+        <div class="balance_con" :style="{ height: conHeight }">
             <!-- <div class="top_cord">
                 <div class="tit flex_r flex_ac flex_jb">
                     <view
@@ -23,6 +23,12 @@
                     <div class="m_num">{{ balance || "0.00" }}</div>
                 </div>
             </div> -->
+            <view class="tabs_two flex_r">
+                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i}}</text>
+                    <view v-if="i==active" class="line"></view>
+                </view>
+            </view>
             <div class="bill_log">
                 <!-- <div class="tit flex_r flex_ac flex_jb">
                     <span>存储记录</span>
@@ -34,7 +40,9 @@
                         @scrolltolower="onReachScollBottom"
                         :lower-threshold="400"
                     >
-                        <div
+                    <block  v-if="active == '星币'">
+                          <div
+                        
                             class="li_item flex_r flex_jb"
                             v-for="(item, index) in transactionList"
                             :key="index"
@@ -52,6 +60,29 @@
                             >
                             <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
                         </div>
+                    </block>
+
+                    <block v-else>
+                             <div
+                            class="li_item flex_r flex_jb"
+                            v-for="(item, index) in transactionList"
+                            :key="index" >
+                            <view class="itb flex_c flex_jb">
+                                <view class="itb2">{{
+                                    getXcoinPoint(item.logType)
+                                }}</view>
+                                <view class="itb1">{{ item.createdAt }}</view>
+                            </view>
+
+                            <view class="itb3"
+                                >{{ item.point > 0 ? "+" : ""
+                                }}{{ item.point }} 星光积分</view
+                            >
+                            <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
+                        </div>
+                    </block>
+                      
+                   
                     </scroll-view>
                 </div>
             </div>
@@ -73,9 +104,12 @@ import xPay from "@/components/x-pay/index.vue";
 // import autonym from "@/components/autonym/index.vue";
 import { mapState, mapActions } from "vuex";
 import popUpVue from "./popUp.vue";
+import { getSourceXcoinPoint ,formatDate} from '@/utils/mgtv';
 export default {
     data() {
         return {
+            navbar: [ "星光积分","星币",],
+            active: "星光积分",
             balance: 0,
             pageda: {
                 page: 1,
@@ -107,6 +141,13 @@ export default {
             let da = this.MBInfo();
             return da.top + da.height + "px";
         },
+          conHeight() {
+            let h = this.SystemInfo.screenHeight;
+            let va = this.MBInfo();
+            let th = va.height + va.top + 10;
+            let str = h - th + "px";
+            return str;
+        },
     },
     mounted() {
         this.closeAutonym = this.userInfo.isAuthenticated;
@@ -117,6 +158,16 @@ export default {
         },
     },
     methods: {
+        getXcoinPoint(type){
+          return getSourceXcoinPoint(type)
+        },
+        ontab2(i, s) {
+               this.transactionList = [];
+            this.active = i;
+            this.pageda.page = 1;
+         
+            this.getTransaction();
+        },
         ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
         async onClickAutonym() {
             this.showAutonym = false;
@@ -129,6 +180,23 @@ export default {
         // 获取流水
         getTransaction() {
             this.balance = this.userInfo.gold;
+            if(this.active == "星光积分"){
+                post("v1/activity/cost-award/log/list", {
+                    ...this.pageda,
+                }).then((res) => {
+                    console.log(res);
+                    res.list.forEach((item)=>{
+                        const data = new Date(item.createdAt)
+                        item.createdAt = formatDate(data)
+                    })
+                    
+                    if (this.pageda.page == 1) this.transactionList = [];
+                    this.transactionList = this.transactionList.concat(
+                        res.list
+                    );
+                    this.pageda.total = res.total;
+                });
+            }else{
             post("v1/wallet/transaction/list", {
                 type: 4,
                 ...this.pageda,
@@ -140,6 +208,7 @@ export default {
                 );
                 this.pageda.total = res.total;
             });
+        }
         },
         onReachScollBottom() {
             if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
@@ -184,6 +253,71 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.tabs_two {
+    margin-bottom: 24rpx;
+    // width: 650rpx;
+    // background: #ac8afc;
+    // border-radius: 0 30rpx 0 0;
+    // padding-right: 20rpx;
+    // width: 468rpx;
+    height: 56rpx;
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
+    // background-size: 100% 100%;
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 28rpx;
+       padding-left: 24rpx;
+    // padding-right: 62rpx;
+
+    .tab_item {
+      width: 136rpx;
+height: 56rpx;
+// background: #EEEEEE;
+// border-radius: 28rpx 28rpx 28rpx 28rpx;
+display: flex;
+color: #8D8D94;
+font-weight: bold;
+align-items: center;
+justify-content: center;
+line-height: 56rpx;
+margin-right: 16rpx;
+position: relative;
+.line{
+    width: 64rpx;
+height: 12rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 6rpx 6rpx 6rpx 6rpx;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+bottom: 4rpx;
+}
+text{
+    position: relative;
+    z-index: 2;
+}
+        &:first-child {
+            // margin-left: -16rpx;
+        }
+        &:last-of-type {
+            // margin-right: 10rpx;
+        }
+
+        &.active {
+            // background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #1A1A1A;
+            // margin-top: -10rpx;
+            // color: #333;
+            // width: 156rpx;
+            // height: 86rpx;
+            // line-height: 76rpx;
+            // font-weight: bold;
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
+        }
+    }
+}
 ::v-deep .u-form-item__body__left__content__label {
     font-weight: bold;
     font-size: 28rpx;
@@ -301,7 +435,7 @@ export default {
 
 .bill_log {
     width: 100%;
-    height: calc(100%);
+    height: calc(100% - 80rpx);
     background-color: #fff;
     border-radius: 32rpx 32rpx 0 0;
 

@@ -274,3 +274,40 @@ export const addAmount = (value1,value2)=>{
     return  new BigNumber(value1).plus(new BigNumber(value2)).toFixed()
 
 }
+
+export const getSourceXcoinPoint= (type)=>{
+  if ((type == 'CostAwardLogType_Normal')) {
+     return '消费返星光积分'
+  }else if(type == 'CostAwardLogType_Invite'){
+     return '邀请用户消费返星光积分'
+  }else if(type == 'CostAwardLogType_Accept'){
+     return '星光积分兑换'
+  }else if(type == 'CostAwardLogType_PrizeWheel'){
+     return '转盘抽奖'
+  }else if(type == 'CostAwardLogType_StepByStep'){
+     return '步步高升'
+  }else if(type == 'CostAwardLogType_SignIn'){
+     return '签到'
+  }else if(type == 'CostAwardLogType_LuckyNum'){
+     return '幸运数'
+  }else if(type == 'CostAwardLogType_CostAwardOffset'){
+     return '星光积分抵扣'
+  }else if(type == 'CostAwardLogType_Recall'){
+     return '召回'
+  }else if(type == 'CostAwardLogType_RedemptionCode'){
+     return '兑换码'
+  }else if(type == 'CostAwardLogType_Admin'){
+     return '管理员手动修改'
+  }
+}
+
+
+export const formatDate = (date)=> {
+  const pad = (n) => String(n).padStart(2, '0');
+  return date.getFullYear() + '-' +
+    pad(date.getMonth() + 1) + '-' +
+    pad(date.getDate()) + ' ' +
+    pad(date.getHours()) + ':' +
+    pad(date.getMinutes()) + ':' +
+    pad(date.getSeconds());
+}

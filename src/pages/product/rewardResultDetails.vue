@@ -69,7 +69,7 @@ export default {
                      that.$showModal({
                         title: "放生",
                         content: `本次放生共获得${res.balance}星币`,
-                        hint: '温馨提示：回收后将无法恢复，请谨慎操作~',
+                        hint: '温馨提示：放生后将无法恢复，请谨慎操作~',
                         success:(res1)=> {
                             if (res1.confirm) {
                                 post("v1/cabinet/decompose/by-gacha-order", {

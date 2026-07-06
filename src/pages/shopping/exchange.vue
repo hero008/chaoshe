@@ -59,7 +59,7 @@
                                         <div class="number">
                                             {{ stock == "" ? 0 : point }}
                                         </div>
-                                        <div class="EuropeanGas" :style="{ marginLeft: '4rpx' }"> 欧气值 </div>
+                                        <div class="EuropeanGas" :style="{ marginLeft: '4rpx' }"> 星光积分 </div>
                                     </div>
                                     <div class="increase">
                                         <u-number-box v-model="number" :disabled="stock == 0" :min="1" :max="stock"
@@ -80,20 +80,20 @@
                             <div>合计</div>
                             <div class="sumUp">
                                 <div class="sum">{{ stock == "" ? 0 : totalPrice * number }} </div>
-                                <div>欧气值</div>
+                                <div>星光积分</div>
                             </div>
                         </div>
                         <div class="freight">
                             <div>付款方式</div>
-                            <div>欧气值兑换</div>
+                            <div>星光积分兑换</div>
                         </div>
                         <div class="freight" v-if="!onlyShipment">
                             <div>兑换方式</div>
                             <div>兑换至星仓</div>
                         </div>
                         <div class="freight">
-                            <div>我的欧气值</div>
-                            <div>{{ myPrice }} 欧气值</div>
+                            <div>我的星光积分</div>
+                            <div>{{ myPrice }} 星光积分</div>
                         </div>
                         <div class="freight" v-if="onlyShipment">
                             <div class="orderForm">订单备注</div>
@@ -110,7 +110,7 @@
                         2、由于显示器、拍照和做图的过程中,产品可能发生颜色偏差，具体请以实物为准;<br />3、如有任何疑问请随时联系在线客服咨询。
                     </div>
                 </div>
-                <x-btn txt="欧气值兑换" cor="3" class="btn" :style="[stock == 0 ? { opacity: 0.5 } : '']" @click="onBtn" />
+                <x-btn txt="星光积分兑换" cor="3" class="btn" :style="[stock == 0 ? { opacity: 0.5 } : '']" @click="onBtn" />
             </view>
         </view>
         <show-modal></show-modal>
@@ -198,7 +198,7 @@ export default {
                 return;
             }
             if (Number(that.myPrice) < Number(that.totalPrice * this.number)) {
-                uni.$u.toast("您的欧气值不足~");
+                uni.$u.toast("您的星光积分不足~");
                 return;
             }
             that.$showModal({

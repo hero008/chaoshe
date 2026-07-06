@@ -83,7 +83,7 @@
                 </div>
                 <div class="th flex_r flex_ac flex_jb">
                     <span>好友昵称</span>
-                    <span>奖励 (欧气值)</span>
+                    <span>奖励 (星光积分)</span>
                 </div>
                 <div
                     class="td flex_r flex_ac flex_jb"
@@ -218,7 +218,7 @@ export default {
         },
         onShare() {
             uniShare(
-                { tit: "邀请好友，领欧气值", path: "pages/login/sharePage" },
+                { tit: "邀请好友，领星光积分", path: "pages/login/sharePage" },
                 { inviteCode: this.userInfo.inviteCode },
                 this.shareimg
             );
@@ -355,7 +355,7 @@ export default {
                     }
                     .text1 {
                         &::after {
-                            content: "(欧气值)";
+                            content: "(星光积分)";
                             color: #aaacbb;
                             font-weight: 500;
                             font-size: 24rpx;
