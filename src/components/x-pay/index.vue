@@ -743,18 +743,23 @@ export default {
             this.amount = this.goMitigate ? this.floatingPoint(this.amount, "-", this.mitigate) : this.floatingPoint(this.amount, "+", this.mitigate);
             this.onGoldPay();
         },
-        async getDiscounts() {
+        async getDiscounts(type=false) {
             if (this.amount && ["1", "2", "3", "4", "5"].includes(this.mtype) && Object.keys(this.offsetInfo).length
             ) {
                 const { offsetAmount, offsetMax } = this.offsetInfo.config[0];
                 let pc = this.integralAll.point / offsetAmount > this.amount * (offsetMax / 100) ? this.amount * (offsetMax / 100) : this.integralAll.point / offsetAmount;
                 this.mitigate = pc > 1 ? Math.floor(pc) : (Math.floor(pc * 10) / 10).toFixed(1);
                 if (this.goMitigate) this.amount = this.floatingPoint(this.amount, "-", this.mitigate); // 减去欧气值
+
+               
             } else {
                 this.goMitigate = false;
                 this.mitigate = 0;
                 this.pays.forEach((i) => (i.consume = 0));
             }
+             if(type){
+                 this.xCoinBanlance();
+             }
             this.onGoldPay();
         },
         onPaytype(item) {
@@ -858,7 +863,10 @@ export default {
                 let a = this.$h.Sub(this.oldamount, va);
 
                 if(this.goXcoin){
-                    this.xCoinBanlance();
+                    this.amount = a > 0 ? a : 0;
+                    this.amount = this.selectTicket.type == "COUPON_TYPE_FREE" ? 0 : this.amount;
+                    this.getDiscounts(true);
+                    
                 }else{
                     this.amount = a > 0 ? a : 0;
                     this.amount = this.selectTicket.type == "COUPON_TYPE_FREE" ? 0 : this.amount;

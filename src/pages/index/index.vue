@@ -133,15 +133,19 @@ export default {
             if(value.targetId){
                 if(value.targetType == 'WindowTargetType_Gashapon'){
                         this.goto('/pages/product/niudan',{id:value.targetId})
+                        this.closeBannerActivityPoupon()
                 }else if(value.targetType == 'WindowTargetType_ChaoPlay'){
                       this.goto('/pages/product/chaowanshang',{id:value.targetId})
+                        this.closeBannerActivityPoupon()
                 }else if(value.targetType == 'WindowTargetType_SurpriseBox'){
                        this.goto('/pages/product/dongle',{id:value.targetId})
+                         this.closeBannerActivityPoupon()
                 }else{
 
                     console.log(value.targetId,value.targetId == -1,'targetId');
                     if(value.targetId == -1){
                         this.goto('/pages/my/cardpack')
+                        this.closeBannerActivityPoupon()
                     }
                 }
             }

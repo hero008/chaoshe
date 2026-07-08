@@ -55,11 +55,15 @@
                     
                 </view>
                 <view class="gahcaAmount">
-                    <image  mode="scaleToFill" src="https://img.shinemang.com/gachaStatic/chaoyou/icon.png" />
-                    <text>已抽{{ residual }}发</text>
+                      距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text>
+                    <!-- <image  mode="scaleToFill" src="https://img.shinemang.com/gachaStatic/chaoyou/icon.png" />
+                    <text>已抽{{ residual }}发</text> -->
                 </view>
-                <view class="preview_box">
-                    <view class="seeRecords" @click="showRecards = true"></view>
+                <view :style="{
+                   backgroundImage:`url(${ previewType == 1?bgc1:bgc2})`,
+                   height:previewType == 1? '936rpx':'988rpx'
+                }"  class="preview_box">
+                    <!-- <view class="seeRecords" @click="showRecards = true"></view> -->
                     <!-- <view class="p-tit flex_r flex_ac">
                         <view class="tit_item " @click="previewType = 1" :class="{ active: previewType == 1 }">赏池预览
                         </view>
@@ -69,8 +73,19 @@
                             <view class="num">x{{ spNum }}</view>
                         </view>
                     </view> -->
+                     <div class="preview_tabs">
+
+                                 <div @click="changeTabs(1)" :class="['tab',previewType == 1 ? 'active':'']">
+                                    <span>奖品预览</span>
+                                 </div>
+                                 <div @click="changeTabs(2)" :class="['tab',previewType == 2 ? 'active':'']">
+                                    <span>中奖记录</span>
+                                 </div>
+                              </div>
                     <template v-if="previewType == 1">
                         <div class="preview_1">
+
+                             
                               <div class="p-probability flex_r flex_ac ">
                                 <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
                            
@@ -79,12 +94,12 @@
                                     </text>
                                 <!-- <div class="prob_num">{{ ($h.Div(i, gachainfo.totalNum) * 100).toFixed(2) }}%</div> -->
                                 <div class="prob_num" v-if="i">{{ i }}%</div>
-                            </div>
-                        </div>
-                        <view class="spShow">
+                             </div>
+                          </div>
+                        <!-- <view class="spShow">
                              距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text>
-                        </view>
-                        <scroll-view scroll-y style="height:740rpx;padding-top: 12rpx;">
+                        </view> -->
+                        <scroll-view scroll-y style="height:740rpx;">
                            <view class="list">
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
                                 @click="ondetail(item.itemId)">
@@ -110,6 +125,68 @@
                         </div>
                     </template>
                     <template v-if="previewType == 2">
+                         <div class="preview_2">
+                    <view class="tab">
+
+                        <view @click="refreshBtn" class="refresh"></view>
+                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem',value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
+                  <!-- <view class="tabItem">史诗</view>
+                  <view class="tabItem">稀有</view>
+                  <view class="tabItem">普通</view> -->
+             </view>
+                <scroll-view style="height: 780rpx;" scroll-y>
+                    <div class="lotteryRaffle">
+                            <div v-if="newRecordList" class="r_item" >
+                             <!-- v-for="(array, key) in recordList" -->
+                                <!-- <div  class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]"> -->
+                                    <!-- <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
+                                        class="badge" /> -->
+                                    <!-- <div class="tit_r flex_r flex_ac" @click="getJl(array)">
+                                        <span>查看最近10个</span>
+                                        <span class="icof" v-if="array.active">&#xe72a;</span>
+                                        <span class="icof" v-else>&#xe72d;</span>
+                                    </div> -->
+                                <!-- </div> -->
+                                <div  :class="['lr_con', { row1: false }]">
+                                    <div v-if="newRecordList && newRecordList.records && newRecordList.records.length !== 0">
+                                        <div :style="{
+                                backgroundImage: `url(https://img.shinemang.com/gachaStatic/k_${newRecordList.name}.png)`,
+                            }"  class="lr_i flex_r flex_ac flex_jb"
+                                            v-for="(item, i) in newRecordList.records.slice(0, newRecordList.records.lengthNumber)" :key="i">
+                                            <div class="lr_r">
+                                                <img class="lr_img" :src="item.itemCover" />
+                                                <div class="nums">{{ item.no }}发</div>
+                                            </div>
+                                            <div class="bor"></div>
+                                            <div class="lr_info flex_c flex_jb">
+                                                <div class="name ellipsis">
+                                                    {{ item.itemName }}
+                                                </div>
+                                                <div class="user_time flex_r flex_ac flex_jb">
+                                                    <div class="user flex_r flex_ac">
+                                                        <img class="u_img" :src="item.avatar
+                                                            | active
+                                                            " />
+                                                        <div class="u_name">
+                                                            {{ item.name }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="time">
+                                                        {{ item.createTime }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div v-else class="nullBox">
+                                        暂无中赏记录~
+                                    </div>
+                                </div>
+                            </div>
+                  </div>
+               </scroll-view>
+                        </div>
                         <!-- <view class="spNumber flex_r flex_ac flex_jb">
                             <view class="flex_r flex_ac">
                                 <view class="icon"></view>已抽{{ residual }}发
@@ -301,9 +378,13 @@ import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
 import { formateGachaLevelName } from "../../utils/mgtv";
+import bgc1 from '@/static/bg1.png'
+import bgc2 from '@/static/bg2.png'
 export default {
     data() {
         return {
+            bgc1:bgc1,
+            bgc2:bgc2,
             showRecards:false,
             AReward: {
                 
@@ -394,6 +475,9 @@ export default {
         this.loadDetail();
     },
     methods: {
+        changeTabs(type){
+          this.previewType = type
+        },
     //     onShareMessage(){
           
     //     }
@@ -1045,6 +1129,16 @@ font-size: 24rpx;
 margin-top: -140rpx;
 margin-bottom: 200rpx;
 line-height: 56rpx;
+.cs{
+    font-family: "倍数欧气值";
+    font-size: 14px;
+    text-stroke:  0.5px #000000;
+    -webkit-text-stroke: 0.5px #000000;
+    text-align: center;
+    font-style: normal;
+    text-transform: none;
+    color:#FF93C7;
+}
 image{
     width: 48rpx;
     height: 48rpx;
@@ -1218,19 +1312,62 @@ image{
     color: #fff;
 }
 
+.preview_tabs{
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    >.tab{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28rpx;
+        color: #fff;
+        position: relative;
+        span{
+            position: relative;
+            z-index: 3;
+        }
+
+        &.active{
+            color: #1A1A1A;
+            font-size: 32rpx;
+
+            &::after{
+                position: absolute;
+                content:'';
+                width: 128rpx;
+                    height: 16rpx;
+                    background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+                    border-radius: 0rpx 0rpx 0rpx 0rpx;
+                    bottom: 15rpx;
+            }
+        }
+    }
+}
+
 .preview_box {
     width: 702rpx;
     height: 936rpx;
-    background: url('https://img.shinemang.com/gachaStatic/chaoyou/bg1.png');
+    background: url('@/static/bg1.png');
     background-size:100%;
     margin: auto;
 
-    padding: 26rpx 24rpx;
+    padding:0 0rpx  26rpx;
     padding-right: 0;
     // background: #501C20;
     border-radius: 24rpx;
     margin-top: -190rpx;
     position: relative;
+    .preview_1{
+        padding: 0 24rpx;
+        padding-right: 0;
+    }
+
+    .preview_2{
+        padding: 0 16rpx;
+        padding-right: 0;
+    }
     .seeRecords{
         width: 200rpx;
         height: 100rpx;
@@ -1258,7 +1395,7 @@ image{
                 position: relative;
             }
 
-            &.active::after {
+            &::after {
                 content: "";
                 position: absolute;
                 bottom: 0;
@@ -1306,20 +1443,23 @@ margin-bottom: 12rpx;
             }
         }
     .p-probability {
-        margin-bottom: 24rpx;
+        margin-bottom: 20rpx;
+        margin-top: 10rpx;
+        justify-content: center;
+        width: 100%;
         .prob_item{
-            margin-right:40rpx;
+            margin-right:66rpx;
             &:last-child{
                 margin-right: 0;
             }
         }
      .prob_name{
         font-family: '倍数欧气值';
-        font-size: 28rpx;
+        font-size: 32rpx;
 line-height: 40rpx;
 
-text-stroke: 1rpx #000000;
--webkit-text-stroke:1rpx #000000;
+text-stroke: 0.6px #000000;
+-webkit-text-stroke:0.6px #000000;
 text-align: center;
 font-style: normal;
 text-transform: none;
@@ -1521,20 +1661,65 @@ margin-right: 16rpx;
 
        }
       }
-.lotteryRaffle {
+
+}
+.preview_2{
+          .tab{
+        display: flex;
+        margin-bottom: 24rpx;
+        // padding-left: 32rpx;
+        position: relative;
+        z-index: 2;
+        margin-top: 24rpx;
+        .refresh{
+            position: absolute;
+            width: 48rpx;
+            height: 48rpx;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 24rpx;
+            background: url('@/static/refresh.png');
+            background-size: 100% 100%;
+
+        }
+       .tabItem{
+        width: 136rpx;
+height: 56rpx;
+background: #fff;
+border-radius: 28rpx 28rpx 28rpx 28rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+line-height: 56rpx;
+margin-right: 16rpx;
+ color: #666666;
+ font-size: 28rpx;
+ &.active{
+    background: #FF93C7;
+    color: #000;
+    font-weight: bold;
+ }
+
+       }
+      }
+}
+  .lotteryRaffle {
         height: calc(100%);
         border-radius: 10rpx;
         overflow-y: auto;
         
-        padding:0 32rpx;
+        padding:0;
         
        .r_item {
         // background: #5D2028;
         // background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
         border-radius: 24rpx;
           width: 100%;
-          height: 184rpx;
+        //   height: 184rpx;
           background-size: 100% 100%;
+          display: flex;
+          align-items: center;
         .lr_tit {
             font-weight: 500;
             font-size: 20rpx;
@@ -1593,6 +1778,8 @@ margin-right: 16rpx;
             padding: 16rpx;
             background-size: 100% 100%;
             margin-bottom: 16rpx;
+            width: 670rpx;
+            height:184rpx;
             // padding: 12rpx 0;
 
             .lr_r {
@@ -1653,8 +1840,6 @@ margin-right: 16rpx;
         }
     }
     }
-}
-  
 .foot-btn {
     left: 0;
     width: 100%;

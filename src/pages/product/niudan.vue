@@ -65,15 +65,27 @@
                     <view class="number">{{ gachainfo.costAwardMultiple }}</view>
                 </view>
             </view>
-            <view class="preview_box">
-                <view @click="ondrawLog" class="record"></view>
-                <view class="box">
+            <view :style="{
+                backgroundImage:`url(${previewType == 1 ? bgc3:bgc4})`
+            }" class="preview_box">
+                 <div class="preview_tabs">
+
+                                 <div @click="changeTabs(1)" :class="['tab',previewType == 1 ? 'active':'']">
+                                    <span>奖品预览</span>
+                                 </div>
+                                 <div @click="changeTabs(2)" :class="['tab',previewType == 2 ? 'active':'']">
+                                    <span>中奖记录</span>
+                                 </div>
+                              </div>
+
+                <!-- <view @click="ondrawLog" class="record">234234234</view> -->
+                <view v-if="previewType == 1" style="padding-left: 24rpx;" class="box">
                     <view class="tab">
-                        <text>奖池预览</text>
-                        <text class="amount">（初始商品总数共：{{ (eggTwister.gachaBox &&
-                            eggTwister.gachaBox.totalAwards)}}抽）</text>
+                      
+                      <text class="amount">初始商品总数共：{{ (eggTwister.gachaBox &&
+                            eggTwister.gachaBox.totalAwards)}}抽</text>
                     </view>
-                      <scroll-view scroll-y class="p-list" @scroll="onScroll">
+                   <scroll-view scroll-y class="p-list" @scroll="onScroll">
                     <view class="flex-container">
                         <view class="list-item" v-for="(item, index) in goodsList" :key="index"  @click=" ondetail(item)">
                             <img lazy-load :src="item.itemCover" class="p-img" />
@@ -95,6 +107,9 @@
                     </view>
                 </scroll-view>
                 </view>
+               <view style="height:790rpx;position: relative;" v-show="previewType == 2">
+                 <draw-log-other  @onRefresh="onRefresh" ref="drawLogOther" :drawType="2"  />
+               </view>
                 <!-- <view class="p-tit flex_r flex_jb flex_ac">
                     <view class="l">奖品概览</view>
                     <view class="r" v-if="eggTwister.gachaBox">{{
@@ -246,11 +261,14 @@ import { post } from "@/utils/api.js";
 import xPay from "@/components/x-pay/index.vue";
 import capsuleToys from "@/components/capsuleToys/index.vue";
 import drawLogElse from "@/pages/product/modules/drawLogElse.vue";
+import drawLogOther from "@/pages/product/modules/drawLogOther.vue";
 import cSvga from "@/components/c-svga/c-svga.vue";
 import { playDede, saveFileToLocal, uniShare, compressImg, groupBySum, itemDetails, vibratePhone } from "@/utils/fun.js";
 import { Postpayment } from "@/utils/pay.js";
 import discounts from "@/components/modules/x-discounts.vue";
 import ball from "@/page-activity/ball/ball.vue";
+import bgc3 from '@/static/bgc3.png'
+import bgc4 from '@/static/bgc4.png'
 // import dynamicEffect from "@/pages/product/modules/dynamicEffect.vue";
 // import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
@@ -260,6 +278,8 @@ export default {
 
     data() {
         return {
+            bgc3:bgc3,
+            bgc4:bgc4,
             eggTwister: {
                 gacha: { themeName: "" },
                 gachaBox: {},
@@ -316,6 +336,7 @@ export default {
             vibrat: false,
             LuckyVisible: false,
             scheduleNum: null,
+            previewType:1
         };
     },
     components: {
@@ -325,7 +346,8 @@ export default {
         cSvga,
         discounts,
         ball,
-        scheduleTips
+        scheduleTips,
+        drawLogOther
         // dynamicEffect,
         // xPrize
     },
@@ -369,6 +391,19 @@ export default {
         this.saveFile();
     },
     methods: {
+           changeTabs(type){
+            if(type == this.previewType) return;
+            
+          this.previewType = type
+          if(this.previewType == 2){
+              let type1 = this.gachainfo.leftAwards !== 0 ? true : false;
+              console.log(this.$refs.drawLogOther)
+            this.$refs.drawLogOther.open(
+                this.gachaId,
+                this.eggTwister.gachaBox.boxIndex, -1, type1
+            );
+          }
+        },
          toShare(){
             if(window.mgtv){
                 mgtv.showShareMenu({
@@ -820,6 +855,40 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.preview_tabs{
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    >.tab{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28rpx;
+        color: #fff;
+        position: relative;
+        span{
+            position: relative;
+            z-index: 3;
+        }
+
+        &.active{
+            color: #1A1A1A;
+            font-size: 32rpx;
+
+            &::after{
+                position: absolute;
+                content:'';
+                width: 128rpx;
+                    height: 16rpx;
+                    background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+                    border-radius: 0rpx 0rpx 0rpx 0rpx;
+                    bottom: 15rpx;
+            }
+        }
+    }
+}
+
 .mask {
     position: fixed;
     top: 0;
@@ -1119,13 +1188,13 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
 
 .preview_box {
     width: 702rpx;
-    height: 963rpx;
+    height: 886rpx;
     margin: auto;
     position: relative;
   
-    background: url('https://img.shinemang.com/gachaStatic/niudanji/bg.png');
+    // background: url('https://img.shinemang.com/gachaStatic/niudanji/bg.png');
       background-size: 100% 100%;
-      padding-left: 24rpx;
+    //   padding-left: 24rpx;
       .record{
         position: absolute;
         width: 200rpx;
@@ -1144,18 +1213,19 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
 // border-radius: 32rpx 32rpx 32rpx 32rpx;
 // border: 2rpx solid #FFFFFF;
 .tab{
-    height: 96rpx;
+    // height: 96rpx;
     width: 100%;
-    line-height: 96rpx;
-    font-weight: bold;
-    color: #1A1A1A;
+    // line-height: 96rpx;
+    // font-weight: bold;
     font-size: 32rpx;
+    margin-bottom: 16rpx;
     display: flex;
     align-items: center;
+    color: #3F5E83;
     .amount{
         color: #3F5E83;
-        font-size: 20rpx;
-        margin-left: 10rpx;
+        font-size: 24rpx;
+        // margin-left: 10rpx;
         font-weight: 100;
     }
 
@@ -1179,7 +1249,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
     .p-list {
         // margin-top: 15rpx;
         width: 100%;
-        height: 870rpx;
+        height: 760rpx;
         padding-bottom: 15rpx;
 
         .flex-container {
@@ -1309,6 +1379,7 @@ font-size: 22rpx;
     width: 750rpx;
 height: 136rpx;
 background: #FFFFFF;
+z-index: 88;
 border-radius:32rpx 32rpx 0 0 ;
 }
 .foot-btn {
