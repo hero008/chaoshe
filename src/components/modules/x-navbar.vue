@@ -2,7 +2,9 @@
     <view class="header" :style="{ paddingTop: MBInfo().top + 'px' }" >
         <view  :style="{ height: MBInfo().height + 'px' }" >
             <view class="top_Back" @click.stop="gateBack()" :style="{color:tcolor}">
-                <text class="icof Back_ico">&#xe72c;</text>
+                <text :style="{
+                    color:whiteBack ? '#fff':'#1c1c1c'
+                }" class="icof Back_ico">&#xe72c;</text>
                 <text class="txt"> {{tit ? tit : '返回'}}</text>
             </view>
         </view>
@@ -21,6 +23,10 @@ export default {
         tcolor: {
             type: String,
             default: "#1c1c1c"
+        },
+        whiteBack: {
+            type:Boolean,
+            default:false
         }
     },
     created() {},
@@ -48,6 +54,8 @@ width: 580rpx !important;
 .top_Back {
     color: #1c1c1c;
     padding-left: 24rpx;
+    display: flex;
+    align-items: center;
 
     text {
         vertical-align: middle;

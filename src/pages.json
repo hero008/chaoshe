@@ -260,6 +260,18 @@
 			"root": "page-activity",
 			"pages": [
 				{
+					"path": "rank/rankRewards",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "rank/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
 					"path": "activity/index",
 					"style": {
 						"navigationStyle": "custom"
