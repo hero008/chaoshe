@@ -264,6 +264,7 @@ export default {
          integralPrice().then((res)=>{
             this.point = res.point
          })
+
     },
     mounted() {
         this.balance = this.userInfo.gold;

@@ -437,7 +437,7 @@ export default {
 
             // 活动类型路由处理函数
             const activityRoutes = {
-                100: () => this.goto("/page-activity/activity/index"),
+                100: () => this.goto("/page-activity/rank/index"),
                 102: () =>
                     this.goto("/page-activity/ticket/index", { itemJson }),
                 103: () => this.goto("/page-activity/huigui/index", { id }),
