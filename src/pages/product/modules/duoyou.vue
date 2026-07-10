@@ -50,7 +50,7 @@
             <view class="footer">
                 <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view>
                 <view  class="box">
-                     <view @click='fangsheng' v-if="allShow && awardList && awardList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
+                     <view @click='fangsheng' v-if="allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
                      <view class="all_btn" @click="getAll">{{ allShow ? '确定' : '一键开奖' }}</view>
                 </view>
             </view>
@@ -100,10 +100,9 @@ export default {
     components: { cSvga },
     methods: {
           fangsheng() {
-           
+
             const that = this;
-           const result = groupByItemId(this.awardList)
-           console.log(result)
+           const result = groupByItemId(this.originalList)
            post('v1/cabinet/decompose/cal-obtained',{item_dict:result}).then((res) => {
             console.log(res);
             if(!res.code){
@@ -114,7 +113,7 @@ export default {
                         success:(res1)=> {
                             if (res1.confirm) {
                                 post("v1/cabinet/decompose/by-gacha-order", {
-                                    request_id: that.awardList[0].requestId,
+                                    request_id: that.originalList[0].requestId,
                                 }).then((res2) => {
                                     if (res2.code) {
                                         uni.$u.toast(res2.message);

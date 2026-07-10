@@ -45,26 +45,45 @@
                             v-for="(item, index) in transactionList"
                             :key="index"
                         >
-                            <view class="itb flex_jb flex_r">
+                        
+                            <view class="listItems">
+                                <view  @click="ondetail(value.id)" :key="index" v-for="(value,index) in item.item" class="item">
+                                    <div :style="{
+                                        backgroundImage:`url(${value.img})`
+                                    }" class="img">
+                                    
+                                  <view class="count">
+                                        <text>{{ value.point }}星币</text>
+                                        <text>x{{value.num}}</text>
+                                    </view>
+                                </div>
+                                    <!-- <img  :src="value.img" alt=""> -->
+                                    <view class="name ellipsis">{{value.name}}</view>
+                                  
+                                </view>
+                            </view>
+
+                             <view class="itb flex_jb flex_r">
                                 <view v-if="active == '转赠记录'" class="itb2">转赠给({{
                                    item.targetUserId
                                 }})</view>
                                   <view v-else class="itb2">({{
                                    item.userId
                                 }})转赠给我</view>
+                                <view class="itb1">{{ item.decomposeXPoint }}星币</view>
+                            </view>
+                              <view class="itb flex_jb flex_r">
+                                <view v-if="active == '转赠记录'" class="itb1">转赠时间</view>
+                                  <view v-else class="itb1">获赠时间</view>
                                 <view class="itb1">{{ item.createdAt }}</view>
                             </view>
-                            <view class="listItems">
-                                <view :key="index" v-for="(value,index) in item.item" class="item">
-                                    <view class="name ellipsis">{{value.name}}</view>
-                                    <view class="count">x{{value.num}}</view>
-                                </view>
-                            </view>
-
-                         
                             <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
                         </div>
+                           <u-empty v-if="transactionList.length < 1" text="暂无记录"
+                            icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
                     </scroll-view>
+
+                   
                 </div>
             </div>
         </div>
@@ -75,6 +94,7 @@
             :visible="showAutonym"
         /> -->
         <popUpVue ref="popUp" @popUp="onClickPopUp" />
+           <gachaDetails ref="gachaDetails" />
     </view>
 </template>
 <script>
@@ -140,6 +160,9 @@ export default {
         },
     },
     methods: {
+          ondetail(id) {
+            this.gachaDetailsMethod(this, id);
+        },
        ontab2(i, s) {
             this.transactionList = [];
             this.active = i;
@@ -164,13 +187,18 @@ export default {
                 ...this.pageda,
             }).then((res) => {
                 if (this.pageda.page == 1) this.transactionList = [];
-                res.list.forEach((item)=>{
+                if(res.list && res.list.length>0){
+                   res.list.forEach((item)=>{
                     item.item = groupByItemName1(item.item)
-                })
-
+                 })
+                }
+                
+         
                 this.transactionList = this.transactionList.concat(
                     res.list
                 );
+
+                console.log(this.transactionList)
                 this.pageda.total = res.total;
             });
         },
@@ -430,16 +458,46 @@ text{
                 	border: none;
                 }
                 .listItems{
-                    margin-top: 20rpx;
+                   
+                    display: flex;
+                    flex-wrap: nowrap;
+                    overflow-x: auto;
                     .item{
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        line-height: 36rpx;
+                        margin-right: 24rpx;
+                        &:last-child{
+                            margin-right: 0;
+                        }
+                        // display: flex;
+                        // justify-content: space-between;
+                        // align-items: center;
+                        // line-height: 36rpx;
+                        width: 160rpx;
+                        // height: 160rpx;
+                        .img{
+                            width: 160rpx;
+                            height: 160rpx;
+                            border-radius: 12rpx;
+                            background-size: 100% 100%;
+                            position: relative;
+                            .count{
+                                position: absolute;
+                                bottom: 0;
+                                border-radius: 0 0 12rpx 12rpx;
+                                width: 100%;
+                                background-color: rgba(0,0,0,.3);
+                                padding: 6rpx 6rpx;
+                                font-size: 18rpx;
+
+                                color: #fff;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                            }
+                        }
                         .name{
                             font-size: 24rpx;
                             color: #1A1A1A;
-                            max-width: 500rpx;
+                            // max-width: 500rpx;
                         }
                         .count{
                             font-size: 22rpx;
@@ -450,6 +508,7 @@ text{
             }
         }
         .itb {
+            margin-top: 20rpx;
             .itb1 {
                 font-weight: 500;
                 font-size: 24rpx;

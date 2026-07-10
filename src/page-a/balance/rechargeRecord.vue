@@ -60,6 +60,8 @@
                             >
                             <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
                         </div>
+                           <u-empty v-if="transactionList.length < 1" text="暂无记录"
+                            icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
                     </block>
 
                     <block v-else>
@@ -80,6 +82,8 @@
                             >
                             <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
                         </div>
+                             <u-empty v-if="transactionList.length < 1" text="暂无记录"
+                            icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
                     </block>
                       
                    

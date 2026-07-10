@@ -285,6 +285,8 @@ export default {
             this.swiperList = [];
             this.numsId = "";
             this.swiperList = list;
+
+            console.log(list);
             this.currentPercent = addTotalPrice;
             if (this.currentPercent >= this.totalPrice)
                 this.insufficient = true;

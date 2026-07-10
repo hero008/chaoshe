@@ -98,6 +98,10 @@
                                 <view class="item_no ellipsis">{{
                                     item.itemId
                                     }}</view>
+
+                                <view style="color: #F65C36;" class="item_no ellipsis">
+                                    可获得: {{ item.item.decomposeXPoint }}星币
+                                </view>
                             </view>
                         </view>
                     </view>
@@ -604,7 +608,7 @@ margin-right: 16rpx;
 
     .item {
         width: 224rpx;
-        height: 300rpx;
+        height: 324rpx;
         background-color: #fff;
         margin-right: 8rpx;
         border-radius: 24rpx 24rpx 24rpx 24rpx;

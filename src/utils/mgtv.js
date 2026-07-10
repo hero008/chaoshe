@@ -252,6 +252,8 @@ export const  groupByItemName1 = (data)=> {
   data.forEach(item => {
     const id = item.id;
     const name = item.name;
+    const img = item.coverImage
+    const point = item.decomposeXPoint
     
     if (map.has(id)) {
       map.get(id).num += 1;
@@ -259,7 +261,9 @@ export const  groupByItemName1 = (data)=> {
       map.set(id, {
         id: id,
         name: name,
-        num: 1
+        num: 1,
+        img:img,
+        point:point
       });
     }
   });

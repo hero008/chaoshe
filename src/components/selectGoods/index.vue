@@ -266,7 +266,7 @@ export default {
                     this.sliceList = JSON.parse(JSON.stringify(res.cabinetStocks));
                     // 恢复切换前的选中状态
                     this._restoreSelections();
-                    this.subOpen(ids, nums, index = false,type=false)
+                    this.subOpen(ids, nums, index,type)
                 }
             }).catch((err) => {
                 uni.hideLoading()
