@@ -250,7 +250,6 @@ export default {
     methods: {
         getDanmu(){
           post('v1/publicize/push/barrage/all').then((res)=>{
-            console.log(res);
             this.danmuList = res.list
           })
         },

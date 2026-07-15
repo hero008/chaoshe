@@ -144,7 +144,15 @@ export default {
       const half = Math.ceil(data.length / 2);
       this.topData = data.slice(0, half);
 
+      if(this.topData.length > 0 && this.topData.length < 4){
+        this.topData = [...this.topData,...this.topData,...this.topData,...this.topData]
+      }
+
       this.bottomData = data.slice(half);
+
+       if(this.bottomData.length > 0 && this.bottomData.length < 4){
+        this.bottomData = [...this.bottomData,...this.bottomData,...this.bottomData,...this.bottomData]
+      }
       this.duration = this.topData.length * 4
      this.timer = setTimeout(()=>{
           this.opacityClass = 1
