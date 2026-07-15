@@ -2,11 +2,13 @@
 <template>
     <view>
         <view class="index_page">
+          
+          
             <!-- <chao-wan v-if="tbStyle.selectIndex == 0" :inx.sync="chaowanInx" /> -->
             <!-- 微信小程序不需要 -->
             <market v-if="tbStyle.selectIndex == 1" ref="marketPage" />
             <!-- 微信小程序不需要 -->
-            <home v-if="tbStyle.selectIndex == 0" />
+            <home  v-if="tbStyle.selectIndex == 0" />
             <shang-gui v-if="tbStyle.selectIndex == 2" ref="shangGui" />
             <my v-if="tbStyle.selectIndex == 3" ref="tabmy" />
             <!-- 底部导航 -->
@@ -44,7 +46,9 @@ import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { mapState } from "vuex";
 import { post } from "@/utils/api.js";
 import { getWebSocket } from "../../utils/webSocket";
+import DanmakuSimple from '@/components/danmu/danmu'
 import { goto } from "../../utils/fun";
+import { getMsg } from "../../utils/webSocket";
 export default {
     data() {
         return {
@@ -58,6 +62,9 @@ export default {
             chaowanInx: 1,  // 潮玩tab 默认一
             isPopupVisible: true, // 没用到, 
             loading: true, // 没用到
+            danmakuList: [],
+              colors: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bcb'],
+      messages: ['大家好！', '666', '太棒了', '哈哈', '加油！', '😊']
         };
     },
 
@@ -73,9 +80,13 @@ export default {
         // #ifdef MP-WEIXIN
         mpPrivacy,
         // #endif
+        DanmakuSimple
     },
     computed: {
         ...mapState(["popupWebSocket", 'userInfo']),
+    },
+    watch:{
+     
     },
     async onLoad(da) {
          if(this.userInfo && this.userInfo.id){
@@ -109,15 +120,12 @@ export default {
             },
         });
         if (
-            !this.popupWebSocket &&
-            this.SystemInfo.uniPlatform == "app" &&
-            uni.getStorageSync("aToken")
+            !this.popupWebSocket &&  uni.getStorageSync("aToken")
         ) {
-            getWebSocket(this); // 链接socket
+            // getWebSocket(this); // 链接socket
         }
-       
-
     },
+  
     onShow() {
         let inx = uni.getStorageSync("currentChange"); //当前底部的tab
         inx = [0, 1, 2, 3, 4].includes(inx) ? inx : 2; // 是否包含在tab上面
@@ -128,6 +136,18 @@ export default {
         if (this.$refs.shangGui && inx == 3) this.$refs.shangGui.loadDetail(1);//刷新对应的界面
     },
     methods: {
+        test(){
+ const randomMsg = this.messages[Math.floor(Math.random() * this.messages.length)];
+      const randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+      const randomSize = 16 + Math.floor(Math.random() * 10);
+      
+      this.danmakuList.push({
+        text: randomMsg,
+        color: randomColor,
+        fontSize: randomSize + 'px',
+        duration: (6 + Math.random() * 4) + 's'
+      });
+        },
         
         toTarget(value){
             if(value.targetId){

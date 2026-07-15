@@ -119,7 +119,7 @@ export default {
                                         uni.$u.toast(res2.message);
                                     } else {
                                         uni.$u.toast("放生成功");
-                                          that.close()
+                                        that.close()
                                       
                                     }
                                 });
@@ -133,12 +133,14 @@ export default {
             this.show = true;
             this.dynamicEffectShow = true;
             this.originalList = da//原数据
+            // this.originalList.sort((a,b)=>a.levelIndex - b.levelIndex)
             this.totalPage = Math.ceil(da.length / 10)
             this.awards = da.slice(0, 10);
             this.pageSize = this.awards.length
             this.gachaId = id;
             this.boxIndex = index;
             this.cysType = this.verdictBig(da)
+
             this.styleStep = 1
         },
         close() {
@@ -173,8 +175,11 @@ export default {
             if (this.awards.length > 5) atime = 100;
             const sp = this.cysType == 28 ? false : true
             if (!sp) {
+                   this.dynamicEffectShow = true;
+               
                 this.awardList.push({ ...this.awards[a], rotated: false, click: false });
                 this.originalList.forEach(item => { item.rotated = false; item.click = false; });
+                 this.getAll()
             } else {
                 this.awardList.push({ ...this.awards[a], rotated: true, click: false });
                 setTimeout(() => {
@@ -189,7 +194,9 @@ export default {
                 a++;
                 if (a < this.awards.length) {
                     if (!sp) {
+                         this.dynamicEffectShow = true;
                         this.awardList.push({ ...this.awards[a], rotated: false, click: false });
+                         this.getAll()
                     } else {
                         this.awardList.push({ ...this.awards[a], rotated: true, click: false });
                         setTimeout(() => {

@@ -393,7 +393,7 @@ function canShowGachaButton(data) {
                 gacha.specialDiscountLimitBetNum) &&
             (userBetCountDaily === -1 ||
                 userBetCountDaily >=
-                gacha.specialDiscountLimitBetNum) && specialDiscountCount > 0 && gachaBox.leftAwards >= gacha.specialDiscountLimitBetNum
+                gacha.specialDiscountLimitBetNum) && specialDiscountCount > 0 &&  (gachaBox.leftAwards== -1 || gachaBox.leftAwards >= gacha.specialDiscountLimitBetNum)
     }
     return btn
 

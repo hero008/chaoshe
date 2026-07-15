@@ -28,6 +28,11 @@ uni.addInterceptor('request', {
     invoke(args) {
         let token = uni.getStorageSync('aToken');
         if (token && args && args.header) args.header.Authorization = "Bearer " + token;
+        let channel = uni.getStorageSync('channel')
+        if(args && args.header){
+          args.header.Channel =  channel ? channel : 'Channel_Official';
+
+        }
     },
    
     // 请求成功

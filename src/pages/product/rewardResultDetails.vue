@@ -78,10 +78,12 @@ export default {
                                     if (res2.code) {
                                         uni.$u.toast(res2.message);
                                     } else {
-                                        uni.$u.toast("放生成功");
                                         setTimeout(()=>{
+                                            uni.$u.toast("放生成功");
+                                        },300)
+                                        // setTimeout(()=>{
                                              that.confirmBtn()
-                                        },2000)
+                                        // },2000)
                                     }
                                 });
                             }

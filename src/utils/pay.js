@@ -135,16 +135,17 @@ export function Postpayment(data = {}, num = 0, special = 0) {
     } = data.gacha;
     const { leftAwards, boxIndex } = data.gachaBox;
     // 处理无限库存情况：leftAwards === -1 表示无限库存，不触发售罄，数量不限制
-    if (data.gachaBox && leftAwards !== -1 && (leftAwards <= 0 || state == 3)) {
+    // && leftAwards !== -1
+    if (data.gachaBox && leftAwards !== -1 &&  (leftAwards <= 0 || state == 3)) {
         uni.$u.toast("该箱已售罄，请选择其他箱子");
         return {};
     } else {
         let money = discountPrice ? discountPrice : price;
-        // 计算可购买数量：无限库存时直接取 num，否则取 min
+        // 计算可购买数量：无限库存时直接取 num，否则取 min  
         let number = leftAwards === -1 ? num : (leftAwards < num ? leftAwards : num);
         let m;
         let discount;
-        if ((leftAwards < specialDiscountLimitBetNum && special) || !special) {
+        if (leftAwards !== -1 && (leftAwards < specialDiscountLimitBetNum && special) || !special) {
             discount = true;
             m = Vue.prototype.$h.Mul(number, money);
         } else if (special == 1) {

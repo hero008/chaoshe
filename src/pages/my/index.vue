@@ -71,8 +71,14 @@
                         src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
                         class="m_ico"
                     /> -->
-                    <div class="m_num">{{ point || "0.00" }}</div>
-                    <div class="m_num1">{{ userInfo.xCoin || "0.00" }}</div>
+                    <div class="m_num">
+                        <div style="font-size: 24rpx;">星光积分</div>
+
+                        {{ point || "0.00" }}
+                    </div>
+                    <div class="m_num1">
+                         <div style="font-size: 24rpx;">星币</div>
+                        {{ userInfo.xCoin || "0.00" }}</div>
                 </div>
                 <!-- <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view> -->
                 <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
@@ -445,7 +451,7 @@ export default {
         }
 
         .B_num {
-            margin: 60rpx 0 8rpx;
+            margin: 50rpx 0 8rpx;
 
             .m_ico {
                 width: 48rpx;
@@ -457,23 +463,24 @@ export default {
                 font-weight: bold;
                 font-size: 48rpx;
               
-                &::after {
-                    content: "星光积分";
-                    font-weight: 500;
-                    font-size: 24rpx;
-                    margin-left: 8rpx;
-                }
+                // &::after {
+                //     content: "星光积分";
+                //     font-weight: 500;
+                //     font-size: 24rpx;
+                //     margin-left: 8rpx;
+                // }
             }
             .m_num1{
                  font-weight: bold;
                 font-size: 48rpx;
+                text-align: right;
               
-                &::after {
-                    content: "星币";
-                    font-weight: 500;
-                    font-size: 24rpx;
-                    margin-left: 8rpx;
-                }
+                // &::after {
+                //     content: "星币";
+                //     font-weight: 500;
+                //     font-size: 24rpx;
+                //     margin-left: 8rpx;
+                // }
             }
         }
         .nums {

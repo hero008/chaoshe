@@ -55,6 +55,7 @@ export default {
             // let nickName = res.nickName;
             // let avatarUrl = res.avatarUrl;
             // this.webLogin();
+            let channel = uni.getStorageSync('channel')
 
                post("v1/user/login", {
                 phone_num: "",
@@ -63,7 +64,7 @@ export default {
                 login_platform: 0,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
-                channel_id: 1,
+                channel_id: channel ? channel : 'Channel_Official',
                 uuid:res.uuid,
                 nickname:res.nickName,
                 avatar_url:res.avatarUrl
@@ -167,13 +168,13 @@ export default {
 // 19999999995
     webLogin(){
         post("v1/user/login", {
-                phone_num: "19999999996",
+                phone_num: "19999999999",
                 type: 0,
                 code: "260106",
                 login_platform: 0,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
-                channel_id: 1,
+                channel_id: 'Channel_Official',
             }).then((res) => {
                 if (res.code) {
                 // uni.$u.toast(res.message);

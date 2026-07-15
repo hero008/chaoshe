@@ -50,10 +50,10 @@
         </div>
         <div @click="toRankRewards" class="reward">奖品列表</div>
       </div>
-      <div class="countDown" v-if="residuetime > 0">
-        <span v-if="countDown">活动开始倒计时：</span>
-        <span v-else>本期活动倒计时：</span>
-        <u-count-down :time="residuetime" @change="rtimeChange">
+      <div class="countDown" >
+        <span v-if="countDown && residuetime > 0">活动开始倒计时：</span>
+        <span v-else-if="residuetime > 0">本期活动倒计时：</span>
+        <u-count-down v-if="residuetime > 0" :time="residuetime" @change="rtimeChange">
           <view class="timetxt">
             <text>{{ timeData.days }}天</text>
             <text>{{ timeData.hours }}小时</text>
@@ -61,6 +61,7 @@
             <text>{{ timeData.seconds }}秒</text>
           </view>
         </u-count-down>
+        <span v-else>本期活动已结束</span>
       </div>
       <scroll-view scroll-y class="rankList">
         <div class="list">

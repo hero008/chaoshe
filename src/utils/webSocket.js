@@ -4,6 +4,7 @@ import Vue from 'vue'
 import store from '@/store';
 import { createAlarm } from "@/utils/nativeMsg.js";
 import { showNotice } from "@/utils/notice.js";
+import eventBus from './eventBus';
 Vue.prototype.$store = store
 let SystemInfo = uni.getSystemInfoSync();
 Vue.prototype.SystemInfo = SystemInfo;
@@ -16,21 +17,24 @@ let messageQueue = [];
 let isAlarmActive = false;
 let alarmMsgInstance = null;
 let connect=false
+
 export function getWebSocket(vm) {
     // return
     if(connect) return
     connect=true  
     that = vm 
-    let url = process.env.VUE_APP_BASE_URL == 'https://v2.app.chaoshewang.com/api/' ? 'ws://v2.app.chaoshewang.com/ws' : 'ws://192.168.8.180/ws'
+    let url = process.env.VUE_APP_BASE_URL == 'https://v2.app.chaoshewang.com/api/' ? 'ws://v2.app.chaoshewang.com/ws' : 'ws://192.168.8.190:8081/ws'
     let token = uni.getStorageSync('aToken');
+
     socketTask = uni.connectSocket({
-        url: url,
-        header: {
-            'Authorization': 'Bearer ' + token
-        },
+        url: url+'?token='+token,
+        // protocols:[token],
+        // header: {
+        //     'Authorization': 'Bearer ' + token
+        // },
         method: 'POST',
         success: (res) => {
-            // console.log(res, 'WebSocket连接已发起')
+            console.log(res, 'WebSocket连接已发起')
         },
         fail: (err) => {
             // console.error('连接失败:', err)
@@ -39,7 +43,7 @@ export function getWebSocket(vm) {
     });
     // 监听事件  
     socketTask.onOpen(() => {
-        // console.log('WebSocket连接已打开');
+        console.log('WebSocket连接已打开');
         vm.$store.commit('UpSelectWebSocket', true)
         reconnectAttempts = 0 // 重连次数 
         MAX_RETRY = 3      // 最大重连次数
@@ -47,27 +51,38 @@ export function getWebSocket(vm) {
     });
 
     socketTask.onMessage((res) => {
+        console.log(res);
         if (res.data == 'Connected') return
         const parsed = JSON.parse(res.data);
+
+        
         // console.log(parsed, '收到消息'); 
+        if(parsed.type == 1){
+            console.log('时间付款时间大富科技')
+           eventBus.$emit('danmaku-message', parsed);
+        }
         if (parsed.type == 2) {
-            showNotice(parsed)
+
+
+            // showNotice(parsed)
         }else if(parsed.type == 100){
-            vm.$store.commit('UpAllInLeft', parsed)
+
+            // vm.$store.commit('UpAllInLeft', parsed)
         }else {
             // 新消息加入队列
-            messageQueue.push(parsed);
-            processMessageQueue();
+            // messageQueue.push(parsed);
+            // processMessageQueue();
         }
     })
 
-    socketTask.onClose(() => {
+    socketTask.onClose((err) => {
+        console.log(err)
         // console.log('WebSocket连接已关闭');
         vm.$store.commit('UpSelectWebSocket', false)
         connect=false
     });
     socketTask.onError((err) => {
-        // console.error('WebSocket错误:', err);
+        console.log('WebSocket错误:', err);
         vm.$store.commit('UpSelectWebSocket', false)
         scheduleReconnect()
         connect=false

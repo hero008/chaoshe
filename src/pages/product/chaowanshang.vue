@@ -16,6 +16,7 @@
                         mode="scaleToFill"
                     /><text>分享</text>
         </view> 
+        <DanmakuSimple :data="danmuList" :top="MBInfo().top +48" ></DanmakuSimple>
         <scroll-view :style="{ height: conHeight, }" scroll-y="true" @scroll="onScroll">
             <view class="chaowanshang_con">
                 <view class="gashapon_machine_box">
@@ -380,9 +381,12 @@ import xPrize from "@/components/modules/x-prize";
 import { formateGachaLevelName } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
+import DanmakuSimple from '@/components/danmu/danmu'
 export default {
     data() {
         return {
+            danmuList:[
+            ],
             bgc1:bgc1,
             bgc2:bgc2,
             showRecards:false,
@@ -444,6 +448,7 @@ export default {
 
             recordLevelName:'SP',
             newRecordList:'',
+            
 
 
         };
@@ -453,7 +458,8 @@ export default {
         discounts,
         ball,
         duoyou,
-        xPrize
+        xPrize,
+        DanmakuSimple
     },
     computed: {
        ...mapState(["userInfo"]),
@@ -484,10 +490,11 @@ export default {
     //    ,
      toShare(){
             if(window.mgtv){
+                let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
                 mgtv.showShareMenu({
                     title:"无限赏 : " + this.gachainfo.themeName,
                      typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode)}`
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'channel='+channel)}`
                 })
             }
         },
@@ -543,6 +550,11 @@ export default {
                     // this.onshareMessage()
                 }
             });
+
+            post('v1/publicize/push/barrage/all').then((res)=>{
+            console.log(res);
+            this.danmuList = res.list
+          })
 
         },
         getData(key = "") {
@@ -736,6 +748,7 @@ export default {
         },
         onpay(num, special = 0) {
             let res = Postpayment(this.AReward, num, special);
+            console.log(res,'lsjdfjsldjflksdjf')
             if (res && res.m > 0) {
                 this.$refs.xPay.open(
                     res.m,
@@ -758,11 +771,15 @@ export default {
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
                 if (!Array.isArray(res.awards)) return
+
                  if(res.awards && res.awards.length > 0){
+                    res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
                 // res.awards[]
                   }
                 this.awardsList = res.awards;
+
+                
                 this.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
                 // this.loadDetail();
                 // this.chaoPlay(this.previewType);

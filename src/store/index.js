@@ -72,6 +72,7 @@ const store = new Vuex.Store({
         selectAllInLeft(state) {
             return state.allInLeft
         },
+  
         selectMail(state) {
             return state.mail
         },
@@ -131,6 +132,7 @@ const store = new Vuex.Store({
         UpAllInLeft(state, va) {
             state.allInLeft = va;
         },
+
         UpMail(state, va) {
             state.mail = va;
         },

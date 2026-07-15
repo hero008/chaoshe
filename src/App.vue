@@ -132,6 +132,11 @@ export default {
              uni.setStorageSync('parmasPath',data);
                if(data){
                  const query = parseQueryString(data);
+                 if(query && query.channel){
+                    uni.setStorageSync('channel',query.channel)
+                 }else{
+                    // uni.setStorageSync('channel','Channel_Official')
+                 }
                  if(query && query.inviteCode){
                      uni.setStorageSync('inviteCode',query.inviteCode)
                  }
@@ -143,20 +148,24 @@ export default {
                  }
                }
 
-
             //    console.log(mgtv.getLaunchOptionsSync())
 
-               const query = mgtv.getLaunchOptionsSync().query;
-               uni.setStorageSync('query',JSON.stringify(query));
-               if(query && query.inviteCode){
-                   uni.setStorageSync('inviteCode',query.inviteCode)
-               }
-               if(query.gachaName){
-                   uni.setStorageSync('gachaName',query.gachaName)
-               }
-               if(query.gachaId){
-                   uni.setStorageSync('gachaId',query.gachaId)
-               }
+            //    const query = mgtv.getLaunchOptionsSync().query;
+            //    uni.setStorageSync('query',JSON.stringify(query));
+            //    if(query && query.channel){
+            //         uni.setStorageSync('channel',query.channel)
+            //      }else{
+            //         // uni.setStorageSync('channel','Channel_Official')
+            //      }
+            //    if(query && query.inviteCode){
+            //        uni.setStorageSync('inviteCode',query.inviteCode)
+            //    }
+            //    if(query.gachaName){
+            //        uni.setStorageSync('gachaName',query.gachaName)
+            //    }
+            //    if(query.gachaId){
+            //        uni.setStorageSync('gachaId',query.gachaId)
+            //    }
              
 
           let isLogin = mgtv.isLogin();
@@ -231,12 +240,12 @@ export default {
     onLoad() {},
     computed: { ...mapState(["popupWebSocket","userInfo"]) },
     onShow: function () {
+        //  this.SystemInfo.uniPlatform == "app" &&
         if (
             !this.popupWebSocket &&
-            this.SystemInfo.uniPlatform == "app" &&
             uni.getStorageSync("aToken")
         ) {
-            getWebSocket(this);
+            // getWebSocket(this);
         }
 
         // if(isMTVapp()){

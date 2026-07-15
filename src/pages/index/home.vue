@@ -21,11 +21,15 @@
                 </view> -->
             </view>
         </view>
+         <DanmakuSimple :data="danmuList"  :top="MBInfo().top + 42"
+         ></DanmakuSimple>
         <scroll-view :style="{
             height:`calc(100vh - ${MBInfo().height}px - ${MBInfo().top}px - 28rpx)`
         }" scroll-with-animation="true"  @scroll="scroll" :scroll-top="scrollTop" @scrolltolower="onReachScollBottom" class="home-scroll" :scroll-y="true" :refresher-enabled="true"
             refresher-background="rgba(0,0,0,0)" :refresher-threshold="60" :refresher-triggered="triggered"
             @refresherrefresh="onRefresh" @refresherrestore="onRestore">
+
+             
             <!-- AD banner -->
             <view class="head-adbar">
                 <u-swiper @click="tn" :list="list3" indicator height='292rpx' indicatorMode="dot" circular
@@ -137,9 +141,11 @@ import { service } from '@/utils/fun.js';
 import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
 import homeInfiniteScroll from "../../components/homeInfiniteScroll/homeInfiniteScroll.vue";
 import { parseQueryString } from "../../utils/mgtv.js";
+import DanmakuSimple from '@/components/danmu/danmu'
 export default {
     data() {
         return {
+             danmuList:[],
           
              gachaList:[{
                 url:'https://img.shinemang.com/gachaStatic/ndj.png',
@@ -208,9 +214,13 @@ export default {
         productList1,
         xPay,
         xModal,
-        homeInfiniteScroll
+        homeInfiniteScroll,
+
+        DanmakuSimple
     },
     mounted() {
+
+        
         // #ifdef MP-WEIXIN
         // this.ontab(2);
         // #endif
@@ -233,9 +243,17 @@ export default {
     created() {
         this.getBannerList();
         this.showFirstActive();
+        this.getDanmu()
       
     },
+    
     methods: {
+        getDanmu(){
+          post('v1/publicize/push/barrage/all').then((res)=>{
+            console.log(res);
+            this.danmuList = res.list
+          })
+        },
       
         toGacha(index){
            if(index == 0){
