@@ -426,7 +426,7 @@ export default {
                 mgtv.showShareMenu({
                     title:"炸弹赏 : " + this.gachainfo.themeName,
                      typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddl&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'channel='+channel)}`
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddl&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
                 })
             }
         },

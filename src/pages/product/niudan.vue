@@ -410,7 +410,7 @@ export default {
                 mgtv.showShareMenu({
                     title: "扭蛋赏 : " + this.gachainfo.themeName,
                      typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ndj&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode +'channel='+channel)}`
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ndj&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode +'&channel='+channel)}`
                 })
             }
         },
