@@ -86,6 +86,8 @@
                                         backgroundImage: `url(${item.item.coverThumb})`,
                                     }"
                                 >
+
+                                <view class="num">x{{ item.num }}</view>
                                  <!-- <view class="box_ico frame"></view> -->
                                     <!-- <img
                                         src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"
@@ -183,6 +185,7 @@ import xBtn from "@/components/modules/x-btn";
 import selectGoods from "@/components/selectGoods/index";
 import { mapMutations, mapState } from "vuex";
 import { callPayment } from "@/utils/pay.js";
+import { groupByItemName } from "../../utils/mgtv";
 export default {
     data() {
         return {
@@ -245,12 +248,15 @@ export default {
         },
         SelectIds(ids, infos) {
             this.selectRewardIds = ids;
-            this.selectRewardsInfo = infos;
+            this.selectRewardsInfo =groupByItemName(infos);
+
         },
         removeItem(item) {
-            let id = item.id;
-            this.selectRewardIds = this.remove(this.selectRewardIds, id);
-            this.selectRewardsInfo = this.remove(this.selectRewardsInfo, item);
+             let ids = item.ids;
+
+             console.log(ids);
+            this.selectRewardIds = this.selectRewardIds.filter(item => !ids.includes(item));
+            this.selectRewardsInfo =this.selectRewardsInfo.filter(item => !ids.includes(item.id));
         },
         async onpay() {
             this.UppayMessage({
@@ -262,8 +268,8 @@ export default {
                     type: 1,
                 },
             });
-            if (this.selectRewardIds.length > 1000) {
-                uni.$u.toast("选择赏品超过100！请重新选择");
+            if (this.selectRewardIds.length > 2000) {
+                uni.$u.toast("选择赏品超过2000！请重新选择");
                 return;
             }
             if (this.selectRewardIds.length < 5) {
@@ -436,6 +442,22 @@ font-size: 24rpx;
             width: 60rpx;
             height: 32rpx;
             background-size: 100% 100%;
+        }
+
+        .num{
+     position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 0 4px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0 12px 0 7px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+               
         }
         }
 

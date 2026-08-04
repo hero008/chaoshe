@@ -31,10 +31,9 @@ uni.addInterceptor('request', {
         let channel = uni.getStorageSync('channel')
         if(args && args.header){
           args.header.Channel =  channel ? channel : 'Channel_Official';
-
         }
     },
-   
+
     // 请求成功
     success(args) {
         if ([401].includes(args.statusCode) && throttle401) {

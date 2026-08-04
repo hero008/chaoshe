@@ -8,17 +8,17 @@
                 :style="{ height: MBInfo().height - 2 + 'px' }" /> -->
             <!-- 微信小程序不用-->
             <view class="notice-bar flex_r flex_jb flex_ac" :style="{ height: MBInfo().height + 'px', width: boundW }">
-                <view @click="goto('/page-activity/notice/notice-list')"class="notice_con flex_r flex_ac"
+                <view @click="goto('/page-activity/notice/notice-list')" class="notice_con flex_r flex_ac"
                    >
                     <view class="l_ico flex_jc flex_ac">
                         <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico">
-                        <view>消息中心</view>
+                        <!-- <view>消息中心</view> -->
                     </view>
                     <u-notice-bar v-if="notices.length" :text="notices[0]" :fontSize="11" color="#1A1A1A" bgColor="transparent"></u-notice-bar>
                 </view>
-                <!-- <view class="notice_btn" @click="goto('/page-activity/notice/notice-list')">
-                    <view v-if="mail !== '0' && mail" class="notice_num">{{ mail > 99 ? '99+' : mail }}</view>
-                </view> -->
+                 <!-- <view class="notice_btn" @click="goto('/page-activity/notice/notice-list')"> -->
+                    <!-- <view v-if="mail !== '0' && mail" class="notice_num">{{ mail > 99 ? '99+' : mail }}</view> -->
+                <!-- </view>  -->
             </view>
         </view>
          <DanmakuSimple :data="danmuList"  :top="MBInfo().top + 42"

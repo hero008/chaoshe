@@ -150,7 +150,7 @@ import { getMsg } from "../../utils/webSocket";
 import { service } from '@/utils/fun.js';
 import { integralPrice } from "@/utils/getData.js";
 import autonym from "@/components/autonym/index.vue";
-import { mgTvLogin } from "../../utils/mgtv";
+import { mgTvLogin,MGTV_Channel } from "../../utils/mgtv";
 import { copyCode, goto } from '../../utils/fun';
 
 let that;
@@ -179,7 +179,7 @@ export default {
                     path: "/pages/shipments/addressList",
                     title: "地址管理",
                 },
-                {
+               {
                     name: 'https://img.shinemang.com/gachaStatic/zhuanzeng.png',
                     path: '/page-a/balance/transferGift',
                     title: '转赠记录'
@@ -189,7 +189,7 @@ export default {
                 //     path: '/pages/index/index',
                 //     title: '常见问题'
                 // },
-            {
+               {
                     name: "https://img.shinemang.com/gachaStatic/my/myCardsIcon.png",
                     path: "/pages/my/cardpack",
                     // path:'/page-a/couponPackage/discountCoupon',
@@ -270,6 +270,11 @@ export default {
          integralPrice().then((res)=>{
             this.point = res.point
          })
+
+
+          if(this.userInfo.channel==MGTV_Channel){
+            this.baseList2.splice(1,1)
+          }
 
     },
     mounted() {

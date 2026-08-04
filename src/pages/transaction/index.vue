@@ -42,8 +42,10 @@
                                     <img @click="removeItem(item)" class="remove_btn"
                                         src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png" />
                                     <view :class="['item_txt1',item.item.saleType==1?'xianhuo':'']">{{ item.item.saleType == 1 ? "现货" : "预售" }}</view>
+
+                                    <view class="num">x{{ item.num }}</view>
                                 </view>
-                                <div class="SelectProduct flex_r flex_jc flex_ac" v-show="thickData.length < 600"
+                                <div class="SelectProduct flex_r flex_jc flex_ac" v-show="thickData.length < 2000"
                                     @click="addStock">
                                     <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico1.png"
                                         class="ico" /> -->
@@ -131,11 +133,18 @@
                                     buyReward_img:
                                         selectRewardsInfo.length == 1,
                                 }" v-else>
-                                    <img v-for="(i, s) in selectRewardsInfo" :src="i.item.coverThumb" :key="s"
-                                        class="img_item" />
-                                    <div class="num" v-if="selectRewardsInfo.length > 1">
+                                <div :style="{
+                                    backgroundImage:`url(${i.item.coverThumb})`,
+                                    backgroundSize:'cover',
+                                    position:'relative',
+                                }" v-for="(i, s) in selectRewardsInfo" :key="s" class="img_item">
+                                        <view class="num">x{{ i.num }}</view>
+                                </div>
+                                    <!-- <img v-for="(i, s) in selectRewardsInfo" :src="i.item.coverThumb" :key="s"
+                                        class="img_item" /> -->
+                                    <!-- <div class="num" v-if="selectRewardsInfo.length > 1">
                                         共{{ selectRewardsInfo.length }}件
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <img src="https://img.shinemang.com/gachaStatic/market/marketExchange.png" class="ico3" />
@@ -361,6 +370,7 @@ import selectGoods from "@/components/selectGoods/index";
 import autonym from "@/components/autonym/index.vue";
 import { callPayment } from "@/utils/pay.js";
 import { mapState, mapMutations } from "vuex";
+import { groupByItemName } from "@/utils/mgtv";
 import { br } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 export default {
     data() {
@@ -479,18 +489,29 @@ export default {
             this.currentPage = 1; // 当前加载的页数
             this.selectRewardIds = ids;
             this.thickData = infos;
-            if (this.transactionType == 1) {
-                this.selectRewardsInfo = infos.slice(0, 50);
-            } else {
-                this.selectRewardsInfo = infos
-            }
+
+            // if (this.transactionType == 1) {
+            //     this.selectRewardsInfo = infos.slice(0, 50);
+            // } else {
+              
+                this.selectRewardsInfo =groupByItemName(infos)
+            // }
 
         },
         removeItem(item) {
-            let id = item.id;
-            this.selectRewardIds = this.remove(this.selectRewardIds, id);
-            this.selectRewardsInfo = this.remove(this.selectRewardsInfo, item);
-            this.thickData = this.remove(this.thickData, item);
+            let ids = item.ids;
+            // this.selectRewardIds = this.remove(this.selectRewardIds, id);
+            // this.selectRewardsInfo = this.remove(this.selectRewardsInfo, item);
+            // this.thickData = this.remove(this.thickData, item);
+           this.selectRewardIds =this.selectRewardIds.filter(item => !ids.includes(item));
+            this.selectRewardsInfo =this.selectRewardsInfo.filter(item => !ids.includes(item.id));
+            this.thickData = this.thickData.filter(item => !ids.includes(item.id));
+
+//             const result1 = list.filter(item => !idsToRemove.includes(item.id));
+// console.log(result1); // [{ id: 1 }, { id: 3 }]
+
+// const result = numbers.filter(num => !removeNumbers.includes(num));
+// console.log(result); // [1, 3, 5, 7]
         },
         SelectBuyReward(item) {
             let id = item.id;
@@ -542,8 +563,8 @@ export default {
                 stock_ids.push(index.id);
                 item_ids.push(index.itemId);
             }
-            if (stock_ids.length > 600) {
-                uni.$u.toast("选择赏品超过600！请重新选择");
+            if (stock_ids.length > 2000) {
+                uni.$u.toast("选择赏品超过2000！请重新选择");
                 return;
             }
             let res = await callPayment(
@@ -629,14 +650,14 @@ export default {
             }
         },
         onReachScollBottom() {
-            const nextStart = this.currentPage * this.pageSize;
-            const nextEnd = (this.currentPage + 1) * this.pageSize;
-            if (nextStart >= this.thickData.length) {
-                return;
-            }
-            const newData = this.thickData.slice(nextStart, nextEnd);
-            this.selectRewardsInfo = [...this.selectRewardsInfo, ...newData];
-            this.currentPage += 1;
+            // const nextStart = this.currentPage * this.pageSize;
+            // const nextEnd = (this.currentPage + 1) * this.pageSize;
+            // if (nextStart >= this.thickData.length) {
+            //     return;
+            // }
+            // const newData = this.thickData.slice(nextStart, nextEnd);
+            // this.selectRewardsInfo = [...this.selectRewardsInfo, ...newData];
+            // this.currentPage += 1;
 
         },
     },
@@ -855,6 +876,21 @@ padding: 0 16rpx;
             justify-content: center;
             border-radius: 16rpx;
             background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
+
+            .num{
+                position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 0 4px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0 12px 0 7px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+            }
             .item_img {
                 width: 160rpx;
                 height: 160rpx;
@@ -1021,9 +1057,13 @@ padding: 0 16rpx;
             background: #F5F6F8;
             font-size: 28rpx;
             color: #8D8D94;
-            overflow: hidden;
+            // overflow: hidden;
+            overflow-y: auto;
             &.select{
                 background: linear-gradient( 190deg, #D6E5FF 0%, #FFFFFF 100%);
+            }
+            .num{
+   
             }
 
             .ico {
@@ -1064,16 +1104,31 @@ padding: 0 16rpx;
             }
 
             .num {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                font-size: 24rpx;
-                font-weight: 800;
-                color: #fff;
-                padding: 0 16rpx;
-                border-radius: 30rpx;
-                background: rgba(0, 0, 0, 0.7);
+                                             position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 0 4px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0 12px 0 7px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+               
             }
+
+
+             // position: absolute;
+                // right: 0;
+                // bottom: 0;
+                // font-size: 24rpx;
+                // font-weight: 800;
+                // color: #fff;
+                // padding: 0 16rpx;
+                // border-radius: 30rpx;
+                // background: rgba(0, 0, 0, 0.7);
         }
 
         .buyReward_img {

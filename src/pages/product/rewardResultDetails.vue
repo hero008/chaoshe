@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="foot_btn flex_r flex_jc">
-                     <view v-if='awards.length > 0 && awards[0].requestId' @click='fangsheng' class="fangsheng">放生</view>
+                     <view v-if='userInfo.channel != MGTV_Channel && awards.length > 0 && awards[0].requestId' @click='fangsheng' class="fangsheng">放生</view>
                     <view class="btn" @click="confirmBtn" >确定</view>
                     <!-- <x-btn txt="确定" @click="confirmBtn" cor="3" /> -->
                 </div>
@@ -29,8 +29,9 @@
 </template>
 <script>
 import xBtn from "@/components/modules/x-btn";
-import {groupByItemId} from '@/utils/mgtv'
+import {groupByItemId,MGTV_Channel} from '@/utils/mgtv'
 import { post } from '../../utils/api';
+import { mapState } from "vuex";
 export default {
     data() {
         return {
@@ -38,10 +39,12 @@ export default {
             awards: [], // 抽到的赏
             BigAward: [1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37],
             isdemo: false,
+            MGTV_Channel:MGTV_Channel
         };
     },
     components: { xBtn },
     computed: {
+        ...mapState(["userInfo"]),
         padTop() {
             let da = this.MBInfo();
             return da.top + da.height + 10 + "px";
@@ -59,7 +62,6 @@ export default {
     },
     methods: {
         fangsheng() {
-           
             const that = this;
            const result = groupByItemId(this.awards)
            console.log(result)

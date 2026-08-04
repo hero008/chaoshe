@@ -224,21 +224,48 @@ export const  groupByItemId = (data) =>{
   });
   return result;
 }
+export const marketGroupByItemId =(data)=>{
+    const map = new Map();
+  
+  data.forEach(item => {
+    const itemId = item.itemId;
+    if (map.has(itemId)) {
+      map.get(itemId).num += 1;
 
+    } else {
+      map.set(itemId, {
+        num: 1,
+        ...item
+      });
+    }
+  });
+  
+  return Array.from(map.values());
+}
 export const  groupByItemName = (data)=> {
   const map = new Map();
   
   data.forEach(item => {
     const itemId = item.itemId;
     const name = item.item.name;
-    
     if (map.has(itemId)) {
       map.get(itemId).num += 1;
+      if(map.get(itemId).ids){
+         
+      }else{
+        map.get(itemId).ids = []
+      }
+       map.get(itemId).ids.push(item.id)
+     
     } else {
       map.set(itemId, {
         itemId: itemId,
         name: name,
-        num: 1
+        num: 1,
+        item:item.item,
+        id:item.id,
+        ids:[item.id]
+        
       });
     }
   });
@@ -315,3 +342,5 @@ export const formatDate = (date)=> {
     pad(date.getMinutes()) + ':' +
     pad(date.getSeconds());
 }
+
+export const MGTV_Channel = 'MGTV_Channel'

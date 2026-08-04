@@ -110,8 +110,19 @@
                                      <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
                                         v-if="item.items.length" class="ico3">
                                 </template>
-                                <img  :src="cont.coverThumb" v-for="(cont, i) in item.items" :key="i" :class="['goods_img',item.type == 'MarketOrderType_Ask'?'imgAsk':'']"
-                                    @click="ondetail(cont.itemId)" :id="i + 1" />
+                               <!-- <view style="display: flex;flex-shrink: 0;"> -->
+
+                                   <view :style="{
+                                    backgroundImage:`url(${cont.coverThumb})`,
+                                    backgroundSize:'cover',
+                                    position:'relative',
+                                    display:'inline-block'
+                                }"  v-for="(cont, i) in formateList(item.items)"  @click="ondetail(cont.itemId)" :id="i + 1"  :key="i" :class="['goods_img',item.type == 'MarketOrderType_Ask'?'imgAsk':'']">
+                                    <view class="num">x{{ cont.num }}</view>
+                                </view>
+                               <!-- </view> -->
+                                <!-- <img  :src="cont.coverThumb"
+                                   /> -->
                             </scroll-view>
                             <div style="margin-left: 10rpx;color: #8D8D94;" class="goods_num flex_c flex_jc flex_ac" v-if="item.items.length > 1">
                                 <div>共</div>
@@ -171,6 +182,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
+import { marketGroupByItemId } from "@/utils/mgtv";
 export default {
     data() {
         return {
@@ -382,7 +394,7 @@ export default {
                     if (this.pageda.page == 1) this.orderList = [];
                     this.rawData = JSON.parse(JSON.stringify(res.orders));
                     this.rawData = [...this.rawData, ...res.orders];
-                    const list = res.orders;
+                    let list = res.orders;
                     list.map((i) => {
                         i.state = getApp().globalData.MarketOrderState[i.state];
                         i.nus = i.items.length;
@@ -391,10 +403,25 @@ export default {
                                 ? i.items
                                 : i.items.slice(0, 10);
                     });
+
+                  
+
+
+
+
                     this.orderList = [...this.orderList, ...list];
+
+
                     this.pageda.total = res.total;
                 }
             });
+        },
+
+        formateList(value){
+            console.log(value);
+             let   data = marketGroupByItemId(value);
+            return data;
+                  
         },
 
         searchKey() {
@@ -746,6 +773,15 @@ background-color: #F5F6F8;
                     // margin: 4rpx;
                     overflow: scroll;
                     margin-right: 20rpx;
+
+                    .num{
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        padding: 10rpx;
+                        color: #1A1A1A;
+                        font-size: 24rpx;
+                    }
 
                     &:last-child {
                         margin-right: 4rpx;

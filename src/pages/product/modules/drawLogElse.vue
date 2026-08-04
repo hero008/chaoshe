@@ -1,6 +1,7 @@
 <template>
     
-    <u-popup round="16" :overlay="true" mode="bottom"  :show="show">
+   <view>
+      <u-popup round="16" :overlay="true" mode="bottom"  :show="show">
         <view class="warp">
             <view class="title">抽赏记录</view>
             <view @click.stop="refresh" class="refresh">
@@ -37,7 +38,7 @@
                             </div>
                             <div class="goods">
                                 <template v-for="(a, b) in i.awardItems || i.award">
-                                    <div class="goods_item flex_r flex_ac flex_jb"
+                                    <div @click="ondetail(a.itemId)" class="goods_item flex_r flex_ac flex_jb"
                                         :class="{ sp: a.levelIndex == 28, a: a.levelIndex == 1, dt: drawType == 3 }"
                                         :key="b">
                                         <div class="name ellipsis">{{ a.itemName || a.name }}</div>
@@ -64,9 +65,12 @@
             </div>
         </view>
     </u-popup >
+       <gachaDetails ref="gachaDetails" />
+</view>
 </template>
 <script>
 import { post } from "@/utils/api.js";
+
 export default {
     data() {
         return {
@@ -90,6 +94,9 @@ export default {
         },
     },
     methods: {
+      ondetail(id) {
+            this.gachaDetailsMethod(this, id);
+        },
         refresh() {
             this.pageda=  {
                 page: 1,

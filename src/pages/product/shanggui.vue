@@ -110,7 +110,7 @@
                     :marginTop="50" />
             </view>
 
-            <view class="activityBtn">
+            <view v-if="userInfo.channel == MGTV_Channel" class="activityBtn">
                 <view  @click="onGoRecycle()" class="btn"></view>
                 <view @click='toSendOther' class="btn"></view>
             </view>
@@ -161,10 +161,11 @@ import { post } from "@/utils/api.js";
 
 import xBtn from "@/components/modules/x-btn";
 import selectGoods from "@/components/selectGoods/index";
-import { groupByItemId ,groupByItemName} from '../../utils/mgtv';
+import { groupByItemId ,groupByItemName,MGTV_Channel} from '../../utils/mgtv';
 export default {
     data() {
         return {
+            MGTV_Channel:MGTV_Channel,
             sendOtherId:'',
             sendInfo:{
                ids:[],

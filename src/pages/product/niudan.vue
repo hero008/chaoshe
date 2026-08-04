@@ -156,7 +156,7 @@
             </view>
             <view class="foot-btn flex_r flex_jb flex_ac"
                 v-else-if="eggTwister.userBetCount == -1 && eggTwister.userBetCountDaily == -1">
-                <view class="cut flex_r flex_ac" @click="oncut" :class="[cutPattern]">
+                <view v-if="userInfo.channel != MGTV_Channel" class="cut flex_r flex_ac" @click="oncut" :class="[cutPattern]">
                     <!-- <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view> -->
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>
@@ -165,7 +165,7 @@
                 <view v-for="(value, index) in payOptions" :key="index" class="btn-item"
                     :class="[value.className, {forbid_btn: probability > 10 && value.text == '全包'}]"
                     
-                    @click="onpay(value.num)">
+                    @click="probability > 10 && value.text == '全包'?tipQb(): onpay(value.num)">
                     {{ value.text }}</view>
             </view>
             <view  class="special_btn1 flex_c" v-else :class="{
@@ -249,6 +249,7 @@
         <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="eggTwister.gacha.themeName"
             :message="eggTwister.openMessage" />
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
+       <show-modal></show-modal>
         <!-- 抽赏动效 -->
         <!-- <dynamic-effect ref="animation" @childData="handleChildData" /> -->
         <!-- <xPrize ref="refPrize" :prize="prize" /> -->
@@ -272,12 +273,14 @@ import bgc4 from '@/static/bgc4.png'
 // import dynamicEffect from "@/pages/product/modules/dynamicEffect.vue";
 // import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
+import { MGTV_Channel } from "@/utils/mgtv";
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {
 
     data() {
         return {
+            MGTV_Channel:MGTV_Channel,
             bgc3:bgc3,
             bgc4:bgc4,
             eggTwister: {
@@ -391,6 +394,18 @@ export default {
         this.saveFile();
     },
     methods: {
+        tipQb(){
+               this.$showModal({
+                        title: "全包",
+                        content: `全包`,
+                        hint: '',
+                        success:(res1)=> {
+                            if (res1.confirm) {
+                           
+                            }
+                        },
+                    });
+        },
            changeTabs(type){
             if(type == this.previewType) return;
             
@@ -468,6 +483,7 @@ export default {
 
         },
         onpay(num, special = 0) {
+         
             let res = Postpayment(this.eggTwister, num, special);
             if (res && res.m > 0) {
                 this.$refs.xPay.open(

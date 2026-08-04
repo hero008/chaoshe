@@ -10,7 +10,7 @@
 
                 <div :style="{
                     marginTop: isfilt == 1 ? '0rpx' : '30rpx',
-                }"class="total">
+                }" class="total">
                     <view class="flex_r flex_jb">
                         <view class="teg">赏品共{{ totalNums }}个</view>
                         <view class="teg cor_g">已选{{ selectNums }}个</view>
@@ -434,8 +434,8 @@ export default {
                     });
                 }
             }
-            let list = this.totalPrice > 0 || this.totalPrice === -1 ? arr : arr.slice(0, 600);
-            let idList = this.totalPrice > 0 || this.totalPrice === -1 ? ids : ids.slice(0, 600);
+            let list = this.totalPrice > 0 || this.totalPrice === -1 ? arr : arr.slice(0, 2000);
+            let idList = this.totalPrice > 0 || this.totalPrice === -1 ? ids : ids.slice(0, 2000);
             this.$emit("confirmSelect", idList, list);
             // this.clearSelectState();
             this.popupShow = false;

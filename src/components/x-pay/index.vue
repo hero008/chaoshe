@@ -109,18 +109,20 @@
             <div class="appoint flex_r flex_ac" @click="onAgreeChange">
                 <div class="select" :class="{ active: showAgree }"></div>
                 <div class="selectBox">
-                    <span>我已满18岁，已阅读并同意</span>
-                    <span class="cory" @click.stop="
+                    <span>本产品仅面向成年用户，</span>
+                    <span class="cory">未成年人请勿下单</span>
+
+                     <!-- @click.stop="
                         goto('/pages/common/rulepop', {
                             val: 'UserAgreement',
                         })
-                        ">《用户协议》</span>
-                    <span>及</span>
+                        " -->
+                    <!-- <span>及</span>
                     <span class="cory" @click.stop="
                         goto('/pages/common/rulepop', {
                             val: 'ExplanationOfConsumerRightsProtectionMeasures',
                         })
-                        ">《消费者权益保障措施说明》</span>
+                        ">《消费者权益保障措施说明》</span> -->
                 </div>
             </div>
             <view v-if="couponId !== '0'">

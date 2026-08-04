@@ -153,6 +153,7 @@
                                         <div :style="{
                                 backgroundImage: `url(https://img.shinemang.com/gachaStatic/k_${newRecordList.name}.png)`,
                             }"  class="lr_i flex_r flex_ac flex_jb"
+                                            @click="ondetail(item.itemId)"
                                             v-for="(item, i) in newRecordList.records.slice(0, newRecordList.records.lengthNumber)" :key="i">
                                             <div class="lr_r">
                                                 <img class="lr_img" :src="item.itemCover" />

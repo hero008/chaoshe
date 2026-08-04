@@ -50,7 +50,7 @@
             <view class="footer">
                 <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view>
                 <view  class="box">
-                     <view @click='fangsheng' v-if="allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
+                     <view @click='fangsheng' v-if="userInfo.channel != MGTV_Channel && allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
                      <view class="all_btn" @click="getAll">{{ allShow ? '确定' : '一键开奖' }}</view>
                 </view>
             </view>
@@ -63,11 +63,13 @@
 <script>
 import cSvga from "@/components/c-svga/c-svga.vue";
 import { playDede, uniShare, compressImg, vibratePhone } from "@/utils/fun.js";
-import { groupByItemId } from '@/utils/mgtv.js'
+import { groupByItemId,MGTV_Channel } from '@/utils/mgtv.js'
 import { post } from '../../../utils/api';
+import { mapState } from "vuex";
 export default {
     data() {
         return {
+            MGTV_Channel:MGTV_Channel,
             show: false,
             dynamicEffectShow: true,
             awards: [],
@@ -93,6 +95,10 @@ export default {
             { imageUrl: 'https://img.shinemang.com/gachaStatic/static/img/duoyou/cj_center.png', key: 'duoyou_img2', class: 'card2' },
             { imageUrl: 'https://img.shinemang.com/gachaStatic/static/img/duoyou/winImgs4.png', key: 'duoyou_img3', class: 'card3' },],
         };
+    },
+     computed: {
+        ...mapState(["userInfo"]),
+ 
     },
     mounted() {
         this.loadLocalImages();

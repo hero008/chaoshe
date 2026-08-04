@@ -1,7 +1,8 @@
 <template>
     
    
-        <view  v-if="show" class="warp">
+      <view>
+             <view  v-if="show" class="warp">
          
             <view @click.stop="refresh" class="refresh">
                <!-- <image
@@ -37,7 +38,7 @@
                             </div>
                             <div class="goods">
                                 <template v-for="(a, b) in i.awardItems || i.award">
-                                    <div class="goods_item flex_r flex_ac flex_jb"
+                                    <div @click="ondetail(a.itemId)" class="goods_item flex_r flex_ac flex_jb"
                                         :class="{ sp: a.levelIndex == 28, a: a.levelIndex == 1, dt: drawType == 3 }"
                                         :key="b">
                                         <div class="name ellipsis">{{ a.itemName || a.name }}</div>
@@ -63,6 +64,8 @@
               
             </div>
         </view>
+        <gachaDetails ref="gachaDetails" />
+      </view>
     
 </template>
 <script>
@@ -90,6 +93,9 @@ export default {
         },
     },
     methods: {
+          ondetail(id) {
+            this.gachaDetailsMethod(this, id);
+        },
         refresh() {
             this.pageda=  {
                 page: 1,
