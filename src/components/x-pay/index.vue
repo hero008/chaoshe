@@ -353,6 +353,11 @@ export default {
         onAgreeChange() {
             this.showAgree = !this.showAgree;
             this.$sl("IsAgree", this.showAgree);
+            post('v1/system/user-click',{
+                event:'confirmProtocol:'+(this.showAgree ? 'isAgree':'disAgree')
+            }).then(res=>{
+                console.log(res);
+            })
         },
         async open(amount, num, source_type, source_id, couponId, box_index, original = 0, discount = 0, theme_id
         ) {

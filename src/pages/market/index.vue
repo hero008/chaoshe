@@ -418,7 +418,6 @@ export default {
         },
 
         formateList(value){
-            console.log(value);
              let   data = marketGroupByItemId(value);
             return data;
                   
@@ -444,8 +443,11 @@ export default {
                     order_id: this.oldInx.id,
                 }).then((res) => {
                     if (!res.code) {
-                        res.orders.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
-                        this.orderList.splice(this.oldInx.inx, 1, res.order);
+                        if(res.order.state = getApp().globalData.MarketOrderState[i.state]){
+                              this.orderList.splice(this.oldInx.inx, 1, res.order);
+                        }
+                        // res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
+                        // this.orderList.splice(this.oldInx.inx, 1, res.order);
                     }
                 });
             }
