@@ -110,7 +110,7 @@
                     :marginTop="50" />
             </view>
 
-            <view v-if="userInfo.channel == MGTV_Channel" class="activityBtn">
+            <view v-if="userInfo.channel != MGTV_Channel" class="activityBtn">
                 <view  @click="onGoRecycle()" class="btn"></view>
                 <view @click='toSendOther' class="btn"></view>
             </view>
