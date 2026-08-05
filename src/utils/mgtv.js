@@ -161,17 +161,15 @@ if (isVideo(link)) {
 export const mgTvIsLogin = () => {
    return new Promise((resolve, reject) => {
         MgtvApi.getUserInfo((user_info) => {
+
                 if (user_info && user_info.length !== 0) {
                 const userInfo = JSON.parse(user_info);
                 if (userInfo.ticket && userInfo.uuid) {
-
-                  console.log(userInfo,'sjkflsdjflsjdlj')
                    const uuid = uni.getStorageSync('uuid')
                     if(uuid && uuid != userInfo.uuid){
                       resolve(false);
                     }else{
-                        resolve(true)
-
+                      resolve(true)
                     }
                 
                 } else {

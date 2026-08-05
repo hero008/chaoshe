@@ -186,11 +186,9 @@ export default {
 
 
 
-          uni.setStorageSync("currentChange", 0);
+        
          
          if(window.MgtvApi){
-
-            console.log(window.location.search,'search')
             const params = new URLSearchParams(window.location.search);
              if( params && params.get("channel")){
                  uni.setStorageSync('channel',params.get("channel"))
@@ -205,49 +203,10 @@ export default {
                  uni.setStorageSync('gachaId',params.get("gachaId"))
              }
 
-
-
-            //  const data =parmas ? parmas.path :'';
-            //  uni.setStorageSync('parmasPath',data);
-            //    if(data){
-            //      const query = parseQueryString(data);
-            //      if(query && query.channel){
-                  
-            //      }else{
-            //         // uni.setStorageSync('channel','Channel_Official')
-            //      }
-            //      if(query && query.inviteCode){
-            //          uni.setStorageSync('inviteCode',query.inviteCode)
-            //      }
-            //      if(query && query.gachaName){
-            //          uni.setStorageSync('gachaName',query.gachaName)
-            //      }
-            //      if(query && query.gachaId){
-            //          uni.setStorageSync('gachaId',query.gachaId)
-            //      }
-            //    }
-
-            //    console.log(mgtv.getLaunchOptionsSync())
-
-            //    const query = mgtv.getLaunchOptionsSync().query;
-            //    uni.setStorageSync('query',JSON.stringify(query));
-            //    if(query && query.channel){
-            //         uni.setStorageSync('channel',query.channel)
-            //      }else{
-            //         // uni.setStorageSync('channel','Channel_Official')
-            //      }
-            //    if(query && query.inviteCode){
-            //        uni.setStorageSync('inviteCode',query.inviteCode)
-            //    }
-            //    if(query.gachaName){
-            //        uni.setStorageSync('gachaName',query.gachaName)
-            //    }
-            //    if(query.gachaId){
-            //        uni.setStorageSync('gachaId',query.gachaId)
-            //    }
              mgTvIsLogin().then(res=>{
                 console.log(res,'login')
                 if(!res){
+                console.log('3249023749372')
                 uni.removeStorageSync("aToken");
                 uni.removeStorageSync("rToken");
                 uni.removeStorageSync("userInfo");
@@ -259,7 +218,7 @@ export default {
   
   
         
-
+  uni.setStorageSync("currentChange", 0);
 
         // #ifdef APP-PLUS
         let that = this;
