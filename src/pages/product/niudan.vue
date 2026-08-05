@@ -273,7 +273,7 @@ import bgc4 from '@/static/bgc4.png'
 // import dynamicEffect from "@/pages/product/modules/dynamicEffect.vue";
 // import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
-import { MGTV_Channel } from "@/utils/mgtv";
+import { MGTV_Channel,shareUrl } from "@/utils/mgtv";
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {
@@ -420,14 +420,19 @@ export default {
           }
         },
          toShare(){
-            if(window.mgtv){
-                 let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
-                mgtv.showShareMenu({
-                    title: "扭蛋赏 : " + this.gachainfo.themeName,
-                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ndj&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode +'&channel='+channel)}`
-                })
-            }
+            let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+            let url = shareUrl+"&gachaName=ndj&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode +'&channel='+channel
+
+            MgtvApi.showShareMenus(
+            {
+            title: "扭蛋赏", // 分享标题
+            desc: this.gachainfo.themeName, // 分享描述
+            shareUrl: url, // 分享链接
+            shareIcon: "https://img.shinemang.com/static/rednote/shareImg.jpg",
+            },
+            (resp) => { },
+        );
+           MgtvApi.showShare();
         },
         ...mapMutations(["UppayMessage"]),
         async saveFile() {

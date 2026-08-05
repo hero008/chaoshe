@@ -2,6 +2,7 @@ import { post } from "./api";
 import { goto } from "./fun";
 import store from "../store";
 import BigNumber from "bignumber.js";
+export const  shareUrl = 'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
   return /imgo/i.test(window.navigator.userAgent);
 };
@@ -18,7 +19,6 @@ export const getDecievedModel = () => {
 };
 export const isIos = () => {
   const res = uni.getSystemInfoSync();
-  console.log(res);
 
   const osName = res.osName || res.platform;
   const isIOS = osName === "ios";
@@ -30,7 +30,7 @@ export const isHonery = ()=>{
 }
 
 export const mgTvLogin =()=>{
-    MgtvApi.login((res) => {
+    MgtvApi.login(() => {
        store.dispatch('asyncUpdateMgTvLogin');
         setTimeout(() => { goto("/pages/my/loading") }, 100)
     });
@@ -164,8 +164,16 @@ export const mgTvIsLogin = () => {
                 if (user_info && user_info.length !== 0) {
                 const userInfo = JSON.parse(user_info);
                 if (userInfo.ticket && userInfo.uuid) {
+
+                  console.log(userInfo,'sjkflsdjflsjdlj')
+                   const uuid = uni.getStorageSync('uuid')
+                    if(uuid && uuid != userInfo.uuid){
+                      resolve(false);
+                    }else{
+                        resolve(true)
+
+                    }
                 
-                    resolve(true)
                 } else {
                     resolve(false)
                 }
@@ -174,7 +182,6 @@ export const mgTvIsLogin = () => {
                 }
         });
     })
-
 }
 
 // 上面的用不上

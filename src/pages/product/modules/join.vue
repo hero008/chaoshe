@@ -113,7 +113,9 @@ export default {
             }).then((res) => {
                 if (!res.code) {
                     if (this.pageda.page == 1) this.list = [];
-                    res.gachaRecords.map((item) => {
+
+                    console.log(res.gachaRecords);
+                   res.gachaRecords.map((item) => {
                         item.levelIocn = false;
                         item.awardItems.map((i) => {
                             if (["SSR", "SP"].includes(i.levelName))

@@ -379,7 +379,7 @@ import ball from "@/page-activity/ball/ball.vue";
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
-import { formateGachaLevelName } from "../../utils/mgtv";
+import { formateGachaLevelName,shareUrl } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
@@ -490,14 +490,20 @@ export default {
     //     }
     //    ,
      toShare(){
-            if(window.mgtv){
-                let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
-                mgtv.showShareMenu({
-                    title:"无限赏 : " + this.gachainfo.themeName,
-                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
-                })
-            }
+
+            let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+            let url = shareUrl+"&gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+"&channel="+channel;
+
+            MgtvApi.showShareMenus(
+            {
+            title: "无限赏", // 分享标题
+            desc: this.gachainfo.themeName, // 分享描述
+            shareUrl: url, // 分享链接
+            shareIcon: "https://img.shinemang.com/static/rednote/shareImg.jpg",
+            },
+            (resp) => { },
+        );
+           MgtvApi.showShare();
         },
         recordsTab(value){
             console.log(value);

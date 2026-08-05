@@ -2,7 +2,7 @@
 <script>
 import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
-import { isMTVapp, mgTvIsLogin,parseQueryString } from "./utils/mgtv";
+import { isMTVapp,isHonery, mgTvIsLogin,parseQueryString } from "./utils/mgtv";
 import store from "./store";
 import {goto} from "./utils/fun";
 
@@ -123,30 +123,109 @@ export default {
         },
     },
     onLaunch: function () {
+
+
+   const honery = isHonery()
+    if(honery){
+
+    let lastWidth = window.innerWidth
+    let timer = null
+
+    window.addEventListener('resize', () => {
+      const currentWidth = window.innerWidth
+      if (currentWidth === lastWidth) return
+
+      lastWidth = currentWidth
+
+     timer && clearTimeout(timer)
+      timer = setTimeout(() => {
+        location.reload()
+      }, 300) 
+    })
+
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const isFullScreen = params && params.get("isFullScreen");
+    if (isFullScreen) {
+        if(!isMTVapp()){
+         uni.setStorageSync('safeTop', 0);
+        }
+    MgtvApi.callhandler('getScreenCutoutInfo', {}, function(data){
+        const resp = typeof data === 'string' ? JSON.parse(data) : data;
+        if (resp.code == 200 && resp.data) { //响应正常
+          const t = JSON.parse(resp.data)
+          const dpr = window.devicePixelRatio || 1
+          //将机器像素换算为CSS的像素
+          t.safeTop = t.safeTop / dpr
+          t.safeBottom = t.safeBottom / dpr
+          t.safeLeft = t.safeLeft / dpr
+          t.safeBottom = t.safeBottom / dpr
+          uni.setStorageSync('safeTop', t.safeTop);
+          //  /** 是否有刘海，挖孔，1：有，0：无 */
+          //    hasNotch;
+          // /** 屏的安全区域与左侧的间隔 */
+          //   safeLeft;
+          // /** 屏的安全区域与顶部的间隔 */
+          //   safeTop;
+          // /** 屏的安全区域与右侧的间隔 */
+          //   safeRight;
+          // /** 屏的安全区域与底部的间隔 */
+          //  safeBottom;
+        }else{
+          uni.setStorageSync('safeTop', 40);
+        }
+      })
+      uni.setStorageSync('hideHeader', 0);
+    }else{
+      uni.setStorageSync('safeTop', 0);
+      uni.setStorageSync('hideHeader', 1);
+    }
+
+
+
+
+
           uni.setStorageSync("currentChange", 0);
          
-         if(window.mgtv){
-            const parmas  = mgtv.getLaunchOptionsSync()
-         
-             const data =parmas ? parmas.path :'';
-             uni.setStorageSync('parmasPath',data);
-               if(data){
-                 const query = parseQueryString(data);
-                 if(query && query.channel){
-                    uni.setStorageSync('channel',query.channel)
-                 }else{
-                    // uni.setStorageSync('channel','Channel_Official')
-                 }
-                 if(query && query.inviteCode){
-                     uni.setStorageSync('inviteCode',query.inviteCode)
-                 }
-                 if(query && query.gachaName){
-                     uni.setStorageSync('gachaName',query.gachaName)
-                 }
-                 if(query && query.gachaId){
-                     uni.setStorageSync('gachaId',query.gachaId)
-                 }
-               }
+         if(window.MgtvApi){
+
+            console.log(window.location.search,'search')
+            const params = new URLSearchParams(window.location.search);
+             if( params && params.get("channel")){
+                 uni.setStorageSync('channel',params.get("channel"))
+             }
+               if( params && params.get("inviteCode")){
+                 uni.setStorageSync('inviteCode',params.get("inviteCode"))
+             }
+               if( params && params.get("gachaName")){
+                 uni.setStorageSync('gachaName',params.get("gachaName"))
+             }
+               if( params && params.get("gachaId")){
+                 uni.setStorageSync('gachaId',params.get("gachaId"))
+             }
+
+
+
+            //  const data =parmas ? parmas.path :'';
+            //  uni.setStorageSync('parmasPath',data);
+            //    if(data){
+            //      const query = parseQueryString(data);
+            //      if(query && query.channel){
+                  
+            //      }else{
+            //         // uni.setStorageSync('channel','Channel_Official')
+            //      }
+            //      if(query && query.inviteCode){
+            //          uni.setStorageSync('inviteCode',query.inviteCode)
+            //      }
+            //      if(query && query.gachaName){
+            //          uni.setStorageSync('gachaName',query.gachaName)
+            //      }
+            //      if(query && query.gachaId){
+            //          uni.setStorageSync('gachaId',query.gachaId)
+            //      }
+            //    }
 
             //    console.log(mgtv.getLaunchOptionsSync())
 
@@ -166,57 +245,17 @@ export default {
             //    if(query.gachaId){
             //        uni.setStorageSync('gachaId',query.gachaId)
             //    }
-             
-
-          let isLogin = mgtv.isLogin();
-          if(!isLogin){
+             mgTvIsLogin().then(res=>{
+                console.log(res,'login')
+                if(!res){
                 uni.removeStorageSync("aToken");
                 uni.removeStorageSync("rToken");
                 uni.removeStorageSync("userInfo");
                 uni.removeStorageSync('uuid')
-                // goto("/pages/my/loading")
-           
-          }else{
-            if(this.userInfo){
-                mgtv.getSetting({
-                success(res) {
-                if (!res.authSetting["scope.userProfile"]) {
-                        uni.removeStorageSync("aToken");
-                        uni.removeStorageSync("rToken");
-                        uni.removeStorageSync("userInfo");
-                        uni.removeStorageSync('uuid')
-                        //  goto("/pages/my/loading")
-                    
-                      
-                } else {
-                    mgtv.getUserProfile({
-                    success(res) {
-                            const uuid = res.data.uuid;
-                            const localUUid = uni.getStorageSync('uuid')
-                            console.log(localUUid);
-                         if(localUUid != uuid){
-                            uni.removeStorageSync("aToken");
-                            uni.removeStorageSync("rToken");
-                            uni.removeStorageSync("userInfo");
-                            uni.removeStorageSync('uuid')
-                            //  goto("/pages/my/loading")
-                          
-                          }
-
-                    },
-                    fail(res) {
-                      
-                    },
-                    });
                 }
-                },
-                fail(res) {
-              
-                },
-            });
-            }
-          }
-         }
+             })
+       
+     }
   
   
         
@@ -238,6 +277,19 @@ export default {
         // ...mapMutations(["updateMgTvLogin"]),
     },
     onLoad() {},
+      mounted() {
+    const is_app = /imgo/i.test(window.navigator.userAgent)
+   const is_android = /android/i.test(window.navigator.userAgent)
+
+if(is_app && is_android) {
+      // 兼容安卓端会员频道里面弹窗打开后无法下拉的问题
+      document.addEventListener('click', () => {
+        if(document.documentElement.scrollTop === 0) {
+          document.documentElement.scrollTop = 1
+        }
+      })
+    }
+  },
     computed: { ...mapState(["popupWebSocket","userInfo"]) },
     onShow: function () {
         //  this.SystemInfo.uniPlatform == "app" &&

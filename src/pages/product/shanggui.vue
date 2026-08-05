@@ -1,6 +1,6 @@
-<!-- 赏柜界面 -->
+<!-- 赏柜界面 + 36-->
 <template>
-    <view class="shanggui" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top + 36 + 'px' }">
+    <view class="shanggui" :class="{ mpWeixin: ISmp() }" :style="{ paddingTop: MBInfo().top  + 'px' }">
         <view class="top_tabs">
             <!-- <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs> -->
             <!-- <view class="top_btn" @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })">
@@ -8,7 +8,7 @@
                 <img class="ico" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_3.png" />
             </view> -->
         </view>
-        <div :style="{ paddingTop: MBInfo().top + 36 + 'px' }"  class="shanggui_con">
+        <div :style="{ paddingTop: MBInfo().top  + 'px' }"  class="shanggui_con">
             <view class="flex_r flex_jb">
                 <view class="tabs_two flex_r flex_jb">
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
