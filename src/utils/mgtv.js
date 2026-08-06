@@ -343,4 +343,4 @@ export const formatDate = (date)=> {
     pad(date.getSeconds());
 }
 
-export const MGTV_Channel = 'MGTV_Channel'
+export const MGTV_Channel = 'Channel_Official'

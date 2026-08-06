@@ -50,7 +50,7 @@
             <view class="footer">
                 <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view>
                 <view  class="box">
-                     <view @click='fangsheng' v-if="userInfo.channel != MGTV_Channel && allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
+                     <view @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
                      <view class="all_btn" @click="getAll">{{ allShow ? '确定' : '一键开奖' }}</view>
                 </view>
             </view>

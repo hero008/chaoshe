@@ -166,8 +166,8 @@ const store = new Vuex.Store({
             let userInfo = getCache("userInfo") || {};
             post("v1/user/self/get", { user_id: userInfo.id }).then(res => {
                 if (!res.code) {
-                    let { id, avatarUrl, nickname, phone, coinBalance, inviteCode, showMarket, balanceGold, isAdmin, level, allowCoinBet, isAuthenticated } = res
-                    let info = { ...userInfo, id, name: nickname, avatarUrl, phone, coin: coinBalance, gold: balanceGold, inviteCode, showMarket, isAdmin, level, allowCoinBet, isAuthenticated }
+                    let { id, avatarUrl, nickname, phone, coinBalance, inviteCode, showMarket, balanceGold, isAdmin, level, allowCoinBet, isAuthenticated,channel,featureConfig } = res
+                    let info = { ...userInfo, id, name: nickname, avatarUrl, phone, coin: coinBalance, gold: balanceGold, inviteCode, showMarket, isAdmin, level, allowCoinBet, isAuthenticated,channel,featureConfig }
                     context.commit('updateInfo', info)
                 }
             })

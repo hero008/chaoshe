@@ -156,7 +156,7 @@
             </view>
             <view class="foot-btn flex_r flex_jb flex_ac"
                 v-else-if="eggTwister.userBetCount == -1 && eggTwister.userBetCountDaily == -1">
-                <view v-if="userInfo.channel != MGTV_Channel" class="cut flex_r flex_ac" @click="oncut" :class="[cutPattern]">
+                <view v-if="userInfo.featureConfig && (userInfo.featureConfig.biggerBetNum == 'FeatureFlag_Enable' ||   userInfo.featureConfig.biggerBetNum == 'FeatureFlag_AdminOpen')" class="cut flex_r flex_ac" @click="oncut" :class="[cutPattern]">
                     <!-- <view>{{ cutPattern == 'common' ? '普通' : "激情" }}模式</view> -->
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>

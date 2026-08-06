@@ -272,8 +272,7 @@ export default {
             this.point = res.point
          })
 
-
-          if(this.userInfo.channel== MGTV_Channel){
+          if(this.userInfo.featureConfig && this.userInfo.featureConfig.donation != 'FeatureFlag_Enable' && this.userInfo.featureConfig.donation != 'FeatureFlag_AdminOpen'){
             this.baseList2.splice(1,1)
           }
 

@@ -118,7 +118,7 @@
                                     position:'relative',
                                     display:'inline-block'
                                 }"  v-for="(cont, i) in formateList(item.items)"  @click="ondetail(cont.itemId)" :id="i + 1"  :key="i" :class="['goods_img',item.type == 'MarketOrderType_Ask'?'imgAsk':'']">
-                                    <view class="num">x{{ cont.num }}</view>
+                                    <view class="num">{{ cont.num }}</view>
                                 </view>
                                <!-- </view> -->
                                 <!-- <img  :src="cont.coverThumb"
@@ -443,9 +443,10 @@ export default {
                     order_id: this.oldInx.id,
                 }).then((res) => {
                     if (!res.code) {
-                        if(res.order.state = getApp().globalData.MarketOrderState[i.state]){
-                              this.orderList.splice(this.oldInx.inx, 1, res.order);
-                        }
+                        // if(res.order.state = getApp().globalData.MarketOrderState[res.order.state]){
+                             
+                        // }
+                         this.orderList.splice(this.oldInx.inx, 1, res.order);
                         // res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
                         // this.orderList.splice(this.oldInx.inx, 1, res.order);
                     }
@@ -764,9 +765,9 @@ background-color: #F5F6F8;
                 white-space: nowrap;
                 font-size: 0;
                 
-  display: flex;
+                display: flex;
                 .goods_img {
-                   width: 144rpx;
+                    width: 144rpx;
                     height: 144rpx;
                     background: linear-gradient( 0deg, #CCFFF4 0%, #FFFFFF 60%);
                     border-radius: 16rpx 16rpx 16rpx 16rpx;
@@ -780,9 +781,18 @@ background-color: #F5F6F8;
                         position: absolute;
                         right: 0;
                         bottom: 0;
-                        padding: 10rpx;
+                        min-width: 32rpx;
+                         width: fit-content;
+                         height: 32rpx;
+                         line-height: 32rpx;
+                        padding:0 6rpx;
                         color: #1A1A1A;
                         font-size: 24rpx;
+                        text-align: center;
+                        background: #f56c6c;
+                        color: #fff;
+                        border-radius: 16rpx;
+
                     }
 
                     &:last-child {

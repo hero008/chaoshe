@@ -12,6 +12,9 @@
                    >
                     <view class="l_ico flex_jc flex_ac">
                         <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico">
+
+                        <!-- v-if="mail !== '0' && mail" -->
+                        <view  v-if="mail !== '0' && mail" class="notice_num">{{ mail > 99 ? '99+' : mail }}</view>
                         <!-- <view>消息中心</view> -->
                     </view>
                     <u-notice-bar v-if="notices.length" :text="notices[0]" :fontSize="11" color="#1A1A1A" bgColor="transparent"></u-notice-bar>
@@ -621,7 +624,7 @@ export default {
 
 
             .l_ico {
-                width: 152rpx;
+                width: 102rpx;
                 line-height: 100%;
                 background: #1A1A1A;
                 border-radius: 32rpx 32rpx 32rpx 32rpx;
@@ -632,6 +635,7 @@ export default {
                 display: flex;
                 font-size: 24rpx;
                 // font-weight: bold;
+                position: relative;
                 color: #fff;
                 .ico {
                     width: 32rpx;
@@ -640,6 +644,17 @@ export default {
                     margin-right: 4rpx;
                     vertical-align: middle;
                 }
+                .notice_num {
+                position: absolute;
+                right: -16rpx;
+                top: -16rpx;
+                width: 32rpx;
+                height: 32rpx;
+                line-height: 32rpx;
+                text-align: center;
+                background: #ff411b;
+                border-radius: 50%;
+            }
             }
 
             .notice_name {
@@ -660,17 +675,7 @@ export default {
             font-size: 20rpx;
             color: #ffffff;
 
-            .notice_num {
-                position: absolute;
-                right: -16rpx;
-                top: -16rpx;
-                width: 32rpx;
-                height: 32rpx;
-                line-height: 32rpx;
-                text-align: center;
-                background: #ff411b;
-                border-radius: 50%;
-            }
+            
         }
     }
 }

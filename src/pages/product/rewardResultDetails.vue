@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="foot_btn flex_r flex_jc">
-                     <view v-if='userInfo.channel != MGTV_Channel && awards.length > 0 && awards[0].requestId' @click='fangsheng' class="fangsheng">放生</view>
+                     <view v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && awards.length > 0 && awards[0].requestId" @click='fangsheng' class="fangsheng">放生</view>
                     <view class="btn" @click="confirmBtn" >确定</view>
                     <!-- <x-btn txt="确定" @click="confirmBtn" cor="3" /> -->
                 </div>
