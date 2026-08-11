@@ -1,24 +1,65 @@
 <template>
-    <u-popup :show="show" @close="close" :safeAreaInsetBottom="false" :closeable="true" round="20" bgColor="#fff">
+    <u-popup :show="show" @close="close" :safeAreaInsetBottom="false" :closeable="false" round="20" bgColor="#fff">
         <view class="pay_module">
-            <div class="title">{{ title }}</div>
+             <div class="title"> 确认订单 <span v-if="gachaInfo">({{ payNum }}抽)</span>
+             </div>
+             <div @click="close" class="closeBtn"></div>
+
+             <view v-if="gachaInfo" class="buyProduct">
+                  <view>
+                      <image
+                        :src="gachaInfo.coverImage"
+                        mode="scaleToFill"
+                      />
+                  </view>
+                  <view>
+                      <view class="productTitle ellipsis">{{gachaInfo.themeName}}</view>
+                      <view class="price">
+                         <view v-if="gachaInfo.discount > 0">￥{{ gachaInfo.discountPrice }}/抽</view>
+                         <view v-else>￥{{ gachaInfo.price }}/抽</view>
+                         <view v-if="gachaInfo.discount > 0" class="discountPrice">￥{{ item.price }}/抽</view>
+                      </view>
+                  </view>
+             </view>
+            <!-- <div class="title">{{ title }}</div>
             <div class="msg flex_r flex_jc flex_ac">
                 <img src="https://img.shinemang.com/gachaStatic/static/img/pay/ico.png" class="ico1" />
                 <span>请核对支付信息无误后再支付</span>
-            </div>
-            <div class="pay_money" :class="{ active: mtype == '13' && allDiscount.discount }">
+            </div> -->
+           
+            <!-- <div class="pay_money" :class="{ active: mtype == '13' && allDiscount.discount }">
                 {{amount }}
-            </div>
-            <view v-if="mtype == '13' && allDiscount.original" class="all_discount">
-                {{ allDiscount.original }}元</view>
-            <div class="pay_info">
-                <view v-if="mtype == '13' && allDiscount.discount" class="subjoin_info flex_r flex_jb flex_ac">
+            </div> -->
+              <!-- 一网打进 -->
+            <!-- <view v-if="mtype == '13' && allDiscount.original" class="all_discount">
+                {{ allDiscount.original }}元</view> -->
+            <div style="margin-bottom: 40rpx;" class="pay_info">
+
+                <view v-if="showMultiple" class="multiple flex_r flex_jb flex_ac">
+                    <view class="multiple_list flex_r flex_ac">
+                        <view class="multiple_item" :class="{ active: payMultiple == i }"
+                            v-for="(i, s) in multipleOptions" :key="s" @click="onSelectMultiple(i)">x{{ i }}</view>
+                    </view>
+                </view>
+                <!-- 对对碰普通模式：购买次数加减 -->
+                <view v-if="showQuantity" class="quantity flex_r flex_jb flex_ac">
+                    <view class="txt">购买次数</view>
+                    <view class="quantity_ctrl flex_r flex_ac">
+                        <view class="quantity_btn" :class="{ disabled: payQuantity <= 1 }"
+                            @click="onChangeQuantity(-1)"> - </view>
+                        <view class="quantity_num">{{ payQuantity }}</view>
+                        <view class="quantity_btn" @click="onChangeQuantity(1)">+</view>
+                    </view>
+                </view>
+
+                 <!-- 一网打进 -->
+                <!-- <view v-if="mtype == '13' && allDiscount.discount" class="subjoin_info flex_r flex_jb flex_ac">
                     <view class="txt">支付优惠：</view>
                     <view class="all_txt">{{ allDiscount.discount }}折扣</view>
-                </view>
+                </view> -->
                 <!-- amount: goMitigate ? Number(amount) + Number(mitigate) : amount, -->
                 <div v-if="
-                    ['1', '2', '3', '4', '5'].includes(mtype) && discount == 0 && payMessage.discount
+                    ['1', '2', '3', '4', '5','7'].includes(mtype) && discount == 0 && payMessage.discount
                 " class="subjoin_info flex_r flex_jb flex_ac" @click="
                     goto('/pages/my/cardpack', {
                         gacha_id: source_id,
@@ -30,12 +71,12 @@
                         gacha_theme_id: theme_id,
                     })">
                     <span class="txt">支付优惠：</span>
-                    <div class="tickets flex_r flex_ac">
+                    <div v-if="!fetchCoupon" class="tickets flex_r flex_ac">
                         <span v-if="selectTicket.id" class="ticket_item">{{ selectTicket.name }}</span>
                         <span v-else-if="severalPieces" style="color: red" class="no_msg">您有{{ severalPieces
                             }}张优惠券可以使用</span>
                         <span v-else class="no_msg">暂无优惠券</span>
-                        <span class="icof">&#xe72b;</span>
+                        <span class="icof" style="color:#8D8D94;font-weight: normal;">&#xe72b;</span>
                     </div>
                 </div>
 
@@ -43,22 +84,26 @@
                 <view class="integral flex_r flex_jb" v-if="
                     offsetInfo.status &&
                     oldamount &&
-                    couponId == 0 && ['1', '2', '3', '4', '5'].includes(mtype) && discount == 0">
+                    couponId == 0 && ['1', '2', '3', '4', '5','7'].includes(mtype) && discount == 0">
                     <span class="txt">星光积分抵扣</span>
                     <view class="integral_r flex_r flex_ac">
-                        <view class="integral_num">{{timesAmount(mitigate,offsetInfo.config[0].offsetAmount)}}星光积分</view>
+                        <view class="integral_num">({{timesAmount(mitigate,offsetInfo.config[0].offsetAmount)}}星光积分)</view>
                         <view class="integral_nums" v-if="Number(mitigate) > 0.0">-￥{{ mitigate }}</view>
-                        <view class="integral_btn" :class="{ av: goMitigate }" @click="onGoMitigate"></view>
+                        <view class="integral_btn" :class="{ av: goMitigate }" @click="onGoMitigate">
+                           <view></view>
+                        </view>
                     </view>
                 </view>
 
                  <view  class="integral flex_r flex_jb" v-if="userInfo.xCoin && oldamount &&
-                    couponId == 0 && ['1', '2', '3', '4', '5'].includes(mtype) && discount == 0">
+                    couponId == 0 && ['1', '2', '3', '4', '5','7'].includes(mtype) && discount == 0">
                     <span class="txt">星币抵扣</span>
                     <view class="integral_r flex_r flex_ac">
-                        <view class="integral_num" v-if="xCoinDisountPrice">{{xCoinDisountPrice.consume}}星币</view>
+                        <view class="integral_num" v-if="xCoinDisountPrice">({{xCoinDisountPrice.consume}}星币)</view>
                         <view class="integral_nums" v-if="xCoinDisountPrice">-￥{{ xCoinDisountPrice.discount }}</view>
-                        <view class="integral_btn" :class="{ av: goXcoin }" @click="onGoXcoin"></view>
+                        <view class="integral_btn" :class="{ av: goXcoin }" @click="onGoXcoin">
+                             <view></view>
+                        </view>
                     </view>
                 </view>
                 <!-- 惊趣赏 满足条件赠送/ last赏最后一抽赠送/ lucky赏参与抽赏玩家随机赠送  -->
@@ -109,20 +154,20 @@
             <div class="appoint flex_r flex_ac" @click="onAgreeChange">
                 <div class="select" :class="{ active: showAgree }"></div>
                 <div class="selectBox">
-                    <span>本产品仅面向成年用户，</span>
-                    <span class="cory">未成年人请勿下单</span>
-
-                     <!-- @click.stop="
+                    <span class="red">本产品仅面向成年用户，</span>
+                    <span class="red">未成年人请勿下单，</span>
+                    <span>已阅读并同意</span>
+                    <span class="cory" @click.stop="
                         goto('/pages/common/rulepop', {
                             val: 'UserAgreement',
                         })
-                        " -->
-                    <!-- <span>及</span>
+                        ">《用户协议》</span>
+                    <span>及</span>              
                     <span class="cory" @click.stop="
                         goto('/pages/common/rulepop', {
                             val: 'ExplanationOfConsumerRightsProtectionMeasures',
                         })
-                        ">《消费者权益保障措施说明》</span> -->
+                        ">《消费者权益保障措施说明》</span>
                 </div>
             </div>
             <view v-if="couponId !== '0'">
@@ -131,7 +176,7 @@
                 <div v-else class="btn disabled" @click="onHint">确认信息并支付</div>
             </view>
             <!-- <div class="btn" v-else @click="$u.debounce(onPay, 1000)">支付</div> -->
-            <div class="btn" v-else @click="$noMultipleClicks(onPay)">确认信息并支付</div>
+            <div class="btn" v-else @click="$noMultipleClicks(onPay)">确认信息并支付 ￥{{ amount }}</div>
         </view>
         <mp-privacy title="授权手机号" ref="mpPrivacy" type="2" @authChange="authChange" />
 
@@ -171,17 +216,26 @@ export default {
             default: "选择支付方式",
         },
         mtype: {
-            type: String, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒星赏  //游戏方式
+            type: String, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒星赏  //游戏方式  13是一网打尽 
             default: "",
         },
         probabilityShow: {
-            type: Array, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒星赏
+            type: Array, // 1一番赏 2扭蛋机 3潮游赏 4洞洞乐 （调起支付）5 芒星赏  "7" 对对碰
             default: [],
+        },
+        isMultiple: {
+            type: Boolean, // 对对碰疯狂模式（倍速多次支付），仅 mtype 7 生效
+            default: false,
+        },
+        maxNum: {
+            type: Number, // 购买次数上限，0 表示不限制（普通模式数量加减时生效）
+            default: 0,
         },
     },
     components: { mpPrivacy },
     data() {
         return {
+            gachaInfo:'',
 
             xCoinDisountPrice:null,
             XCoin:0,
@@ -300,38 +354,33 @@ export default {
             noClickTime: 3000, //防抖挂载
             discount: 0,
             unitPrice: 0,
-            theme_id: ''
+            theme_id: '',
+
+
+            multipleOptions: [3, 5, 10], // 可选的一次性购买倍数
+            payMultiple: 1, // 当前选中的购买倍数
+            payQuantity: 1, // 普通模式下的购买次数
+            baseAmount: 0, // 单份支付总额（未乘倍数/数量）
+            baseNum: 0, // 单份购买次数（未乘倍数/数量）
+            fetchCoupon:false
         };
     },
-//     config
-// : 
-// [{id: "1", state: 1, offsetAmount: "500", offsetMax: 10, minDeductionAmount: 1}]
-// 0
-// : 
-// {id: "1", state: 1, offsetAmount: "500", offsetMax: 10, minDeductionAmount: 1}
-// id
-// : 
-// "1"
-// minDeductionAmount
-// : 
-// 1
-// offsetAmount
-// : 
-// "500"
-// offsetMax
-// : 
-// 10
-// state
-// : 
-// 1
-// status
-// : 
-// true
-// total
-// : 
-// "1"
+
     computed: {
         ...mapState(["userInfo", "selectTicket", "offsetInfo", "payMessage", 'subtract']),
+          showMultiple() {
+            return this.mtype == "7" && this.isMultiple;
+        },
+        // 对对碰普通模式展示购买次数加减
+        showQuantity() {
+            return this.mtype == "7" && !this.isMultiple;
+        },
+        // 当前生效的换算系数：疯狂模式取倍数，普通模式取购买次数
+        payFactor() {
+            if (this.showMultiple) return this.payMultiple;
+            if (this.showQuantity) return this.payQuantity;
+            return 1;
+        },
     },
     created() {
         // console.log(this.userInfo);
@@ -359,13 +408,15 @@ export default {
                 console.log(res);
             })
         },
-        async open(amount, num, source_type, source_id, couponId, box_index, original = 0, discount = 0, theme_id
+        async open(amount, num, source_type, source_id, couponId, box_index, original = 0, discount = 0, theme_id,gachaInfo=''
         ) {
             // #ifndef MP-WEIXIN 微信小程序需要
             // 0潮币 1支付宝 2微信 3微信小程序 推荐使用this.mtype !== "12"
             // if (this.userInfo.allowCoinBet && !["12", "13"].includes(this.mtype)) this.paytype;
             // else this.paytype = this.mtype !== "6" ? 1 : 0;
             // #endif  微信小程序需要
+            this.gachaInfo = gachaInfo
+
             if (!this.userInfo.id) {
                 this.goto("/pages/login/login");
                 return;
@@ -376,6 +427,13 @@ export default {
             this.amount = amount; // 传过来的金额
             this.oldamount = amount; // 传过来的金额
             this.payNum = num; // 数量
+
+            this.baseAmount = amount;
+            this.baseNum = num;
+            this.payMultiple = this.showMultiple ? this.multipleOptions[0] : 1;
+            this.payQuantity = 1;
+            this.applyPayFactor();
+
             this.source_type = source_type;
             this.source_id = source_id;
             this.couponId = couponId; // 优惠券id
@@ -405,7 +463,7 @@ export default {
                 // #endif
             } else {
                 this.asyncUpBalance();//获取金币
-                if (["1", "2", "3", "4", "5"].includes(this.mtype)) {
+                if (["1", "2", "3", "4", "5", "7"].includes(this.mtype)) {
                     if (!discount && this.payMessage.discount) {
                         // 获取汇率
                         this.unitPrice = this.$h.Div(amount, num).toFixed(2)
@@ -428,6 +486,60 @@ export default {
                 // #endif
             }
         },
+
+
+
+
+
+
+
+
+
+        /** 按当前倍数/数量换算支付总额与购买次数 */
+        applyPayFactor() {
+            this.payNum = this.$h.Mul(this.baseNum, this.payFactor);
+            const total = Number(this.$h.Mul(this.baseAmount, this.payFactor).toFixed(2));
+            console.log(total,'lskjflsjdlfjsldj ')
+            this.amount = total;
+            this.oldamount = total;
+        },
+        /** 倍数/数量变化后：重算金额，并重置重新查询依赖金额与次数的优惠信息 */
+        refreshPayAmount() {
+            this.applyPayFactor();
+            this.goMitigate = false;
+            this.mitigate = 0;
+            this.pays.forEach((i) => (i.consume = 0));
+            this.UpselectTicket({});
+            this.getBalance();
+            this.getDiscounts();
+        },
+        /** 切换购买倍数：重算总价与次数，并重新获取优惠信息 */
+        onSelectMultiple(multiple) {
+            if(!this.showMultiple || this.payMultiple == multiple) return;
+            this.payMultiple = multiple;
+            this.refreshPayAmount();
+        },
+        /** 普通模式增减购买次数：最少 1 次，maxNum 大于 0 时不可超过上限 */
+        onChangeQuantity(step) {
+            if (!this.showQuantity) return;
+            const next = this.payQuantity + step;
+            if (next < 1) return;
+            if (this.maxNum > 0 && next > this.maxNum) {
+                uni.$u.toast(`最多可购买${this.maxNum}次`);
+                return;
+            }
+            this.payQuantity = next;
+
+            console.log(this.payQuantity,
+                '234234'
+            )
+            this.refreshPayAmount();
+        },
+
+
+
+
+
         authChange(bo) {
             if (bo) this.getBalance();
             else this.close();
@@ -455,7 +567,8 @@ export default {
             //     }
             // }
             // 获取优惠券
-            if (['1', '2', '3', '4', '5'].includes(this.mtype) && this.discount == 0 && this.payMessage.discount) {
+            if (['1', '2', '3', '4', '5', '7'].includes(this.mtype) && this.discount == 0 && this.payMessage.discount) {
+                this.fetchCoupon = true
                 let a = await post("v1/coupon/list", {
                     state: 1,
                     ...{
@@ -474,6 +587,7 @@ export default {
                 if (a.tableData.length > 0) {
                     this.UpselectTicket(a.tableData[0].id ? a.tableData[0] : {})
                 }
+                this.fetchCoupon = false
             }
             // 欧气值抵扣
             if (this.amount && this.offsetInfo.status) {
@@ -564,7 +678,8 @@ export default {
                             user_coupon_id: this.selectTicket.id,
                             is_offset: this.goMitigate ? 1 : 0, // 欧气值抵扣
                             offset_money: this.goMitigate ? this.mitigate : 0,// 欧气值抵扣
-                            x_coin_discount:this.xCoinDisountPrice ? this.xCoinDisountPrice.consume : 0
+                            x_coin_discount:this.xCoinDisountPrice ? this.xCoinDisountPrice.consume : 0,
+                            ...(this.mtype == "7" && this.isMultiple ? { is_multiple: true } : {}),
                         },
                     });
                 }
@@ -751,7 +866,7 @@ export default {
             this.onGoldPay();
         },
         async getDiscounts(type=false) {
-            if (this.amount && ["1", "2", "3", "4", "5"].includes(this.mtype) && Object.keys(this.offsetInfo).length
+            if (this.amount && ["1", "2", "3", "4", "5", "7"].includes(this.mtype) && Object.keys(this.offsetInfo).length
             ) {
                 const { offsetAmount, offsetMax } = this.offsetInfo.config[0];
                 let pc = this.integralAll.point / offsetAmount > this.amount * (offsetMax / 100) ? this.amount * (offsetMax / 100) : this.integralAll.point / offsetAmount;
@@ -917,15 +1032,78 @@ export default {
 
 .pay_module {
     // height: 1060rpx;
-    padding: 0 36rpx 160rpx;
+    padding: 0 32rpx 180rpx;
     position: relative;
+    .closeBtn{
+         width: 56rpx;
+        height: 56rpx;
+        position: absolute;
+        right: 32rpx;
+        top: 32rpx;
+        background: url('@/static/close.png');
+        background-size: 100% 100%;
+    }
+     &::after {
+        content: "";
+        width: 100vw;
+        height: 210rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('@/static/payTop.png');
+        background-size: 100% 100%;
+      }
+
+      div{
+        z-index: 2;
+        // position: static;
+      }
 }
 
 .title {
-    padding: 30rpx 0;
+    padding: 48rpx 0 32rpx;
     text-align: center;
-    font-size: 32rpx;
+    font-size: 36rpx;
     font-weight: 500;
+    color:#1A1A1A;
+    z-index: 2;
+    position: relative;
+}
+.buyProduct{
+    padding: 32rpx 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    image{
+        width: 160rpx;
+        height: 160rpx;
+        border-radius: 16rpx;
+        margin-right: 24rpx;
+    }
+
+    .productTitle{
+       color: #1A1A1A;
+       font-size: 32rpx;
+       font-weight: bold;
+       max-width: 450rpx;
+       margin-bottom: 16rpx;
+    }
+
+    .price{
+        display: flex;
+        align-items: center;
+        color: #000000;
+        font-size: 32rpx;
+        font-weight: bold;
+        .discountPrice{
+           color: #8D8D94;
+           font-weight: normal;
+           text-decoration: line-through;
+           margin-left: 8rpx;
+           font-size: 28rpx;
+        }
+    }
 }
 
 .msg {
@@ -968,14 +1146,15 @@ export default {
 }
 
 .subjoin_info {
-    font-weight: 500;
-    font-size: 32rpx;
-    margin-bottom: 20rpx;
-    color: #818181;
+    font-weight: bold;
+    font-size: 28rpx;
+    margin-bottom: 32rpx;
+    color: #1A1A1A;
 
     .no_msg {
-        color: #999;
+        color: #8D8D94;
         font-size: 28rpx;
+        font-weight: normal;
     }
 
     .all_txt {
@@ -986,7 +1165,7 @@ export default {
 
     .tickets {
         .ticket_item {
-            color: #ff5070;
+            color: #F65C36;
         }
 
         .icof {
@@ -995,47 +1174,134 @@ export default {
         }
     }
 }
-
-.integral {
-    color: #818181;
+.multiple {
+    font-weight: 500;
+    font-size: 32rpx;
     margin-bottom: 20rpx;
+    color: #818181;
+
+    .multiple_item {
+        min-width: 96rpx;
+        height: 56rpx;
+        line-height: 56rpx;
+        text-align: center;
+        padding: 0 16rpx;
+        margin-left: 16rpx;
+        font-size: 28rpx;
+        color: #615e74;
+        background: #fff;
+        border-radius: 28rpx;
+        border: 2rpx solid #e5e5e5;
+
+        &.active {
+            color: #fff;
+            background: #715cdd;
+            border-color: #715cdd;
+        }
+    }
+}
+
+.quantity {
+    font-weight: 500;
+    font-size: 28rpx;
+    margin-bottom: 20rpx;
+    color: #1A1A1A;
+    .txt{
+        font-weight: 600;
+    }
+
+    .quantity_btn {
+        width: 56rpx;
+        height: 56rpx;
+        line-height: 52rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 36rpx;
+        color: #615e74;
+        background: #fff;
+        border-radius: 50%;
+        border: 2rpx solid #e5e5e5;
+
+        &.disabled {
+            color: #d0d0d0;
+        }
+    }
+
+    .quantity_num {
+        min-width: 80rpx;
+        text-align: center;
+        font-size: 32rpx;
+        color: #000;
+    }
+}
+.integral {
+    color: #1A1A1A;
+    margin-bottom: 20rpx;
+       margin-bottom: 32rpx;
+
+    .txt{
+        font-weight: bold;
+        font-size: 28rpx;
+    }
 
     .integral_r {
         font-weight: 500;
         font-size: 28rpx;
 
         .integral_num {
-            color: #000000;
+            color: #8D8D94;
+            font-weight: normal;
         }
 
         .integral_nums {
-            color: #fa80c7;
+            color: #F65C36;
             margin-left: 8rpx;
         }
 
         .integral_btn {
             margin-left: 16rpx;
-            width: 88rpx;
-            height: 48rpx;
-            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/integral_btn1.png");
-            background-size: 100% 100%;
+          width: 76rpx;
+height: 40rpx;
+background: #EBEEF3;
+border-radius: 24rpx 24rpx 24rpx 24rpx;
+position: relative;
+>view{
+    width: 32rpx;
+height: 32rpx;
+background: #AAACBB;
+position: absolute;
+left: 4rpx;
+top: 4rpx;
+border-radius:50%;
+}
 
             &.av {
-                background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/integral_btn.png");
-                background-size: 100% 100%;
+              background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+              >view{
+                left: unset;
+                right: 4rpx;
+                background: #FFFFFF;
+              }
             }
         }
     }
 }
 
 .pays {
-    padding: 16rpx 32rpx;
+    // padding: 16rpx 32rpx;
     background: #fff;
-    border-radius: 24rpx;
-    background-color: #F5F6F8;
+    // border-radius: 24rpx;
+    // background-color: #F5F6F8;
 
     .pay_item {
-        padding: 20rpx 0;
+        padding: 0rpx 32rpx;
+        width: 100%;
+        height: 104rpx;
+        background: #F5F6F8;
+        border-radius: 24rpx 24rpx 24rpx 24rpx;
+        margin-bottom: 16rpx;
     }
 
     .pay_name {
@@ -1116,13 +1382,21 @@ export default {
 
 .selectBox {
     width: 600rpx;
+    line-height: 32rpx;
+    font-size: 24rpx;
+    .red{
+        color: #EE4326;
+        font-weight: bold;
+    }
 }
 
 .appoint {
     font-size: 24rpx;
-    font-weight: 500;
-    color: #615e74;
+    // font-weight: 500;
+    color: #8D8D94;
     margin-top: 25rpx;
+    display:flex;
+    align-items: center;
 
     span {
         vertical-align: middle;
@@ -1134,7 +1408,7 @@ export default {
     }
 
     .cory {
-        color: #ff6a16;
+        color: #01C2D0;
     }
 
 }

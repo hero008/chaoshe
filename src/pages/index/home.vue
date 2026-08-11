@@ -7,11 +7,11 @@
             <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/home/ico_ico2.png" class="logo_img"
                 :style="{ height: MBInfo().height - 2 + 'px' }" /> -->
             <!-- 微信小程序不用-->
-            <view class="notice-bar flex_r flex_jb flex_ac" :style="{ height: MBInfo().height + 'px', width: boundW }">
+            <view class="notice-bar flex_r flex_jb flex_ac" :style="{ height: 56 + 'rpx', width: boundW }">
                 <view @click="goto('/page-activity/notice/notice-list')" class="notice_con flex_r flex_ac"
                    >
                     <view class="l_ico flex_jc flex_ac">
-                        <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico">
+                        <!-- <img src="https://img.shinemang.com/gachaStatic/home/notice.png" class="ico"> -->
 
                         <!-- v-if="mail !== '0' && mail" -->
                         <view  v-if="mail !== '0' && mail" class="notice_num">{{ mail > 99 ? '99+' : mail }}</view>
@@ -113,8 +113,8 @@
             </view>
 
             <view style="min-height: 1400rpx;width: 100%;">
-               <product-list v-if="active_m == 0" :type="active_m + 1" :IsScroll.sync="IsScroll" ref="productList" />
-               <product-list1 v-else  :type="active_m + 1" :IsScroll.sync="IsScroll1" ref="productList1" />
+               <product-list v-if="slectType == 1" :type="slectType" :IsScroll.sync="IsScroll" ref="productList" />
+               <product-list1 v-else  :type="slectType" :IsScroll.sync="IsScroll1" ref="productList1" />
 
             </view>
         </scroll-view>
@@ -173,15 +173,23 @@ export default {
               navbar: [
                 {
                     name: "热门推荐",
+                    type:1
                 },
                 {
                     name: "扭蛋赏",
+                    type:2
                 },
                  {
                     name: "无限赏",
+                    type:3
                 },
                  {
                     name: "炸弹赏",
+                    type:4
+                },
+                  {
+                    name: "对对碰",
+                    type:7
                 },
             ],
             // navbar: [
@@ -210,6 +218,7 @@ export default {
             timeData: {},
             allIn: { open: false },
             egg: { open: true },
+            slectType:1
         };
     },
     components: {
@@ -290,13 +299,17 @@ export default {
                    })
             }
             if ([item, item.index].includes(this.active_m)) return;
+
+            console.log(item)
             this.page = 1;
             // if (item == 2 || item == -1) {
             //     this.active_m = item;
             //     this.activeStyl = {};
             //     this.lineWidth = "0rpx";
             // } else {
+                   
                 this.active_m = item.index;
+                this.slectType = item.type
             
                 this.activeStyl = {
                     color: "#1A1A1A",
@@ -405,6 +418,7 @@ export default {
             const item = this.list3[index];
             const { type, id, key, targetType } = item;
             const itemJson = JSON.stringify(item);
+            console.log('时间飞逝垃圾分类伺机待发逻辑上')
             // 产品类型路由处理函数
             const productRoutes = {
                 1: () =>
@@ -451,6 +465,18 @@ export default {
 
                     // #ifndef MP-WEIXIN
                     this.goto("/pages/product/chaosheshang", { id });
+                    // #endif
+                },
+
+                 7: () => {
+                    if (id === 0) return;
+
+                    // #ifdef MP-WEIXIN
+                    this.downShow = true;
+                    // #endif
+
+                    // #ifndef MP-WEIXIN
+                    this.goto("/pages/product/duiduipeng", { id });
                     // #endif
                 },
             };
@@ -610,7 +636,7 @@ export default {
     }
 
     .notice-bar {
-        height: 70rpx;
+        height: 56rpx;
         background-color: rgba(255, 255, 255, 0.5);
         border-radius: 35rpx;
         font-size: 22rpx;
@@ -621,15 +647,14 @@ export default {
         .notice_con {
             width: calc(100%);
             height: 100%;
-
-
+            padding-left: 4rpx;
             .l_ico {
-                width: 102rpx;
+                width: 64rpx;
                 line-height: 100%;
-                background: #1A1A1A;
-                border-radius: 32rpx 32rpx 32rpx 32rpx;
+               background: url('@/static/notifyIcon.png');
+               background-size: 100% 100%;
                 // height: 24rpx;
-                height: 100%;
+                height: 48rpx;
                 // border-right: 2rpx solid $motif-color;
                 // padding-right: 10rpx;
                 display: flex;
@@ -639,7 +664,6 @@ export default {
                 color: #fff;
                 .ico {
                     width: 32rpx;
-                   
                     height: 32rpx;
                     margin-right: 4rpx;
                     vertical-align: middle;

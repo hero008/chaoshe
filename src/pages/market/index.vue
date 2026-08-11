@@ -118,7 +118,7 @@
                                     position:'relative',
                                     display:'inline-block'
                                 }"  v-for="(cont, i) in formateList(item.items)"  @click="ondetail(cont.itemId)" :id="i + 1"  :key="i" :class="['goods_img',item.type == 'MarketOrderType_Ask'?'imgAsk':'']">
-                                    <view class="num">{{ cont.num }}</view>
+                                    <view class="num">x{{ cont.num }}</view>
                                 </view>
                                <!-- </view> -->
                                 <!-- <img  :src="cont.coverThumb"
@@ -781,17 +781,18 @@ background-color: #F5F6F8;
                         position: absolute;
                         right: 0;
                         bottom: 0;
-                        min-width: 32rpx;
+                        min-width: 52rpx;
                          width: fit-content;
                          height: 32rpx;
                          line-height: 32rpx;
                         padding:0 6rpx;
-                        color: #1A1A1A;
+                        
+                        color: #fff;
                         font-size: 24rpx;
                         text-align: center;
-                        background: #f56c6c;
+                        background: rgba(0, 0, 0, 0.5);
                         color: #fff;
-                        border-radius: 16rpx;
+                        border-radius: 14rpx 0 14rpx 0;
 
                     }
 

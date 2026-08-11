@@ -229,7 +229,7 @@ export default {
                 p = Math.ceil(this.pageda.total / this.pageda.page_size);
                 da = {
                         is_mp: this.ismp,
-                        is_recommend: 1,
+                        is_recommend: 0,
                         type: this.type,
                         is_discount:0,
                         sale_type:0,
@@ -415,6 +415,7 @@ export default {
                 else if (da.type == 3) this.goto("/pages/product/chaowanshang", { id: da.id, });
                 else if (da.type == 4) this.goto("/pages/product/dongle", { id: da.id, });
                 else if (da.type == 5) this.goto("/pages/product/chaosheshang", { id: da.id, });
+                else if (da.type == 7) this.goto("/pages/product/duiduipeng", { id: da.id, });
             }
         },
         onReachScollBottom() {

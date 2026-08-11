@@ -659,7 +659,8 @@ export default {
                     this.boxIndex,
                     0,
                     this.gachainfo.discount,
-                    this.gachainfo.themeId
+                    this.gachainfo.themeId,
+                     this.gachainfo
                 );
                 let take_all = this.selectGrid.length <= 0 ? 1 : 0;
                 this.UppayMessage({

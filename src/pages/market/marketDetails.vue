@@ -765,20 +765,21 @@ font-size: 32rpx;
                 position: relative;
 
                                     .num{
-                        position: absolute;
+                       position: absolute;
                         right: 0;
                         bottom: 0;
-                        min-width: 32rpx;
+                        min-width: 52rpx;
                          width: fit-content;
                          height: 32rpx;
                          line-height: 32rpx;
                         padding:0 6rpx;
-                        color: #1A1A1A;
+                        
+                        color: #fff;
                         font-size: 24rpx;
                         text-align: center;
-                        background: #f56c6c;
+                        background: rgba(0, 0, 0, 0.5);
                         color: #fff;
-                        border-radius: 16rpx;
+                        border-radius: 14rpx 0 14rpx 0;
 
                     }
 
@@ -918,20 +919,21 @@ border: 4rpx solid #EA4CA4;
         border-radius: 12rpx;
         position: relative;
                      .num{
-                        position: absolute;
+                       position: absolute;
                         right: 0;
                         bottom: 0;
-                        min-width: 32rpx;
+                        min-width: 52rpx;
                          width: fit-content;
                          height: 32rpx;
                          line-height: 32rpx;
                         padding:0 6rpx;
-                        color: #1A1A1A;
+                        
+                        color: #fff;
                         font-size: 24rpx;
                         text-align: center;
-                        background: #f56c6c;
+                        background: rgba(0, 0, 0, 0.5);
                         color: #fff;
-                        border-radius: 16rpx;
+                        border-radius: 14rpx 0 14rpx 0;
 
                     }
     }

@@ -149,6 +149,7 @@ export default {
                 { txt: "扭蛋赏", val: 2 },
                 { txt: "无限赏", val: 3 },
                 { txt: "炸弹赏", val: 4 },
+                  { txt: "对对碰", val: 7 },
                 // { txt: "芒星赏", val: 5 },
                 // { txt: "一网打尽", val: 6 },
             ],
@@ -190,6 +191,7 @@ export default {
             else if (data.gachaType == 4) s = "/pages/product/dongle";
             else if (data.gachaType == 5) s = "/pages/product/chaosheshang";
             else if (data.gachaType == 6) s = "/pages/product/allCaptured";
+            else if (data.gachaType == 7) s = "/pages/product/duiduipeng";
             this.goto(s, da);
         },
         onReachScollBottom() {

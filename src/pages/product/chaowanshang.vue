@@ -749,7 +749,7 @@ export default {
         },
         onpay(num, special = 0) {
             let res = Postpayment(this.AReward, num, special);
-            console.log(res,'lsjdfjsldjflksdjf')
+      
             if (res && res.m > 0) {
                 this.$refs.xPay.open(
                     res.m,
@@ -760,7 +760,8 @@ export default {
                     this.AReward.gachaBox.boxIndex,
                     0,
                     this.gachainfo.discount,
-                    this.gachainfo.themeId
+                    this.gachainfo.themeId,
+                    this.gachainfo
                 );
                 this.UppayMessage({
                     url: "v1/gacha/open",

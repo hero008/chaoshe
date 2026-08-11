@@ -277,7 +277,6 @@ import { MGTV_Channel } from "@/utils/mgtv";
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {
-
     data() {
         return {
             MGTV_Channel:MGTV_Channel,
@@ -396,8 +395,8 @@ export default {
     methods: {
         tipQb(){
                this.$showModal({
-                        title: "全包",
-                        content: `全包`,
+                        title: "全包条件",
+                        content: `当前剩余可抽数小于等于本箱总抽数的10%`,
                         hint: '',
                         success:(res1)=> {
                             if (res1.confirm) {
@@ -495,7 +494,8 @@ export default {
                     this.eggTwister.gachaBox.boxIndex,
                     0,
                     this.gachainfo.discount,
-                    this.gachainfo.themeId
+                    this.gachainfo.themeId,
+                    this.gachainfo
                 );
                 this.UppayMessage({
                     url: "v1/gacha/open",

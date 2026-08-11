@@ -69,6 +69,12 @@
 			}
 		},
 		{
+			"path": "pages/product/duiduipeng",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/product/niudan",
 			"style": {
 				"navigationStyle": "custom"
