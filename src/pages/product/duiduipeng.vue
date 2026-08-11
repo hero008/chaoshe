@@ -13,11 +13,12 @@
             <view class="auto_pilot_txt">{{ autoModeText }}</view>
         </view> -->
          <!-- #ifndef MP-WEIXIN -->
-            <view class="share " @click="onShare"></view>
+           
             <!-- #endif -->
+            
             <view class="theme_card">
                 <view class="gz" @click=" goto('/pages/common/rulepop', { val: 'FateMatch' })"></view>
-           
+                  <view class="share " @click="onShare"></view>
                 <view class="theme_content flex_r flex_ac ">
                    
                     <image
@@ -341,7 +342,13 @@ export default {
                 color:'#73B7FE',
                 bgc:"linear-gradient( 90deg, rgba(115,183,254,0) 0%, #73B7FE 50%, rgba(115,183,254,0) 99.52%)"
             }
+           }else{
+             return {
+                tagPng:smallPng,
+                color:'#73B7FE',
+                bgc:"linear-gradient( 90deg, rgba(115,183,254,0) 0%, #73B7FE 50%, rgba(115,183,254,0) 99.52%)"
             }
+           }
         },
         ...mapMutations(["UppayMessage"]),
         // ============ 游戏初始化 ============
@@ -1048,7 +1055,7 @@ export default {
             background-size: 100% 100%;
             position: absolute;
             right: 0rpx;
-            top: 20rpx;
+            bottom: -20rpx;
         }
 
         .share {
@@ -1057,8 +1064,8 @@ export default {
             background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/gainFx.png");
             background-size: 100% 100%;
             position: absolute;
-            right: 32rpx;
-            top: -76rpx;
+            right: 0rpx;
+            top: -20rpx;
         }
 
         .theme_card {

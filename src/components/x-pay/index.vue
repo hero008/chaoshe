@@ -34,15 +34,15 @@
             <!-- <view v-if="mtype == '13' && allDiscount.original" class="all_discount">
                 {{ allDiscount.original }}元</view> -->
             <div style="margin-bottom: 40rpx;" class="pay_info">
-
+<!-- 
                 <view v-if="showMultiple" class="multiple flex_r flex_jb flex_ac">
                     <view class="multiple_list flex_r flex_ac">
                         <view class="multiple_item" :class="{ active: payMultiple == i }"
                             v-for="(i, s) in multipleOptions" :key="s" @click="onSelectMultiple(i)">x{{ i }}</view>
                     </view>
-                </view>
+                </view> -->
                 <!-- 对对碰普通模式：购买次数加减 -->
-                <view v-if="showQuantity" class="quantity flex_r flex_jb flex_ac">
+                <!-- <view v-if="showQuantity" class="quantity flex_r flex_jb flex_ac">
                     <view class="txt">购买次数</view>
                     <view class="quantity_ctrl flex_r flex_ac">
                         <view class="quantity_btn" :class="{ disabled: payQuantity <= 1 }"
@@ -50,7 +50,7 @@
                         <view class="quantity_num">{{ payQuantity }}</view>
                         <view class="quantity_btn" @click="onChangeQuantity(1)">+</view>
                     </view>
-                </view>
+                </view> -->
 
                  <!-- 一网打进 -->
                 <!-- <view v-if="mtype == '13' && allDiscount.discount" class="subjoin_info flex_r flex_jb flex_ac">

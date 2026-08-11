@@ -268,11 +268,11 @@ export default {
       
         toGacha(index){
            if(index == 0){
-            this.ontab({index:1,type:'top'})
+            this.ontab({index:1,type:2,mode:'top'})
            }else if(index == 1){
-                this.ontab({index:2,type:'top'})
+                this.ontab({index:2,type:3,mode:'top'})
            }else if(index == 2){
-                this.ontab({index:3,type:'top'})
+                this.ontab({index:3,type:4,mode:'top'})
            }else{
              this.goto('/page-a/luck/index')
            }
@@ -291,7 +291,7 @@ export default {
             this.data = data;
         },
         ontab(item) {
-                if(item.type == 'top'){
+                if(item.mode == 'top'){
                    this.scrollTop = this.scrollTop1
                    this.$nextTick(() => {
                         let px = 640 * this.SystemInfo.screenWidth /750 ;
@@ -300,7 +300,6 @@ export default {
             }
             if ([item, item.index].includes(this.active_m)) return;
 
-            console.log(item)
             this.page = 1;
             // if (item == 2 || item == -1) {
             //     this.active_m = item;
@@ -309,7 +308,7 @@ export default {
             // } else {
                    
                 this.active_m = item.index;
-                this.slectType = item.type
+                this.slectType =item.type
             
                 this.activeStyl = {
                     color: "#1A1A1A",
