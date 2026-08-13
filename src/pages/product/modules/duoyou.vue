@@ -264,6 +264,7 @@ export default {
                 if (hasTargetItem) {
                     this.dynamicEffectShow = true
                     this.styleStep = 3
+                    //超神动画
                     playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/chaoshen.mp3')
                     vibratePhone(3000)
                     setTimeout(() => {
@@ -278,6 +279,7 @@ export default {
                         });
                     }, 4200);
                 } else {
+                    // 没有超神 ,直接开
                     this.awardList.forEach(vue => {
                         vue.rotated = true;
                     });
@@ -333,6 +335,8 @@ export default {
             this.shareType = 0;
         },
         onDy(index) {
+
+            //第一步点击动画
             if (index !== 0) return
             playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/click.mp3');
             this.styleStep = 2

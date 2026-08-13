@@ -196,7 +196,7 @@
 <script>
 
 import { post } from "@/utils/api.js";
-import { mapMutations } from "vuex";
+import { mapMutations,mapState } from "vuex";
 import xPay from "@/components/x-pay/index.vue";
 import { Postpayment } from "@/utils/pay.js";
 import { playDede, uniShare } from "@/utils/fun.js";
@@ -204,6 +204,7 @@ import { cacheImage } from "@/utils/storage.js";
 import bigPng from '@/static/big.png'
 import middlePng from '@/static/middle.png'
 import smallPng from '@/static/small.png'
+
 export default {
     name: "duiduipeng",
     data() {
@@ -277,6 +278,7 @@ export default {
         xPay,
     },
     computed: {
+          ...mapState(["userInfo"]),
         // 普通模式可购买次数上限：取当前箱子剩余库存，-1（无限库存）时不限制
         buyMaxNum() {
             const left = this.initialData && this.initialData.gachaBox ? Number(this.initialData.gachaBox.leftAwards) : 0;
@@ -1002,10 +1004,11 @@ export default {
             }
         },
         onShare() {
+            console.log('ddddddddddd',window.mgtv)
             if(window.mgtv){
                 let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
                 mgtv.showShareMenu({
-                    title:"对对碰 : " + + (this.initialData.gacha ? this.initialData.gacha.themeName : ''),
+                    title:"对对碰 : " +  ((this.initialData && this.initialData.gacha) ? this.initialData.gacha.themeName : ''),
                      typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
                     url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddp&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
                 })

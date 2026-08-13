@@ -10,6 +10,8 @@
                         class="w-icon" />
                          <img v-else-if="item.type == 4" src="https://img.shinemang.com/gachaStatic/home/ddlIcon.png"
                         class="w-icon" />
+                           <img v-else-if="item.type == 7" src="https://img.shinemang.com/gachaStatic/home/ddpIcon.png"
+                        class="w-icon" />
                     <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
                         <view class="multiple1 flex_r" v-if="item.costAwardMultiple > 1">

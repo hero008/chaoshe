@@ -36,7 +36,13 @@
                         </div>
                         <div class="goods flex_r flex_jb flex_ac">
                             <div class="goods_li">
-                                <img v-for="(v,k) in item.items" :key="k" class="goods_img" :src="v.cover">
+                                <view :style="{
+                                    backgroundImage:`url(${v.cover})`,
+                                    backgroundSize:'cover',
+                                    display:'inline-block'
+                                }" v-for="(v,k) in formateList(item.items)" :key="k" class="goods_img">
+                                <view class="num">x{{ v.num }}</view></view>
+                                <!-- <img v-for="(v,k) in item.items" :key="k" class="goods_img" :src="v.cover"> -->
                             </div>
                           
                         </div>
@@ -59,7 +65,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js"
-
+import { marketGroupByItemId } from "@/utils/mgtv";
 export default {
     data() {
         return {
@@ -87,6 +93,13 @@ export default {
         },
     },
     methods: {
+               formateList(value){
+
+             let   data = marketGroupByItemId(value);
+
+            return data;
+                  
+        },
         ontab2(item, index) {
             this.active = item
 			this.pageda.page = 1
@@ -337,9 +350,25 @@ text{
                 margin: 2rpx;
                 /* background-color: rgba($color: $motif-color, $alpha: 0.5); */
                 margin-right: 16rpx;
+                position: relative;
 
                 &:last-child {
                     margin-right: 0;
+                }
+
+                .num{
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                padding: 0 4px;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+                border-radius: 0 12px 0 7px;
+                background: rgba(0, 0, 0, 0.5);
+                font-weight: bold;
+                font-size: 12px;
+                color: #ffffff;
                 }
             }
         }

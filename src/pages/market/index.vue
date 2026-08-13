@@ -398,10 +398,11 @@ export default {
                     list.map((i) => {
                         i.state = getApp().globalData.MarketOrderState[i.state];
                         i.nus = i.items.length;
-                        i.items =
-                            i.items.length < 20
-                                ? i.items
-                                : i.items.slice(0, 10);
+                        i.items = i.items
+                        // i.items =
+                        //     i.items.length < 20
+                        //         ? i.items
+                        //         : i.items.slice(0, 10);
                     });
 
                   
@@ -418,7 +419,9 @@ export default {
         },
 
         formateList(value){
+
              let   data = marketGroupByItemId(value);
+
             return data;
                   
         },
@@ -514,6 +517,7 @@ export default {
         onScrollX(id, index) {
             let all = this.rawData[index].items.length;
             let now = this.orderList[index].items.length;
+            console.log(all,now);
             if (now < all) {
                 const nus = all - now < 10 ? all : 10 + now;
                 this.orderList[index].items = [

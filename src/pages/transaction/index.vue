@@ -259,7 +259,7 @@
                     <div class="tit">交易赏品：</div>
                     <div class="products">
                         <div class="product_list">
-                            <div class="img" v-for="(item, index) in thickData" :key="index">
+                            <div class="img" v-for="(item, index) in formateList(thickData)" :key="index">
                                 <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
@@ -269,6 +269,7 @@
                                             ? "现货"
                                             : "预售"
                                     }}</view>
+                                    <view class="num">x{{item.num  }}</view>
                                 </view>
                             </div>
                         </div>
@@ -301,7 +302,7 @@
                     <div class="tit">出换赏品：</div>
                     <div class="products">
                         <div class="product_list">
-                            <div class="img" v-for="(item, index) in selectRewardsInfo" :key="index">
+                            <div class="img" v-for="(item, index) in formateList(selectRewardsInfo)" :key="index">
                                 <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }">
@@ -313,6 +314,8 @@
                                             ? "现货"
                                             : "预售"
                                     }}</view>
+
+                                    <view class="num">x{{ item.num }}</view>
                                 </view>
                             </div>
                         </div>
@@ -372,6 +375,7 @@ import { callPayment } from "@/utils/pay.js";
 import { mapState, mapMutations } from "vuex";
 import { groupByItemName } from "@/utils/mgtv";
 import { br } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
+import { marketGroupByItemId } from "@/utils/mgtv";
 export default {
     data() {
         return {
@@ -462,6 +466,14 @@ export default {
     },
     mounted() { this.closeAutonym = this.userInfo.isAuthenticated; },
     methods: {
+        
+        formateList(value){
+
+             let   data = marketGroupByItemId(value);
+
+            return data;
+                  
+        },
         ...mapMutations(["UppayMessage"]),
         async onAutonym() {
             this.showAutonym = false;
@@ -489,6 +501,8 @@ export default {
             this.currentPage = 1; // 当前加载的页数
             this.selectRewardIds = ids;
             this.thickData = infos;
+
+            console.log(this.thickData,'329493274983')
 
             // if (this.transactionType == 1) {
             //     this.selectRewardsInfo = infos.slice(0, 50);
@@ -1063,7 +1077,18 @@ padding: 0 16rpx;
                 background: linear-gradient( 190deg, #D6E5FF 0%, #FFFFFF 100%);
             }
             .num{
-   
+                  position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 0 4px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0 12px 0 7px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
             }
 
             .ico {
@@ -1138,6 +1163,11 @@ padding: 0 16rpx;
             .img_item {
                 width: 100%;
                 height: 100%;
+
+                position: relative;
+                .num{
+
+                }
             }
         }
 
@@ -1312,6 +1342,23 @@ font-weight: bold;
                     border-radius: 16rpx;
                     background-size: 100% 100%;
                     position: relative;
+
+                    
+                               .num{
+                position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 0 4px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0 12px 0 7px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+            }
+                    
                 }
             }
         }
@@ -1437,6 +1484,21 @@ font-weight: bold;
                     border-radius: 16rpx;
                     background-size: 100% 100%;
                     position: relative;
+                     .num{
+                position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding: 0 4px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 0 12px 0 7px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+            }
+                    
                 }
             }
         }

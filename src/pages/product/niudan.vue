@@ -163,6 +163,9 @@
                 <!-- <img class="cut " :src="`https://img.shinemang.com/gachaStatic/static/img/cw-new/${cutPattern}.png`"  :key="cutPattern"   @click="oncut" /> -->
                 <!-- { forbid_btn: probability > 10 && value.text == '全包' } -->
                 <view v-for="(value, index) in payOptions" :key="index" class="btn-item"
+                    style="
+                        pointer-events:all;
+                    "
                     :class="[value.className, {forbid_btn: probability > 10 && value.text == '全包'}]"
                     
                     @click="probability > 10 && value.text == '全包'?tipQb(): onpay(value.num)">
