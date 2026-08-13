@@ -193,8 +193,11 @@
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
                         height="100%" />
                 </view>
-                <view class="awards_box" v-if="percentage > 85 && isRun">
-                    <view class="awards flex_r flex_jc">
+                <view  class="awards_box" v-if="percentage > 85 && isRun">
+                    <view :style="{
+                    backgroundImage:`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_b.png')`,
+                    backgroundSize:'100% 100%'
+                }" class="awards flex_r flex_jc">
                         <view class="ni">
                             <img :src="spList[WinnInx].coverImage ||
                                 spList[WinnInx].itemCover
@@ -302,7 +305,7 @@ export default {
             istry: false,
             cartoonShow: false, // 过场动画
             inAdvance: false, // 过场动画
-            cartoonsrc: "https://img.shinemang.com/gachaStatic/static/img/cartoon/cartoon.svga",
+            cartoonsrc: "https://img.shinemang.com/gachaStatic/svga/ndj_small.svga",
             newFilePath: "",
             percentage: 0, // 动画播放进度
             Winning: [], // 抽中的赏品
@@ -1511,12 +1514,12 @@ border-radius:32rpx 32rpx 0 0 ;
     }
 
     .awards_box {
-        width: 608rpx;
-        height: 752rpx;
+        width: 750rpx;
+        height: 926rpx;
         position: absolute;
         left: 50%;
-        top: 50%;
-        transform: translate(-50%, -500rpx);
+        top: 0%;
+        transform: translate(-50%, 328rpx);
 
         .awards_share {
             width: 240rpx;
@@ -1581,19 +1584,18 @@ border-radius:32rpx 32rpx 0 0 ;
     }
 
     .awards {
-        width: 608rpx;
-        height: 752rpx;
+        width: 100%;
+        height: 100%;
         padding-top: 192rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/static/img/niudan/eggshell.png");
         background-size: 100% 100%;
         animation: myFn 0.8s;
 
         .ni {
-            width: 229rpx;
+            width: 162rpx;
 
             .ni_img {
-                width: 229rpx;
-                height: 229rpx;
+                width: 162rpx;
+                height: 162rpx;
                 border-radius: 20rpx;
                 // background-color: $motif-color;
             }
