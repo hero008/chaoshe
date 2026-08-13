@@ -100,7 +100,7 @@
                                     }}</view>
 
                                 <view style="color: #F65C36;" class="item_no ellipsis">
-                                    可获得: {{ item.item.decomposeXPoint }}星币
+                                    价值: {{ item.item.decomposeXPoint }}星币
                                 </view>
                             </view>
                         </view>
