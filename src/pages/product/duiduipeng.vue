@@ -1006,7 +1006,6 @@ export default {
             }
         },
         onShare() {
-            console.log('ddddddddddd',window.mgtv)
             if(window.mgtv){
                 let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
                 mgtv.showShareMenu({
