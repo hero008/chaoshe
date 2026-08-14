@@ -95,6 +95,7 @@
                            <view class="Lucky flex_r  flex_js " v-if="item.levelName == 'Lucky' && item.luckyNo">
                                 <view class="type">{{ item.levelName }}</view>
                                 <view class="sort">{{item.luckyNo}}赏</view>
+
                             </view> 
                             <img v-else class="ico3" :class="[item.levelName == '冲冲' ? 'rotated' : '']"
                                 :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
@@ -187,15 +188,21 @@
         </view>
         <!-- 过场动画 -->
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
-            <view :class="['cartoon_con', { opacity: !cartoonShow }]" v-if="inAdvance">
+            <view :class="['cartoon_con', { opacity: !cartoonShow },((spList[WinnInx].levelIndex == 28) ) && percentage > 90?'big':'']" v-if="inAdvance">
                 <view class="svga_it">
                     <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
                         height="100%" />
                 </view>
-                <view  class="awards_box" v-if="percentage > 85 && isRun">
+
+                <view v-if="(spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
+                <view  class="awards_box" v-if="percentage > 90 && isRun">
+                   <view  v-if="(spList[WinnInx].levelIndex == 28) "  class="guang"></view>
+                    <view v-if="(spList[WinnInx].levelIndex == 28) " class="title">
+                       {{spList[WinnInx].levelName == 'Lucky' ? (spList[WinnInx].levelName + spList[WinnInx].luckyNo +'赏'):(spList[WinnInx].levelName+'赏')}}
+                    </view>
                     <view :style="{
-                    backgroundImage:`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_b.png')`,
+                    backgroundImage:(spList[WinnInx].levelIndex == 28) ?`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_b.png')`:`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_s.png')`,
                     backgroundSize:'100% 100%'
                 }" class="awards flex_r flex_jc">
                         <view class="ni">
@@ -207,13 +214,13 @@
                             }}</view>
                         </view>
                     </view>
-                    <view class="msg" v-if="percentage > 95">{{ hint }}</view>
+                   
                     <!-- <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
                         v-if="spList[WinnInx].levelIndex == 28">
                         <view class="share_img"></view>
                         <view class="share_text">炫耀一下</view>
                     </view> -->
-                    <view class="share flex_r flex_ac" v-if="shareType">
+                    <!-- <view class="share flex_r flex_ac" v-if="shareType">
                         <view @click="onShareType(2)">
                             <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
                             <view>小程序</view>
@@ -223,17 +230,22 @@
                             <view>朋友圈</view>
                         </view>
                         <div @click="shareType = 0" class="btn icof"> &#xe607;</div>
-                    </view>
+                    </view> -->
                 </view>
-                <view class="c_btn flex_r flex_jse flex_ac" v-if="percentage > 95">
-                    <view class="c_btn_item" @click="toDetails" v-if="WinnNum > 0">跳过动画</view>
+                <view class="bottom">
+                  <view class="c_btn flex_r flex_jse flex_ac" v-if="percentage > 95">
+                    <view class="c_btn_item" @click="toDetails" v-if="WinnNum > 0"></view>
                     <view class="c_btn_item cor9" @click="next">
-                        <span>继续</span>
-                        <view class="r_num flex_r flex_ae" v-if="WinnNum > 0">
-                            <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/ball.png" class="ico1" />
+                        <!-- <span>继续</span> -->
+                        <view class="r_num flex_r" v-if="WinnNum > 0">
+                             <view>
+                                <img src="https://img.shinemang.com/gachaStatic/newNdj/qiu.png" class="ico1" />
                             <view>x{{ WinnNum }}</view>
+                             </view>
                         </view>
                     </view>
+                </view>
+                 <view class="msg" v-if="percentage > 95">{{ hint }}</view>
                 </view>
             </view>
         </u-popup>
@@ -625,11 +637,18 @@ export default {
                 id: this.gachaId,
                 index: this.eggTwister.gachaBox.boxIndex,
             });
+            if(grandPrizes.length > 0){
+                this.cartoonsrc = 'https://img.shinemang.com/gachaStatic/svga/ndj_big.svga'
+            }else{
+                 this.cartoonsrc = 'https://img.shinemang.com/gachaStatic/svga/ndj_small.svga'
+            }
 
             // 5. 提前设置标记（2.2秒后）
             setTimeout(() => {
                 this.inAdvance = true;
             }, PRE_ADVANCE_DELAY);
+
+            // return;
 
             // 6. 等待动画结束（3秒后执行音效与界面跳转）
             setTimeout(() => {
@@ -642,7 +661,7 @@ export default {
          */
         handlePostAnimation(showAnim, winningList, otherPrizes) {
             // 判断是否存在大赏
-            const hasGrandPrize = winningList.some(item => item.levelIndex === 28);
+            const hasGrandPrize = winningList.some(item => (item.levelIndex === 28));
 
             // 确定音效类型（1=普通，2=特殊）
             let soundType = 1;
@@ -651,7 +670,16 @@ export default {
             } else {
                 soundType = 1;
             }
-            playDede(soundType);
+            if(soundType == 2){
+                 playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b.wav')
+            }else{
+             
+                 playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_s.mp4')
+            }
+
+            
+           
+            // playDede(soundType);
 
             // 界面跳转/显示卡通动画
             this.show = false;
@@ -659,6 +687,11 @@ export default {
                 // 开启动画且无大赏 → 直接跳转到结果详情页
                 this.navigateToResultDetail();
             } else {
+                 if(this.spList[0].levelIndex == 28){
+                    setTimeout(() => {
+                            playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
+                    }, 2800);
+                 }
                 // 其他情况（包括关动画，或开启动画但有大赏）显示内置卡通动画
                 this.cartoonShow = true;
             }
@@ -701,9 +734,25 @@ export default {
                 path: "pages/product/niudan",
                 id: this.gachaId,
             });
+             if(this.verdictBig([da]) ){
+                this.cartoonsrc = 'https://img.shinemang.com/gachaStatic/svga/ndj_big.svga'
+            }else{
+                 this.cartoonsrc = 'https://img.shinemang.com/gachaStatic/svga/ndj_small.svga'
+            }
             setTimeout(() => {
-                let a = this.verdictBig([da]) ? 2 : 1;
-                playDede(a);
+                var a = this.verdictBig([da]) ? 2 : 1;
+                if(a == 2){
+                    playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b.wav')
+                }else{
+                    playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_s.mp4')
+                }
+
+                setTimeout(()=>{
+                    if(a == 2){
+                        playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
+                    }
+                },2800)
+                // playDede(a);
             }, 3000);
             setTimeout(() => {
                 this.inAdvance = true;
@@ -728,11 +777,19 @@ export default {
         },
         onLoaded() {
             this.$refs.cSvgaRef.call("startAnimation");
+            //   const hasGrandPrize = this.Winning.some(item => item.levelIndex === 28);
+            //  if(hasGrandPrize){
+            //    playDede(0, 'https://img.shinemang.com/gachaStatic/newNdj/ndj_b.wav')
+            //  }else{
+            //      playDede(0, 'https://img.shinemang.com/gachaStatic/newNdj/ndj_s.mp4')
+            //  }
             if (this.vibrat) vibratePhone(3000)
             // console.log("动画加载完成，播放时回调");
         },
         onPercentage(va) {
             if (va > 0.85) this.percentage = va * 100;
+           
+
         },
         onFinished() {
             // console.log("动画停止播放时回调");
@@ -743,15 +800,23 @@ export default {
             this.hint = "赏品已自动放入星仓，可在星仓查看~";
             if (this.WinnInx >= this.spList.length) {
                 this.toDetails();
+                return;
             }
             setTimeout(() => {
-                if (this.spList < this.spList.length) {
+                console.log(this.spList < this.spList.length,this.spList,this.spList.length)
+                if (this.spList.length > 0) {
                     let a = this.verdictBig([this.spList[this.WinnInx]])
                         ? 2
                         : 1;
-                    playDede(a);
+                          console.log(a,'ddddddddd')
+                        if(a == 2){
+                            console.log('ddddddddd')
+                             playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
+                        }
+                    // playDede(a);
+                    this.isRun = true;
                 }
-                this.isRun = true;
+                
             }, 600);
         },
         toDetails() {
@@ -775,7 +840,8 @@ export default {
             );
         },
         verdictBig(arr) {
-            let result = [1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37];
+            // 1, , 29, 30, 31, 32, 33, 34, 35, 36, 37
+            let result = [28];
             for (const i of arr) {
                 if (result.includes(i.levelIndex)) return true;
             }
@@ -1499,6 +1565,22 @@ border-radius:32rpx 32rpx 0 0 ;
     width: 100vw;
     height: 100vh;
     position: relative;
+    .gx{
+        position: absolute;
+        top: 254rpx;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 276rpx;
+        height: 61rpx;
+        background: url('https://img.shinemang.com/gachaStatic/newNdj/gx.png');
+        background-size: 100% 100%;
+    }
+
+    &.big{
+        background: url('https://img.shinemang.com/gachaStatic/newNdj/bgc.png');
+        background-size: cover;
+    }
+    
 
     &.opacity {
         opacity: 0;
@@ -1512,14 +1594,70 @@ border-radius:32rpx 32rpx 0 0 ;
         top: 50%;
         transform: translate(0, -50%);
     }
-
+.bottom{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 1188rpx;
+    z-index: 100;
+}
     .awards_box {
         width: 750rpx;
         height: 926rpx;
-        position: absolute;
-        left: 50%;
-        top: 0%;
-        transform: translate(-50%, 328rpx);
+        // position: absolute;
+        // left: 50%;
+        // top: 0%;
+        // transform: translate(-50%, 328rpx);
+        margin-top: 328rpx;
+        position: relative;
+        .guang{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            background: url('https://img.shinemang.com/gachaStatic/newNdj/guang.png');
+            background-size: 100% 100%;
+             animation: infinityScroll 2s linear infinite;
+        }
+
+        @keyframes infinityScroll {
+              from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .title{
+            font-family: '倍数欧气值';
+      font-size: 64rpx;  /* rpx 在 H5 中无效！换成 px 或 rem */
+  line-height: 80rpx;
+  font-weight: 400;
+  display: inline-block;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  
+  /* 兼容写法：background 也加 -webkit- 前缀 */
+  background: -webkit-linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+  background: linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+  
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+ position: absolute;
+ left: 50%;
+ transform: translateX(-50%);
+ top:0;
+ z-index: 3;
+
+  
+  /* 字体先换成系统字体测试 */
+//   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC";
+        }
 
         .awards_share {
             width: 240rpx;
@@ -1586,9 +1724,12 @@ border-radius:32rpx 32rpx 0 0 ;
     .awards {
         width: 100%;
         height: 100%;
-        padding-top: 192rpx;
+        padding-top: 352rpx;
         background-size: 100% 100%;
         animation: myFn 0.8s;
+        text-align: center;
+        position: relative;
+        z-index: 3;
 
         .ni {
             width: 162rpx;
@@ -1602,9 +1743,9 @@ border-radius:32rpx 32rpx 0 0 ;
 
             .ni_name {
                 font-weight: bold;
-                font-size: 30rpx;
-                color: #6b1bb4;
-                margin-top: 18rpx;
+                font-size: 24rpx;
+                color: #000000;
+                margin-top: 8rpx;
                 text-align: center;
             }
         }
@@ -1614,49 +1755,82 @@ border-radius:32rpx 32rpx 0 0 ;
         font-size: 24rpx;
         font-weight: 500;
         color: #fff;
+        margin-top: 16rpx;
         width: 100%;
         text-align: center;
-        position: absolute;
-        left: 0;
-        bottom: -60rpx;
+        // position: absolute;
+        // left: 0;
+        // bottom: -60rpx;
     }
 
     .c_btn {
         width: 100%;
-        position: absolute;
-        bottom: 263rpx;
-        left: 0;
+        // position: absolute;
+        // bottom: 263rpx;
+        // left: 0;
+        position: relative;
+        z-index:100;        
+        // margin-top: -60rpx;
 
         .c_btn_item {
-            width: 228rpx;
+            width: 298rpx;
             text-align: center;
-            padding: 10rpx 0;
-            border-radius: 36rpx;
+            // padding: 10rpx 0;
+            height: 120rpx;
+            // border-radius: 36rpx;
             font-weight: 500;
-            font-size: 28rpx;
-            background: linear-gradient(0deg, #d6d6d6, #8d8c8c);
-            border: 6rpx solid #fff;
+            // font-size: 28rpx;
+            // background: linear-gradient(0deg, #d6d6d6, #8d8c8c);
+            // border: 6rpx solid #fff;
             position: relative;
+             background: url('https://img.shinemang.com/gachaStatic/newNdj/pass.png');
+                background-size: 100% 100%;
+
+                margin-right: 32rpx;
+                &:last-child{
+                    margin-right: 0;
+                }
 
             &.cor9 {
-                background: linear-gradient(0deg, #e68ff1, #a75bf8);
-                color: #fff;
+                // background: linear-gradient(0deg, #e68ff1, #a75bf8);
+                background: url('https://img.shinemang.com/gachaStatic/newNdj/continue.png');
+                background-size: 100% 100%;
             }
 
             .r_num {
                 position: absolute;
-                width: 100%;
-                top: -130%;
-                left: 50%;
-                transform: translate(-50%, 0);
-                font-size: 30rpx;
-                font-weight: 500;
+                width: 128rpx;
+                // top: -130%;
+                // left: 50%;
+                right: 0;
+                top: -48rpx;
+                height: 76rpx;
+                background: url('https://img.shinemang.com/gachaStatic/newNdj/tips.png');
+                background-size: 100% 100%;
+                // transform: translate(-50%, 0);
+                font-size: 32rpx;
+                display: flex;
+                // align-items: center;
+                // padding-top: 20rpx;
+                // justify-content: center;
+                font-family: '倍数欧气值';
+
+                >view{
+                    display: flex;
+                    // align-content: center;
+                    // justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 62rpx;
+                    padding-left: 8rpx;
+                }
             }
 
             .ico1 {
-                width: 46rpx;
-                height: 46rpx;
-                margin-right: 6rpx;
+                width: 32rpx;
+                height: 32rpx;
+                margin-right: 8rpx;
+                vertical-align: middle;
             }
         }
     }
