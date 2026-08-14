@@ -681,7 +681,7 @@ export default {
                 return
             }
             if (this.tableSlots.length >= this.maxTableSlots) {
-                uni.showToast({ title: '卡桌已满，请先消除卡牌~', icon: 'none' });
+                uni.showToast({ title: '卡桌已满，无需补卡', icon: 'none' });
                 return
             }
             // 更新游戏状态到后端
