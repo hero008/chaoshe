@@ -57,7 +57,8 @@
             <view class="tab_pill_right" @click="showList(2, '中奖记录')"></view>
         <view class="tab_pill_left" @click="showList(1, '奖品概览')"></view>
             <view class="game_area">
-                 <view class="progress_track">
+                <view style="padding:0 12rpx">
+                    <view class="progress_track">
                     <view class="progress_inner" :style="{ width: progressPercent + '%' }">
                          <div class="image"></div>
                      
@@ -67,6 +68,7 @@
                     <view class="progress_tip">累计{{ accumulate.accumulationNum }}局 碰击次数达到{{ accumulate.rangeLeft + '~' +
                         accumulate.rangeRight }}次，额外赠送一轮游戏</view>
                     <view class="progress_num">{{ accumulate.num }} /{{ accumulate.accumulationNum }}</view>
+                </view>
                 </view>
              <view class="table_area">
 
@@ -1004,7 +1006,6 @@ export default {
             }
         },
         onShare() {
-            console.log('ddddddddddd',window.mgtv)
             if(window.mgtv){
                 let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
                 mgtv.showShareMenu({
@@ -1027,8 +1028,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+page{
+    background: rgb(252, 255, 225);
+}
 .duiduipeng {
     width: 100vw;
+    overflow-x: hidden;
     height: 100vh;
     background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/ddpBg.png");
     background-size: 100% 100%;
@@ -1255,7 +1260,7 @@ export default {
             background: url("@/static/close.png");
             background-size: 100% 100%;
             position: absolute;
-            top: -70rpx;
+            top: -60rpx;
             right: 32rpx;
         }
 
@@ -1441,11 +1446,11 @@ position: relative;
 
 .tab_pill_left {
     position: absolute;
-    right: 0;
+    right: -18rpx;
     top: -8rpx;
-    width: 152rpx;
-    height: 52rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/prize.png");
+    width: 154rpx;
+    height: 60rpx;
+    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/prize_1.png");
     background-size: 100% 100%;
     z-index: 2;
 }
@@ -1491,10 +1496,10 @@ position: relative;
 .tab_pill_right {
     position: absolute;
     top: -8rpx;
-    left: 0;
-    width: 152rpx;
-    height: 52rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/record.png");
+    left: -18rpx;
+    width: 154rpx;
+    height: 60rpx;
+    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/record_1.png");
     background-size: 100% 100%;
     z-index: 2;
 }
@@ -1537,7 +1542,7 @@ background: #FFFFFF;
 box-shadow: inset 8rpx 8rpx 8rpx 0rpx rgba(212,243,254,0.5);
 border-radius: 24rpx 24rpx 24rpx 24rpx;
 margin: auto;
-padding:0 16rpx;
+padding:0 8rpx;
 padding-top: 32rpx;
 padding-bottom: 38rpx;
 }
@@ -1545,7 +1550,7 @@ padding-bottom: 38rpx;
 /* 卡桌区域 */
 .table_area {
     width: 100%;
-    padding: 24rpx 0rpx;
+    padding: 16rpx 0rpx;
     position: relative;
 }
 
@@ -1584,7 +1589,7 @@ padding-bottom: 38rpx;
 .table_grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14rpx;
+    gap: 2rpx;
     width: 100%;
 }
 
@@ -1628,8 +1633,8 @@ padding-bottom: 38rpx;
 }
 
 .card_img {
-    width: 210rpx;
-    height: 270rpx;
+    width: 222rpx;
+    height: 282rpx;
     // margin: auto;
 }
 
@@ -1659,9 +1664,9 @@ padding-bottom: 38rpx;
 }
 
 .card_back1 {
-    width: 210rpx;
-    height: 270rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/card.png");
+    width: 222rpx;
+    height: 282rpx;
+    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/card_1.png");
     background-size: 100% 100%;
 }
 
@@ -1671,7 +1676,7 @@ padding-bottom: 38rpx;
     height: 200rpx;
     padding: 30rpx 52rpx 0;
     position: absolute;
-    bottom: -60rpx;
+    bottom: -70rpx;
 }
 
 .progress_row {
@@ -1704,14 +1709,14 @@ padding-bottom: 38rpx;
         transition: width 0.3s ease;
         position: relative;
         .image{
-            background: url('https://img.shinemang.com/gachaStatic/static/duiduipeng/smallCard.png');
+            background: url('https://img.shinemang.com/gachaStatic/static/duiduipeng/smallCard_1.png');
             background-size: 100% 100%;
             position: absolute;
             top: 50%;
             right: -14rpx;
             transform: translateY(-50%);
-            width: 28rpx;
-            height: 32rpx;
+            width: 29rpx;
+            height: 33rpx;
             
         }
     }
@@ -1810,13 +1815,13 @@ padding-bottom: 38rpx;
 .fate_list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16rpx;
+    gap: 0rpx;
     z-index: 1;
 }
 
 .fate_option {
-    width: 210rpx;
-    height: 270rpx;
+    width: 222rpx;
+    height: 282rpx;
     // background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/cardBg.png");
     // background-size: 100% 100%;
     // position: relative;
@@ -1859,8 +1864,8 @@ padding-bottom: 38rpx;
     .fate_opt_img {
         // width: 192rpx;
         // height: 192rpx;
-      width: 210rpx;
-    height: 270rpx;
+      width: 222rpx;
+    height: 282rpx;
         // position: absolute;
         // top: 50%;
         // left: 50%;
