@@ -1,5 +1,24 @@
+import en from '@/Local/en.json'
+import zhHant from '@/Local/zh-Hant.json'
+import zsm from '@/Local/zsm.json'
+
+const messages = {
+  en,
+  'zh-Hant': zhHant,
+   zsm
+}
+let i18nConfig = {
+  locale:'en',// 获取已设置的语言
+  messages
+}
+
+
 import Vue from 'vue'
 import App from './App'
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n)
+const i18n = new VueI18n(i18nConfig)
+
 import './uni.promisify.adaptor'
 // 引入vuex
 import store from './store'
@@ -92,7 +111,13 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 const app = new Vue({
+	i18n,
 	...App,
 	store,
 })
 app.$mount()
+
+
+    // setTimeout(()=>{
+    //         this.$i18n.locale = 'zh-Hant'
+    //     },2000)
