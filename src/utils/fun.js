@@ -58,13 +58,14 @@ let ISmp = () => {
 // 获取胶囊按钮信息
 let getMBInfo = () => {
 
-    if(window.MgtvApi){
+    if(isMTVapp()){
         return {
             top: uni.getStorageSync("safeTop"),
-            height:40,width:0
+            height:40,
+            width:0
         }
     }else{
-          return { top: 40, height: 32, width: 0 }
+          return { top: 20, height: 32, width: 0 }
     }
    if(window.mgtv){
     const ios=isIos()

@@ -524,7 +524,7 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    padding: 120rpx 32rpx 190rpx;
+    padding: 50rpx 32rpx 190rpx;
     overflow-y: auto;
     background-color: #F5F6F8;
       &::after {

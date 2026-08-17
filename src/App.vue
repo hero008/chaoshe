@@ -206,7 +206,6 @@ export default {
              mgTvIsLogin().then(res=>{
                 console.log(res,'login')
                 if(!res){
-                console.log('3249023749372')
                 uni.removeStorageSync("aToken");
                 uni.removeStorageSync("rToken");
                 uni.removeStorageSync("userInfo");

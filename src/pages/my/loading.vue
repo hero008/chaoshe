@@ -25,7 +25,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
-import { isMTVapp,shareUrl } from "../../utils/mgtv";
+import { isMTVapp,shareUrl } from "@/utils/mgtv";
 
 let that;
 export default {
@@ -79,7 +79,6 @@ export default {
 
       if (window.MgtvApi) {
         MgtvApi.getUserInfo((user_info) => {
-          console.log(user_info);
           if (user_info && user_info.length !== 0) {
             const userInfo = JSON.parse(user_info);
             if (userInfo.ticket && userInfo.uuid) {
@@ -114,11 +113,9 @@ export default {
               //登錄
               this.needLogin = true
               MgtvApi.login((res) => {
-                console.log(res,'234823084230');
                 // window.location.reload();
                 this.toLogin()
               },(err)=>{
-                console.log(err,'234234234234234')
               });
             }
           } else {

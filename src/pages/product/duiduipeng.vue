@@ -206,6 +206,7 @@ import { cacheImage } from "@/utils/storage.js";
 import bigPng from '@/static/big.png'
 import middlePng from '@/static/middle.png'
 import smallPng from '@/static/small.png'
+import { shareUrl } from "../../utils/mgtv";
 
 export default {
     name: "duiduipeng",
@@ -1006,14 +1007,27 @@ export default {
             }
         },
         onShare() {
-            if(window.mgtv){
-                let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
-                mgtv.showShareMenu({
-                    title:"对对碰 : " +  ((this.initialData && this.initialData.gacha) ? this.initialData.gacha.themeName : ''),
-                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddp&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
-                })
-            }
+            // if(window.mgtv){
+            //     let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+            //     mgtv.showShareMenu({
+            //         title:"对对碰 : " +  ((this.initialData && this.initialData.gacha) ? this.initialData.gacha.themeName : ''),
+            //          typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
+            //         url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddp&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
+            //     })
+            // }
+              let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+            let url = shareUrl+"&gachaName=ddp&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode +'&channel='+channel
+
+            MgtvApi.showShareMenus(
+            {
+            title:"对对碰", // 分享标题
+            desc: ((this.initialData && this.initialData.gacha) ? this.initialData.gacha.themeName : ''), // 分享描述
+            shareUrl: url, // 分享链接
+            shareIcon: "https://img.shinemang.com/static/rednote/shareImg.jpg",
+            },
+            (resp) => { },
+        );
+           MgtvApi.showShare();
             // uniShare(
             //     {
             //         tit: "潮游赏 : " + (this.initialData.gacha ? this.initialData.gacha.themeName : ''),
