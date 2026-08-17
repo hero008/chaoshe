@@ -100,7 +100,7 @@
                                     }}</view>
 
                                 <view style="color: #F65C36;" class="item_no ellipsis">
-                                    可获得: {{ item.item.decomposeXPoint }}星币
+                                    价值: {{ item.item.decomposeXPoint }}星币
                                 </view>
                             </view>
                         </view>
@@ -110,9 +110,9 @@
                     :marginTop="50" />
             </view>
 
-            <view v-if="userInfo.channel == MGTV_Channel" class="activityBtn">
-                <view  @click="onGoRecycle()" class="btn"></view>
-                <view @click='toSendOther' class="btn"></view>
+            <view class="activityBtn">
+                <view v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' || userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen')"  @click="onGoRecycle()" class="btn fs"></view>
+                <view v-if="userInfo.featureConfig && (userInfo.featureConfig.donation == 'FeatureFlag_Enable' ||   userInfo.featureConfig.donation == 'FeatureFlag_AdminOpen') " @click='toSendOther' class="btn zz"></view>
             </view>
             <view class="foot_btn">
 
@@ -225,6 +225,7 @@ export default {
     },
     created() {
         this.loadDetail();
+
         if (!this.userInfo.showMarket) this.navbar = [{ name: "全部" }];
     },
     methods: {
@@ -718,12 +719,12 @@ background-size: cover;
         width: 112rpx;
         height: 116rpx;
 
-        &:first-child{
+        &.fs{
             background: url('https://img.shinemang.com/gachaStatic/fs.png');
             background-size: 100% 100%;
 
         }
-        &:last-child{
+        &.zz{
             background: url('https://img.shinemang.com/gachaStatic/zz.png');
              background-size: 100% 100%;
         }

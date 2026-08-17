@@ -1,6 +1,6 @@
 <template>
     <view class="hot-product flex_r flex_jb" v-if="evenList.length">
-        <view class="l-lists" v-if="type < 3">
+        <view class="l-lists">
             <view class="p-item" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
                 <view class="product-info">
@@ -9,6 +9,8 @@
                          <img v-else-if="item.type == 2" src="https://img.shinemang.com/gachaStatic/home/ndIcon.png"
                         class="w-icon" />
                          <img v-else-if="item.type == 4" src="https://img.shinemang.com/gachaStatic/home/ddlIcon.png"
+                        class="w-icon" />
+                           <img v-else-if="item.type == 7" src="https://img.shinemang.com/gachaStatic/home/ddpIcon.png"
                         class="w-icon" />
                     <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
@@ -81,7 +83,8 @@
                 </view>
             </view>
         </view> -->
-        <view class="r-lists" v-if="type < 3">
+         <!-- v-if="type < 3" -->
+        <view class="r-lists">
             <view class="p-item" v-for="(item, index) in oddList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
                 <view class="product-info">
@@ -98,6 +101,8 @@
                          <img v-else-if="item.type == 2" src="https://img.shinemang.com/gachaStatic/home/ndIcon.png"
                         class="w-icon" />
                          <img v-else-if="item.type == 4" src="https://img.shinemang.com/gachaStatic/home/ddlIcon.png"
+                        class="w-icon" />
+                         <img v-else-if="item.type == 7" src="https://img.shinemang.com/gachaStatic/home/ddpIcon.png"
                         class="w-icon" />
                     <view class="p-info flex_r flex_jb">
                         <view v-if="item.isWelfare == true" class="WelfareBox">福利箱</view>
@@ -164,7 +169,7 @@
             </view>
         </view> -->
     </view>
-    <u-empty v-else-if="type < 3" :text="type == 1 ? '敬请期待热门箱子~' : '暂时没有可捡漏的箱子哦~'"
+    <u-empty v-else-if="type < 10" :text="type == 1 ? '敬请期待热门箱子~' : '暂时没有可捡漏的箱子哦~'"
         icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
     <u-empty v-else :text="'暂无商品'" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
     <!-- </scroll-view> -->
@@ -380,6 +385,7 @@ export default {
                 else if (da.type == 3) this.goto("/pages/product/chaowanshang", { id: da.id, });
                 else if (da.type == 4) this.goto("/pages/product/dongle", { id: da.id, });
                 else if (da.type == 5) this.goto("/pages/product/chaosheshang", { id: da.id, });
+                  else if (da.type == 7) this.goto("/pages/product/duiduipeng", { id: da.id, });
             }
         },
         onReachScollBottom() {

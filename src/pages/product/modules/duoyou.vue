@@ -50,7 +50,7 @@
             <view class="footer">
                 <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view>
                 <view  class="box">
-                     <view @click='fangsheng' v-if="userInfo.channel != MGTV_Channel && allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
+                     <view @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && allShow && originalList && originalList[0].requestId" style="margin-right:20rpx; background: linear-gradient(0deg, #4FEF5F 0.01%, #1BAB04 100%);" class="all_btn">放生</view>
                      <view class="all_btn" @click="getAll">{{ allShow ? '确定' : '一键开奖' }}</view>
                 </view>
             </view>
@@ -264,6 +264,7 @@ export default {
                 if (hasTargetItem) {
                     this.dynamicEffectShow = true
                     this.styleStep = 3
+                    //超神动画
                     playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/chaoshen.mp3')
                     vibratePhone(3000)
                     setTimeout(() => {
@@ -278,6 +279,7 @@ export default {
                         });
                     }, 4200);
                 } else {
+                    // 没有超神 ,直接开
                     this.awardList.forEach(vue => {
                         vue.rotated = true;
                     });
@@ -333,6 +335,8 @@ export default {
             this.shareType = 0;
         },
         onDy(index) {
+
+            //第一步点击动画
             if (index !== 0) return
             playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/click.mp3');
             this.styleStep = 2

@@ -398,10 +398,11 @@ export default {
                     list.map((i) => {
                         i.state = getApp().globalData.MarketOrderState[i.state];
                         i.nus = i.items.length;
-                        i.items =
-                            i.items.length < 20
-                                ? i.items
-                                : i.items.slice(0, 10);
+                        i.items = i.items
+                        // i.items =
+                        //     i.items.length < 20
+                        //         ? i.items
+                        //         : i.items.slice(0, 10);
                     });
 
                   
@@ -418,7 +419,9 @@ export default {
         },
 
         formateList(value){
+
              let   data = marketGroupByItemId(value);
+
             return data;
                   
         },
@@ -443,9 +446,10 @@ export default {
                     order_id: this.oldInx.id,
                 }).then((res) => {
                     if (!res.code) {
-                        if(res.order.state = getApp().globalData.MarketOrderState[i.state]){
-                              this.orderList.splice(this.oldInx.inx, 1, res.order);
-                        }
+                        // if(res.order.state = getApp().globalData.MarketOrderState[res.order.state]){
+                             
+                        // }
+                         this.orderList.splice(this.oldInx.inx, 1, res.order);
                         // res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
                         // this.orderList.splice(this.oldInx.inx, 1, res.order);
                     }
@@ -513,6 +517,7 @@ export default {
         onScrollX(id, index) {
             let all = this.rawData[index].items.length;
             let now = this.orderList[index].items.length;
+            console.log(all,now);
             if (now < all) {
                 const nus = all - now < 10 ? all : 10 + now;
                 this.orderList[index].items = [
@@ -764,9 +769,9 @@ background-color: #F5F6F8;
                 white-space: nowrap;
                 font-size: 0;
                 
-  display: flex;
+                display: flex;
                 .goods_img {
-                   width: 144rpx;
+                    width: 144rpx;
                     height: 144rpx;
                     background: linear-gradient( 0deg, #CCFFF4 0%, #FFFFFF 60%);
                     border-radius: 16rpx 16rpx 16rpx 16rpx;
@@ -780,9 +785,19 @@ background-color: #F5F6F8;
                         position: absolute;
                         right: 0;
                         bottom: 0;
-                        padding: 10rpx;
-                        color: #1A1A1A;
+                        min-width: 52rpx;
+                         width: fit-content;
+                         height: 32rpx;
+                         line-height: 32rpx;
+                        padding:0 6rpx;
+                        
+                        color: #fff;
                         font-size: 24rpx;
+                        text-align: center;
+                        background: rgba(0, 0, 0, 0.5);
+                        color: #fff;
+                        border-radius: 14rpx 0 14rpx 0;
+
                     }
 
                     &:last-child {

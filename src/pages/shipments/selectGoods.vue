@@ -139,7 +139,7 @@
                                     <span>· 运费</span>
                                 </div>
                                 <span>{{
-                                    selectRewardsInfo.length >= 5
+                                    selectRewardIds.length >= 5
                                         ? "包邮"
                                         : "￥10"
                                 }}</span>
@@ -253,8 +253,6 @@ export default {
         },
         removeItem(item) {
              let ids = item.ids;
-
-             console.log(ids);
             this.selectRewardIds = this.selectRewardIds.filter(item => !ids.includes(item));
             this.selectRewardsInfo =this.selectRewardsInfo.filter(item => !ids.includes(item.id));
         },

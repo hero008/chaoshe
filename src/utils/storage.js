@@ -23,3 +23,54 @@ export const getCache = (key) => {
     }
     return val.data
 }
+
+export const cacheImage = (url) => {
+    return new Promise(async (resolve) => {
+        if (!url) return resolve(url)
+        const key = 'ddpImg_' + url
+        // 命中缓存且文件仍有效，直接返回本地路径
+        const cachedPath = getCache(key)
+        if (cachedPath && await verifyLocalFile(cachedPath)) {
+            return resolve(cachedPath)
+        }else{
+          
+          const img = new Image()
+          img.src = url
+        // img.onload = resolve
+        // img.onerror = reject
+            resolve(url)
+        }
+
+        return;
+        // 未命中或文件失效：下载并保存
+        uni.downloadFile({
+            url: url,
+            success: (downloadResult) => {
+                if (downloadResult.statusCode !== 200) {
+                    return resolve(url)
+                }
+                // // #ifdef APP-PLUS
+                // uni.saveFile({
+                //     tempFilePath: downloadResult.tempFilePath,
+                //     success: (saveResult) => {
+                //         setCache(key, saveResult.savedFilePath)
+                //         resolve(saveResult.savedFilePath)
+                //     },
+                //     fail: () => resolve(url)
+                // })
+                // // #endif
+                // // #ifdef MP-WEIXIN
+                // wx.getFileSystemManager().saveFile({
+                //     tempFilePath: downloadResult.tempFilePath,
+                //     success: (saveResult) => {
+                //         setCache(key, saveResult.savedFilePath)
+                //         resolve(saveResult.savedFilePath)
+                //     },
+                //     fail: () => resolve(url)
+                // })
+                // #endif
+            },
+            fail: () => resolve(url)
+        })
+    })
+}

@@ -32,8 +32,15 @@
                                 <img src="https://img.shinemang.com/gachaStatic/static/img/transaction/ico3.png"
                                     v-if="myRewardData.length" class="ico3" />
                             </template>
-                            <img v-for="(cont, i) in myRewardData" :key="i" class="goods_img" :src="cont.coverThumb"
-                                @click="ondetail(cont.itemId)" />
+                            <!-- <img v-for="(cont, i) in myRewardData" :key="i" class="goods_img" :src="cont.coverThumb"
+                                @click="ondetail(cont.itemId)" /> -->
+                            <div @click="ondetail(cont.itemId)" v-for="(cont, i) in formateList(myRewardData)" :key="i" class="goods_img"  :style="{
+                                display:'inline-block',
+                                backgroundImage:`url(${cont.coverThumb})`,
+                                backgroundSize:'cover'
+                            }">
+                              <view class="num">{{ cont.num }}</view>
+                         </div>
                         </div>
                         <div class="goods_num flex_r flex_jc flex_ac" v-if="myRewardData.length > 0">
                             x{{ myRewardData.length }}
@@ -103,8 +110,18 @@
                             </div>
                         </div>
                         <div class="Records" v-if="item.offerItems">
-                            <img :src="i.cover" class="Record_img" v-for="(i, s) in item.offerItems" :key="s"
-                                @click="ondetail(i.itemId)" />
+                            <!-- <img :src="i.cover" class="Record_img" v-for="(i, s) in item.offerItems" :key="s"
+                                @click="ondetail(i.itemId)" /> -->
+                            <div @click="ondetail(i.itemId)" v-for="(i, s) in formateList(item.offerItems)" :key="s" :style="{
+                                display:'inline-block',
+                                backgroundImage:`url(${i.cover})`,
+                                backgroundSize:'cover'
+                            }" class="Record_img">
+                            
+                        <view class="num">{{ i.num }}</view></div>
+
+
+
                         </div>
                         <div class="u_btns flex_r flex_ac flex_je">
                             <div class="btn_item" v-if="
@@ -244,6 +261,7 @@ import xPay from "@/components/x-pay/index.vue";
 import autonym from "@/components/autonym/index.vue";
 import { mapMutations } from "vuex";
 import { callPayment } from "@/utils/pay.js";
+import { marketGroupByItemId } from "../../utils/mgtv";
 let that;
 // 用户交易金额决定 提现等级 及 额度
 // message UserDealAmountReply{
@@ -358,6 +376,11 @@ export default {
         this.closeAutonym = this.userInfo.isAuthenticated;
     },
     methods: {
+                formateList(value){
+             let   data = marketGroupByItemId(value);
+            return data;
+                  
+        },
         ...mapMutations(["UppayMessage"]),
         async onAutonym() {
             this.showAutonym = false;
@@ -739,6 +762,26 @@ font-size: 32rpx;
                     border: 2rpx solid #A1FAE3;
                 margin: 4rpx;
                 margin-right: 20rpx;
+                position: relative;
+
+                                    .num{
+                       position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        min-width: 52rpx;
+                         width: fit-content;
+                         height: 32rpx;
+                         line-height: 32rpx;
+                        padding:0 6rpx;
+                        
+                        color: #fff;
+                        font-size: 24rpx;
+                        text-align: center;
+                        background: rgba(0, 0, 0, 0.5);
+                        color: #fff;
+                        border-radius: 14rpx 0 14rpx 0;
+
+                    }
 
                 &:last-child {
                     margin-right: 4rpx;
@@ -874,6 +917,25 @@ border: 4rpx solid #EA4CA4;
         height: 150rpx;
         margin-right: 16rpx;
         border-radius: 12rpx;
+        position: relative;
+                     .num{
+                       position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        min-width: 52rpx;
+                         width: fit-content;
+                         height: 32rpx;
+                         line-height: 32rpx;
+                        padding:0 6rpx;
+                        
+                        color: #fff;
+                        font-size: 24rpx;
+                        text-align: center;
+                        background: rgba(0, 0, 0, 0.5);
+                        color: #fff;
+                        border-radius: 14rpx 0 14rpx 0;
+
+                    }
     }
 }
 

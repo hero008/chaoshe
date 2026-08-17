@@ -102,6 +102,8 @@ export default {
                      this.goto("/pages/product/niudan", { id: gachaId });
                 }else if(gachaName == 'wxs'){
                      this.goto("/pages/product/chaowanshang", { id: gachaId });
+                }else if(gachaName == 'ddp'){
+                     this.goto("/pages/product/duiduipeng", { id: gachaId });
                 }
             }
          }

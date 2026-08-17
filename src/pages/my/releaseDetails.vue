@@ -79,14 +79,20 @@
                             <div class="goods_li flex_r">
                                 <view
                                     class="imgBox"
-                                    v-for="(v, k) in item.logisticsItems"
+                                    v-for="(v, k) in formateList(item.logisticsItems)"
                                     :key="k"
                                 >
-                                    <img
+                                <view  :style="{
+                                    backgroundImage:`url(${v.coverImage})`,
+                                    backgroundSize:'cover',
+                                    display:'inline-block'
+                                }" @click="ondetail(v.itemId)" class="goods_img">
+                                <view class="num">x{{ v.num }}</view></view>
+                                    <!-- <img
                                         class="goods_img"
                                         :src="v.coverImage"
-                                        @click="ondetail(v.itemId)"
-                                    />
+                                        
+                                    /> -->
                                     <view class="number">x{{ v.nums }}</view>
                                 </view>
                             </div>
@@ -129,13 +135,24 @@
                 <div class="info_row">
                     <div class="goods flex_r flex_jb flex_ac">
                         <div class="goods_li">
-                            <img
+
+                            <view  @click="ondetail(v.itemId)"  v-for="(v, k) in formateList(rewardInfos)"
+                                :key="k" :style="{
+                                    backgroundImage:`url(${v.cover})`,
+                                    backgroundSize:'cover',
+                                    display:'inline-block'
+                                }" class="goods_img"> 
+                                  <view class="num">
+                                       x{{ v.num }}
+                                  </view>
+                            </view>
+                            <!-- <img
                                 v-for="(v, k) in rewardInfos"
                                 :key="k"
                                 class="goods_img"
                                 :src="v.cover"
                                 @click="ondetail(v.itemId)"
-                            />
+                            /> -->
                         </div>
                         <div class="goods_num flex_r flex_jc flex_ac">
                             x{{ rewardInfos.length }}
@@ -168,6 +185,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
+import { marketGroupByItemId } from "@/utils/mgtv";
 export default {
     data() {
         return {
@@ -181,6 +199,13 @@ export default {
         this.getreleaseDetail(da.id);
     },
     methods: {
+          formateList(value){
+
+             let   data = marketGroupByItemId(value);
+
+            return data;
+                  
+        },
         getreleaseDetail(id) {
             post("v1/order/detail", {
                 order_id: id,
@@ -425,9 +450,24 @@ export default {
                 border-radius: 16rpx;
                 /* background-color: rgba($color: $motif-color, $alpha: 0.5); */
                 margin-right: 16rpx;
+                position: relative;
 
                 &:last-child {
                     margin-right: 0;
+                }
+                .num{
+                     position: absolute;
+                bottom: 0px;
+                left: 0px;
+                padding: 0 4px;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+                border-radius: 0 12px 0 7px;
+                background: rgba(0, 0, 0, 0.5);
+                font-weight: bold;
+                font-size: 12px;
+                color: #ffffff;
                 }
             }
         }

@@ -113,7 +113,9 @@
                                             {{ a.levelIndex | levelNum }}赏
                                         </div>
                                         <div class="name ellipsis" v-else>
-                                            {{ a.itemName }}
+                                           <span :style="{
+                                            color:getTagPng(item.matchNum).color
+                                           }" v-if="secondCondition == 7">{{ item.matchNum }}碰</span> {{ a.itemName }}
                                         </div>
                                         <div class="num">
                                             {{
@@ -149,6 +151,7 @@ export default {
                 { txt: "扭蛋赏", val: 2 },
                 { txt: "无限赏", val: 3 },
                 { txt: "炸弹赏", val: 4 },
+                  { txt: "对对碰", val: 7 },
                 // { txt: "芒星赏", val: 5 },
                 // { txt: "一网打尽", val: 6 },
             ],
@@ -165,6 +168,25 @@ export default {
         this.getMyRewards();
     },
     methods: {
+         getTagPng(value){
+           if(value == 0 || value ==1 || value ==12 || value ==13 || value ==14){
+            return {
+                color:'#FF659B',
+            }
+           }else if(value == 2 || value == 8 || value == 9 || value == 10 || value == 11){
+               return {
+                color:'#FF932B',
+            }
+            }else if(value == 3 || value == 4 || value == 5 || value == 6 || value == 7){
+                return {
+                color:'#73B7FE',
+            }
+           }else{
+             return {
+                color:'#73B7FE',
+            }
+           }
+        },
         ontab2(da) {
             this.pageda.page = 1;
             this.secondCondition = da.val;
@@ -190,6 +212,7 @@ export default {
             else if (data.gachaType == 4) s = "/pages/product/dongle";
             else if (data.gachaType == 5) s = "/pages/product/chaosheshang";
             else if (data.gachaType == 6) s = "/pages/product/allCaptured";
+            else if (data.gachaType == 7) s = "/pages/product/duiduipeng";
             this.goto(s, da);
         },
         onReachScollBottom() {
@@ -385,6 +408,8 @@ text{
 
         .name {
             width: calc(100% - 138rpx);
+            // display: inline-block;
+            // align-items: center;
         }
 
         .num {

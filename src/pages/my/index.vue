@@ -109,9 +109,10 @@
         <!-- <button class="invite_bar" open-type="share" id="invite"></button> -->
         <!-- <button class="invite_bar" @click="goto('/page-activity/invite/index')"></button>  -->
         <div class="grid_bar">
+            <!-- v-if="!userInfo.isAuthenticated && i.title === '实名认证' || i.title !== '实名认证'" -->
             <!-- <div class="grid_tit">常用功能</div> -->
             <view class="grid_content">
-                <view  @click="topGrid(i)" v-for="(i, s) in baseList2" :key="s" class="x_grid"  v-if="!userInfo.isAuthenticated && i.title === '实名认证' || i.title !== '实名认证'">
+                <view  @click="topGrid(i)" v-for="(i, s) in baseList2" :key="s" class="x_grid"  >
                     <view class="leftIcon">
                         <view class="icon"
                          :style="{
@@ -271,8 +272,7 @@ export default {
             this.point = res.point
          })
 
-
-          if(this.userInfo.channel==MGTV_Channel){
+          if(this.userInfo.featureConfig && this.userInfo.featureConfig.donation != 'FeatureFlag_Enable' && this.userInfo.featureConfig.donation != 'FeatureFlag_AdminOpen'){
             this.baseList2.splice(1,1)
           }
 

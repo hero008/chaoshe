@@ -8,7 +8,7 @@
                 <div class="gacha_info">
                     <div class="row flex_r flex_ac flex_jb">
                         <div class="row_l flex_r flex_as">
-                            <div class="tag">{{goodsInfo.referenceXPoint ? '星币' : '￥'}}</div>
+                            <div class="tag">{{goodsInfo.referenceXPoint ? '星光积分' : '￥'}}</div>
                             <div class="price">{{goodsInfo.referenceXPoint?goodsInfo.referenceXPoint: goodsInfo.showPrice }}</div>
                             <div class="tag2">
                                 <img
