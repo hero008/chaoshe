@@ -723,6 +723,7 @@ export default {
             const currentPage = uni.$u.page();
             const targetUrl = "/pages/product/rewardResultDetails";
             if (currentPage === "/pages/index/index") {
+                   this.inAdvance = false;
                 // this.goto(targetUrl);
             } else {
                  this.inAdvance = false;
