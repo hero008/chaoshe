@@ -637,13 +637,13 @@ export default {
                 .sort((a, b) => a.levelIndex - b.levelIndex);
 
             // 大赏强制加入spList（无论是否开启动画）
-            this.spList.push(...grandPrizes,...otherPrizes);
+            this.spList.push(...grandPrizes);
             this.vibrat = grandPrizes.length > 0;  // 直接赋值，无论长度如何
             // 2. 根据showAnim决定是否将非大赏加入spList
-            // if (!showAnim) {
-            //     // 关闭动画时，所有奖品都会进入动画序列
-            //     this.spList.push(...otherPrizes);
-            // }
+            if (!showAnim) {
+                // 关闭动画时，所有奖品都会进入动画序列
+                this.spList.push(...otherPrizes);
+            }
             // 开启动画时，spList仅包含大赏，非大赏暂存于otherPrizes供后续使用
 
             // 3. 触发摇球动画（固定3秒）
@@ -691,21 +691,18 @@ export default {
                 soundType = 1;
             }
 
-            if(!showAnim){
-                if(soundType == 2){
+          
+            this.show = false;
+            if (!this.spList.length && showAnim ) {
+                // 开启动画且无大赏 → 直接跳转到结果详情页
+                  this.navigateToResultDetail(winningList);
+            } else {
+                 if(soundType == 2){
                     playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b.wav')
                 }else{
                 
                     playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_s.mp4')
                 }
-            }
-          
-            this.show = false;
-            if (showAnim) {
-                // 开启动画且无大赏 → 直接跳转到结果详情页
-                  this.navigateToResultDetail(winningList);
-            } else {
-                
                   if(hasGrandPrize){
                     setTimeout(() => {
                             playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
@@ -826,14 +823,11 @@ export default {
                 return;
             }
             setTimeout(() => {
-                console.log(this.spList < this.spList.length,this.spList,this.spList.length)
-                if (this.spList.length > 0) {
+                if (this.spList.length > 0 && this.WinnInx < this.spList.length) {
                     let a = this.verdictBig([this.spList[this.WinnInx]])
                         ? 2
                         : 1;
-                          console.log(a,'ddddddddd')
                         if(a == 2){
-                            console.log('ddddddddd')
                              playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
                         }
                     // playDede(a);

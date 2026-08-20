@@ -202,7 +202,7 @@
                     </div>
                   
                 </div> -->
-                     <view v-if="(percentage > 90 && isRun && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
+              <view v-if="(percentage > 90 && isRun && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
                 <view  class="awards_box" v-if="percentage > 90 && isRun">
                    <view  v-if="(spList[WinnInx].levelIndex == 28) "  class="guang"></view>
                     <view v-if="(spList[WinnInx].levelIndex == 28) " class="title">
@@ -630,18 +630,19 @@ this.shareTo=false
                 index: this.boxindex,
             });
             let a;
+            //声音
             if (this.spList.length && showAnim) {
                 a = 2;
             } else {
                 a = this.verdictBig(showAnim ? this.Winning : [this.Winning[0]]) ? 2 : 1;
             }
             if (!this.spList.length && showAnim) {
-                playDede(a);
+
                 uni.hideLoading();
                 this.inAdvance = false
              
                                 
-                   this.$refs.result.open(this.Winning, true, this.gachaId, this.boxindex)
+               this.$refs.result.open(this.Winning, true, this.gachaId, this.boxindex)
                 // uni.$u.route({
                 //     type: "redirect",
                 //     url: "/pages/product/rewardResultDetails",
@@ -763,7 +764,6 @@ this.shareTo=false
             this.$refs.drawLog.open(this.gachaId, this.boxIndex, -1, type);
         },
         shareToWechat(type){
-          console.log(type);
           this.shareTo = false;
           if(!window.mgtv)return
               mgtv.shareTo({
@@ -799,7 +799,6 @@ this.shareTo=false
         onLoaded() {
             if (this.vibrat) vibratePhone(3000)
             this.$refs.cSvgaRef.call("startAnimation");
-            // console.log("动画加载完成，播放时回调");
         },
         onPercentage(va) {
             if (va > 0.85) {
@@ -835,9 +834,11 @@ this.shareTo=false
                 this.toDetails();
             }
             setTimeout(() => {
-                if (this.WinnInx < this.spList.length) {
+                if (this.WinnInx < this.spList.length && this.spList.length > 0) {
                     let a = this.verdictBig([this.spList[this.WinnInx]]) ? 2 : 1;
-                    playDede(a);
+                    if(a == 2){
+                     playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav');
+                    }
                 }
                 this.isRun = true;
             }, 600);
@@ -855,7 +856,8 @@ this.shareTo=false
             // });
         },
         verdictBig(arr) {
-            let result = [1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37];
+            // let result = [1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37];
+            let result = [28]
             for (const i of arr) {
                 if (result.includes(i.levelIndex)) return true;
             }

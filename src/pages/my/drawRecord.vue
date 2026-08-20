@@ -442,7 +442,7 @@ text{
             width: 150rpx;
             height: 150rpx;
             border-radius: 8rpx;
-            background-color: rgba($color: $motif-color, $alpha: 0.5);
+            // background-color: rgba($color: $motif-color, $alpha: 0.5);
             border: 2rpx solid #fff;
             position: relative;
             
