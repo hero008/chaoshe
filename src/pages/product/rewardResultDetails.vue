@@ -121,7 +121,7 @@ export default {
     width: 100vw;
     height: 100vh;
     position: relative;
-    background: #F5F6F8;
+    background: rgba(0,0,0,.7);
 
     // &::before {
     //     content: "";

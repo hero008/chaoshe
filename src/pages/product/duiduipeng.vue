@@ -583,7 +583,7 @@ export default {
             this.playMatchSound();
             // 播放消除动画（用位置索引）
             this.showPengAtCards(pos1, pos2);
-            await this.delay(500);
+            await this.delay(100);
             // 调用后端匹配接口（参数使用 cardNo）
             if (!this.isMockMode) {
                 try {
@@ -1079,7 +1079,7 @@ page{
         .theme_card {
             width: 100%;
            height: 140rpx;
-           margin-top: 104rpx;
+           margin-top: 84rpx;
            position: relative;
             color: #000;
             // padding-top: 48rpx;
@@ -1140,7 +1140,7 @@ page{
             // background: #E1C1F2;
             // border-radius: 16rpx;
             // border: 4rpx solid #FFFFFF;
-            margin: 24rpx auto 0;
+            margin: 18rpx auto 0;
             display: flex;
             justify-content: space-between;
 
@@ -1209,7 +1209,7 @@ page{
         background: linear-gradient( 180deg, #B6EFFF 0%, #7BCFFE 100%);
         box-shadow: inset 0rpx 4rpx 12rpx 0rpx #FFFFFF, inset 0rpx -4rpx 12rpx 0rpx rgba(13,168,254,0.5);
         border-radius: 32rpx 32rpx 32rpx 32rpx;
-        margin: 24rpx auto 0;
+        margin: 18rpx auto 0;
         // width: 100%;
         // height: 1304rpx;
         // background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/machine.png");
@@ -1673,10 +1673,10 @@ padding-bottom: 38rpx;
 /* 底部进度与按钮 */
 .game_footer {
     width: 100%;
-    height: 200rpx;
-    padding: 30rpx 52rpx 0;
+    // height: 200rpx;
+    // padding: 30rpx 52rpx 0;
     position: absolute;
-    bottom: -70rpx;
+    bottom: -30rpx;
 }
 
 .progress_row {

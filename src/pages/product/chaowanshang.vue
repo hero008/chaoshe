@@ -541,6 +541,9 @@ export default {
                     this.getChaoyou()
                     this.getData()
 
+
+        
+
                 //   mgtv.onShareAppMessage(() => {
                 //       console.log('分享了')
                 //        return {
@@ -796,6 +799,7 @@ export default {
                 if (!res.code) {
                     if (!Array.isArray(res.awards)) return
                      if(res.awards && res.awards.length > 0){
+                      res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                       res.awards[0].requestId = res.requestId
                 // res.awards[]
                   }

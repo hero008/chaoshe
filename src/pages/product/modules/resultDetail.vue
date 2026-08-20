@@ -1,26 +1,18 @@
 <template>
-    <u-popup :show="show" mode="center" :safeAreaInsetBottom="false" bgColor="transparent" :overlayOpacity="0.8">
-           <view v-show="dynamicEffectShow" >
-             <view class="svga_it">
-                    <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
-                        @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
-                        height="100%" />
-              </view>
-            </view>
-              
+    <u-popup :show="show" :safeAreaInsetBottom="false" bgColor="transparent" :overlayOpacity="0.8">
         <!-- <view class="dynamicEffect" v-show="dynamicEffectShow">
             <view v-for="(img, index) in imgUrlList" :key="index" v-show="styleStep == index + 1" @click="onDy(index)"
                 :style="{ backgroundImage: `url(${img.localImageUrl || img.imageUrl})` }" :class="img.class"></view>
         </view> -->
-        <view v-show="!dynamicEffectShow && originalList.length > 0" class="card_list_popup flex_c flex_ac flex_jc"
+        <view v-show="!dynamicEffectShow" class="card_list_popup flex_c flex_ac flex_jc"
             :style="{ 'pointer-events': shareType ? 'none' : 'auto',backgroundImage:`url(${cysType == 28 ? bgc:''})` }">
             <view v-if="originalList.length > 1"  class="title flex_r  flex_ac ">
                 <img src="@/static/result/Congratulations.png" class="title_img" />
                 <!-- <view @click="close" class="closebtn" style="margin-right: 40rpx;"></view> -->
             </view>
-            <view v-if="originalList.length > 1" class="card_list  " @touchstart="handleTouchStart" @touchmove="handleTouchMove"
+            <view v-if="originalList.length > 1" class="card_list" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
                 @touchend="handleTouchEnd">
-                   <view v-if="cysType == 28" class="guang"></view>
+                <view v-if="cysType == 28" class="guang"></view>
                 <view  class="page-list flex_r flex_ac flex_jse flex_wrap" :class="{
                     // 'animate-left': animateDir === '左' && isAnimating,
                     // 'animate-right': animateDir === '右' && isAnimating, 'transition': isAnimating
@@ -36,11 +28,18 @@
                         <view class="card-contents card-back" @click="ondetail(k.itemId)"
                             :class="['card' + k.levelName,]">
 
-                            <view :class="['kuang','kuang_'+k.levelName]">
+                            <view :style="{
+                                backgroundImage:`url(${getResultBgc(k)})`,
+                                backgroundSize:'100% 100%'
+                            }" :class="['kuang']">
                                 <!-- v-show="k.rotated && k.click" -->
                                    <img  :src="k.coverImage" class="award_img" />
 
-                              <view  class="cl_" :class="['cl_' + k.levelName]"></view> 
+                              <view 
+                               :style="{
+                                backgroundImage:`url(https://img.shinemang.com/gachaStatic/tag/${k.levelName}.png)`
+                               }"
+                              :class="['cl_' + (k.levelName.includes('SP')? 'SP':'')]"></view> 
                             </view>
                            <view class="itemName flex_c flex_ac flex_jc ">
                                 <view class="name ellipsis">{{ k.itemName }} </view>
@@ -63,21 +62,20 @@
                 <!-- <view @click="close" class="closebtn" style="margin-right: 40rpx;"></view> -->
             </view>
                <view class="guang">
-                      <view v-if="cysType == 28" class="guangImg animation">
+                       <view v-if="cysType == 28" class="guangImg animation">
                            
                        </view>
                        <view v-else class="guangImg"></view>
-                       <img v-if="originalList[0].levelName == 'SP'" class="tag" src="@/static/result/SP.png" alt="">
-                      <img :src="originalList[0].coverImage" class="goodsImg" alt="">
+                        <view v-if="originalList[0].levelName == 'SP'" class="tag">SP赏</view>
+                      <img :src="originalList[0].coverImage || originalList[0].itemCover" class="goodsImg" alt="">
                       <view class="goodsName ellipsis">{{ originalList[0].itemName }}</view>
                 </view>
-
                 <view class="btn">
-                     <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
+                     <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') &&  originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
                      <view class="all_btn" @click="close"></view>
                      
                 </view>
-                 <view class="tips">赏品已自动放进赏柜，可在赏柜查看~</view>
+                 <view class="tips" > {{originalList && originalList[0].requestId ? '赏品已自动放进赏柜，可在赏柜查看~': '试玩结果仅供参考~'}}</view>
                      <view class="closeBtn">
                          <img @click="close"  src="@/static/close.png" alt="">
                      </view>
@@ -98,7 +96,7 @@
                 <view  class="box">
                     <view class="btn">
                       <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
-                    <!-- {{ allShow ? '确定' : '一键开奖' }} -->
+
                       <view class="all_btn" @click="close"></view>
                     </view>
                      <view class="tips">赏品已自动放进赏柜，可在赏柜查看~</view>
@@ -120,16 +118,18 @@ import { groupByItemId,MGTV_Channel } from '@/utils/mgtv.js'
 import { post } from '../../../utils/api';
 import { mapState } from "vuex";
 import bgc from '@/static/result/resultBg.png'
+import lastBgc from '@/static/result/tag/Last_bgc.png'
+import luckyBgc from '@/static/result/tag/Lucky_bgc.png'
+import ccsBgc from '@/static/result/tag/ccs_bgc.png'
+import spBgc from '@/static/result/tag/SP_bgc.png'
+import otherBgc from '@/static/result/tag/A_bgc.png'
 export default {
     data() {
         return {
-            percentage:0,
-            cartoonsrc:'https://img.shinemang.com/gachaStatic/svga/wxs_b.svga',
-            voiceUrl:"",
             bgc:bgc,
             MGTV_Channel:MGTV_Channel,
             show: false,
-            dynamicEffectShow: false,
+            dynamicEffectShow: true,
             awards: [],
             awardList: [],
             shareType: 0,
@@ -138,7 +138,7 @@ export default {
             boxIndex: 0,
             cysType: 0,
             styleStep: 0,
-            allShow: false,
+            allShow: true,
             originalList: [],//初始列表
             startX: 0, // 触摸起始X坐标
             slideDirection: '未滑动', // 滑动方向
@@ -162,32 +162,29 @@ export default {
         this.loadLocalImages();
     },
     components: { cSvga },
+
+   
     methods: {
-         onLoaded() {
-            this.$refs.cSvgaRef.call("startAnimation");
-
-               playDede(0,this.voiceUrl)
-
- 
-            if (this.vibrat) vibratePhone(3000)
-            // console.log("动画加载完成，播放时回调");
-        },
-               onPercentage(va) {
-            if (va > 0.85) this.percentage = va * 100;
-           
-
-        },
-        onFinished(){
-           
-            this.dynamicEffectShow = false
-          
-
+      
+        getResultBgc(value){
+           if(value.levelName.includes('SP')){
+            return spBgc
+           }else if(value.levelName == '冲冲'){
+            return ccsBgc
+           }else if(value.levelName == 'Last'){
+            return lastBgc
+           }else if(value.levelName == 'Lucky'){
+            return luckyBgc
+           }else {
+            return otherBgc
+           }
         },
           fangsheng() {
 
             const that = this;
            const result = groupByItemId(this.originalList)
            post('v1/cabinet/decompose/cal-obtained',{item_dict:result}).then((res) => {
+            console.log(res);
             if(!res.code){
                      that.$showModal({
                         title: "放生",
@@ -213,37 +210,27 @@ export default {
            })
         },
         open(da, showAnim, id, index) {
-              this.cysType = this.verdictBig(da)
-             this.originalList = da//原数据
-            // this.originalList.sort((a,b)=> b.levelIndex - a.levelIndex )
-          
-          if(this.cysType == 28){
-            this.cartoonsrc = 'https://img.shinemang.com/gachaStatic/svga/wxs_b.svga'
-            this.voiceUrl = 'https://img.shinemang.com/gachaStatic/svga/wxs_b.wav'
-           }else{
-             this.cartoonsrc = 'https://img.shinemang.com/gachaStatic/svga/wxs_s.svga'
-              this.voiceUrl = 'https://img.shinemang.com/gachaStatic/svga/wxs_s.wav'
-           }
-           this.show = true;
-           
-                this.dynamicEffectShow = true;
-            
-           
-            this.totalPage = Math.ceil(da.length / 10)
+            this.show = true;
+            this.dynamicEffectShow = false;
+            this.originalList = da//原数据
+            // console.log(da,'sjdflsjflsjdfl')
+            // this.originalList.sort((a,b)=>  b.levelIndex - a.levelIndex)
+            // this.totalPage = Math.ceil(da.length / 10)
             this.awards = da.slice(0, 10);
-            this.pageSize = this.awards.length
+            // this.pageSize = this.awards.length
             this.gachaId = id;
             this.boxIndex = index;
-          
-         
-            this.styleStep = 1
+            this.cysType = this.verdictBig(da)
+            
+
+            // this.styleStep = 1
         },
         close() {
             this.show = false;
             this.shareType = 0;
             this.awards = [];
-            this.allShow = false
-            this.$emit("onDuoyou");
+            // this.allShow = false
+            this.$emit("onResult");
             this.pageNum = 1
         },
         loadLocalImages() {
@@ -270,13 +257,12 @@ export default {
             if (this.awards.length > 5) atime = 100;
             const sp = this.cysType == 28 ? false : true
             if (!sp) {
-                //    this.dynamicEffectShow = false;
+                   this.dynamicEffectShow = true;
                
                 // this.awardList.push({ ...this.awards[a], rotated: false, click: false });
                 // this.originalList.forEach(item => { item.rotated = false; item.click = false; });
-                //  this.getAll()
+                 this.getAll()
             } else {
-                  this.allShow = true
                 // this.awardList.push({ ...this.awards[a], rotated: true, click: false });
                 // setTimeout(() => {
                 //     this.awardList.forEach((item, index) => {
@@ -342,7 +328,6 @@ export default {
             this.allShow = !this.originalList.some(item => item.rotated === false);
         },
         getAll() {
-            this.close()
             // if (this.awardList.length !== this.pageSize) return
             // if (this.allShow) {
             //     this.close()
@@ -429,14 +414,13 @@ export default {
 
             //第一步点击动画
             if (index !== 0) return
-            this.showList()
-            // playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/click.mp3');
-            // this.styleStep = 2
-            // playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/putong.mp3');
-            // this.timerList = setTimeout(() => {
-            //     this.styleStep = 0
-            //     this.showList();
-            // }, 2000);
+            playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/click.mp3');
+            this.styleStep = 2
+            playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/putong.mp3');
+            this.timerList = setTimeout(() => {
+                this.styleStep = 0
+                this.showList();
+            }, 2000);
         },
         handleTouchStart(e) {
             this.startX = e.changedTouches[0].clientX;
@@ -496,14 +480,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
- .svga_it {
-        width: 100vw;
-        height: calc(100vw / 0.4618);
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-    }
 .dynamicEffect {
     width: 100vw;
     height: 100vh;
@@ -663,11 +639,11 @@ export default {
     .guang{
         width: 750rpx;
         height: 750rpx;
-      
+
         padding-top: 170rpx;
         text-align: center;
         position: relative;
-          .guangImg{
+        .guangImg{
       background: url('@/static/result/guang.png');
         background-size: 100% 100%;
         width: 100%;
@@ -694,14 +670,31 @@ export default {
             left: 50%;
             transform: translateX(-50%);
             top: -34rpx;
-            width: 506rpx;
-            height: 168rpx;
-              z-index: 3;
+            // width: 506rpx;
+            // height: 168rpx;
+              font-family: '倍数欧气值';
+      font-size: 64rpx;  /* rpx 在 H5 中无效！换成 px 或 rem */
+  line-height: 80rpx;
+  font-weight: 400;
+  display: inline-block;
+  text-align: center;
+  font-style: normal;
+  text-transform: none;
+  
+  /* 兼容写法：background 也加 -webkit- 前缀 */
+  background: -webkit-linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+  background: linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+  
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  z-index: 3;
         }
         .goodsImg{
             width: 400rpx;
             height: 400rpx;
-                          position: relative;
+              position: relative;
   z-index: 3;
   border-radius: 32rpx;
 
@@ -713,7 +706,7 @@ export default {
            margin-top: 48rpx;
            padding: 0 50rpx;
            text-align: center;
-                        position: relative;
+             position: relative;
   z-index: 3;
         }
     }
@@ -723,6 +716,8 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            z-index: 44;
 
     
         .fangsheng{
@@ -752,6 +747,8 @@ export default {
         .closeBtn{
             text-align: center;
             margin-top: 32rpx;
+             position: relative;
+            z-index: 44;
             img{
                 width: 56rpx;
                 height: 56rpx;
@@ -762,11 +759,12 @@ export default {
     height: 100vh;
     padding: 0;
     position: relative;
+    background-size: cover;
 
     .title {
         width: 100%;
         height: 67rpx;
-        margin-bottom: 76rpx;
+          margin-bottom: 76rpx;
         justify-content: center;
 
         .closebtn {
@@ -820,7 +818,7 @@ export default {
     overflow-y: auto;
     // padding-bottom: 80rpx;
     position: relative;
- .guang{
+    .guang{
         position: fixed;
         width: 750rpx;
         height: 750rpx;
@@ -841,11 +839,12 @@ export default {
         }
 
     .page-list {
+        position: relative;
+        z-index: 10;
         width: 100%;
-        // max-height: 100%;
+        // height: 100%;
         transform: translateX(0);
         opacity: 1;
-           z-index: 10;
         margin-bottom: 120rpx;
 
     }
@@ -948,61 +947,27 @@ export default {
 
 
 .cl_ {
-    // width: 88rpx;
-    // height: 40rpx;
-    // background: url("https://img.shinemang.com/gachaStatic/tag_C.png");
-    // background-size: 100% 100%;
-    // position: absolute;
-    // top: 15rpx;
-    // left: 10rpx;
-}
-.cl_C{
-    width: 168rpx;
+   width: 168rpx;
     height: 32rpx;
-    background: url('@/static/result/tag_C.png');
     background-size: 100% 100%;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     bottom: 25rpx;
     z-index: 2;
-
-}
-.cl_B {
- width: 168rpx;
-    height: 32rpx;
-    background: url('@/static/result/tag_B.png');
-    background-size: 100% 100%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 25rpx;
-        z-index: 2;
-
 }
 
-.cl_A {
- width: 168rpx;
-    height: 32rpx;
-    background: url('@/static/result/tag_A.png');
-    background-size: 100% 100%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 25rpx;
-        z-index: 2;
 
-}
 
 .cl_SP {
-    width: 180rpx;
+      width: 180rpx;
     height: 88rpx;
-    background: url("@/static/result/tag_SP.png");
     background-size: 100% 100%;
     position: absolute;
     left: 0;
     top: -24rpx;
         z-index: 2;
+
 
 
 }
@@ -1038,25 +1003,11 @@ export default {
     width: 100%;
     height: 236rpx;
     position: relative;
+    
     // background: url('@/static/result/kuang.png');
     // background-size: 100% 100%;
 
-    &.kuang_SP{
-     background: url('@/static/result/kuang_SP.png');
-     background-size: 100% 100%;
-    }
-     &.kuang_A{
-     background: url('@/static/result/kuang_A.png');
-     background-size: 100% 100%;
-    }
-     &.kuang_B{
-     background: url('@/static/result/kuang_B.png');
-     background-size: 100% 100%;
-    }
-     &.kuang_C{
-     background: url('@/static/result/kuang_C.png');
-     background-size: 100% 100%;
-    }
+   
 
 
    }
@@ -1173,6 +1124,4 @@ export default {
         // margin: 20rpx auto 0;
     }
 }
-
-   
 </style>

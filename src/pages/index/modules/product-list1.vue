@@ -164,7 +164,7 @@
     </view>
     <!-- <u-empty v-else-if="type < 3" :text="type == 1 ? '敬请期待热门箱子~' : '暂时没有可捡漏的箱子哦~'"
         icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" /> -->
-    <u-empty v-else :text="'暂时没有可捡漏的箱子哦~'" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
+    <u-empty v-else :text="'暂时没有箱子哦~'" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
     <!-- </scroll-view> -->
 </template>
 <script>
