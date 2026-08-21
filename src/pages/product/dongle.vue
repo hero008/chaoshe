@@ -183,8 +183,8 @@
         </div>
         <div class="recordBtn" @click="getRewardHistory"></div>
         <!-- 过场动画 , { opacity: !cartoonShow } -->
-        <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
-            <div v-if="inAdvance" :class="['cartoon_con',,((isRun && spList[WinnInx].levelIndex == 28 ) ) && percentage > 90?'big':'']">
+        <u-popup mode="center" :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
+            <div v-if="inAdvance" :class="['cartoon_con',( spList.length>0 && (isRun && spList[WinnInx].levelIndex == 28 ) ) && percentage > 90?'big':'']">
                 <div class="svga_it">
                     <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
@@ -202,7 +202,7 @@
                     </div>
                   
                 </div> -->
-              <view v-if="(percentage > 90 && isRun && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
+              <!-- <view v-if="(percentage > 90 && isRun && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
                 <view  class="awards_box" v-if="percentage > 90 && isRun">
                    <view  v-if="(spList[WinnInx].levelIndex == 28) "  class="guang"></view>
                     <view v-if="(spList[WinnInx].levelIndex == 28) " class="title">
@@ -228,7 +228,6 @@
                   <view class="c_btn flex_r flex_jse flex_ac" v-if="percentage > 95">
                     <view class="c_btn_item" @click="toDetails" v-if="WinnNum > 0"></view>
                     <view class="c_btn_item cor9" @click="next">
-                        <!-- <span>继续</span> -->
                         <view class="r_num flex_r" v-if="WinnNum > 0">
                              <view>
                                 <img src="https://img.shinemang.com/gachaStatic/newNdj/qiu.png" class="ico1" />
@@ -238,7 +237,7 @@
                     </view>
                 </view>
                  <view class="msg" v-if="percentage > 95">{{ hint }}</view>
-                </view>
+                </view> -->
                 <!-- <div class="c_btn flex_r flex_jse flex_ac" v-if="percentage > 95">
                     <div class="c_btn_item" @click="toDetails" v-if="WinnNum > 0">
                         跳过动画
@@ -254,7 +253,7 @@
             </div>
         </u-popup>
         <!-- 炸弹 -->
-        <u-popup :show="showDh" :overlay="cartoonShowDh" :safeAreaInsetBottom="false" bgColor="transparent">
+        <u-popup mode="center" :show="showDh" :overlay="cartoonShowDh" :safeAreaInsetBottom="false" bgColor="transparent">
             <div v-if="showDh" :class="['cartoon_con']">
                 <div class="svga_it">
                     <c-svga ref="cSvgaRef" :src="cartoonsrc2" :loops="1" :autoPlay="false" :isOnChange="true"
@@ -381,9 +380,9 @@ export default {
             showDiscounts: false,
             shareType: 0,
             probabilityShow: [],
-            cartoonsrc: "https://img.shinemang.com/gachaStatic/static/img/cartoon/ddl.svga",
+            cartoonsrc: "https://img.shinemang.com/gachaStatic/svga/ddl.svga",
             newFilePath: "",
-            cartoonsrc2: "https://img.shinemang.com/gachaStatic/static/img/cartoon/bomb.svga",
+            cartoonsrc2: "https://img.shinemang.com/gachaStatic/svga/bomb.svga",
             newGifPath: "", //Gif动画资源地址
             showDh: false,
             cartoonShowDh: false,
@@ -456,9 +455,15 @@ this.shareTo=false
           this.cartoonShow = false
           this.inAdvance = false;
           this.percentage = 0;
+          this.spList = [];
           this.Winning = [];
           this.WinnInx = 0;
-          this.isRun = true
+          this.isRun = true;
+          this.showDh =false;
+          this.entrance = false
+          this.gachaBombRecord={}
+          
+          
          
         },
         onClickResult(){
@@ -636,22 +641,23 @@ this.shareTo=false
             } else {
                 a = this.verdictBig(showAnim ? this.Winning : [this.Winning[0]]) ? 2 : 1;
             }
+
+            console.log(this.spList.length,showAnim,'阿是两节课弗利萨记录')
             if (!this.spList.length && showAnim) {
 
                 uni.hideLoading();
-                this.inAdvance = false
-             
-                                
                this.$refs.result.open(this.Winning, true, this.gachaId, this.boxindex)
                 // uni.$u.route({
                 //     type: "redirect",
                 //     url: "/pages/product/rewardResultDetails",
                 // });
             } else {
-                this.sound = a
+                this.sound = 'https://img.shinemang.com/gachaStatic/svga/ddl.wav'
+             
                 this.showDh = false
                 this.cartoonShowDh = false;
-                this.inAdvance = true;
+                  this.inAdvance = true;
+               playDede(0,this.sound);
                 setTimeout(() => {
                     this.cartoonShow = true;
                     uni.hideLoading();
@@ -806,7 +812,7 @@ this.shareTo=false
             }
             // console.log(va, "动画加载完成，播放时回调2");
             if (this.percentage > 80 && this.percentage < 86) {
-                playDede(this.sound);
+              
             }
         },
         onPercentage1(va) {
@@ -817,9 +823,10 @@ this.shareTo=false
                     uni.vibrateLong();
                 }
             });
-            playDede(0, 'https://img.shinemang.com/gachaStatic/static/media/bomb.wav')
+            playDede(0, 'https://img.shinemang.com/gachaStatic/svga/bomb.wav')
         },
         onFinished() {
+             this.toDetails();
             // console.log("动画停止播放时回调");
         },
         onFinished1() {
@@ -837,7 +844,7 @@ this.shareTo=false
                 if (this.WinnInx < this.spList.length && this.spList.length > 0) {
                     let a = this.verdictBig([this.spList[this.WinnInx]]) ? 2 : 1;
                     if(a == 2){
-                     playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav');
+                    //  playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav');
                     }
                 }
                 this.isRun = true;

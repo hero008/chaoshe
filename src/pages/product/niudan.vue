@@ -188,15 +188,15 @@
         </view>
         <!-- 过场动画 -->
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
-            <view :class="['cartoon_con', { opacity: !cartoonShow },((isRun && spList[WinnInx].levelIndex == 28 ) ) && percentage > 95?'big':'']" v-if="inAdvance">
+            <view :class="['cartoon_con', { opacity: !cartoonShow },((isRun && spList.length>0 && spList[WinnInx].levelIndex == 28 ) ) && percentage > 95?'big':'']" v-if="inAdvance">
                 <view class="svga_it">
                     <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
                         height="100%" />
                 </view>
 
-                <view v-if="(percentage > 95 && isRun && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
-                <view  class="awards_box" v-if="percentage > 95 && isRun">
+                <view v-if="(percentage > 95 && isRun && spList.length>0 && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
+                <view  class="awards_box" v-if="percentage > 95 && spList.length>0 && isRun">
                    <view  v-if="(spList[WinnInx].levelIndex == 28) "  class="guang"></view>
                     <view v-if="(spList[WinnInx].levelIndex == 28) " class="title">
                        {{spList[WinnInx].levelName == 'Lucky' ? (spList[WinnInx].levelName + spList[WinnInx].luckyNo +'赏'):(spList[WinnInx].levelName+'赏')}}
@@ -691,7 +691,7 @@ export default {
                 soundType = 1;
             }
 
-          
+          console.log(this.spList,'spList')
             this.show = false;
             if (!this.spList.length && showAnim ) {
                 // 开启动画且无大赏 → 直接跳转到结果详情页

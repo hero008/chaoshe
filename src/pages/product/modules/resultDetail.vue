@@ -1,5 +1,5 @@
 <template>
-    <u-popup :show="show" :safeAreaInsetBottom="false" bgColor="transparent" :overlayOpacity="0.8">
+    <u-popup :show="show" mode="center" :safeAreaInsetBottom="false" bgColor="transparent" :overlayOpacity="0.8">
         <!-- <view class="dynamicEffect" v-show="dynamicEffectShow">
             <view v-for="(img, index) in imgUrlList" :key="index" v-show="styleStep == index + 1" @click="onDy(index)"
                 :style="{ backgroundImage: `url(${img.localImageUrl || img.imageUrl})` }" :class="img.class"></view>
@@ -653,7 +653,7 @@ export default {
         left: 0;
         // transform: translate(-50%,-50%);
         &.animation{
-          animation: infinityScroll 2s linear infinite;
+          animation: infinityScroll 10s linear infinite;
 
         }
         }
@@ -826,8 +826,8 @@ export default {
         background-size: 100% 100%;
         left: 0;
         top: calc((100vh - 750rpx)/2);
-        background-attachment: fixed;
-        animation: infinityScroll 2s linear infinite;
+        // background-attachment: fixed;
+        animation: infinityScroll 10s linear infinite;
     }
      @keyframes infinityScroll {
               from {

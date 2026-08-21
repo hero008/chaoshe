@@ -137,7 +137,7 @@
              </view>
                 <scroll-view style="height: 780rpx;" scroll-y>
                     <div class="lotteryRaffle">
-                            <div v-if="newRecordList" class="r_item" >
+                            <div v-if="newRecordList && newRecordList.records && newRecordList.records.length !== 0" class="r_item" >
                              <!-- v-for="(array, key) in recordList" -->
                                 <!-- <div  class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]"> -->
                                     <!-- <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
@@ -149,7 +149,7 @@
                                     </div> -->
                                 <!-- </div> -->
                                 <div  :class="['lr_con', { row1: false }]">
-                                    <div v-if="newRecordList && newRecordList.records && newRecordList.records.length !== 0">
+                                    <div>
                                         <div :style="{
                                 backgroundImage: `url(https://img.shinemang.com/gachaStatic/k_${newRecordList.name}.png)`,
                             }"  class="lr_i flex_r flex_ac flex_jb"
@@ -181,11 +181,11 @@
                                         </div>
                                     </div>
 
-                                    <div v-else class="nullBox">
-                                        暂无中赏记录~
-                                    </div>
+                       
                                 </div>
                             </div>
+                            <u-empty v-else text="暂无中赏记录~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
+                    :marginTop="50" />
                   </div>
                </scroll-view>
                         </div>
@@ -1790,6 +1790,7 @@ margin-right: 16rpx;
 
         .nullBox {
             height: 150rpx;
+           
             font-weight: 500;
             font-size: 12px;
             color: #E9BCBD;
