@@ -366,6 +366,128 @@
           
 		</u-popup>
 
+      <u-popup mode="center" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
+          <view class="BzcList">
+            <view class="rules"></view>
+            <scroll-view class="scrollView" scroll-y>
+                 <view class="list">
+                    <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>    
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                     <view class="item">
+                         <view class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
+                         <view class="rate">概率:0.1%</view>
+                    </view>  
+                </view>
+            </scroll-view>
+          </view>
+	  </u-popup>
+
     </view>
 </template>
 <script>
@@ -449,6 +571,7 @@ export default {
 
             recordLevelName:'SP',
             newRecordList:'',
+            showBzcPopup:false,
             
 
 
@@ -1701,13 +1824,13 @@ margin-right: 16rpx;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            right: 24rpx;
+            right: 12rpx;
             background: url('@/static/refresh.png');
             background-size: 100% 100%;
 
         }
        .tabItem{
-        width: 136rpx;
+        // width: 136rpx;
 height: 56rpx;
 background: #fff;
 border-radius: 28rpx 28rpx 28rpx 28rpx;
@@ -1716,8 +1839,12 @@ align-items: center;
 justify-content: center;
 line-height: 56rpx;
 margin-right: 16rpx;
+padding: 0 26rpx;
  color: #666666;
  font-size: 28rpx;
+ &:last-child{
+    margin-right: 0;
+ }
  &.active{
     background: #FF93C7;
     color: #000;
@@ -2011,6 +2138,70 @@ margin-right: 16rpx;
 
     50% {
         transform: translate(0, 30rpx);
+    }
+}
+
+.BzcList{
+    width: 670rpx;
+    height: 1082rpx;
+    background: url('https://img.shinemang.com/gachaStatic/bzsBg.png');
+    background-size: 100% 100%;
+    position: relative;
+    padding-top: 220rpx;
+    .rules{
+        width: 112rpx;
+        height: 40rpx;
+        position: absolute;
+        top: 36rpx;
+        right: 16rpx;
+        background: url('https://img.shinemang.com/gachaStatic/rules.png');
+        background-size: 100% 100%;
+    }
+    .scrollView{
+        width: 100%;
+        height: 810rpx;
+        // background: #fff;
+        .list{
+            width: 100%;
+            padding-left: 28rpx;
+            display: flex;
+            flex-wrap: wrap;
+            .item{
+                width: 200rpx;
+                height: 292rpx;
+                background: linear-gradient( 180deg, #CCFBFF 0%, #FFFFFF 20%);
+                border-radius: 16rpx 16rpx 16rpx 16rpx;
+                margin-right: 8rpx;
+                margin-bottom: 8rpx;
+                .bgc{
+                    width: 200rpx;
+                    height: 200rpx;
+                    border-radius: 16rpx 16rpx 0 0;
+                    background: red;
+                    position: relative;
+                    .tag{
+                        width: 120rpx;
+                        height: 40rpx;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                    }
+                }
+                .name{
+                    color: #1A1A1A;
+                    padding: 0 8rpx;
+                    font-size: 24rpx;
+                    line-height: 32rpx;
+                    margin-top: 12rpx;
+                }
+                .rate{
+                    padding-left: 8rpx;
+                    color: #8D8D94;
+                    font-size: 20rpx;
+                    margin-top: 4rpx;
+                }
+            }
+        }
     }
 }
 </style>
