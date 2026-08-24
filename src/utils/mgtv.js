@@ -344,3 +344,38 @@ export const formatDate = (date)=> {
 }
 
 export const MGTV_Channel = 'Channel_Official'
+
+export const  awardsSort = (awards)=>{
+  let splist = awards.filter((item)=>{
+    return item.levelIndex == 28
+   })
+   let otherList = awards.filter((item)=>{
+    return item.levelIndex != 28
+   })
+   otherList.sort((a,b)=>a.levelIndex - b.levelIndex)
+   return [...splist,...otherList]
+}
+
+
+export const choushangResultByItemId =(data)=>{
+
+   let spRewards = data.filter((item)=>item.levelIndex == 28)
+   let otherRewards =  data.filter((item)=>item.levelIndex != 28)
+    const map = new Map();
+  
+  otherRewards.forEach(item => {
+    const itemId = item.itemId;
+    if (map.has(itemId)) {
+      map.get(itemId).num += 1;
+
+    } else {
+      map.set(itemId, {
+        num: 1,
+        ...item
+      });
+    }
+  });
+  let otherArr = Array.from(map.values());
+  
+  return [...spRewards,...otherArr]
+}

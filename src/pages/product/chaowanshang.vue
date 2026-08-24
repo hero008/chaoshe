@@ -106,7 +106,7 @@
                                 @click="ondetail(item.itemId)">
                                 <img :src="item.itemHalfImage" class="p-img" />
                                 <img :src="`https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png`"
-                                    class="badge" />
+                                    :class="['badge','badge'+item.levelName]" />
                                 <!-- <view class="bor"></view> -->
                                 <view class="p-name flex_c flex_jb">
                                     <div class="tit ellipsis">{{ item.itemName }}</div>
@@ -505,6 +505,7 @@ import { formateGachaLevelName } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
+import {awardsSort} from '@/utils/mgtv.js'
 export default {
     data() {
         return {
@@ -901,9 +902,12 @@ export default {
                 if (!Array.isArray(res.awards)) return
 
                  if(res.awards && res.awards.length > 0){
-                    res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
+                     res.awards = awardsSort(res.awards);
+                    // let spList = res.awards.filter((item)=>item.levelIndex == 28)
+                    // let other = res.awards.filter((item)=>item.levelIndex != 28)
+                    // res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
-                // res.awards[]
+                    // res.awards[]
                   }
                 this.awardsList = res.awards;
 
@@ -922,7 +926,8 @@ export default {
                 if (!res.code) {
                     if (!Array.isArray(res.awards)) return
                      if(res.awards && res.awards.length > 0){
-                      res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
+                        res.awards = awardsSort(res.awards);
+                    //   res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                       res.awards[0].requestId = res.requestId
                 // res.awards[]
                   }
@@ -1621,6 +1626,13 @@ text-transform: none;
         &.C{
             color: #EDF1F0;
         }
+        &.BZ{
+         background: -webkit-linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+        background: linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        }
     
      }
         .badge {
@@ -1669,6 +1681,10 @@ text-transform: none;
             position: absolute;
             left: 0;
             top: 168rpx;
+
+            &.badgeBZ{
+                width: 120rpx;
+            }
         }
 
         .p-name {
@@ -1998,10 +2014,10 @@ padding: 0 26rpx;
 
     .cut {
         position: absolute;
-        width: 196rpx;
+        width: 380rpx;
         height: 64rpx;
         bottom: 90rpx;
-        right: 0rpx;
+        right: -26rpx;
         // border-radius: 18rpx 0 0 18rpx;
         // font-weight: bold;
         // font-size: 24rpx;
@@ -2011,10 +2027,13 @@ padding: 0 26rpx;
         // justify-content: flex-end;
 
         .passionImg {
-            width: 100%;
+            width: 280rpx;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/jq.png");
+            background: url("https://img.shinemang.com/gachaStatic/jq1.png");
             background-size: 100% 100%;
+            position: absolute;
+            right: 0;
+            top:0;
           
         }
 
@@ -2023,7 +2042,7 @@ padding: 0 26rpx;
             // height: 32rpx;
            width: 100%;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/pt.png");
+            background: url("https://img.shinemang.com/gachaStatic/pt1.png");
             background-size: 100% 100%;
             // margin-left: 10rpx;
         }

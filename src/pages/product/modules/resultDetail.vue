@@ -18,7 +18,7 @@
                     // 'animate-right': animateDir === '右' && isAnimating, 'transition': isAnimating
                 }">
                 <!-- k.rotated && !k.click ? 'rotated' :  @click="onRotated(k)"-->
-                    <view class="card " v-for="(k, s) in originalList" :key="s"
+                    <view class="card " v-for="(k, s) in formateRewardsList(originalList)" :key="s"
                        >
                         <!-- <view v-show="!k.click" class="card-contents card-front">
                             <view class="num">{{ k.no }}</view>
@@ -27,6 +27,10 @@
 
                         <view class="card-contents card-back" @click="ondetail(k.itemId)"
                             :class="['card' + k.levelName,]">
+                            
+                            <view v-if="k.levelIndex != 28" class="count">
+                               <view>x{{ k.num }}</view>
+                            </view>
 
                             <view :style="{
                                 backgroundImage:`url(${getResultBgc(k)})`,
@@ -114,7 +118,7 @@
 <script>
 import cSvga from "@/components/c-svga/c-svga.vue";
 import { playDede, uniShare, compressImg, vibratePhone } from "@/utils/fun.js";
-import { groupByItemId,MGTV_Channel } from '@/utils/mgtv.js'
+import { groupByItemId,MGTV_Channel ,choushangResultByItemId} from '@/utils/mgtv.js'
 import { post } from '../../../utils/api';
 import { mapState } from "vuex";
 import bgc from '@/static/result/resultBg.png'
@@ -165,7 +169,9 @@ export default {
 
    
     methods: {
-      
+        formateRewardsList(list){
+            return choushangResultByItemId(list)
+        },
         getResultBgc(value){
            if(value.levelName.includes('SP')){
             return spBgc
@@ -925,7 +931,22 @@ export default {
     flex-direction: column;
     align-items: center;
     z-index: 2;
-
+  .count{
+        position: absolute;
+        width: 84rpx;
+        height: 52rpx;
+        color: #fff;
+        font-size: 28rpx;
+        text-align: center;
+        right: 0;
+        top: 0;
+        background: url('@/static/countBg.png');
+        background-size: 100% 100%;
+        z-index: 55;
+        view{
+            transform: rotate(7deg);  /* 沿 X 轴倾斜 */  
+        }
+    }
     .itemName {
         width: 208rpx;
         height: 32rpx;

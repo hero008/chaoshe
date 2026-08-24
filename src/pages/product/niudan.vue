@@ -279,6 +279,7 @@ import bgc4 from '@/static/bgc4.png'
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { MGTV_Channel } from "@/utils/mgtv";
 import result from '@/pages/product/modules/resultDetail'
+import {awardsSort} from '@/utils/mgtv.js'
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {
@@ -542,7 +543,8 @@ export default {
             if (type == 0) {
                 
                 if(res.awards && res.awards.length>0){
-                    res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
+                    res.awards = awardsSort(res.awards)
+                    // res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
                 }
                 this.Winning = res.awards;
@@ -557,7 +559,8 @@ export default {
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                    if(res.awards && res.awards.length>0){
-                      res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
+                    res.awards = awardsSort(res.awards)
+                    //   res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
                    }
                     this.Winning = res.awards;
@@ -691,7 +694,6 @@ export default {
                 soundType = 1;
             }
 
-          console.log(this.spList,'spList')
             this.show = false;
             if (!this.spList.length && showAnim ) {
                 // 开启动画且无大赏 → 直接跳转到结果详情页
@@ -725,6 +727,7 @@ export default {
             } else {
                  this.inAdvance = false;
                 // uni.$u.route({ type: "redirect", url: targetUrl });
+                
                this.$refs.result.open(winningList, true, this.gachaId, this.boxIndex)
             }
         },
@@ -1497,7 +1500,7 @@ border-radius:32rpx 32rpx 0 0 ;
 
     .cut {
           position: absolute;
-        width: 196rpx;
+        width: 380rpx;
         height: 64rpx;
         bottom: 90rpx;
         right: 0rpx;
@@ -1510,19 +1513,22 @@ border-radius:32rpx 32rpx 0 0 ;
         // justify-content: flex-end;
 
         .passionImg {
-            width: 100%;
+             width: 280rpx;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/jq.png");
+            background: url("https://img.shinemang.com/gachaStatic/jq1.png");
             background-size: 100% 100%;
+              position: absolute;
+            right: 0;
+            top:0;
           
         }
 
         .commonImg {
             // width: 32rpx;
             // height: 32rpx;
-           width: 100%;
+            width: 100%;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/pt.png");
+            background: url("https://img.shinemang.com/gachaStatic/pt1.png");
             background-size: 100% 100%;
             // margin-left: 10rpx;
         }

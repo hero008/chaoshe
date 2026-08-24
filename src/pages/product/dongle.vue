@@ -338,6 +338,7 @@ import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 import share from "./modules/share.vue";
 import result from '@/pages/product/modules/resultDetail'
+import {awardsSort} from '@/utils/mgtv.js'
 export default {
     data() {
         return {
@@ -584,7 +585,8 @@ this.shareTo=false
         // 提取公共方法
         handleDrawResult(res, showAnim) {
             if(res.awards && res.awards.length > 0){
-                res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
+                // res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
+                res.awards = awardsSort(res.awards)
                 res.awards[0].requestId = res.requestId
                 // res.awards[]
             }
