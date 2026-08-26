@@ -397,13 +397,6 @@ export default {
         // },
         // #endif
         // #ifndef MP-WEIXIN
-        // {
-        //     name: "微信支付",
-        //     type: 2,
-        //     img: "WeChat",
-        //     show: false,
-        //     msg: "微信APP支付",
-        // },  // 是否金币和潮币支付
         {
           name: "余额",
           type: 0,
@@ -416,6 +409,18 @@ export default {
           number: 0,
           payType: 1,
         },
+        {
+            name: "微信支付",
+            type: 2,
+            img: "WeChat",
+            show: true,
+            msg: "微信APP支付",
+            consume: 0,
+          // number: this.$gl("userInfo").coin,
+            number: 0,
+            payType: 1,
+        },  // 是否金币和潮币支付
+     
         // {
         //     name: "金币余额",
         //     type: 4,
@@ -779,7 +784,7 @@ export default {
     async onPay() {
       // 是否支付宝支付1 其它支付0
       // #小程序不需要ifndef MP-WEIXIN
-      this.paytype = this.paytypeList.includes(1) ? 1 : 0;
+      this.paytype = this.paytypeList.includes(1) || this.paytypeList.includes(2) ? 1 : 0;
       // #endif
       // #ifdef MP-WEIXIN
       // this.paytype = 1;
@@ -790,7 +795,7 @@ export default {
       let allNum = 0; // 支付宝勾选
       this.pays.map((i) => {
         if (i.type == 4) goldNum = i.consume;
-        if (i.type == 1) {
+        if (i.type == 1 || i.type == 2) {
           //折扣后的金额加上欧气
           if (i.consume)
             allNum = this.goMitigate
@@ -841,6 +846,7 @@ export default {
       } else {
         // this.amount  == 0   免费抽
         let res, orderInfo;
+        console.log(this.amount);
         let click_type = this.amount == 0 ? 0 : this.paytype;
         // 潮币单独支付 潮币和欧气值支付
         // 金币单独支付  金币和欧气值支付 金币和支付宝支付 金币和欧气值和支付宝支付
@@ -853,7 +859,7 @@ export default {
         //     OpenGachaPayType_PostCard = 2;      // 明信片
         //     OpenGachaPayType_Gold = 3;          // 金币
         // }
-
+       console.log(this.payMessage.url);
         //UppayMessage 只是存储值
         if (this.payMessage.url == "v1/gacha/open") {
           this.UppayMessage({
@@ -891,7 +897,7 @@ export default {
             },
           });
         }
-
+       console.log(click_type,'23784923749')
         // 这里支付
         if (click_type == 0) {
           // 直接开箱,有免费优惠卷
@@ -907,6 +913,7 @@ export default {
           this.$emit("success", res, this.showAnimation, click_type);
           this.close();
         } else {
+          console.log('束带结发看来是杜绝浪费科技')
           //还是要调用支付
           let that = this;
           res = await callPayment(
@@ -931,13 +938,7 @@ export default {
             click_type,
           );
           orderInfo = res.orderInfo;
-          // 在这里应该拿到 url.
-          // 这里需要调支付,有问题.
-          console.log(
-            res.res.createPaymentReply.signData,
-            res.res.createPaymentReply.sign,
-            Number(res.res.createPaymentReply.timestamp),
-          );
+
           if (window.mgtv) {
             mgtv.requestPaymentGameItem({
               signData: res.res.createPaymentReply.signData,
@@ -1105,46 +1106,48 @@ export default {
       // 选中两个的时候 可以取消一个
       // 当金币足够的时候 单选
       // 金币不够的时候可以选两个paytype
-      if (this.goldNumber >= this.amount || !item.type || !this.goldNumber) {
+      // if (this.goldNumber >= this.amount || !item.type || !this.goldNumber) {
         this.paytypeList = [item.type];
         this.pays.forEach((i) => (i.consume = 0));
         return;
-      } else if (item.type) {
-        // 必须选中一个不能取消
-        if (
-          this.paytypeList.length == 1 &&
-          this.paytypeList.includes(item.type)
-        )
-          return;
-        // 潮币不参与组合支付
-        if (this.paytypeList.includes(0) && item.type) this.paytypeList = [];
-        // 已选中就取消
-        if (this.paytypeList.includes(item.type)) {
-          this.paytypeList = this.paytypeList.filter((x) => x !== item.type);
-          item.consume = 0;
-        } else {
-          // 未选中就取消
-          this.paytypeList = [...this.paytypeList, item.type];
-        }
+      // } else if (item.type) {
+      //   // 必须选中一个不能取消
+      //   if (
+      //     this.paytypeList.length == 1 &&
+      //     this.paytypeList.includes(item.type)
+      //   )
+    
+      //     return;
+      //   // 潮币不参与组合支付
+      //   if (this.paytypeList.includes(0) && item.type) this.paytypeList = [];
+      //   // 已选中就取消
+      //   if (this.paytypeList.includes(item.type)) {
+      //     this.paytypeList = this.paytypeList.filter((x) => x !== item.type);
+      //     item.consume = 0;
+      //   } else {
+      //     // 未选中就取消
+      //     this.paytypeList = [...this.paytypeList, item.type];
+      //   }
+      //   this.pays.forEach((user) => {
+      //     if (user.type == 4 && this.paytypeList.includes(4))
+      //       user.consume = this.goldNumber;
+      //     if (
+      //       user.type == 1 &&
+      //       this.paytypeList.includes(1) &&
+      //       this.paytypeList.length > 1
+      //     )
+      //       user.consume = this.floatingPoint(
+      //         this.amount,
+      //         "-",
+      //         this.goldNumber,
+      //       );
+      //   });
 
-        this.pays.forEach((user) => {
-          if (user.type == 4 && this.paytypeList.includes(4))
-            user.consume = this.goldNumber;
-          if (
-            user.type == 1 &&
-            this.paytypeList.includes(1) &&
-            this.paytypeList.length > 1
-          )
-            user.consume = this.floatingPoint(
-              this.amount,
-              "-",
-              this.goldNumber,
-            );
-        });
-        // 仅选中支付宝就删除支付金额显示
-        if (this.paytypeList.includes(1) && this.paytypeList.length == 1)
-          this.pays.forEach((i) => (i.consume = 0));
-      }
+      //   console.log(this.paytypeList)
+      //   // 仅选中支付宝就删除支付金额显示
+      //   if (this.paytypeList.includes(1) && this.paytypeList.length == 1)
+      //     this.pays.forEach((i) => (i.consume = 0));
+      // }
     },
     onGoldPay() {
       if (!this.paytypeList.includes(0)) {
