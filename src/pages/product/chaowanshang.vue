@@ -387,7 +387,7 @@
             <view class="close" @click="showBzcPopup = false"></view>
           </view>
 	  </u-popup>
-   <gachaDetails ref="gachaDetails" />
+      <gachaDetails ref="gachaDetails" />
     </view>
 </template>
 <script>

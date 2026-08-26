@@ -7,16 +7,9 @@
             <view class="title">对对碰</view>
         </view>
        
-        <view class="auto_pilot  " :class="{ auto_pilot_on: isAutoMode }" @click="toggleAutoMode">
-            <view class="voluntarily flex_r flex_ac flex_jc">
-                <view class="auto_pilot_txt">{{ autoModeText }}</view>
-                <view :class="[isAutoMode ? 'auto_pilot_on' : 'auto_pilot_ico']"></view>
-            </view>
-        </view>
+      
 
-          <view class="lord_pill " v-if="lordActivity" @click="openLordPopup" >
-            <!-- <view class="lord_pill_txt">领主模式</view> -->
-        </view>
+     
          <!-- #ifndef MP-WEIXIN -->
            
             <!-- #endif -->
@@ -140,6 +133,23 @@
                 </view>
             </view>
         </view>
+         <movable-area class="area">
+            <movable-view x="10000"  @click="openLordPopup" v-if="lordActivity" class="lord_pill " direction="all" :y="0">
+                <view>
+                        <!-- <view class="lord_pill_txt">领主模式</view> -->
+                    </view>
+            </movable-view>
+            <movable-view class="auto_pilot  " :class="{ auto_pilot_on: isAutoMode }" @click="toggleAutoMode" x="10000" direction="all" :y="0">
+                <view >
+                        <view class="voluntarily flex_r flex_ac flex_jc">
+                            <view class="auto_pilot_txt">{{ autoModeText }}</view>
+                            <view :class="[isAutoMode ? 'auto_pilot_on' : 'auto_pilot_ico']"></view>
+                        </view>
+                  </view>
+            </movable-view>
+           
+       
+         </movable-area>
         <!-- 奖励物品弹窗  -->
        <view class="awards_mask" v-if="showAwardsModal">
             <view class="awards_box flex_c flex_ac">
@@ -313,7 +323,7 @@ export default {
         // 普通模式可购买次数上限：取当前箱子剩余库存，-1（无限库存）时不限制
         buyMaxNum() {
             const left = this.initialData && this.initialData.gachaBox ? Number(this.initialData.gachaBox.leftAwards) : 0;
-            return left === -1 ? 0 : left;
+            return left === -1 ? 200 : (left > 200 ? 200 : left);
         },
         // 天命卡徽标图片源（统一取值，兼容 cardImage / image 两种字段）
          fateBadgeSrc() {
@@ -353,6 +363,18 @@ export default {
     onLoad(query) {
         this.gachaId = query.id || "";
         this.initGame();
+
+        // const isAuto = uni.getStorageSync('isAuto')
+        // if(isAuto){
+        //    setTimeout(()=>{
+        //      this.isAutoMode = true;
+        //         uni.showToast({
+        //             title: '已开启托管',
+        //             icon: 'none'
+        //         });
+        //     this.scheduleAutoStep(400);
+        //    },1000)
+        // }
     },
     created() {
         this.preloadPeng();
@@ -426,6 +448,9 @@ export default {
                     this.prizeList = res.gachaAwards
                     this.recordId = fateMatch.recordId
                     this.lordActivity=res.lordActivity
+                   
+                   
+
 
                 }
             }).catch((e) => {
@@ -787,11 +812,13 @@ export default {
         /** 点击托管按钮：未托管则开启，托管中则取消（保留当前游戏进度） */
         toggleAutoMode() {
             if (this.isAutoMode) {
+                uni.removeStorageSync('isAuto')
                 this.stopAuto(true);
                 return;
             }
             // 不校验支付状态：未支付也可开启，开启后立即进入托管调度（未支付时待机等待开局）
             this.isAutoMode = true;
+            uni.setStorageSync('isAuto',1)
             uni.showToast({
                 title: '已开启托管',
                 icon: 'none'
@@ -1162,6 +1189,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.area{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+   pointer-events: none; /* 🔥 关键 */
+
+ 
+
+}
 page{
     background: rgb(252, 255, 225);
 }
@@ -1607,14 +1646,21 @@ position: relative;
 /* 托管模式切换按钮（位于奖品概览下方） */
 .auto_pilot {
     position: absolute;
-    right: 16rpx;
+    right: 32rpx;
     top: 685rpx;
-    width: 72rpx;
-    height: 84rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/auto.gif");
-    background-size: 100% 100%;
+    width: 102rpx;
+    height: 120rpx;
+      pointer-events:auto;
     position: absolute;
     z-index: 2;
+    >view{
+        width: 72rpx;
+        height: 84rpx;
+        margin: auto;
+         background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/auto.gif");
+         background-size: 100% 100%;
+    }
+    
 
     &.auto_pilot_on{
         .voluntarily{
@@ -1640,7 +1686,9 @@ border: 2rpx solid #FFFFFF;
        align-items: center;
         z-index: 3;
         line-height: 36rpx;
-        right: -16rpx;
+        // right: -16rpx;
+        left: 50%;
+        transform: translateX(-50%);
         top: 65rpx;
 
         .auto_pilot_ico {
@@ -2023,7 +2071,7 @@ padding-bottom: 38rpx;
     background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/lz.png");
     background-size: 100% 100%;
     z-index: 2;
-
+  pointer-events:auto;
     .lord_pill_txt {
         position: absolute;
         top: 58rpx;

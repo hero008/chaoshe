@@ -676,6 +676,7 @@ export default {
       if (!this.showQuantity) return;
       const next = this.payQuantity + step;
       if (next < 1) return;
+
       if (this.maxNum > 0 && next > this.maxNum) {
         uni.$u.toast(`最多可购买${this.maxNum}次`);
         return;
@@ -694,7 +695,8 @@ export default {
         uni.$u.toast(`最多可购买${this.maxNum}次`);
       }
       // 编辑过程中允许临时为空，待失焦时补齐
-      this.payQuantity = val === "" ? "" : Number(val);
+
+        this.payQuantity = val === "" ? 1 : (val);
       if (val !== "" && Number(val) >= 1) this.refreshPayAmount();
     },
     /** 普通模式输入框失焦：兜底校验，空值或小于 1 时归为 1 */
