@@ -278,7 +278,6 @@ import bgc4 from '@/static/bgc4.png'
 // import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { MGTV_Channel,shareUrl } from "@/utils/mgtv";
-import { MGTV_Channel } from "@/utils/mgtv";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort} from '@/utils/mgtv.js'
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
