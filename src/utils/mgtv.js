@@ -190,6 +190,8 @@ export const formateGachaLevelName = (levelName) => {
             return '稀有'
            }else if(levelName == 'C'){
                return '普通'
+           }else if(levelName == '宝箱'){
+            return '宝藏'
            }
 }
 
@@ -329,6 +331,8 @@ export const getSourceXcoinPoint= (type)=>{
      return '兑换码'
   }else if(type == 'CostAwardLogType_Admin'){
      return '管理员手动修改'
+  }else if(type == 'CostAwardLogType_Lord'){
+    return '领主收益'
   }
 }
 
@@ -358,9 +362,9 @@ export const  awardsSort = (awards)=>{
 
 
 export const choushangResultByItemId =(data)=>{
-
+  let bzRewards = data.filter((item)=>item.levelIndex == 52)
    let spRewards = data.filter((item)=>item.levelIndex == 28)
-   let otherRewards =  data.filter((item)=>item.levelIndex != 28)
+   let otherRewards =  data.filter((item)=>item.levelIndex != 28 && item.levelIndex != 52)
     const map = new Map();
   
   otherRewards.forEach(item => {
@@ -377,5 +381,5 @@ export const choushangResultByItemId =(data)=>{
   });
   let otherArr = Array.from(map.values());
   
-  return [...spRewards,...otherArr]
+  return [...bzRewards,...spRewards,...otherArr]
 }

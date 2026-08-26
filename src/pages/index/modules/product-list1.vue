@@ -4,7 +4,9 @@
         <view class="l-lists">
             <view class="p-item flex_r flex_jb" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <!-- <image :src="item.coverImage" class="p-img" /> -->
+                 
                 <view class="product-info">
+                   <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/home/wx_bz.png" alt="">
                     <image :src="item.coverImage" class="p-img" />
                     <!-- <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/static/img/cw-new/wuxiansss.png"
                         class="w-icon" /> -->
@@ -222,6 +224,10 @@ export default {
     onShow() { },
     mounted() { },
     methods: {
+           hasBz(value){
+         const arr = value.awards.filter((item)=>item.levelIndex == 52)
+         return arr.length
+        },
         getlist(page) {
             this.pageda.page = page;
             let url = "v1/gacha/list",
@@ -606,7 +612,16 @@ export default {
    width: 200rpx;
 height: 200rpx;
 border-radius: 16rpx 16rpx 16rpx 16rpx;
+position: relative;
 // margin-right: 24rpx;
+    .bz{
+        width: 70rpx;
+        height: 70rpx;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
 image{
     width: 200rpx;
     height: 200rpx;

@@ -7,11 +7,16 @@
             <view class="title">对对碰</view>
         </view>
        
-        <!-- 托管模式切换按钮 -->
-        <!-- <view class="auto_pilot flex_r flex_ac" :class="{ auto_pilot_on: isAutoMode }" @click="toggleAutoMode">
-            <view class="auto_pilot_ico">{{ isAutoMode ? '❚❚' : '▶' }}</view>
-            <view class="auto_pilot_txt">{{ autoModeText }}</view>
-        </view> -->
+        <view class="auto_pilot  " :class="{ auto_pilot_on: isAutoMode }" @click="toggleAutoMode">
+            <view class="voluntarily flex_r flex_ac flex_jc">
+                <view class="auto_pilot_txt">{{ autoModeText }}</view>
+                <view :class="[isAutoMode ? 'auto_pilot_on' : 'auto_pilot_ico']"></view>
+            </view>
+        </view>
+
+          <view class="lord_pill " v-if="lordActivity" @click="openLordPopup" >
+            <!-- <view class="lord_pill_txt">领主模式</view> -->
+        </view>
          <!-- #ifndef MP-WEIXIN -->
            
             <!-- #endif -->
@@ -20,12 +25,12 @@
                 <view class="gz" @click=" goto('/pages/common/rulepop', { val: 'FateMatch' })"></view>
                   <view class="share " @click="onShare"></view>
                 <view class="theme_content flex_r flex_ac ">
-                   
+                    <!-- <image :src="fateBadgeSrc" :key="fateBadgeSrc" /> -->
                     <image
                      v-if="initialData"
                         :src="initialData.gacha.coverImage"
                         mode="scaleToFill"
-                    />
+                    /> 
                     <!-- <view class="theme_deco "></view> -->
                     <view>
                          <view class="theme_title">{{ themeName }}</view>
@@ -96,18 +101,26 @@
             </view>
         
             <!-- 卡桌区域 -->
-        
-            <view class="game_footer">
+               <view class="game_footer">
+                <!-- <view class="progress_track">
+                    <view class="progress_inner" :style="{ width: progressPercent + '%' }"></view>
+                </view> -->
+           
                 <view class="start_row" v-if="stateType == 0">
                     <!-- 经典模式：图片开始按钮；疯狂模式：倍速开始按钮 -->
-                    <view class="start_bar" v-if="!isCrazyMode" @click="onpay"> </view>
-                    <!-- <view class="start_bar start_bar_crazy flex_r flex_ac flex_jc" v-else @click="onCrazyStart">
-                        选择倍速开始游戏</view> -->
+                    <view :class="['start_bar',isCrazyMode?'crazy':'']" @click="onpay"></view>
+                    <!-- <view class="start_bar start_bar_crazy " v-else @click="onCrazyStart"></view> -->
                     <!-- 疯狂/经典模式切换按钮 -->
-                    <!-- <view class="crazy_switch" :class="{ crazy_switch_on: isCrazyMode }" @click="toggleCrazyMode">{{
-                        isCrazyMode ? '切换经典模式' : '切换疯狂模式' }}</view> -->
+                    <view class="crazy_switch" :class="{ crazy_switch_on: isCrazyMode }" @click="toggleCrazyMode">
+                    </view>
                 </view>
             </view>
+            <!-- <view class="game_footer">
+                <view class="start_row" v-if="stateType == 0">
+                  
+                    <view class="start_bar" v-if="!isCrazyMode" @click="onpay"> </view>
+                </view>
+            </view> -->
         </view>
         <!-- 选择天命卡弹窗 -->
         <view class="fate_select_mask" v-if="stateType == 1 && Object.keys(fateCard).length === 0">
@@ -128,22 +141,18 @@
             </view>
         </view>
         <!-- 奖励物品弹窗  -->
-        <view class="awards_mask" v-if="showAwardsModal">
+       <view class="awards_mask" v-if="showAwardsModal">
             <view class="awards_box flex_c flex_ac">
                 <view class="awards_title"></view>
                 <view class="awardsImg ">
-                    <view :style="{
-                        background:getTagPng(finishNumber).bgc
-                    }" class="awards_number">x{{ finishNumber }}碰</view>
+                    <view class="awards_number">x{{ finishNumber }}碰</view>
                     <image class="awards_img" :src="awards.length ? awards[0].coverThumb : ''" />
                     <view class="awards_name flex_r flex_ac flex_jc">
                         <view class="awardsName ellipsis">{{ awards[0].itemName }}</view>
-                        <view class="awardsNumber">x1</view>
+                        <view class="awardsNumber">x{{ multiple }}</view>
                     </view>
                 </view>
                 <view class="awards_btn_group " @click="awardsPlayAgain"> </view>
-
-                <view @click="awardsPlayAgain" class="closeBtn"></view>
             </view>
         </view>
         <u-popup  @close="showList"  :show="popupShow" bgColor="transparent">
@@ -163,10 +172,17 @@
                         }" class="frequency">{{ value.matchNum }}碰获得</view>
                     </view>
                 </view>
-                <scroll-view v-else @scrolltolower="onReachScollBottom" class="recordList" :scroll-y="true">
+                <scroll-view v-else-if="popupTitle == '中奖记录'&& Object.keys(recordList).length" @scrolltolower="onReachScollBottom" class="recordList" :scroll-y="true">
                     <view class="recordItem flex_r " v-for="(value, index) in recordList" :key="index">
-                        <image :src="value.awardItems[0].itemCover" class="recordImg"
-                            @click="ondetail(value.awardItems[0].itemId)" />
+                        <view :style="{
+                            backgroundImage:`url(${value.awardItems[0].itemCover})`,
+                            backgroundSize:'100% 100%'
+                        }" class="recordImg"  @click="ondetail(value.awardItems[0].itemId)">
+                        <view v-if="value.awardNum > 1" class="count">
+                            x{{ value.awardNum }}
+                        </view></view>
+                        <!-- <image :src="" class="recordImg"
+                            /> -->
                         <view class="right flex_r flex_wrap ">
                             <view class="goods flex_r flex_jb flex_ac">
                                 <view class="recorName ellipsis">{{ value.awardItems[0].itemName }}</view>
@@ -187,6 +203,7 @@
                 </scroll-view>
             </view>
         </u-popup>
+        <feudalLord ref="feudalLord" :gachaId="gachaId" />
         <!-- 支付 -->
         <x-pay @success="onClickDraw" ref="xPay" mtype="7" :probabilityShow="[]" :isMultiple="isCrazyMode"
             :maxNum="buyMaxNum" />
@@ -196,7 +213,7 @@
 </template>
 
 <script>
-
+import feudalLord from "@/components/feudalLord/index.vue";
 import { post } from "@/utils/api.js";
 import { mapMutations,mapState } from "vuex";
 import xPay from "@/components/x-pay/index.vue";
@@ -211,7 +228,7 @@ export default {
     name: "duiduipeng",
     data() {
         return {
-            // 游戏核心数据
+             // 游戏核心数据
             tableSlots: [],         // 卡桌：当前可操作的卡片(最多9张)
             selectedCards: [],      // 当前选中的卡片位置索引(最多2个)
             showPeng: false,        // 匹配成功时显示“碰”图片
@@ -263,7 +280,6 @@ export default {
             pengSrc: 'https://img.shinemang.com/gachaStatic/static/duiduipeng/peng.png',
             // “对勾”选中标记图片，默认网络 URL，缓存就绪后替换为本地路径
             pitchOnSrc: 'https://img.shinemang.com/gachaStatic/static/duiduipeng/pitchOn.png',
-            // 复用的匹配音效上下文，避免重复创建与网络加载导致的延迟与内存泄漏
             matchAudio: null,
             finishNumber: 0,//结束次数
             // 疯狂模式（倍速玩法）开关
@@ -274,12 +290,25 @@ export default {
             isAutoRolling: false,   // 托管随机选卡动画是否进行中
             autoRollIndex: -1,      // 随机选卡动画当前高亮的卡片索引
             recordId: '',
+            // 领主接力弹窗
+            lordPopupShow: false,   // 领主弹窗显示标志
+            lordTabIndex: 0,        // 领主弹窗当前Tab：0=领主记录 1=领主收益
+            lordTouchStartY: 0,     // 领主弹窗滑动手势起点Y
+            lordTouchStartX: 0,     // 领主弹窗滑动手势起点X
+            lordTouchInList: false, // 手势是否起始于记录列表内部（列表内滑动不触发关闭）
+            lord: { avatarUrl: '', name: '虚位以待' },
+            awardsList: [],
+            lordRecord: [],//领主记录
+            lordActivity:0,
+            multiple:1
         };
     },
     components: {
         xPay,
+        feudalLord
     },
     computed: {
+
           ...mapState(["userInfo"]),
         // 普通模式可购买次数上限：取当前箱子剩余库存，-1（无限库存）时不限制
         buyMaxNum() {
@@ -287,19 +316,32 @@ export default {
             return left === -1 ? 0 : left;
         },
         // 天命卡徽标图片源（统一取值，兼容 cardImage / image 两种字段）
-        fateBadgeSrc() {
+         fateBadgeSrc() {
             return this.resolveImg((this.fateCard && (this.fateCard.cardImage || this.fateCard.image)) || '');
         },
         // 托管按钮文案：未开启=未托管，已开启且 stateType==1=托管中，已开启但未支付=托管待机
-        autoModeText() {
-            if (!this.isAutoMode) return '未托管';
-            return this.stateType == 1 ? '托管中' : '托管待机';
+         autoModeText() {
+            if (!this.isAutoMode) return '去托管';
+            return this.stateType == 1 ? '托管中...' : '托管中...';
         },
         // 天命卡弹窗提示文案：托管随机选卡时提示自动选择中
-        fateTipText() {
+         fateTipText() {
             return this.isAutoRolling ? '托管中，正在随机选择天命卡…' : '点击卡片即可选定天命卡';
         },
-        progressPercent() {
+         // 领主列表展示数据：统一收益物品字段，兼容单物品与多物品两种返回结构
+        lordDisplayList() {
+            return (this.lordRecord || []).map((row) => {
+                const raw = row.awards || row.awardItems || row.items || [];
+                const items = Array.isArray(raw) ? raw : [raw];
+                return {
+                    avatarUrl: row.avatarUrl,
+                    name: row.name,
+                    num: row.num,
+                    items: items.filter((item) => item && item.name),
+                };
+            });
+        },
+           progressPercent() {
             var current = Number(this.accumulate && this.accumulate.num) || 0;
             var total = Number(this.accumulate && this.accumulate.accumulationNum) || 0;
             if (total <= 0) return 0;
@@ -383,10 +425,10 @@ export default {
                     this.tableSlots = cards.length > 0 ? cards : this.createEmptySlots();
                     this.prizeList = res.gachaAwards
                     this.recordId = fateMatch.recordId
+                    this.lordActivity=res.lordActivity
 
                 }
             }).catch((e) => {
-                console.error('初始化游戏接口失败', e);
             });
 
         },
@@ -401,7 +443,7 @@ export default {
         },
         /** 预下载并缓存图片列表，去重后并行处理，完成后整体替换 imgCache 触发响应式更新 */
         async preloadCardImages(urls) {
-            const list = Array.from(new Set((urls || []).filter((u) => u && !this.imgCache[u])));
+           const list = Array.from(new Set((urls || []).filter((u) => u && !this.imgCache[u])));
             if (!list.length) return;
             const newMap = {};
             await Promise.all(list.map(async (u) => {
@@ -533,7 +575,7 @@ export default {
         },
         /** 点击卡片 */
         onCardClick(card, index) {
-            if (!card) return;
+              if (!card) return;
             // 匹配处理中忽略点击，避免误触与卡顿
             if (this.isProcessing) return;
             // 已选中则取消（点击自身取消选中）
@@ -578,12 +620,12 @@ export default {
         },
 
         /** 匹配成功处理 */
-        async handleMatchSuccess(card1, card2, pos1, pos2) {
+         async handleMatchSuccess(card1, card2, pos1, pos2) {
             // 立即播放匹配音效（与动画、网络请求并行，消除音效延迟）
             this.playMatchSound();
             // 播放消除动画（用位置索引）
             this.showPengAtCards(pos1, pos2);
-            await this.delay(100);
+            await this.delay(200);
             // 调用后端匹配接口（参数使用 cardNo）
             if (!this.isMockMode) {
                 try {
@@ -621,6 +663,7 @@ export default {
                             this.gameOver = true;
                             this.checkAwards(res.awards);
                             this.finishNumber = res.matchNum
+                            this.multiple = res.multiple
                         }
                     } else {
                         // 接口返回错误码，重新请求列表数据刷新页面
@@ -685,7 +728,7 @@ export default {
                 return
             }
             // 更新游戏状态到后端
-            post("v1/gacha/consume_fate_card", {
+           post("v1/gacha/consume_fate_card", {
                 gacha_id: this.gachaId,
                 recordId: this.recordId
             }).then((res) => {
@@ -695,6 +738,7 @@ export default {
                     this.awards = res.awards || []
                     this.checkAwards(res.awards);
                     this.finishNumber = res.matchNum
+                    this.multiple = res.multiple
                 } else {
                     this.initGame()
                 }
@@ -730,7 +774,7 @@ export default {
         },
 
         /** 切换疯狂/经典模式 */
-        toggleCrazyMode() {
+         toggleCrazyMode() {
             this.isCrazyMode = !this.isCrazyMode;
         },
 
@@ -738,7 +782,6 @@ export default {
         onCrazyStart() {
             this.onpay()
         },
-
         // ============ 托管模式 ============
 
         /** 点击托管按钮：未托管则开启，托管中则取消（保留当前游戏进度） */
@@ -750,7 +793,7 @@ export default {
             // 不校验支付状态：未支付也可开启，开启后立即进入托管调度（未支付时待机等待开局）
             this.isAutoMode = true;
             uni.showToast({
-                title:  '已开启托管' ,
+                title: '已开启托管',
                 icon: 'none'
             });
             this.scheduleAutoStep(400);
@@ -773,7 +816,7 @@ export default {
                 uni.showToast({ title: '已取消托管', icon: 'none' });
             }
         },
-
+       
         /** 调度下一次托管执行 */
         scheduleAutoStep(delay) {
             if (!this.isAutoMode) return;
@@ -785,12 +828,12 @@ export default {
         },
 
         /** 托管主流程：自动选天命卡 -> 自动对碰 -> 自动补天命卡 -> 自动开下一局 */
-        async runAutoStep() {
+         async runAutoStep() {
             if (!this.isAutoMode) return;
 
             // 奖励已发放：等待3秒后自动开始下一局
             if (this.showAwardsModal) {
-                await this.delay(3000);
+                await this.delay(1000);
                 if (!this.isAutoMode) return;
                 // 等待期间用户手动关闭了弹窗，回到主流程重新判断
                 if (!this.showAwardsModal) {
@@ -869,6 +912,7 @@ export default {
             this.scheduleAutoStep(1500);
         },
 
+
         /** 从天命卡候选中随机挑选一张有效卡，返回 { item, index, validIndexes }，无有效卡时返回 null */
         pickRandomFateOption() {
             const list = this.fateOptions || [];
@@ -921,7 +965,7 @@ export default {
         },
 
         /** 在卡桌上查找一对相同卡牌，返回两张卡的位置索引，无则返回 null */
-        findMatchPair() {
+         findMatchPair() {
             const seen = {};
             for (let i = 0; i < this.tableSlots.length; i++) {
                 const card = this.tableSlots[i];
@@ -936,7 +980,7 @@ export default {
 
 
         /** 检测游戏是否结束 */
-        checkGameOver() {
+       checkGameOver() {
             if (this.tableSlots.length === 0) {
                 this.endGame();
                 return;
@@ -1002,8 +1046,94 @@ export default {
         onReachScollBottom() {
             if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
                 this.pageda.page++;
-                this.getRecordList();
+                if (this.lordPopupShow) this.getRecordList()
+                else this.getLog()
+
             }
+        },
+
+
+                /** 打开领主接力弹窗 */
+        openLordPopup() {
+            this.$refs.feudalLord.open(this.gachaId)
+            return
+            this.lordTabIndex = 0;
+            this.lordPopupShow = true;
+            post("v1/activity/lord", {
+                gacha_id: this.gachaId,
+            }).then(res => {
+                if (!res.code) {
+                    this.awardsList = res.awards
+                    this.lord = res.log || { avatarUrl: '', name: '虚位以待' }
+                }
+            })
+            this.getLog()
+
+        },
+        /** 关闭领主接力弹窗 */
+        closeLordPopup() {
+            this.lordPopupShow = false;
+            this.pageda = {
+                page: 1,
+                page_size: 20,
+                total: 20,
+            }
+        },
+        /** 记录列表内的滑动：标记后不参与关闭手势判断 */
+        onLordListTouchStart() {
+            this.lordTouchInList = true;
+        },
+        /** 领主弹窗关闭手势：记录起点 */
+        onLordTouchStart(e) {
+            const touch = e.touches && e.touches[0];
+            if (!touch) return;
+            this.lordTouchStartX = touch.clientX;
+            this.lordTouchStartY = touch.clientY;
+        },
+        /** 领主弹窗关闭手势：向下滑动超过阈值即关闭 */
+        onLordTouchMove(e) {
+            if (this.lordTouchInList || !this.lordPopupShow) return;
+            const touch = e.touches && e.touches[0];
+            if (!touch) return;
+            const deltaY = touch.clientY - this.lordTouchStartY;
+            const deltaX = touch.clientX - this.lordTouchStartX;
+            // 向下滑动且以纵向位移为主，避免误触横向滑动
+            if (deltaY > 80 && deltaY > Math.abs(deltaX)) {
+                this.lordTouchInList = true; // 本次手势已处理，避免重复触发
+                this.closeLordPopup();
+            }
+        },
+        /** 领主弹窗关闭手势：重置手势状态 */
+        onLordTouchEnd() {
+            this.lordTouchInList = false;
+            this.lordTouchStartX = 0;
+            this.lordTouchStartY = 0;
+        },
+        /** 切换领主弹窗Tab */
+        switchLordTab(index) {
+            this.lordTabIndex = index;
+            this.pageda = {
+                page: 1,
+                page_size: 20,
+                total: 20,
+            }
+            this.getLog()
+        },
+        getLog() {
+            let url = ''
+            if (!this.lordTabIndex) url = "v1/activity/lord/log"
+            else url = "v1/activity/lord/revenue"
+            post(url, {
+                gacha_id: this.gachaId,
+                page: this.pageda.page,
+                pageSize: this.pageda.page_size
+            }).then(res => {
+                if (!res.code) {
+                    if (this.pageda.page == 1) this.lordRecord = [];
+                    this.lordRecord = this.lordRecord.concat(res.log || res.revenue);
+                    this.pageda.total = res.total || 0;
+                }
+            })
         },
         onShare() {
             if(window.mgtv){
@@ -1023,6 +1153,10 @@ export default {
             //     this.initialData.gacha ? this.initialData.gacha.coverImage : ''
             // );
         },
+
+
+
+
     },
 };
 </script>
@@ -1393,6 +1527,21 @@ position: relative;
                     background: linear-gradient( 180deg, #FFF7A3 0%, #FFFEF9 100%);
                         border-radius: 16rpx 16rpx 16rpx 16rpx;
                         border: 2rpx solid #F1B966;
+                        position: relative;
+                        .count{
+                                 position: absolute;
+                            bottom: 0px;
+                            left: 0px;
+                            padding: 0 4px;
+                            height: 20px;
+                            line-height: 20px;
+                            text-align: center;
+                            border-radius: 0 12px 0 7px;
+                            background: rgba(0, 0, 0, 0.5);
+                            font-weight: bold;
+                            font-size: 12px;
+                            color: #ffffff;
+                        }
                 }
 
                 .right {
@@ -1458,39 +1607,67 @@ position: relative;
 /* 托管模式切换按钮（位于奖品概览下方） */
 .auto_pilot {
     position: absolute;
-    right: 0;
-    top: 462rpx;
-    height: 64rpx;
-    padding: 0 20rpx 0 12rpx;
-    background: rgba(0, 0, 0, 0.45);
-    border-radius: 32rpx 0 0 32rpx;
+    right: 16rpx;
+    top: 685rpx;
+    width: 72rpx;
+    height: 84rpx;
+    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/auto.gif");
+    background-size: 100% 100%;
+    position: absolute;
     z-index: 2;
 
-    .auto_pilot_ico {
-        width: 40rpx;
-        height: 40rpx;
-        line-height: 40rpx;
-        text-align: center;
-        border-radius: 50%;
-        background: #A386CD;
-        color: #FFFFFF;
-        font-size: 18rpx;
-        margin-right: 8rpx;
-    }
-
-    .auto_pilot_txt {
-        font-weight: 500;
-        font-size: 24rpx;
-        color: #FFFFFF;
-    }
-
-    &.auto_pilot_on {
-        background: rgba(124, 92, 255, 0.85);
-
-        .auto_pilot_ico {
-            background: #EA36D7;
+    &.auto_pilot_on{
+        .voluntarily{
+            background: #FFFFFF;
+            border-radius: 18rpx 18rpx 18rpx 18rpx;
+            border: 2rpx solid #444CE2;
+            .auto_pilot_txt{
+                color: #444CE2;
+            }
         }
     }
+
+
+    .voluntarily {
+        position: absolute;
+        width: 104rpx;
+        height: 36rpx;
+       background: linear-gradient( 360deg, #4242DE 0%, #5092F9 100%);
+
+border: 2rpx solid #FFFFFF;
+        border-radius: 18rpx;
+       display: flex;
+       align-items: center;
+        z-index: 3;
+        line-height: 36rpx;
+        right: -16rpx;
+        top: 65rpx;
+
+        .auto_pilot_ico {
+            width: 20rpx;
+            height: 20rpx;
+            margin-left: 4rpx;
+            background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/arrow.png");
+            background-size: 100% 100%;
+
+        }
+
+        .auto_pilot_txt {
+            font-weight: bold;
+            font-size: 20rpx;
+            color: #FFFFFF;
+        }
+
+        .auto_pilot_on {
+            // width: 20rpx;
+            // height: 20rpx;
+            // margin-left: 4rpx;
+            // background: url("https://img.chaoshewang.com/static/img/duiduipeng/pilot.png");
+            // background-size: 100% 100%;
+        }
+    }
+
+
 }
 
 .tab_pill_right {
@@ -1675,9 +1852,76 @@ padding-bottom: 38rpx;
     width: 100%;
     // height: 200rpx;
     // padding: 30rpx 52rpx 0;
+     margin-left: -12rpx;
     position: absolute;
-    bottom: -30rpx;
+    bottom: -20rpx;
+
+    /* 开始游戏按钮行（开始按钮居中，模式切换按钮靠右） */
+    .start_row {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+       align-items: center;
+
+        .start_bar {
+            width: 444rpx;
+            height: 128rpx;
+            background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/start.png");
+            background-size: 100% 100%;
+            margin-right: 10rpx;
+
+    &.crazy{
+        background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/crazy.png");
+        background-size: 100% 100%;
+    }
+
+            // position: absolute;
+            // width: 396rpx;
+            // height: 100rpx;
+            // line-height: 100rpx;
+            // background: url("https://img.chaoshewang.com/static/img/duiduipeng/footBtn.png");
+            // background-size: 100% 100%;
+            // left: 50%;
+            // transform: translateX(-50%);
+            // font-weight: 400;
+            // font-size: 40rpx;
+            // color: #421384;
+            // font-family: "倍数欧气值", sans-serif;
+            // text-align: center;
+        }
+
+        /* 疯狂模式下的倍速开始按钮：与开始按钮尺寸一致 */
+        .start_bar_crazy {
+            //  position: absolute;
+            // width: 340rpx;
+            // height: 104rpx;
+            // background: url("https://img.chaoshewang.com/static/img/duiduipeng/startGame.png");
+            // background-size: 100% 100%;
+            // left: 50%;
+            // transform: translateX(-50%);
+        }
+
+        /* 疯狂/经典模式切换按钮 */
+        .crazy_switch {
+            // position: absolute;
+            // right: -50rpx;
+            // top: 20rpx;
+            width: 220rpx;
+            height: 96rpx;
+            background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/kuangre.png");
+            background-size: 100% 100%;
+
+            &.crazy_switch_on {
+                background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/classic.png");
+                background-size: 100% 100%;
+            }
+        }
+
+
+    }
 }
+
 
 .progress_row {
     width: 100%;
@@ -1731,41 +1975,387 @@ padding-bottom: 38rpx;
 }
 
 /* 开始游戏按钮 */
-.start_bar {
-    width: 526rpx;
-    height: 128rpx;
-    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/startGame.png");
-    background-size: 100% 100%;
-    margin: 0 auto;
-}
+// .start_bar {
+//     width: 526rpx;
+//     height: 128rpx;
+//     background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/startGame.png");
+//     background-size: 100% 100%;
+//     margin: 0 auto;
+// }
 
 /* 疯狂模式下的倍速开始按钮：与开始按钮尺寸一致 */
-.start_bar_crazy {
-    background: linear-gradient(90deg, #7c5cff, #ff4fd8);
-    border-radius: 52rpx;
-    font-weight: 600;
-    font-size: 32rpx;
-    color: #FFFFFF;
-}
+// .start_bar_crazy {
+//     background: linear-gradient(90deg, #7c5cff, #ff4fd8);
+//     border-radius: 52rpx;
+//     font-weight: 600;
+//     font-size: 32rpx;
+//     color: #FFFFFF;
+// }
 
 /* 疯狂/经典模式切换按钮 */
-.crazy_switch {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    margin-top: -28rpx;
-    height: 56rpx;
-    padding: 0 16rpx;
-    line-height: 56rpx;
-    text-align: center;
-    border-radius: 28rpx;
-    background: rgba(0, 0, 0, 0.45);
-    font-weight: 500;
-    font-size: 22rpx;
-    color: #FFFFFF;
+// .crazy_switch {
+//     position: absolute;
+//     right: 0;
+//     top: 50%;
+//     margin-top: -28rpx;
+//     height: 56rpx;
+//     padding: 0 16rpx;
+//     line-height: 56rpx;
+//     text-align: center;
+//     border-radius: 28rpx;
+//     background: rgba(0, 0, 0, 0.45);
+//     font-weight: 500;
+//     font-size: 22rpx;
+//     color: #FFFFFF;
 
-    &.crazy_switch_on {
-        background: rgba(234, 54, 215, 0.85);
+//     &.crazy_switch_on {
+//         background: rgba(234, 54, 215, 0.85);
+//     }
+// }
+
+/* 领主标签（位于托管模式按钮下方） */
+.lord_pill {
+    position: absolute;
+    right: 12rpx;
+    top: 886rpx;
+    width: 108rpx;
+    height: 112rpx;
+    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/lz.png");
+    background-size: 100% 100%;
+    z-index: 2;
+
+    .lord_pill_txt {
+        position: absolute;
+        top: 58rpx;
+        width: 104rpx;
+        height: 36rpx;
+        line-height: 33rpx;
+        background: #DF9E3B;
+        border-radius: 18rpx;
+        border: 2rpx solid #FFFFFF;
+        font-weight: bold;
+        font-size: 20rpx;
+        color: #FFFFFF;
+        text-align: center;
+        right: -12rpx;
+    }
+
+}
+
+/* 领主接力弹窗 */
+// .lord_popup {
+//     width: 100vw;
+//     height: 1244rpx;
+//     position: relative;
+//     background: url("https://img.chaoshewang.com/static/img/duiduipeng/lordBg.png");
+//     background-size: 100% 100%;
+//     padding: 44rpx 32rpx 0;
+//     bottom: -40rpx;
+
+//     .close {
+//         width: 56rpx;
+//         height: 56rpx;
+//         background: url("https://img.chaoshewang.com/static/img/duiduipeng/close.png");
+//         background-size: 100% 100%;
+//         position: absolute;
+//         top: -80rpx;
+//         right: 20rpx;
+//     }
+
+//     .lord_pop_head {
+//         flex-direction: row;
+//         text-align: center;
+//         margin-bottom: 52rpx;
+
+//         .lord_pop_title {
+//             font-weight: 400;
+//             font-size: 48rpx;
+//             font-family: "倍数欧气值", sans-serif;
+//         }
+
+//         .lord_pop_close {
+//             font-weight: 500;
+//             font-size: 24rpx;
+//             color: #776F7A;
+//         }
+//     }
+
+//     .lord_owner {
+//         // width: 100%;
+//         margin-bottom: 24rpx;
+//         position: relative;
+
+//         .lord_owner_avatar {
+//             width: 128rpx;
+//             height: 128rpx;
+//             border-radius: 50%;
+//             border: 6rpx solid #DE9A35;
+//             overflow: hidden;
+//         }
+
+//         .lord_owner_name {
+//             font-weight: bold;
+//             font-size: 28rpx;
+//             margin-top: 16rpx;
+
+//         }
+
+//         .crown {
+//             position: absolute;
+//             width: 78rpx;
+//             height: 70rpx;
+//             background: url("https://img.chaoshewang.com/static/img/duiduipeng/crown.png");
+//             background-size: 100% 100%;
+//             top: -30rpx;
+//             left: 52%;
+//             z-index: 3;
+//         }
+
+//     }
+
+//     .lord_notice {
+//         width: 654rpx;
+//         min-height: 48rpx;
+//         background: linear-gradient(90deg, rgba(234, 197, 255, 0) 0%, #EAC5FF 30%, #EAC5FF 70%, rgba(234, 197, 255, 0) 100%);
+//         margin: 0 auto;
+//         padding: 6rpx 0;
+//         box-sizing: border-box;
+
+//         .lord_notice_row {
+//             font-weight: 500;
+//             font-size: 24rpx;
+//             color: #EA36D7;
+//             flex-shrink: 0;
+//         }
+
+//         /* 物品区：撑不下时换行，不挤压左侧文案 */
+//         .lord_notice_awards {
+//             min-width: 0;
+//             justify-content: flex-start;
+//         }
+
+//         .lord_notice_item {
+//             max-width: 100%;
+//             margin-right: 12rpx;
+
+//             &:last-child {
+//                 margin-right: 0;
+//             }
+//         }
+
+//         .lord_notice_img {
+//             width: 36rpx;
+//             height: 36rpx;
+//             margin-left: 8rpx;
+//             flex-shrink: 0;
+
+//         }
+
+//         .lord_notice_desc {
+//             font-weight: 500;
+//             font-size: 24rpx;
+//             color: #EA36D7;
+//             line-height: 40rpx;
+//             min-width: 0;
+//         }
+
+//         /* 数量独立成列：不参与压缩与省略 */
+//         .lord_notice_num {
+//             font-weight: 500;
+//             font-size: 24rpx;
+//             color: #FF7A1A;
+//             line-height: 40rpx;
+//             margin-left: 4rpx;
+//             flex-shrink: 0;
+//             white-space: nowrap;
+//         }
+//     }
+
+//     .listBox {
+//         height: 1008rpx;
+//         width: 686rpx;
+//         position: relative;
+
+//         .lord_tabs {
+//             position: relative;
+//             margin-top: 40rpx;
+//             width: 686rpx;
+//             height: 200rpx;
+//             font-family: "倍数欧气值", sans-serif;
+//             font-weight: 400;
+//             font-size: 34rpx;
+
+//             /* 背景独立成层，翻转时不影响Tab文字与下划线 */
+//             .lord_tabs_bg {
+//                 position: absolute;
+//                 top: -16rpx;
+//                 /* 抵消父级 padding-top，铺满整个Tab条 */
+//                 left: 0;
+//                 width: 686rpx;
+//                 height: 200rpx;
+//                 z-index: 0;
+//                 background: url("https://img.chaoshewang.com/static/img/duiduipeng/tab.png") no-repeat;
+//                 background-size: 100% 100%;
+//                 /* 默认态也声明 transform，保证列表为空时翻转仍能触发重绘 */
+//                 transform: scaleX(1);
+//                 will-change: transform;
+
+//                 &.lord_tabs_bg_flip {
+//                     transform: scaleX(-1);
+//                 }
+//             }
+
+//             .lord_tab {
+//                 position: relative;
+//                 z-index: 1;
+//                 flex: 1;
+//                 height: 72rpx;
+//                 justify-content: center;
+
+//                 .lord_tab_txt {
+//                     font-weight: 500;
+//                     font-size: 34rpx;
+//                     color: #A79C92;
+//                 }
+
+//                 .lord_tab_line {
+//                     width: 40rpx;
+//                     height: 6rpx;
+//                     border-radius: 4rpx;
+//                     margin-top: 4rpx;
+//                     background: transparent;
+//                 }
+
+//                 &.lord_tab_on {
+//                     .lord_tab_txt {
+//                         font-weight: bold;
+//                         color: #EA36D7;
+//                     }
+
+//                     .lord_tab_line {
+//                         background: #EA36D7;
+//                     }
+//                 }
+//             }
+//         }
+
+//         .lord_list {
+//             position: absolute;
+//             height: 630rpx;
+//             overflow-y: auto;
+//             top: 70rpx;
+//             /* 左右撑满容器，避免绝对定位收缩宽度导致行内元素挤在一起 */
+//             left: 0;
+//             right: 0;
+
+//             .lord_item {
+//                 width: 100%;
+//                 height: 128rpx;
+//                 padding: 0 32rpx;
+//                 font-weight: bold;
+//                 font-size: 24rpx;
+//                 box-sizing: border-box;
+
+//                 .lord_item_avatar {
+//                     width: 64rpx;
+//                     height: 64rpx;
+//                     border-radius: 50%;
+//                     flex-shrink: 0;
+//                 }
+
+//                 .lord_item_name {
+//                     max-width: 100%;
+//                 }
+
+//                 /* 名称 + 占领时长纵向信息列 */
+//                 .lord_item_info {
+//                     margin-left: 16rpx;
+//                     margin-right: 16rpx;
+//                     align-items: flex-start;
+//                     flex: 1;
+//                     min-width: 0;
+//                     overflow: hidden;
+//                 }
+
+//                 .lord_item_time {
+//                     font-weight: 500;
+//                     font-size: 24rpx;
+//                     color: #818181;
+//                     margin-top: 8rpx;
+//                     white-space: nowrap;
+//                 }
+
+//                 .lord_item_value {
+//                     margin-left: auto;
+//                     flex-shrink: 0;
+//                     white-space: nowrap;
+//                 }
+
+//                 /* 领主收益：单条记录可能含多个物品，纵向右对齐逐行展示 */
+//                 .lord_item_awards {
+//                     max-width: 260rpx;
+//                     margin-left: auto;
+//                     align-items: flex-end;
+//                     flex-shrink: 0;
+
+//                     /* 单个物品：缩略图 + 文案，横向垂直居中 */
+//                     .lord_award_row {
+//                         max-width: 100%;
+//                         justify-content: flex-end;
+//                     }
+
+//                     .lord_award_img {
+//                         width: 36rpx;
+//                         height: 36rpx;
+//                         border-radius: 8rpx;
+//                         margin-right: 8rpx;
+//                         flex-shrink: 0;
+//                     }
+
+//                     .lord_award_txt {
+//                         font-weight: bold;
+//                         font-size: 24rpx;
+//                         line-height: 48rpx;
+//                         text-align: right;
+//                         min-width: 0;
+//                         flex-shrink: 1;
+//                     }
+
+//                     /* 数量独立成列：不参与压缩与省略，名称过长时仅省略名称 */
+//                     .lord_award_num {
+//                         font-weight: bold;
+//                         font-size: 24rpx;
+//                         line-height: 48rpx;
+//                         margin-left: 4rpx;
+//                         flex-shrink: 0;
+//                         white-space: nowrap;
+//                     }
+//                 }
+//             }
+//         }
+
+//         &::before {
+//             content: "";
+//             width: 100%;
+//             height: calc(100% - 150rpx);
+//             bottom: 0rpx;
+//             position: absolute;
+//             background: #fff;
+//         }
+//     }
+
+
+// }
+
+@keyframes lordPopIn {
+    0% {
+        opacity: 0;
+        transform: translateY(60rpx);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

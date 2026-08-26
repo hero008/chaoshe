@@ -33,10 +33,10 @@
                         </view> -->
                                                  <!-- !k.click ? 'reversal' : '' -->
 
-                        <view class="card-contents card-back" @click="ondetail(k.itemId)"
+                        <view class="card-contents card-back" @click="ondetail(k)"
                             :class="['card' + k.levelName,]">
 
-                            <view v-if="k.levelIndex != 28" class="count">
+                            <view v-if="k.levelIndex != 28 && k.levelIndex != 52" class="count">
                                <view>x{{ k.num }}</view>
                             </view>
 
@@ -71,13 +71,14 @@
                            
                        </view>
                        <view v-else class="guangImg"></view>
-                       <img v-if="originalList[0].levelName == 'SP'" class="tag" src="@/static/result/SP.png" alt="">
-                      <img :src="originalList[0].coverImage" class="goodsImg" alt="">
+                       <img v-if="originalList[0].levelIndex == 28" class="tag" src="@/static/result/SP.png" alt="">
+                        <img v-if="originalList[0].levelIndex == 52" class="tag bz" src="https://img.shinemang.com/gachaStatic/bz.png" alt="">
+                      <img  @click="ondetail(originalList[0])" :src="originalList[0].coverImage" class="goodsImg" alt="">
                       <view class="goodsName ellipsis">{{ originalList[0].itemName }}</view>
                 </view>
 
                 <view class="btn">
-                     <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
+                     <view  @click='fangsheng' v-if="!hasBx && userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
                      <view class="all_btn" @click="close"></view>
                      
                 </view>
@@ -101,7 +102,7 @@
                 <!-- <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view> -->
                 <view  class="box">
                     <view class="btn">
-                      <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
+                      <view  @click='fangsheng' v-if="!hasBx && userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
                     <!-- {{ allShow ? '确定' : '一键开奖' }} -->
                       <view class="all_btn" @click="close"></view>
                     </view>
@@ -127,6 +128,7 @@ import bgc from '@/static/result/resultBg.png'
 export default {
     data() {
         return {
+            hasBx:0,
             percentage:0,
             cartoonsrc:'https://img.shinemang.com/gachaStatic/svga/wxs_b.svga',
             voiceUrl:"",
@@ -168,7 +170,6 @@ export default {
     components: { cSvga },
     methods: {
         formateRewardsList(list){
-            console.log( choushangResultByItemId(list))
             return choushangResultByItemId(list)
         },
          onLoaded() {
@@ -221,6 +222,8 @@ export default {
            })
         },
         open(da, showAnim, id, index) {
+
+             this.hasBx = da.filter((item)=>item.levelIndex == 52).length
               this.cysType = this.verdictBig(da)
              this.originalList = da//原数据
             // this.originalList.sort((a,b)=> b.levelIndex - a.levelIndex )
@@ -269,7 +272,7 @@ export default {
         },
 
         verdictBig(arr) {
-            return arr.some(item => item.levelIndex === 28) ? 28 : 0;
+            return arr.some(item => item.levelIndex === 28 || item.levelIndex == 52) ? 28 : 0;
         },
         showList() {
             this.dynamicEffectShow = false;
@@ -496,8 +499,18 @@ export default {
                 this.animateDir = '';
             }, 400);
         },
-        ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+        ondetail(item) {
+         
+            if(item.levelIndex == 52){
+                uni.showToast({
+                    title:'宝藏已放入星仓,请到星仓点击宝藏寻宝',
+                    icon:'none'
+                })
+               return;
+            }else{
+              this.gachaDetailsMethod(this, item.itemId);
+
+            }
         },
     },
 
@@ -705,6 +718,10 @@ export default {
             width: 506rpx;
             height: 168rpx;
               z-index: 3;
+              &.bz{
+                 width: 466rpx;
+            height: 128rpx;
+              }
         }
         .goodsImg{
             width: 400rpx;
@@ -1022,7 +1039,7 @@ export default {
 
 }
 
-.cl_SP {
+.cl_SP{
     width: 180rpx;
     height: 88rpx;
     background: url("@/static/result/tag_SP.png");
@@ -1032,6 +1049,17 @@ export default {
     top: -24rpx;
         z-index: 2;
 
+
+}
+.cl_宝箱 {
+ width: 180rpx;
+    height: 88rpx;
+    background: url("@/static/result/bx.png");
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0;
+    top: -24rpx;
+        z-index: 2;
 
 }
 
@@ -1069,7 +1097,7 @@ export default {
     // background: url('@/static/result/kuang.png');
     // background-size: 100% 100%;
 
-    &.kuang_SP{
+    &.kuang_SP,&.kuang_宝箱{
      background: url('@/static/result/kuang_SP.png');
      background-size: 100% 100%;
     }

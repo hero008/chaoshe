@@ -414,7 +414,7 @@ export default {
           this.spList = [];
           this.showDiscounts = false;
           this.showBtn = false;
-          this.goodsList = false;
+        //   this.goodsList = false;
           this.chqShow = false;
           this.LuckyVisible = false
           this.scheduleNum = null

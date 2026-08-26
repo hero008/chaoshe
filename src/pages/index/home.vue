@@ -26,6 +26,8 @@
         </view>
          <DanmakuSimple :data="danmuList"  :top="MBInfo().top + 42"
          ></DanmakuSimple>
+
+         <view @click="showServerModal = true" class="server"></view>
         <scroll-view :style="{
             height:`calc(100vh - ${MBInfo().height}px - ${MBInfo().top}px - 28rpx)`
         }" scroll-with-animation="true"  @scroll="scroll" :scroll-top="scrollTop" @scrolltolower="onReachScollBottom" class="home-scroll" :scroll-y="true" :refresher-enabled="true"
@@ -123,6 +125,18 @@
         <x-pay ref="xPay" :probabilityShow=[] />
         <!-- 下载app弹窗-->
         <x-modal :visible.sync="downShow" />
+
+       <u-popup mode="center" round="16" @close="showServerModal = false" :show="showServerModal">
+           <view class="serverPopop">
+             <img class="top" src="https://img.shinemang.com/gachaStatic/serverTop.png" alt="">
+             <view class="qrcode">
+                <img src="https://img.shinemang.com/gachaStatic/qrcode.png" alt="">
+             </view>
+             <view class="tips">微信扫码进群解锁更多福利~</view>
+             <view @click="showServerModal = false" class="close"></view>
+            </view>
+          
+		</u-popup>
         
 
 
@@ -218,7 +232,8 @@ export default {
             timeData: {},
             allIn: { open: false },
             egg: { open: true },
-            slectType:1
+            slectType:1,
+            showServerModal:false
         };
     },
     components: {
@@ -585,7 +600,57 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.serverPopop{
+    width: 622rpx;
+background: #FFFFFF;
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+padding-top: 260rpx;
+height: 758rpx;
+.top{
+    width:654rpx;
+    height: 260rpx;
+    position: absolute;
+    top: -40rpx;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
+.qrcode{
+    width: 346rpx;
+height: 346rpx;
+background: #FFFFFF;
+border-radius: 32rpx 32rpx 32rpx 32rpx;
+border: 2rpx solid rgba(49, 229, 151, 1);
+
+margin: auto;
+overflow: hidden;
+padding-top: 32rpx;
+padding-left: 32rpx;
+
+img{
+    width: 282rpx;
+    height: 282rpx;
+}
+}
+.tips{
+    font-size: 28rpx;
+    color: #1A1A1A;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 32rpx;
+}
+
+.close{
+    position: absolute;
+    width: 56rpx;
+    height: 56rpx;
+    background: url('https://img.shinemang.com/gachaStatic/static/img/niudan/close2.png');
+    background-size: 100% 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -80rpx;
+}
+}
 
 ::v-deep .u-count-down__text {
     color: #ffffff;
@@ -622,6 +687,16 @@ export default {
         z-index: 1;
         background: url('https://img.shinemang.com/gachaStatic/static/tabBar/tab/homeTopBgc.png');  
         background-size: 100% 100%;  
+    }
+    .server{
+        width: 80rpx;
+        height: 96rpx;
+        position: fixed;
+        bottom: 300rpx;
+        right: 0;
+        z-index: 888;
+        background: url('https://img.shinemang.com/gachaStatic/server.png');
+        background-size: 100% 100%;
     }
 }
 

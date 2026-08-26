@@ -244,7 +244,7 @@ export default {
             });
         },
         addStock() {
-            this.$refs.addStock.open(this.selectRewardIds);
+            this.$refs.addStock.open(this.selectRewardIds,0,false,'SourceType_Delivery');
         },
         SelectIds(ids, infos) {
             this.selectRewardIds = ids;

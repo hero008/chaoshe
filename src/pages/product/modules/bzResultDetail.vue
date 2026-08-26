@@ -5,25 +5,17 @@
                 :style="{ backgroundImage: `url(${img.localImageUrl || img.imageUrl})` }" :class="img.class"></view>
         </view> -->
         <view v-show="!dynamicEffectShow" class="card_list_popup flex_c flex_ac flex_jc"
-            :style="{ 'pointer-events': shareType ? 'none' : 'auto',backgroundImage:`url(${cysType == 28 ? bgc:''})` }">
-            <view v-if="originalList.length > 1"  class="title flex_r  flex_ac ">
+            :style="{ 'pointer-events': shareType ? 'none' : 'auto',backgroundImage:`url(${bgc})` }">
+            <!-- <view v-if="originalList.length > 1"  class="title flex_r  flex_ac ">
                 <img src="@/static/result/Congratulations.png" class="title_img" />
-                <!-- <view @click="close" class="closebtn" style="margin-right: 40rpx;"></view> -->
-            </view>
-            <view v-if="originalList.length > 1" class="card_list" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
+            </view> -->
+         <!-- <view v-if="originalList.length > 1" class="card_list" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
                 @touchend="handleTouchEnd">
                 <view v-if="cysType == 28" class="guang"></view>
                 <view  class="page-list flex_r flex_ac flex_jse flex_wrap" :class="{
-                    // 'animate-left': animateDir === '左' && isAnimating,
-                    // 'animate-right': animateDir === '右' && isAnimating, 'transition': isAnimating
                 }">
-                <!-- k.rotated && !k.click ? 'rotated' :  @click="onRotated(k)"-->
                     <view class="card " v-for="(k, s) in formateRewardsList(originalList)" :key="s"
                        >
-                        <!-- <view v-show="!k.click" class="card-contents card-front">
-                            <view class="num">{{ k.no }}</view>
-                        </view> -->
-                                                 <!-- !k.click ? 'reversal' : '' -->
 
                         <view class="card-contents card-back" @click="ondetail(k.itemId)"
                             :class="['card' + k.levelName,]">
@@ -36,9 +28,7 @@
                                 backgroundImage:`url(${getResultBgc(k)})`,
                                 backgroundSize:'100% 100%'
                             }" :class="['kuang']">
-                                <!-- v-show="k.rotated && k.click" -->
                                    <img  :src="k.coverImage" class="award_img" />
-
                               <view 
                                :style="{
                                 backgroundImage:`url(https://img.shinemang.com/gachaStatic/tag/${k.levelName}.png)`
@@ -48,55 +38,41 @@
                            <view class="itemName flex_c flex_ac flex_jc ">
                                 <view class="name ellipsis">{{ k.itemName }} </view>
                             </view> 
-                            <!-- #ifndef MP-WEIXIN -->
-                            <!-- <view v-if="k.levelName == 'SP' && k.rotated"
-                                @click="onShare(k.itemName, k.itemId, k.levelIndex, k)" class="share_btn" /> -->
-                            <!-- #endif -->
-                            
+                          
                             
                         </view>
                     </view>
                 </view>
               
-            </view>
-            <view class="oneRewards" v-else-if="originalList.length == 1">
+            </view>  -->
+             <!-- v-else-if="originalList.length == 1" -->
+            <view v-if="originalList.length > 0" class="oneRewards">
                   <view class="title flex_r  flex_ac ">
                 <img src="@/static/result/Congratulations.png" class="title_img" />
               
                 <!-- <view @click="close" class="closebtn" style="margin-right: 40rpx;"></view> -->
             </view>
-            <view class="guang">
-                       <view v-if="cysType == 28" class="guangImg animation">
+               <view class="guang">
+                       <view  class="guangImg animation">
                            
                        </view>
-                       <view v-else class="guangImg"></view>
-                        <view v-if="originalList[0].levelName == 'SP'" class="tag">SP赏</view>
-                      <img @click="ondetail(originalList[0].itemId)" :src="originalList[0].coverImage || originalList[0].itemCover" class="goodsImg" alt="">
-                      <view class="goodsName ellipsis">{{ originalList[0].itemName }}</view>
+                     
+                        <view  class="tag"></view>
+                      <img @click="ondetail(originalList[0].id)" :src="originalList[0].coverThumb || originalList[0].coverThumb" class="goodsImg" alt="">
+                      <view class="goodsName ellipsis">{{ originalList[0].name }}</view>
                 </view>
                 <view class="btn">
                      <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') &&  originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
                      <view class="all_btn" @click="close"></view>
                      
                 </view>
-                 <view class="tips" > {{originalList && originalList[0].requestId ? '赏品已自动放进赏柜，可在赏柜查看~': '试玩结果仅供参考~'}}</view>
-                 <view class="closeBtn">
+                 <view class="tips" > {{'赏品已自动放进赏柜，可在赏柜查看~'}}</view>
+                     <view class="closeBtn">
                          <img @click="close"  src="@/static/close.png" alt="">
-                 </view>
-            </view>
-            <!-- <view class="share flex_r flex_ac" v-if="shareType">
-                <view @click="onShareType(2)">
-                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
-                    <view>小程序</view>
-                </view>
-                <view @click="onShareType(3)">
-                    <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/pyq.png" />
-                    <view>朋友圈</view>
-                </view>
-                <view @click="shareType = 0" class="btn icof">&#xe607;</view>
-            </view> -->
+                     </view>
+              </view>
+<!-- 
             <view v-if="originalList.length > 1" class="footer">
-                <!-- <view class="page" v-if="totalPage > 1">{{ pageNum }}/{{ totalPage }}</view> -->
                 <view  class="box">
                     <view class="btn">
                       <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') && originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
@@ -108,10 +84,10 @@
                          <img @click="close"  src="@/static/close.png" alt="">
                      </view>
                 </view>
-            </view>
+            </view> -->
         </view>
         <gachaDetails ref="gachaDetails" />
-        <show-modal></show-modal> 
+          <show-modal></show-modal> 
     </u-popup>
 
 </template>
@@ -676,33 +652,18 @@ export default {
             left: 50%;
             transform: translateX(-50%);
             top: -34rpx;
-            // width: 506rpx;
-            // height: 168rpx;
-              font-family: '倍数欧气值';
-      font-size: 64rpx;  /* rpx 在 H5 中无效！换成 px 或 rem */
-  line-height: 80rpx;
-  font-weight: 400;
-  display: inline-block;
-  text-align: center;
-  font-style: normal;
-  text-transform: none;
-  
-  /* 兼容写法：background 也加 -webkit- 前缀 */
-  background: -webkit-linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
-  background: linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
-  
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-
-  z-index: 3;
+            width: 466rpx;
+            height: 128rpx;
+            background: url('https://img.shinemang.com/gachaStatic/bz.png');
+           z-index: 3;
+           background-size: 100% 100%;
         }
         .goodsImg{
             width: 400rpx;
             height: 400rpx;
               position: relative;
-  z-index: 3;
-  border-radius: 32rpx;
+            z-index: 3;
+            border-radius: 32rpx;
 
         }
         .goodsName{

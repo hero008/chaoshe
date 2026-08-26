@@ -103,7 +103,7 @@
                         <scroll-view scroll-y style="height:740rpx;">
                            <view class="list">
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
-                                @click="ondetail(item.itemId)">
+                                @click="ondetail(item)">
                                 <img :src="item.itemHalfImage" class="p-img" />
                                 <img :src="`https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png`"
                                     :class="['badge','badge'+item.levelName]" />
@@ -130,7 +130,7 @@
                     <view class="tab">
 
                         <view @click="refreshBtn" class="refresh"></view>
-                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem',value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
+                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem','tabItem'+value.levelName,value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
                   <!-- <view class="tabItem">史诗</view>
                   <view class="tabItem">稀有</view>
                   <view class="tabItem">普通</view> -->
@@ -153,7 +153,7 @@
                                         <div :style="{
                                 backgroundImage: `url(https://img.shinemang.com/gachaStatic/k_${newRecordList.name}.png)`,
                             }"  class="lr_i flex_r flex_ac flex_jb"
-                                            @click="ondetail(item.itemId)"
+                                            @click="ondetail(item)"
                                             v-for="(item, i) in newRecordList.records.slice(0, newRecordList.records.lengthNumber)" :key="i">
                                             <div class="lr_r">
                                                 <img class="lr_img" :src="item.itemCover" />
@@ -296,10 +296,10 @@
         <!-- 支付 潮玩赏-->
         <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
         <!-- 详情弹窗 -->
-        <gachaDetails ref="gachaDetails" />
+     
         <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"
             :message="AReward.openMessage" />
-        <duoyou ref="duoyou" @onDuoyou="onClickDuoyou" />
+        <duoyou @onDuoyouDetail="onDuoyouDetail" ref="duoyou" @onDuoyou="onClickDuoyou" />
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
         <u-popup round="16" @close="showRecards = false" :show="showRecards">
           <view class="recordList">
@@ -368,126 +368,26 @@
 
       <u-popup mode="center" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
           <view class="BzcList">
-            <view class="rules"></view>
+            <view @click=" goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules"></view>
             <scroll-view class="scrollView" scroll-y>
                  <view class="list">
-                    <view class="item">
-                         <view class="bgc">
+                    <view @click="ondetail(item)" v-for="item in bzcRewards" :key="item.itemId" class="item">
+                         <view :style="{
+                            backgroundImage:`url(${item.coverThumb})`
+                         }" class="bgc">
                             <view class="tag"></view>
                          </view>
 
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
+                         <view class="name ellipsis">{{ item.name }}</view>
+                         <view class="rate">概率:{{item.probability}}%</view>
                     </view>    
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
-                     <view class="item">
-                         <view class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">华为 Mate 80 束带结发时间段</view>
-                         <view class="rate">概率:0.1%</view>
-                    </view>  
+                
                 </view>
             </scroll-view>
+            <view class="close" @click="showBzcPopup = false"></view>
           </view>
 	  </u-popup>
-
+   <gachaDetails ref="gachaDetails" />
     </view>
 </template>
 <script>
@@ -570,9 +470,10 @@ export default {
             activityOpen: false,
 
 
-            recordLevelName:'SP',
+            recordLevelName:'宝箱',
             newRecordList:'',
             showBzcPopup:false,
+            bzcRewards:[]
             
 
 
@@ -606,6 +507,9 @@ export default {
         this.loadDetail();
     },
     methods: {
+        onDuoyouDetail(item){
+           this.ondetail(item)
+        },
         changeTabs(type){
           this.previewType = type
         },
@@ -937,8 +841,19 @@ export default {
                 } else uni.$u.toast(res.message);
             });
         },
-        ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+        ondetail(item) {
+            if(item.levelIndex && item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.bzcRewards = res.item.boxItems
+                    this.showBzcPopup = true
+                })
+             
+            }else{
+                
+             this.gachaDetailsMethod(this, item.itemId);
+            }
         },
         onShare() {
             uniShare(
@@ -1626,9 +1541,9 @@ text-transform: none;
         &.C{
             color: #EDF1F0;
         }
-        &.BZ{
-         background: -webkit-linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
-        background: linear-gradient(90deg, #008DFF 0%, #EDEEFF 49%, #FF5AFF 100%);
+        &.宝箱{
+         background: -webkit-linear-gradient(26.15616568971575deg, #6E8AFF 0%, #FF98FB 26%, #F7FF9B 73%, #9DFFE4 100%);
+        background:linear-gradient(26.15616568971575deg, #6E8AFF 0%, #FF98FB 26%, #F7FF9B 73%, #9DFFE4 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -1682,7 +1597,7 @@ text-transform: none;
             left: 0;
             top: 168rpx;
 
-            &.badgeBZ{
+            &.badge宝箱{
                 width: 120rpx;
             }
         }
@@ -1805,22 +1720,45 @@ text-transform: none;
         z-index: 2;
        .tabItem{
         width: 136rpx;
-height: 56rpx;
-background: #EEEEEE;
-border-radius: 28rpx 28rpx 28rpx 28rpx;
-display: flex;
-align-items: center;
-justify-content: center;
-line-height: 56rpx;
-margin-right: 16rpx;
- color: #666666;
- font-size: 28rpx;
- &.active{
-    background: #FF93C7;
-    color: #000;
-    font-weight: bold;
- }
-
+        height: 56rpx;
+        background: #EEEEEE;
+        border-radius: 28rpx 28rpx 28rpx 28rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 56rpx;
+        margin-right: 16rpx;
+        color: #666666;
+        font-size: 28rpx;
+        &.active{
+            color: #000;
+            font-weight: bold;
+        }
+        &.tabItem宝箱{
+            &.active{
+            background: linear-gradient( 116deg, #6E8AFF 0%, #FF98FB 26.44%, #F7FF9B 72.6%, #9DFFE4 100%);
+            }
+        }
+        &.tabItemSP{
+        &.active{
+            background: #FF93C7;
+        }
+        }
+        &.tabItemA{
+            &.active{
+            background: #F9E650;
+        }
+        }
+        &.tabItemB{
+            &.active{
+            background: #50FFF5;
+        }
+        }
+        &.tabItemC{
+            &.active{
+            background: #BCCFD4;
+        }
+        }
        }
       }
 
@@ -1862,10 +1800,35 @@ padding: 0 26rpx;
     margin-right: 0;
  }
  &.active{
-    background: #FF93C7;
+    // background: #FF93C7;
     color: #000;
     font-weight: bold;
  }
+   &.tabItem宝箱{
+        &.active{
+        background: linear-gradient( 116deg, #6E8AFF 0%, #FF98FB 26.44%, #F7FF9B 72.6%, #9DFFE4 100%);
+        }
+        }
+        &.tabItemSP{
+        &.active{
+            background: #FF93C7;
+        }
+        }
+        &.tabItemA{
+            &.active{
+            background: #F9E650;
+        }
+        }
+        &.tabItemB{
+            &.active{
+            background: #50FFF5;
+        }
+        }
+        &.tabItemC{
+            &.active{
+            background: #BCCFD4;
+        }
+        }
 
        }
       }
@@ -2173,8 +2136,9 @@ padding: 0 26rpx;
         position: absolute;
         top: 36rpx;
         right: 16rpx;
-        background: url('https://img.shinemang.com/gachaStatic/rules.png');
+        background: url('https://img.shinemang.com/gachaStatic/bzsRule.png');
         background-size: 100% 100%;
+        z-index: 999;
     }
     .scrollView{
         width: 100%;
@@ -2196,7 +2160,8 @@ padding: 0 26rpx;
                     width: 200rpx;
                     height: 200rpx;
                     border-radius: 16rpx 16rpx 0 0;
-                    background: red;
+                    // background: red;
+                    background-size: 100% 100%;
                     position: relative;
                     .tag{
                         width: 120rpx;
@@ -2204,6 +2169,8 @@ padding: 0 26rpx;
                         position: absolute;
                         left: 0;
                         bottom: 0;
+                        background: url('https://img.shinemang.com/gachaStatic/tag_宝箱.png');
+                        background-size: 100% 100%;
                     }
                 }
                 .name{
@@ -2221,6 +2188,16 @@ padding: 0 26rpx;
                 }
             }
         }
+    }
+     .close{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -80rpx;
+        width: 56rpx;
+        height: 56rpx;
+        background: url('@/static/close.png');
+        background-size: 100% 100%;
     }
 }
 </style>
