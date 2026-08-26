@@ -8,9 +8,15 @@
                 <img class="ico" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_3.png" />
             </view> -->
         </view>
-        <div :style="{ paddingTop: MBInfo().top  + 'px' }"  class="shanggui_con">
+        <div :style="{ paddingTop: MBInfo().top + 'px' }"  class="shanggui_con">
+              <view class="tabsOne flex_r">
+                    <view class="tab_item" :class="{ active: s == active_m }" @click="onTab1(i, s)"
+                        v-for="(i, s) in navbar" :key="s">{{ i.name }}
+                     <view v-if="s == active_m" class="line"></view>
+                    </view>
+                </view>
             <view class="flex_r flex_jb">
-                <view class="tabs_two flex_r flex_jb">
+                <view class="tabs_two flex_r">
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
                         v-for="(i, s) in navbar2" :key="s">{{ i }}</view>
                 </view>
@@ -20,9 +26,13 @@
                     <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/recycle.png" />
                     <view class="text">放生</view>
                 </view>  -->
-                <view  @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })" class="rules">
+                <view v-if="active_m == 0"  @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })" class="rules">
 
                 </view>
+                <view v-else  @click="goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules BZ">
+
+                </view>
+
             </view>
             <view class="p_lists">
                 <view class="tab flex_r flex_ac flex_jb">
@@ -51,7 +61,7 @@
                 <scroll-view @scrolltolower="onReachScollBottom" v-if="cabinetData && cabinetData.length"
                     class="ListScroll" :lower-threshold="400" :scroll-y="true">
                     <view class="lists_box">
-                        <view class="lists">
+                        <view v-if="active_m == 0"  class="lists">
                             <view class="item" v-for="(item, index) in cabinetData" :key="index">
                                
                                 <view class="donation" v-if="item.themeType == 'ItemThemeType_Donation'">
@@ -61,31 +71,7 @@
                                 <view class="item_img_box">
                                  <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
-                                }" @click="ondetail(item.itemId)">
-
-                                    <!-- <view class="box_ico frame" v-if="item.state == 'CabinetStockState_InStock'"></view> -->
-                                    <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_1.png"  class="box_ico" v-if="item.state =='CabinetStockState_InStock' " /> -->
-                                    <!-- <view class="" v-if="
-                                        item.state ==
-                                        'CabinetStockState_OnDeal' ||
-                                        item.state ==
-                                        'CabinetStockState_Delivered'
-                                    ">
-                                        <img src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_2.png"
-                                            class="box_ico" />
-                                        <view class="item_txt">{{
-                                            item.state ==
-                                                "CabinetStockState_OnDeal"
-                                                ? "发布中"
-                                                : "发货中"
-                                        }}
-                                        </view>
-                                    </view> -->
-                                    <!-- {{
-                                        item.item.saleType == 1
-                                            ? "现货"
-                                            : "预售"
-                                    }} -->
+                                }" @click="ondetail(item)">
                                     <view :style="{
                                         backgroundImage: `url(${item.item.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
                                     }" class="item_txt1"></view>
@@ -103,10 +89,34 @@
                                     价值: {{ item.item.decomposeXPoint }}星币
                                 </view>
                             </view>
+                          
+                        </view>
+                        <view v-else  class="lists">
+                            <view class="item BZ" v-for="(item, index) in cabinetData" :key="index">
+                               
+                                <view class="donation" v-if="item.themeType == 'ItemThemeType_Donation'">
+                                </view>
+                                <view class="item_img_box">
+                                 <view class="item_img" :style="{
+                                    backgroundImage: `url(${item.item.coverThumb})`,
+                                }" @click="ondetail(item)">
+
+                                   <img src="https://img.shinemang.com/gachaStatic/tag_宝箱.png" alt="">
+                                </view>
+                                </view>
+                               
+                                <view class="item_name ellipsis">{{
+                                    item.item.name
+                                    }}</view>
+                                <view class="item_no ellipsis">{{
+                                    item.itemId
+                                    }}</view>
+                            </view>
+                          
                         </view>
                     </view>
                 </scroll-view>
-                <u-empty v-else text="暂无赏品~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
+                <u-empty v-else :text="active_m ==0? '暂无赏品~':'暂无宝箱'" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </view>
 
@@ -124,7 +134,8 @@
                 <x-btn txt="选择发货" cor="3" @click="goto('/pages/shipments/selectGoods')" /> -->
             </view>
         </div>
-        <gachaDetails ref="gachaDetails" />
+
+       
         <select-goods ref="addStock" @totalNums="(va) => { totalNums = va; }" @confirmSelect="SelectIds" isfilt="1"
             typeClass="0" />
 
@@ -153,18 +164,49 @@
                 <div class="random_btn" @click="sureSend">确认转赠</div>
             </div>
         </u-popup>
+
+       <u-popup mode="center" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
+          <view class="BzcList">
+            <view class="rules"></view>
+            <scroll-view class="scrollView" scroll-y>
+                 <view class="list">
+                    <view @click="ondetail(item)" v-for="item in bzRewards" :key="item.itemId" class="item">
+                         <view :style="{
+                            backgroundImage:`url(${item.coverThumb})`
+                            
+                         }" class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">{{ item.name }}</view>
+                         <view class="rate">概率:{{item.probability}}%</view>
+                    </view>    
+                    
+                </view>
+            </scroll-view>
+           <view @click="openBzGacha" class="confirm"></view>
+           <view @click="showBzcPopup = false" class="close">
+
+           </view>
+          </view>
+	  </u-popup>
+       <gachaDetails ref="gachaDetails" />
+       <result ref="result" @onResult="onClickResult"></result>
     </view>
 </template>
 <script>
 import { mapState } from "vuex";
 import { post } from "@/utils/api.js";
-
+import result from '@/pages/product/modules/bzResultDetail'
 import xBtn from "@/components/modules/x-btn";
 import selectGoods from "@/components/selectGoods/index";
 import { groupByItemId ,groupByItemName,MGTV_Channel} from '../../utils/mgtv';
 export default {
     data() {
         return {
+            showBzInfo:'',
+            bzRewards:[],
+            showBzcPopup:false,
             MGTV_Channel:MGTV_Channel,
             sendOtherId:'',
             sendInfo:{
@@ -182,13 +224,10 @@ export default {
             },
             navbar: [
                 {
-                    name: "全部",
+                    name: "星仓",
                 },
                 {
-                    name: "待交易",
-                },
-                {
-                    name: "发布中",
+                    name: "宝藏",
                 },
             ],
             active_m: 0,
@@ -210,7 +249,8 @@ export default {
     },
     components: {
         xBtn,
-        selectGoods
+        selectGoods,
+        result
     },
     watch: {},
     computed: {
@@ -229,6 +269,18 @@ export default {
         if (!this.userInfo.showMarket) this.navbar = [{ name: "全部" }];
     },
     methods: {
+          onClickResult(){
+           this.pageda.page = 1
+          this.loadDetail(1);
+        },
+        openBzGacha(){
+           post('v1/cabinet/item/box/open',{
+            stock_ids:[this.showBzInfo.id]
+           }).then((res)=>{
+             this.showBzcPopup = false
+             this.$refs.result.open(res.item, true, '', '')
+           })
+        },
         sureSend(){
              if(!this.sendOtherId){
                 uni.$u.toast("请输入用户ID");
@@ -244,7 +296,7 @@ export default {
                     this.pageda.page = 1;
                      this.loadDetail(1);
                      // 刷新 selectGoods 组件数据
-                     this.$refs.addStock.getSubclassReward(true)
+                     this.$refs.addStock.getSubclassReward('SourceType_Donation')
                 }else{
                      uni.$u.toast(res.message);
                 }
@@ -252,10 +304,16 @@ export default {
              })
         },
         toSendOther(){
-           
            this.selectType = 1
-          this.$refs.addStock.open([], -1,false,true);
+          this.$refs.addStock.open([], -1,false,'SourceType_Donation');
    
+        },
+        onTab1(i,s){
+            this.active_m = s;
+            this.pageda.page = 1
+            this.loadDetail(1)
+   
+             
         },
         ontab(item) {
             this.pageda.page = 1;
@@ -271,6 +329,7 @@ export default {
         loadDetail(page) {
             if (page == 1) this.cabinetData = [];
             post("v1/cabinet/stock/list", {
+                item_type:this.active_m == 0 ? 1 : 2,
                 sale_type: this.firstCondition,
                 state: this.secondCondition,
                 order_by_award_level: 1,
@@ -292,8 +351,18 @@ export default {
                 }
             });
         },
-        ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+        ondetail(item) {
+            if(item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.showBzInfo = item
+                    this.bzRewards = res.item.boxItems
+                    this.showBzcPopup = true
+                })
+            }else{
+             this.gachaDetailsMethod(this, item.itemId);
+            }
         },
         onReachScollBottom() {
             if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
@@ -310,7 +379,7 @@ export default {
         },
         onGoRecycle() {
             this.selectType = 2
-            this.$refs.addStock.open([], -1,false,false);
+            this.$refs.addStock.open([], -1,false,'SourceType_Decomposed');
             // uni.navigateTo({ url: "/pages/transaction/index?openStock=true" });
         },
           SelectIds(ids, infos) {
@@ -349,7 +418,7 @@ export default {
                                         that.pageda.page = 1;
                                         that.loadDetail(1);
                                         // 刷新 selectGoods 组件数据
-                                        that.$refs.addStock.getSubclassReward()
+                                        that.$refs.addStock.getSubclassReward('SourceType_Decomposed')
                                     }
                                 });
                             }
@@ -399,6 +468,93 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.BzcList{
+    width: 670rpx;
+    height: 1082rpx;
+    background: url('https://img.shinemang.com/gachaStatic/bzsBg.png');
+    background-size: 100% 100%;
+    position: relative;
+    padding-top: 220rpx;
+    .rules{
+        width: 112rpx;
+        height: 40rpx;
+        position: absolute;
+        top: 36rpx;
+        right: 16rpx;
+        background: url('https://img.shinemang.com/gachaStatic/rules.png');
+        background-size: 100% 100%;
+    }
+    .scrollView{
+        width: 100%;
+        height: 810rpx;
+        // background: #fff;
+        .list{
+            width: 100%;
+            padding-left: 28rpx;
+            display: flex;
+            flex-wrap: wrap;
+            .item{
+                width: 200rpx;
+                height: 292rpx;
+                background: linear-gradient( 180deg, #CCFBFF 0%, #FFFFFF 20%);
+                border-radius: 16rpx 16rpx 16rpx 16rpx;
+                margin-right: 8rpx;
+                margin-bottom: 8rpx;
+                .bgc{
+                    width: 200rpx;
+                    height: 200rpx;
+                    border-radius: 16rpx 16rpx 0 0;
+                    // background: red;
+                    background-size: 100% 100%;
+                    position: relative;
+                    .tag{
+                        width: 120rpx;
+                        height: 40rpx;
+                        position: absolute;
+                        left: 0;
+                          background: url('https://img.shinemang.com/gachaStatic/tag_宝箱.png');
+                        background-size: 100% 100%;
+                        bottom: 0;
+                    }
+                }
+                .name{
+                    color: #1A1A1A;
+                    padding: 0 8rpx;
+                    font-size: 24rpx;
+                    line-height: 32rpx;
+                    margin-top: 12rpx;
+                }
+                .rate{
+                    padding-left: 8rpx;
+                    color: #8D8D94;
+                    font-size: 20rpx;
+                    margin-top: 4rpx;
+                }
+            }
+        }
+    }
+    .confirm{
+        width: 406rpx;
+        height: 120rpx;
+        background: url('https://img.shinemang.com/gachaStatic/treasureHunt.png');
+        background-size: 100% 100%;
+        position: absolute;
+        bottom: -86rpx;
+        left: 50%;
+        transform: translateX(-50%);
+
+    }
+    .close{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -140rpx;
+        width: 56rpx;
+        height: 56rpx;
+        background: url('@/static/close.png');
+        background-size: 100% 100%;
+    }
+}
 .shanggui {
     height: 100vh;
     padding-top: 80rpx;
@@ -466,6 +622,42 @@ export default {
     background: url('https://img.shinemang.com/gachaStatic/chaogui/rule.png');
     background-size: 100% 100%;
     margin-right: 32rpx;
+    &.BZ{
+         background: url('https://img.shinemang.com/gachaStatic/chaogui/bzRule.png');
+    background-size: 100% 100%;
+    }
+}
+.tabsOne{
+        width: 372rpx;
+    height: 48rpx;
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
+    // background-size: 100% 100%;
+    margin-bottom: 20rpx;
+    padding-left: 32rpx;
+    .tab_item{
+     font-size: 32rpx;
+    color: #8D8D94;
+    line-height: 32rpx;
+    font-weight: 600;
+    position: relative;
+    margin-right: 32rpx;
+
+    &.active{
+        color: #1A1A1A;
+        font-size: 36rpx;
+
+    }
+  .line{
+    width: 64rpx;
+height: 12rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 6rpx 6rpx 6rpx 6rpx;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+bottom: 4rpx;
+}
+    }
 }
 .tabs_two {
     width: 372rpx;
@@ -475,7 +667,7 @@ export default {
     font-size: 28rpx;
     color: #ffffff;
     line-height: 28rpx;
-    padding-left: 32rpx;
+    padding-left: 44rpx;
 
     .tab_item {
         width: 136rpx;
@@ -531,7 +723,7 @@ margin-right: 16rpx;
 }
 
 .p_lists {
-    height: calc(100% - 62rpx);
+    height: calc(100% - 142rpx);
     margin-top: -16rpx;
     // border-radius: 0 50rpx 0 0;
     // background: #f4f4f4;
@@ -615,6 +807,9 @@ margin-right: 16rpx;
         margin-right: 8rpx;
         border-radius: 24rpx 24rpx 24rpx 24rpx;
         padding: 12rpx;
+        &.BZ{
+            height: 300rpx;
+        }
         &:nth-child(3n) {
             margin-right: 0;
             
@@ -638,6 +833,15 @@ height: 200rpx;
 border-radius: 16rpx 16rpx 16rpx 16rpx;
 position: relative;
 background-size: cover;
+position: relative;
+
+img{
+    position: absolute;
+    left: 0;
+    bottom:0;
+    width: 120rpx;
+    height: 40rpx;
+}
 
         }
         .donation{

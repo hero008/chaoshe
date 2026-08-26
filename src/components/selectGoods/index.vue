@@ -116,7 +116,7 @@ export default {
     },
     components: { xBtn },
     created() {
-        this.getSubclassReward();
+        // this.getSubclassReward();
     },
     mounted() { },
     onLoad(da) { },
@@ -193,9 +193,9 @@ export default {
         },
         ontab(va) {
             this.selectType = va;
-            this.getSubclassReward(this.mode?true:false);
+            this.getSubclassReward(this.mode);
         },
-        subOpen(ids = [], nums = 0, index = false,type=false){
+        subOpen(ids = [], nums = 0, index = false,type=''){
            this.gather = index;
             this.totalPrice = nums;
             if (this.totalPrice !== 0) {
@@ -238,16 +238,17 @@ export default {
             }
             this.popupShow = true;
         },
-        open(ids = [], nums = 0, index = false,type=false) {
+        open(ids = [], nums = 0, index = false,type='') {
             uni.showLoading()
             // if(type){
                 this.multi = [];
             this.multiinfo = [];
-            if(type){
-                this.mode = 'SourceType_Donation'
-            }else{
-                this.mode = ''
-            }
+            // if(type){
+            //     this.mode = 'SourceType_Donation'
+            // }else{
+            //     this.mode = ''
+            // }
+            this.mode = type
             post("v1/cabinet/stock/merge_list", {
                 sale_type: this.typeClass > 0 ? this.typeClass : this.selectType,
                 mode:this.mode
@@ -276,14 +277,14 @@ export default {
             // }
          
         },
-        getSubclassReward(type=false) {
+        getSubclassReward(type='') {
             // this.sliceList = [];
             this.multi = [];
             this.multiinfo = [];
           
             post("v1/cabinet/stock/merge_list", {
                 sale_type: this.typeClass > 0 ? this.typeClass : this.selectType,
-                mode: type? 'SourceType_Donation':''
+                mode: type
             }).then((res) => {
                
                 if (!res.code) {
