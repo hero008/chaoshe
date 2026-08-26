@@ -494,7 +494,7 @@ export default {
             this.resetForm();
         },
         addStock() {
-            this.$refs.addStock.open(this.selectRewardIds); 
+            this.$refs.addStock.open(this.selectRewardIds,0,false,'SourceType_Market'); 
         },
         SelectIds(ids, infos) {
             this.pageSize = 50; // 每次加载50条

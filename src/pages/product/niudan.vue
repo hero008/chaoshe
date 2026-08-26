@@ -188,15 +188,15 @@
         </view>
         <!-- 过场动画 -->
         <u-popup :show="inAdvance" :overlay="cartoonShow" :safeAreaInsetBottom="false" bgColor="transparent">
-            <view :class="['cartoon_con', { opacity: !cartoonShow },((spList[WinnInx].levelIndex == 28) ) && percentage > 90?'big':'']" v-if="inAdvance">
+            <view :class="['cartoon_con', { opacity: !cartoonShow },((isRun && spList.length>0 && spList[WinnInx].levelIndex == 28 ) ) && percentage > 95?'big':'']" v-if="inAdvance">
                 <view class="svga_it">
                     <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
                         @finished="onFinished" @percentage="onPercentage" @loaded="onLoaded" width="100%"
                         height="100%" />
                 </view>
 
-                <view v-if="(spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
-                <view  class="awards_box" v-if="percentage > 90 && isRun">
+                <view v-if="(percentage > 95 && isRun && spList.length>0 && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
+                <view  class="awards_box" v-if="percentage > 95 && spList.length>0 && isRun">
                    <view  v-if="(spList[WinnInx].levelIndex == 28) "  class="guang"></view>
                     <view v-if="(spList[WinnInx].levelIndex == 28) " class="title">
                        {{spList[WinnInx].levelName == 'Lucky' ? (spList[WinnInx].levelName + spList[WinnInx].luckyNo +'赏'):(spList[WinnInx].levelName+'赏')}}
@@ -215,22 +215,7 @@
                         </view>
                     </view>
                    
-                    <!-- <view class="awards_share flex_r flex_jc flex_ac" @click="shareType = 1"
-                        v-if="spList[WinnInx].levelIndex == 28">
-                        <view class="share_img"></view>
-                        <view class="share_text">炫耀一下</view>
-                    </view> -->
-                    <!-- <view class="share flex_r flex_ac" v-if="shareType">
-                        <view @click="onShareType(2)">
-                            <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/xcx.png" />
-                            <view>小程序</view>
-                        </view>
-                        <view @click="onShareType(3)">
-                            <img class="icon" src="https://img.shinemang.com/gachaStatic/static/img/home/pyq.png" />
-                            <view>朋友圈</view>
-                        </view>
-                        <div @click="shareType = 0" class="btn icof"> &#xe607;</div>
-                    </view> -->
+                   
                 </view>
                 <view class="bottom">
                   <view class="c_btn flex_r flex_jse flex_ac" v-if="percentage > 95">
@@ -268,6 +253,7 @@
             :message="eggTwister.openMessage" />
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
        <show-modal></show-modal>
+       <result ref="result" @onResult="onClickResult"></result>
         <!-- 抽赏动效 -->
         <!-- <dynamic-effect ref="animation" @childData="handleChildData" /> -->
         <!-- <xPrize ref="refPrize" :prize="prize" /> -->
@@ -292,6 +278,9 @@ import bgc4 from '@/static/bgc4.png'
 // import xPrize from "@/components/modules/x-prize";
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { MGTV_Channel,shareUrl } from "@/utils/mgtv";
+import { MGTV_Channel } from "@/utils/mgtv";
+import result from '@/pages/product/modules/resultDetail'
+import {awardsSort} from '@/utils/mgtv.js'
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {
@@ -367,7 +356,8 @@ export default {
         discounts,
         ball,
         scheduleTips,
-        drawLogOther
+        drawLogOther,
+        result
         // dynamicEffect,
         // xPrize
     },
@@ -411,6 +401,29 @@ export default {
         this.saveFile();
     },
     methods: {
+        resetData(){
+          this.istry = false;
+          this.cartoonShow = false;
+          this.inAdvance = false;
+          this.percentage =0
+          this.Winning = []
+          this.WinnInx = 0
+          this.isRun = true
+          this.isWelfare = false
+          this.couponId = 0
+          this.coverImage = '';
+          this.spList = [];
+          this.showDiscounts = false;
+          this.showBtn = false;
+        //   this.goodsList = false;
+          this.chqShow = false;
+          this.LuckyVisible = false
+          this.scheduleNum = null
+        },
+        onClickResult(){
+            this.resetData()
+          this.loadDetail();
+        },
         tipQb(){
                this.$showModal({
                         title: "全包条件",
@@ -486,6 +499,12 @@ export default {
                     this.boxIndex = gachaBox.boxIndex;
                     this.couponId = gacha.couponId;
                     this.coverImage = gacha.coverImage;
+
+
+
+
+
+                    
                     // #ifdef APP
                     if (getApp().globalData.AppTypeList[plus.runtime.channel] == 2) this.probabilityShow = groupBySum(res.gachaAwards);
                     // #endif
@@ -528,7 +547,10 @@ export default {
         },
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
+                
                 if(res.awards && res.awards.length>0){
+                    res.awards = awardsSort(res.awards)
+                    // res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
                 }
                 this.Winning = res.awards;
@@ -543,6 +565,8 @@ export default {
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                    if(res.awards && res.awards.length>0){
+                    res.awards = awardsSort(res.awards)
+                    //   res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
                    }
                     this.Winning = res.awards;
@@ -675,24 +699,19 @@ export default {
             } else {
                 soundType = 1;
             }
-            if(soundType == 2){
-                 playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b.wav')
-            }else{
-             
-                 playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_s.mp4')
-            }
 
-            
-           
-            // playDede(soundType);
-
-            // 界面跳转/显示卡通动画
             this.show = false;
-            if (showAnim && this.spList.length === 0) {
+            if (!this.spList.length && showAnim ) {
                 // 开启动画且无大赏 → 直接跳转到结果详情页
-                this.navigateToResultDetail();
+                  this.navigateToResultDetail(winningList);
             } else {
-                 if(this.spList[0].levelIndex == 28){
+                 if(soundType == 2){
+                    playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b.wav')
+                }else{
+                
+                    playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_s.mp4')
+                }
+                  if(hasGrandPrize){
                     setTimeout(() => {
                             playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
                     }, 2800);
@@ -705,13 +724,17 @@ export default {
         /**
          * 跳转到结果详情页（根据当前页面决定跳转方式）
          */
-        navigateToResultDetail() {
+        navigateToResultDetail(winningList) {
             const currentPage = uni.$u.page();
             const targetUrl = "/pages/product/rewardResultDetails";
             if (currentPage === "/pages/index/index") {
-                this.goto(targetUrl);
+                   this.inAdvance = false;
+                // this.goto(targetUrl);
             } else {
-                uni.$u.route({ type: "redirect", url: targetUrl });
+                 this.inAdvance = false;
+                // uni.$u.route({ type: "redirect", url: targetUrl });
+                
+               this.$refs.result.open(winningList, true, this.gachaId, this.boxIndex)
             }
         },
         ondetail(data) {
@@ -804,18 +827,16 @@ export default {
             this.WinnInx++;
             this.hint = "赏品已自动放入星仓，可在星仓查看~";
             if (this.WinnInx >= this.spList.length) {
+                this.inAdvance =false
                 this.toDetails();
                 return;
             }
             setTimeout(() => {
-                console.log(this.spList < this.spList.length,this.spList,this.spList.length)
-                if (this.spList.length > 0) {
+                if (this.spList.length > 0 && this.WinnInx < this.spList.length) {
                     let a = this.verdictBig([this.spList[this.WinnInx]])
                         ? 2
                         : 1;
-                          console.log(a,'ddddddddd')
                         if(a == 2){
-                            console.log('ddddddddd')
                              playDede(0,'https://img.shinemang.com/gachaStatic/newNdj/ndj_b1.wav')
                         }
                     // playDede(a);
@@ -825,14 +846,16 @@ export default {
             }, 600);
         },
         toDetails() {
-            this.cartoonShow = false;
-            uni.$u.route({
-                type: "redirect",
-                url: "/pages/product/rewardResultDetails",
-                params: {
-                    isdemo: this.istry,
-                },
-            });
+            this.inAdvance = false;
+            // uni.$u.route({
+            //     type: "redirect",
+            //     url: "/pages/product/rewardResultDetails",
+            //     params: {
+            //         isdemo: this.istry,
+            //     },
+            // });
+       
+             this.$refs.result.open(this.Winning, true, this.gachaId, this.boxIndex)
         },
         onShare() {
             uniShare(
@@ -1483,7 +1506,7 @@ border-radius:32rpx 32rpx 0 0 ;
 
     .cut {
           position: absolute;
-        width: 196rpx;
+        width: 380rpx;
         height: 64rpx;
         bottom: 90rpx;
         right: 0rpx;
@@ -1496,19 +1519,22 @@ border-radius:32rpx 32rpx 0 0 ;
         // justify-content: flex-end;
 
         .passionImg {
-            width: 100%;
+             width: 280rpx;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/jq.png");
+            background: url("https://img.shinemang.com/gachaStatic/jq1.png");
             background-size: 100% 100%;
+              position: absolute;
+            right: 0;
+            top:0;
           
         }
 
         .commonImg {
             // width: 32rpx;
             // height: 32rpx;
-           width: 100%;
+            width: 100%;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/pt.png");
+            background: url("https://img.shinemang.com/gachaStatic/pt1.png");
             background-size: 100% 100%;
             // margin-left: 10rpx;
         }
@@ -1605,6 +1631,7 @@ border-radius:32rpx 32rpx 0 0 ;
     transform: translateX(-50%);
     top: 1188rpx;
     z-index: 100;
+    width: 100%;
 }
     .awards_box {
         width: 750rpx;
@@ -1616,11 +1643,12 @@ border-radius:32rpx 32rpx 0 0 ;
         margin-top: 328rpx;
         position: relative;
         .guang{
-            width: 100%;
-            height: 100%;
+            width: 750rpx;
+            height:750rpx;
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 83rpx;
+           
+            // transform: translate(-50%,-50%);
             z-index: 2;
             background: url('https://img.shinemang.com/gachaStatic/newNdj/guang.png');
             background-size: 100% 100%;

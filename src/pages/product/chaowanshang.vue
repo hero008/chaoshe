@@ -103,10 +103,10 @@
                         <scroll-view scroll-y style="height:740rpx;">
                            <view class="list">
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
-                                @click="ondetail(item.itemId)">
+                                @click="ondetail(item)">
                                 <img :src="item.itemHalfImage" class="p-img" />
                                 <img :src="`https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png`"
-                                    class="badge" />
+                                    :class="['badge','badge'+item.levelName]" />
                                 <!-- <view class="bor"></view> -->
                                 <view class="p-name flex_c flex_jb">
                                     <div class="tit ellipsis">{{ item.itemName }}</div>
@@ -130,14 +130,14 @@
                     <view class="tab">
 
                         <view @click="refreshBtn" class="refresh"></view>
-                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem',value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
+                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem','tabItem'+value.levelName,value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
                   <!-- <view class="tabItem">史诗</view>
                   <view class="tabItem">稀有</view>
                   <view class="tabItem">普通</view> -->
              </view>
                 <scroll-view style="height: 780rpx;" scroll-y>
                     <div class="lotteryRaffle">
-                            <div v-if="newRecordList" class="r_item" >
+                            <div v-if="newRecordList && newRecordList.records && newRecordList.records.length !== 0" class="r_item" >
                              <!-- v-for="(array, key) in recordList" -->
                                 <!-- <div  class="lr_tit flex_r flex_ac flex_jb" :class="['badge' + array.name]"> -->
                                     <!-- <img :src="`https://img.shinemang.com/gachaStatic/static/img/chaowanshang/duoyou_${array.name}.png`"
@@ -149,11 +149,11 @@
                                     </div> -->
                                 <!-- </div> -->
                                 <div  :class="['lr_con', { row1: false }]">
-                                    <div v-if="newRecordList && newRecordList.records && newRecordList.records.length !== 0">
+                                    <div>
                                         <div :style="{
                                 backgroundImage: `url(https://img.shinemang.com/gachaStatic/k_${newRecordList.name}.png)`,
                             }"  class="lr_i flex_r flex_ac flex_jb"
-                                            @click="ondetail(item.itemId)"
+                                            @click="ondetail(item)"
                                             v-for="(item, i) in newRecordList.records.slice(0, newRecordList.records.lengthNumber)" :key="i">
                                             <div class="lr_r">
                                                 <img class="lr_img" :src="item.itemCover" />
@@ -181,11 +181,11 @@
                                         </div>
                                     </div>
 
-                                    <div v-else class="nullBox">
-                                        暂无中赏记录~
-                                    </div>
+                       
                                 </div>
                             </div>
+                            <u-empty v-else text="暂无中赏记录~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
+                    :marginTop="50" />
                   </div>
                </scroll-view>
                         </div>
@@ -296,10 +296,10 @@
         <!-- 支付 潮玩赏-->
         <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
         <!-- 详情弹窗 -->
-        <gachaDetails ref="gachaDetails" />
+     
         <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"
             :message="AReward.openMessage" />
-        <duoyou ref="duoyou" @onDuoyou="onClickDuoyou" />
+        <duoyou @onDuoyouDetail="onDuoyouDetail" ref="duoyou" @onDuoyou="onClickDuoyou" />
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
         <u-popup round="16" @close="showRecards = false" :show="showRecards">
           <view class="recordList">
@@ -366,6 +366,28 @@
           
 		</u-popup>
 
+      <u-popup mode="center" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
+          <view class="BzcList">
+            <view @click=" goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules"></view>
+            <scroll-view class="scrollView" scroll-y>
+                 <view class="list">
+                    <view @click="ondetail(item)" v-for="item in bzcRewards" :key="item.itemId" class="item">
+                         <view :style="{
+                            backgroundImage:`url(${item.coverThumb})`
+                         }" class="bgc">
+                            <view class="tag"></view>
+                         </view>
+
+                         <view class="name ellipsis">{{ item.name }}</view>
+                         <view class="rate">概率:{{item.probability}}%</view>
+                    </view>    
+                
+                </view>
+            </scroll-view>
+            <view class="close" @click="showBzcPopup = false"></view>
+          </view>
+	  </u-popup>
+      <gachaDetails ref="gachaDetails" />
     </view>
 </template>
 <script>
@@ -383,6 +405,7 @@ import { formateGachaLevelName,shareUrl } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
+import {awardsSort} from '@/utils/mgtv.js'
 export default {
     data() {
         return {
@@ -447,8 +470,10 @@ export default {
             activityOpen: false,
 
 
-            recordLevelName:'SP',
+            recordLevelName:'宝箱',
             newRecordList:'',
+            showBzcPopup:false,
+            bzcRewards:[]
             
 
 
@@ -482,6 +507,9 @@ export default {
         this.loadDetail();
     },
     methods: {
+        onDuoyouDetail(item){
+           this.ondetail(item)
+        },
         changeTabs(type){
           this.previewType = type
         },
@@ -546,6 +574,9 @@ export default {
                     this.chaoPlay(this.previewType);
                     this.getChaoyou()
                     this.getData()
+
+
+        
 
                 //   mgtv.onShareAppMessage(() => {
                 //       console.log('分享了')
@@ -781,9 +812,12 @@ export default {
                 if (!Array.isArray(res.awards)) return
 
                  if(res.awards && res.awards.length > 0){
-                    res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
+                     res.awards = awardsSort(res.awards);
+                    // let spList = res.awards.filter((item)=>item.levelIndex == 28)
+                    // let other = res.awards.filter((item)=>item.levelIndex != 28)
+                    // res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
-                // res.awards[]
+                    // res.awards[]
                   }
                 this.awardsList = res.awards;
 
@@ -802,6 +836,8 @@ export default {
                 if (!res.code) {
                     if (!Array.isArray(res.awards)) return
                      if(res.awards && res.awards.length > 0){
+                        res.awards = awardsSort(res.awards);
+                    //   res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                       res.awards[0].requestId = res.requestId
                 // res.awards[]
                   }
@@ -811,8 +847,19 @@ export default {
                 } else uni.$u.toast(res.message);
             });
         },
-        ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+        ondetail(item) {
+            if(item.levelIndex && item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.bzcRewards = res.item.boxItems
+                    this.showBzcPopup = true
+                })
+             
+            }else{
+                
+             this.gachaDetailsMethod(this, item.itemId);
+            }
         },
         onShare() {
             uniShare(
@@ -1500,6 +1547,13 @@ text-transform: none;
         &.C{
             color: #EDF1F0;
         }
+        &.宝箱{
+         background: -webkit-linear-gradient(26.15616568971575deg, #6E8AFF 0%, #FF98FB 26%, #F7FF9B 73%, #9DFFE4 100%);
+        background:linear-gradient(26.15616568971575deg, #6E8AFF 0%, #FF98FB 26%, #F7FF9B 73%, #9DFFE4 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        }
     
      }
         .badge {
@@ -1548,6 +1602,10 @@ text-transform: none;
             position: absolute;
             left: 0;
             top: 168rpx;
+
+            &.badge宝箱{
+                width: 120rpx;
+            }
         }
 
         .p-name {
@@ -1668,22 +1726,45 @@ text-transform: none;
         z-index: 2;
        .tabItem{
         width: 136rpx;
-height: 56rpx;
-background: #EEEEEE;
-border-radius: 28rpx 28rpx 28rpx 28rpx;
-display: flex;
-align-items: center;
-justify-content: center;
-line-height: 56rpx;
-margin-right: 16rpx;
- color: #666666;
- font-size: 28rpx;
- &.active{
-    background: #FF93C7;
-    color: #000;
-    font-weight: bold;
- }
-
+        height: 56rpx;
+        background: #EEEEEE;
+        border-radius: 28rpx 28rpx 28rpx 28rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 56rpx;
+        margin-right: 16rpx;
+        color: #666666;
+        font-size: 28rpx;
+        &.active{
+            color: #000;
+            font-weight: bold;
+        }
+        &.tabItem宝箱{
+            &.active{
+            background: linear-gradient( 116deg, #6E8AFF 0%, #FF98FB 26.44%, #F7FF9B 72.6%, #9DFFE4 100%);
+            }
+        }
+        &.tabItemSP{
+        &.active{
+            background: #FF93C7;
+        }
+        }
+        &.tabItemA{
+            &.active{
+            background: #F9E650;
+        }
+        }
+        &.tabItemB{
+            &.active{
+            background: #50FFF5;
+        }
+        }
+        &.tabItemC{
+            &.active{
+            background: #BCCFD4;
+        }
+        }
        }
       }
 
@@ -1703,13 +1784,13 @@ margin-right: 16rpx;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            right: 24rpx;
+            right: 12rpx;
             background: url('@/static/refresh.png');
             background-size: 100% 100%;
 
         }
        .tabItem{
-        width: 136rpx;
+        // width: 136rpx;
 height: 56rpx;
 background: #fff;
 border-radius: 28rpx 28rpx 28rpx 28rpx;
@@ -1718,13 +1799,42 @@ align-items: center;
 justify-content: center;
 line-height: 56rpx;
 margin-right: 16rpx;
+padding: 0 26rpx;
  color: #666666;
  font-size: 28rpx;
+ &:last-child{
+    margin-right: 0;
+ }
  &.active{
-    background: #FF93C7;
+    // background: #FF93C7;
     color: #000;
     font-weight: bold;
  }
+   &.tabItem宝箱{
+        &.active{
+        background: linear-gradient( 116deg, #6E8AFF 0%, #FF98FB 26.44%, #F7FF9B 72.6%, #9DFFE4 100%);
+        }
+        }
+        &.tabItemSP{
+        &.active{
+            background: #FF93C7;
+        }
+        }
+        &.tabItemA{
+            &.active{
+            background: #F9E650;
+        }
+        }
+        &.tabItemB{
+            &.active{
+            background: #50FFF5;
+        }
+        }
+        &.tabItemC{
+            &.active{
+            background: #BCCFD4;
+        }
+        }
 
        }
       }
@@ -1792,6 +1902,7 @@ margin-right: 16rpx;
 
         .nullBox {
             height: 150rpx;
+           
             font-weight: 500;
             font-size: 12px;
             color: #E9BCBD;
@@ -1872,10 +1983,10 @@ margin-right: 16rpx;
 
     .cut {
         position: absolute;
-        width: 196rpx;
+        width: 380rpx;
         height: 64rpx;
         bottom: 90rpx;
-        right: 0rpx;
+        right: -26rpx;
         // border-radius: 18rpx 0 0 18rpx;
         // font-weight: bold;
         // font-size: 24rpx;
@@ -1885,10 +1996,13 @@ margin-right: 16rpx;
         // justify-content: flex-end;
 
         .passionImg {
-            width: 100%;
+            width: 280rpx;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/jq.png");
+            background: url("https://img.shinemang.com/gachaStatic/jq1.png");
             background-size: 100% 100%;
+            position: absolute;
+            right: 0;
+            top:0;
           
         }
 
@@ -1897,7 +2011,7 @@ margin-right: 16rpx;
             // height: 32rpx;
            width: 100%;
             height: 100%;
-            background: url("https://img.shinemang.com/gachaStatic/pt.png");
+            background: url("https://img.shinemang.com/gachaStatic/pt1.png");
             background-size: 100% 100%;
             // margin-left: 10rpx;
         }
@@ -2012,6 +2126,84 @@ margin-right: 16rpx;
 
     50% {
         transform: translate(0, 30rpx);
+    }
+}
+
+.BzcList{
+    width: 670rpx;
+    height: 1082rpx;
+    background: url('https://img.shinemang.com/gachaStatic/bzsBg.png');
+    background-size: 100% 100%;
+    position: relative;
+    padding-top: 220rpx;
+    .rules{
+        width: 112rpx;
+        height: 40rpx;
+        position: absolute;
+        top: 36rpx;
+        right: 16rpx;
+        background: url('https://img.shinemang.com/gachaStatic/bzsRule.png');
+        background-size: 100% 100%;
+        z-index: 999;
+    }
+    .scrollView{
+        width: 100%;
+        height: 810rpx;
+        // background: #fff;
+        .list{
+            width: 100%;
+            padding-left: 28rpx;
+            display: flex;
+            flex-wrap: wrap;
+            .item{
+                width: 200rpx;
+                height: 292rpx;
+                background: linear-gradient( 180deg, #CCFBFF 0%, #FFFFFF 20%);
+                border-radius: 16rpx 16rpx 16rpx 16rpx;
+                margin-right: 8rpx;
+                margin-bottom: 8rpx;
+                .bgc{
+                    width: 200rpx;
+                    height: 200rpx;
+                    border-radius: 16rpx 16rpx 0 0;
+                    // background: red;
+                    background-size: 100% 100%;
+                    position: relative;
+                    .tag{
+                        width: 120rpx;
+                        height: 40rpx;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        background: url('https://img.shinemang.com/gachaStatic/tag_宝箱.png');
+                        background-size: 100% 100%;
+                    }
+                }
+                .name{
+                    color: #1A1A1A;
+                    padding: 0 8rpx;
+                    font-size: 24rpx;
+                    line-height: 32rpx;
+                    margin-top: 12rpx;
+                }
+                .rate{
+                    padding-left: 8rpx;
+                    color: #8D8D94;
+                    font-size: 20rpx;
+                    margin-top: 4rpx;
+                }
+            }
+        }
+    }
+     .close{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -80rpx;
+        width: 56rpx;
+        height: 56rpx;
+        background: url('@/static/close.png');
+        background-size: 100% 100%;
     }
 }
 </style>

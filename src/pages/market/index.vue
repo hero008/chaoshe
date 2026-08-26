@@ -194,9 +194,9 @@ export default {
             },
             lineColor: "linear-gradient( 90deg, #31E597 0%, #40E0EA 100%)",
             navbar: [
-                { name: "广场" },
-                { name: "我发布的" },
-                { name: "我参与的" },
+                { name: "集市广场" },
+                { name: "我的摊位" },
+                { name: "我的交易" },
             ],
             active: 0,
             navbar2: [
@@ -222,7 +222,7 @@ export default {
             triggered: true,
             navbarList: [
                 {
-                    name: "广场",
+                    name: "集市广场",
                     id: 0,
                     txt: [
                         {
@@ -245,7 +245,7 @@ export default {
                     ],
                 },
                 {
-                    name: "我发布的",
+                    name: "我的摊位",
                     id: 1,
                     txt: [
                         {
@@ -270,7 +270,7 @@ export default {
                     ],
                 },
                 {
-                    name: "我参与的",
+                    name: "我的交易",
                     id: 2,
                     txt: [
                         {

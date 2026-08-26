@@ -33,10 +33,10 @@
                             class="order_item"
                             v-for="(item, index) in myRewardData"
                             :key="index"
-                            @click="onclickHistoryDetail(item)"
+                          
                         >
                             <view style="padding:  0 32rpx;">
-                                <div class="row flex_r flex_jb flex_ac">
+                                <div   @click="onclickHistoryDetail(item)" class="row flex_r flex_jb flex_ac">
                                 <div class="flex_r flex_ac">
                                     <span class="txt">套系</span
                                     ><span class="txt">{{
@@ -45,22 +45,17 @@
                                 </div>
                                 <div
                                     class="detail"
-                                    @click="
-                                        getRecordDetails(
-                                            item.gachaId,
-                                            item.boxIndex
-                                        )
-                                    "
+                               
                                 >
                                     <span>查看详情</span
                                     ><span class="icof">&#xe72b;</span>
                                 </div>
                             </div>
-                            <div class="row flex_r flex_ac">
+                            <div    @click="onclickHistoryDetail(item)" class="row flex_r flex_ac">
                                 <span class="txt">箱号</span
                                 ><span class="txt">{{ item.boxOutNo }}</span>
                             </div>
-                            <div class="row flex_r flex_ac flex_jb">
+                            <div   @click="onclickHistoryDetail(item)" class="row flex_r flex_ac flex_jb">
                                 <div class="flex_r flex_ac">
                                     <span class="txt">抽赏类型</span>
                                     <!-- : item.items[0].levelIndex | levelNum -->
@@ -69,6 +64,9 @@
                                         v-if=" item.count"
                                     >
                                         {{ "抽" + item.count + "发" }}
+                                          <span :style="{
+                                            color:getTagPng(item.matchNum).color
+                                           }" v-if="secondCondition == 7">{{ item.matchNum }}碰</span> 
                                     </span>
                                     <span
                                         class="txt"
@@ -103,29 +101,39 @@
                             >
                                 <template v-for="(a, b) in item.items">
                                     <div
-                                        class="goods_item flex_r flex_ac flex_jb"
+                                        class="goods_item"
+                                        @click="ondetail(a.itemId)"
                                         :key="b"
                                     >
-                                        <div
+                                        <!-- <div
                                             class="name ellipsis"
                                             v-if="secondCondition == 1"
                                         >
                                             {{ a.levelIndex | levelNum }}赏
-                                        </div>
-                                        <div class="name ellipsis" v-else>
-                                           <span :style="{
-                                            color:getTagPng(item.matchNum).color
-                                           }" v-if="secondCondition == 7">{{ item.matchNum }}碰</span> {{ a.itemName }}
-                                        </div>
-                                        <div class="num">
+                                        </div> v-else-->
+                                        <!-- <div class="name ellipsis" >
+                                         {{ a.itemName }}
+                                        </div> -->
+                                        
+                                        <div :style="{
+                                           backgroundImage:`url(${a.itemCover})`,
+                                           backgroundSize:'100% 100%'
+                                        }" class="img">
+                                              <div class="num">
                                             {{
-                                                a.count > 1 ? "x" + a.count : ""
+                                               "x" + a.count
                                             }}
                                         </div>
-                                        <img :src="a.itemCover" class="img" />
+                                        </div>
+                                        <!-- <img :src="a.itemCover" class="img" /> -->
                                     </div>
+                                   
                                 </template>
+                               
                             </div>
+                             <div class="total">
+                                    共{{ item.count }}件
+                                </div>
                             </view>
                              <view style="margin-top: 24rpx;" class="bgcBox"></view>
                         </div>
@@ -139,6 +147,7 @@
                 />
             </view>
         </div>
+          <gachaDetails ref="gachaDetails" />
     </view>
 </template>
 <script>
@@ -168,6 +177,9 @@ export default {
         this.getMyRewards();
     },
     methods: {
+           ondetail(id) {
+            this.gachaDetailsMethod(this,id);
+        },
          getTagPng(value){
            if(value == 0 || value ==1 || value ==12 || value ==13 || value ==14){
             return {
@@ -389,17 +401,27 @@ text{
             color: #818181;
         }
     }
+    .total{
+       text-align: right;
+    }
 
     .goods {
         padding-top: 16rpx;
         border-top: 2rpx solid #e2e1e3;
+        overflow-x: auto;
+        width: 100%;
+        display: flex;
+        flex-shrink: 0;
+        position: relative;
+       
     }
 
     .goods_item {
         background: #f9f9f9;
         border-radius: 16rpx;
         font-size: 28rpx;
-        padding: 8rpx 20rpx;
+        display: inline-block;
+        padding: 8rpx 8rpx;
         margin-bottom: 15rpx;
 
         &:last-child {
@@ -417,13 +439,29 @@ text{
         }
 
         .img {
-            width: 60rpx;
-            height: 60rpx;
+            width: 150rpx;
+            height: 150rpx;
             border-radius: 8rpx;
-            background-color: rgba($color: $motif-color, $alpha: 0.5);
+            // background-color: rgba($color: $motif-color, $alpha: 0.5);
             border: 2rpx solid #fff;
-            box-shadow: 0 0 2rpx 2rpx #cacaca;
-            margin: 2rpx;
+            position: relative;
+            
+                .num{
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                padding: 0 4px;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+                border-radius: 0 12px 0 7px;
+                background: rgba(0, 0, 0, 0.5);
+                font-weight: bold;
+                font-size: 12px;
+                color: #ffffff;
+                }
+            // box-shadow: 0 0 2rpx 2rpx #cacaca;
+            // margin: 2rpx;
         }
     }
 

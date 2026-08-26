@@ -1,5 +1,5 @@
 <template>
-    <u-popup :show="show" @close="close" round="20" bgColor="#F4F4F4">
+    <u-popup :overlayStyle="{zIndex:88887}" zIndex="88888" :show="show" @close="close" round="20" bgColor="#F4F4F4">
         <div class="gachaDetails_con">
             <div class="s_c">
                 <div class="gacha_img flex_r flex_jc">

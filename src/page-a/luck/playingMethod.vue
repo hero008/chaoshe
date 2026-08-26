@@ -242,7 +242,7 @@ export default {
             this.insufficient = this.currentPercent >= this.totalPrice ? true : false;
         },
         addStock() {
-            this.$refs.addStock.open(this.swiperList, this.totalPrice, true);
+            this.$refs.addStock.open(this.swiperList, this.totalPrice, true,'SourceType_Advanced');
         },
         asyncUpBalance(index, id) {
             this.swiperList = [];
@@ -339,7 +339,7 @@ export default {
             });
         },
         onEmpty() {
-            this.$refs.addStock.getSubclassReward();
+            this.$refs.addStock.getSubclassReward('SourceType_Advanced');
             this.overflowBox = 0;
             this.currentPercent = 0;
             // this.selectRewardsInfo = [];

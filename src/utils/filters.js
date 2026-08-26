@@ -45,9 +45,13 @@ function tmName(val) {
     }
 }
 
+
+
+
 export default {
     levelNum,
     userange,
     active,
     tmName,
+    
 };
