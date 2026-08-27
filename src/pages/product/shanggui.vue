@@ -72,6 +72,7 @@
                                  <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
                                 }" @click="ondetail(item)">
+                                 <img v-if="item.isTreasureChest" src="https://img.shinemang.com/gachaStatic/tag_宝箱.png" alt="">
                                     <view :style="{
                                         backgroundImage: `url(${item.item.saleType == 1?'https://img.shinemang.com/gachaStatic/chaogui/xianhuo.png':'https://img.shinemang.com/gachaStatic/chaogui/yushou.png'})`,
                                     }" class="item_txt1"></view>
@@ -266,7 +267,7 @@ export default {
     created() {
         this.loadDetail();
 
-        if (!this.userInfo.showMarket) this.navbar = [{ name: "全部" }];
+        // if (!this.userInfo.showMarket) this.navbar = [{ name: "全部" }];
     },
     methods: {
           onClickResult(){

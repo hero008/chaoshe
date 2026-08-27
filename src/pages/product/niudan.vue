@@ -97,7 +97,7 @@
                                 <view class="sort">{{item.luckyNo}}赏</view>
 
                             </view> 
-                            <img v-else class="ico3" :class="[item.levelName == '冲冲' ? 'rotated' : '']"
+                            <img v-else class="ico3" :class="[item.levelName == '冲冲' ? 'rotated' : '',item.levelIndex == 52?'BZ':'']"
                                 :src="`https://img.shinemang.com/gachaStatic/static/img/reward/ico_${item.levelName}.png`" />
                             <view v-if="item.levelName == 'Lucky' && item.luckyPhase"
                                 class="schedule flex_r flex_jb flex_ac" @click.stop="onScheduleTips(item.luckyPhase)">
@@ -109,7 +109,7 @@
                 </scroll-view>
                 </view>
                <view style="height:790rpx;position: relative;" v-show="previewType == 2">
-                 <draw-log-other  @onRefresh="onRefresh" ref="drawLogOther" :drawType="2"  />
+                 <draw-log-other @ondetail="ondetail"  @onRefresh="onRefresh" ref="drawLogOther" :drawType="2"  />
                </view>
                 <!-- <view class="p-tit flex_r flex_jb flex_ac">
                     <view class="l">奖品概览</view>
@@ -195,14 +195,15 @@
                         height="100%" />
                 </view>
 
-                <view v-if="(percentage > 95 && isRun && spList.length>0 && spList[WinnInx].levelIndex == 28 ) " class="gx"></view>
+                <view v-if="(percentage > 95 && isRun && spList.length>0 && (spList[WinnInx].levelIndex == 28 || spList[WinnInx].levelIndex == 52 )) " class="gx"></view>
                 <view  class="awards_box" v-if="percentage > 95 && spList.length>0 && isRun">
-                   <view  v-if="(spList[WinnInx].levelIndex == 28) "  class="guang"></view>
-                    <view v-if="(spList[WinnInx].levelIndex == 28) " class="title">
-                       {{spList[WinnInx].levelName == 'Lucky' ? (spList[WinnInx].levelName + spList[WinnInx].luckyNo +'赏'):(spList[WinnInx].levelName+'赏')}}
+                   <view  v-if="(spList[WinnInx].levelIndex == 28 || spList[WinnInx].levelIndex == 52) "  class="guang"></view>
+                    <view v-if="(spList[WinnInx].levelIndex == 28  || spList[WinnInx].levelIndex == 52) " class="title">
+                        {{ spList[WinnInx].levelIndex == 28 ? 'SP赏':'宝藏赏' }}
+                       <!-- {{spList[WinnInx].levelName == 'Lucky' ? (spList[WinnInx].levelName + spList[WinnInx].luckyNo +'赏'):(spList[WinnInx].levelName+'赏')}} -->
                     </view>
                     <view :style="{
-                    backgroundImage:(spList[WinnInx].levelIndex == 28) ?`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_b.png')`:`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_s.png')`,
+                    backgroundImage:(spList[WinnInx].levelIndex == 28 || spList[WinnInx].levelIndex == 52) ?`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_b.png')`:`url('https://img.shinemang.com/gachaStatic/newNdj/ndj_s.png')`,
                     backgroundSize:'100% 100%'
                 }" class="awards flex_r flex_jc">
                         <view class="ni">
@@ -234,17 +235,10 @@
                 </view>
             </view>
         </u-popup>
-     
-        <!-- <movable-area class="movable-draw">
-            <movable-view v-if="chqShow" class="movable-ball" direction="all" :style="`left: ${ballLeft}; top:450rpx;`"
-                @click="changeTop">
-                <ball :afterTop="afterTop"></ball>
-            </movable-view>
-        </movable-area> -->
-      
+
         <view class="mask" v-if="show"></view>
         <!-- 详情弹窗 -->
-        <gachaDetails ref="gachaDetails" />
+      
         <!-- 支付 -->
         <x-pay @success="onClickDraw" ref="xPay" mtype="2" :probabilityShow="probabilityShow" />
         <!-- 中赏记录 -->
@@ -254,6 +248,9 @@
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
        <show-modal></show-modal>
        <result ref="result" @onResult="onClickResult"></result>
+        <bzModal ref="bzModal" ></bzModal>
+
+         <gachaDetails ref="gachaDetails" />
         <!-- 抽赏动效 -->
         <!-- <dynamic-effect ref="animation" @childData="handleChildData" /> -->
         <!-- <xPrize ref="refPrize" :prize="prize" /> -->
@@ -344,7 +341,7 @@ export default {
             vibrat: false,
             LuckyVisible: false,
             scheduleNum: null,
-            previewType:1
+            previewType:1,
         };
     },
     components: {
@@ -640,8 +637,10 @@ export default {
             const GRAND_PRIZE_LEVEL = 28;                     // 大赏等级
 
             // 1. 分离大赏与非大赏
-            const grandPrizes = winningList.filter(item => item.levelIndex === GRAND_PRIZE_LEVEL);
-            const otherPrizes = winningList.filter(item => item.levelIndex !== GRAND_PRIZE_LEVEL)
+            let bZprizes = winningList.filter(item=> item.levelIndex === 52)
+            let SPPrizes =  winningList.filter(item => item.levelIndex === GRAND_PRIZE_LEVEL );
+            const grandPrizes =[...bZprizes,...SPPrizes]
+            const otherPrizes = winningList.filter(item => (item.levelIndex !== GRAND_PRIZE_LEVEL && item.levelIndex != 52))
                 .sort((a, b) => a.levelIndex - b.levelIndex);
 
             // 大赏强制加入spList（无论是否开启动画）
@@ -689,7 +688,7 @@ export default {
          */
         handlePostAnimation(showAnim, winningList, otherPrizes) {
             // 判断是否存在大赏
-            const hasGrandPrize = winningList.some(item => (item.levelIndex === 28));
+            const hasGrandPrize = winningList.some(item => (item.levelIndex === 28 || item.levelIndex == 52));
 
             // 确定音效类型（1=普通，2=特殊）
             let soundType = 1;
@@ -737,7 +736,16 @@ export default {
             }
         },
         ondetail(data) {
-            itemDetails(data, this.$refs.gachaDetails, '初始获奖概率', this.price)
+            if(data.levelIndex == 52){
+              post('v1/goods/item/get',{
+                    item_id:data.itemId
+                }).then((res)=>{
+                    this.$refs.bzModal.open(res.item.boxItems)
+                })
+            }else{
+               itemDetails(data, this.$refs.gachaDetails, '初始获奖概率', this.price)
+            }
+           
         },
         ondrawLog() {
             let type = this.gachainfo.leftAwards !== 0 ? true : false
@@ -1422,6 +1430,7 @@ border-radius: 12rpx 12rpx 12rpx 12rpx;
                 left: 0rpx;
                  width: auto;
             height: 40rpx;
+          
             }
 
         .Lucky {
@@ -1888,4 +1897,5 @@ border-radius:32rpx 32rpx 0 0 ;
     color: #999;
     font-size: 28rpx;
 }
+
 </style>

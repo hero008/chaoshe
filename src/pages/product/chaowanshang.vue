@@ -292,7 +292,16 @@
                 <ball :afterTop="afterTop"></ball>
             </movable-view>
         </movable-area> -->
-     
+          <movable-area class="area">
+            <movable-view x="10000"  @click="openLordPopup" v-if="lordActivity" class="lord_pill " direction="all" :y="0">
+                <view>
+                        <!-- <view class="lord_pill_txt">领主模式</view> -->
+                    </view>
+            </movable-view>
+
+           
+       
+         </movable-area>
         <!-- 支付 潮玩赏-->
         <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
         <!-- 详情弹窗 -->
@@ -365,28 +374,9 @@
           </view>
           
 		</u-popup>
+        <feudalLord ref="feudalLord" :gachaId="gachaId" />
+        <bzModal ref="bzModal" ></bzModal>
 
-      <u-popup mode="center" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
-          <view class="BzcList">
-            <view @click=" goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules"></view>
-            <scroll-view class="scrollView" scroll-y>
-                 <view class="list">
-                    <view @click="ondetail(item)" v-for="item in bzcRewards" :key="item.itemId" class="item">
-                         <view :style="{
-                            backgroundImage:`url(${item.coverThumb})`
-                         }" class="bgc">
-                            <view class="tag"></view>
-                         </view>
-
-                         <view class="name ellipsis">{{ item.name }}</view>
-                         <view class="rate">概率:{{item.probability}}%</view>
-                    </view>    
-                
-                </view>
-            </scroll-view>
-            <view class="close" @click="showBzcPopup = false"></view>
-          </view>
-	  </u-popup>
       <gachaDetails ref="gachaDetails" />
     </view>
 </template>
@@ -406,6 +396,8 @@ import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
 import {awardsSort} from '@/utils/mgtv.js'
+import feudalLord from "@/components/feudalLord/index.vue";
+import bzModal from "@/components/bzModal/bzModal.vue";
 export default {
     data() {
         return {
@@ -472,8 +464,8 @@ export default {
 
             recordLevelName:'宝箱',
             newRecordList:'',
-            showBzcPopup:false,
-            bzcRewards:[]
+   
+            lordActivity:0
             
 
 
@@ -485,7 +477,9 @@ export default {
         ball,
         duoyou,
         xPrize,
-        DanmakuSimple
+        DanmakuSimple,
+        feudalLord,
+        bzModal
     },
     computed: {
        ...mapState(["userInfo"]),
@@ -507,6 +501,11 @@ export default {
         this.loadDetail();
     },
     methods: {
+        openLordPopup() {
+            this.$refs.feudalLord.open(this.gachaId)
+            return
+         
+        },
         onDuoyouDetail(item){
            this.ondetail(item)
         },
@@ -567,6 +566,7 @@ export default {
                     this.gachaId = res.gacha.id;
                     // this.theme_id = res.gacha.themeId;
                     this.mantissa = this.decimalPart(this.price)
+                       this.lordActivity=res.lordActivity
                     // this.residual = gachaBox.totalAwards - gachaBox.leftAwards 
                     this.residual = gachaBox.totalAwards == -1 ? gachaBox.consumedAwards : gachaBox.totalAwards - gachaBox.leftAwards
                     this.gachas();
@@ -853,7 +853,8 @@ export default {
                     item_id:item.itemId
                 }).then((res)=>{
                     this.bzcRewards = res.item.boxItems
-                    this.showBzcPopup = true
+                    this.$refs.bzModal.open(res.item.boxItems)
+
                 })
              
             }else{
@@ -953,6 +954,46 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.area{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+   pointer-events: none; /* 🔥 关键 */
+
+ 
+
+}
+/* 领主标签（位于托管模式按钮下方） */
+.lord_pill {
+    position: absolute;
+    right: 12rpx;
+    top: 756rpx;
+    width: 108rpx;
+    height: 112rpx;
+    background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/lz.png");
+    background-size: 100% 100%;
+    z-index: 2;
+  pointer-events:auto;
+    .lord_pill_txt {
+        position: absolute;
+        top: 58rpx;
+        width: 104rpx;
+        height: 36rpx;
+        line-height: 33rpx;
+        background: #DF9E3B;
+        border-radius: 18rpx;
+        border: 2rpx solid #FFFFFF;
+        font-weight: bold;
+        font-size: 20rpx;
+        color: #FFFFFF;
+        text-align: center;
+        right: -12rpx;
+    }
+
+}
 .chaowanshang {
     background-color: #969fde;
     background: url("https://img.shinemang.com/gachaStatic/chaoyou/bg.png") top center no-repeat;
@@ -2129,81 +2170,5 @@ padding: 0 26rpx;
     }
 }
 
-.BzcList{
-    width: 670rpx;
-    height: 1082rpx;
-    background: url('https://img.shinemang.com/gachaStatic/bzsBg.png');
-    background-size: 100% 100%;
-    position: relative;
-    padding-top: 220rpx;
-    .rules{
-        width: 112rpx;
-        height: 40rpx;
-        position: absolute;
-        top: 36rpx;
-        right: 16rpx;
-        background: url('https://img.shinemang.com/gachaStatic/bzsRule.png');
-        background-size: 100% 100%;
-        z-index: 999;
-    }
-    .scrollView{
-        width: 100%;
-        height: 810rpx;
-        // background: #fff;
-        .list{
-            width: 100%;
-            padding-left: 28rpx;
-            display: flex;
-            flex-wrap: wrap;
-            .item{
-                width: 200rpx;
-                height: 292rpx;
-                background: linear-gradient( 180deg, #CCFBFF 0%, #FFFFFF 20%);
-                border-radius: 16rpx 16rpx 16rpx 16rpx;
-                margin-right: 8rpx;
-                margin-bottom: 8rpx;
-                .bgc{
-                    width: 200rpx;
-                    height: 200rpx;
-                    border-radius: 16rpx 16rpx 0 0;
-                    // background: red;
-                    background-size: 100% 100%;
-                    position: relative;
-                    .tag{
-                        width: 120rpx;
-                        height: 40rpx;
-                        position: absolute;
-                        left: 0;
-                        bottom: 0;
-                        background: url('https://img.shinemang.com/gachaStatic/tag_宝箱.png');
-                        background-size: 100% 100%;
-                    }
-                }
-                .name{
-                    color: #1A1A1A;
-                    padding: 0 8rpx;
-                    font-size: 24rpx;
-                    line-height: 32rpx;
-                    margin-top: 12rpx;
-                }
-                .rate{
-                    padding-left: 8rpx;
-                    color: #8D8D94;
-                    font-size: 20rpx;
-                    margin-top: 4rpx;
-                }
-            }
-        }
-    }
-     .close{
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -80rpx;
-        width: 56rpx;
-        height: 56rpx;
-        background: url('@/static/close.png');
-        background-size: 100% 100%;
-    }
-}
+
 </style>
