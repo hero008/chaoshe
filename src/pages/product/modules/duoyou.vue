@@ -82,7 +82,7 @@
                      <view class="all_btn" @click="close"></view>
                      
                 </view>
-                 <view class="tips">赏品已自动放进赏柜，可在赏柜查看~</view>
+                 <view class="tips">赏品已自动放进星仓，可在星仓查看~</view>
                      <view class="closeBtn">
                          <img @click="close"  src="@/static/close.png" alt="">
                      </view>
@@ -106,7 +106,7 @@
                     <!-- {{ allShow ? '确定' : '一键开奖' }} -->
                       <view class="all_btn" @click="close"></view>
                     </view>
-                     <view class="tips">赏品已自动放进赏柜，可在赏柜查看~</view>
+                     <view class="tips">赏品已自动放进星仓，可在星仓查看~</view>
                      <view class="closeBtn">
                          <img @click="close"  src="@/static/close.png" alt="">
                      </view>
@@ -789,6 +789,7 @@ export default {
     height: 100vh;
     padding: 0;
     position: relative;
+    background-size: cover;
 
     .title {
         width: 100%;
