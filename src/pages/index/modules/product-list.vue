@@ -3,7 +3,7 @@
         <view class="l-lists">
             <view class="p-item" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
-                <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/home/wx_bz.png" alt="">
+                <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/reward/ico_宝箱.png" alt="">
                 <view class="product-info">
                       <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/home/wxc.png"
                         class="w-icon" />
@@ -88,7 +88,7 @@
         <view class="r-lists">
             <view class="p-item" v-for="(item, index) in oddList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
-                <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/home/wx_bz.png" alt="">
+                <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/reward/ico_宝箱.png" alt="">
                 <view class="product-info">
                     <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
@@ -449,10 +449,10 @@ export default {
     overflow: hidden;
     position: relative;
     .bz{
-        width: 104rpx;
-        height: 104rpx;
+        width: 120rpx;
+        height: 40rpx;
         position: absolute;
-        right: 0;
+        left: 0;
         top: 0;
     }
 

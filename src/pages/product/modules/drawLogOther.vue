@@ -38,7 +38,7 @@
                             </div>
                             <div class="goods">
                                 <template v-for="(a, b) in i.awardItems || i.award">
-                                    <div @click="ondetail(a.itemId)" class="goods_item flex_r flex_ac flex_jb"
+                                    <div @click="ondetail(a)" class="goods_item flex_r flex_ac flex_jb"
                                         :class="{ sp: a.levelIndex == 28, a: a.levelIndex == 1, dt: drawType == 3 }"
                                         :key="b">
                                         <div class="name ellipsis">{{ a.itemName || a.name }}</div>
@@ -93,8 +93,12 @@ export default {
         },
     },
     methods: {
-          ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+          ondetail(a) {
+            if(a.levelIndex == 52){
+              this.$emit('ondetail',a)
+            }else{
+             this.gachaDetailsMethod(this, a.itemId);
+            }
         },
         refresh() {
             this.pageda=  {
