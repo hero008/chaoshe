@@ -1362,7 +1362,6 @@ export default {
   margin-bottom: 32rpx;
   color: #1a1a1a;
   height: 42rpx;
-   
   .no_msg {
     color: #8d8d94;
     font-size: 28rpx;
