@@ -67,15 +67,15 @@
                         <div class="placeOrderUser flex_r flex_ac flex_jb">
                             <div class="user flex_r flex_ac">
                                 <image class="user_img" :src="item.userAvatar | active" />
-                                <div class="user_name">
-                                    <div class="flex_r flex_ac">{{ item.userName }} <div v-if="item.userType == 2"
+                                <div class="user_name ">
+                                    <div  class="flex_r flex_ac "> <span class="ellipsis" style="display: inline-block;max-width: 300rpx;">{{ item.userName }}</span> <div v-if="item.userType == 2"
                                             class="official flex_center">官方</div>
                                     </div>
                                     <div class="c_time">{{ item.createTime }}</div>
                                 </div>
                             </div>
-                            <!-- <div class="tag " :class="[stateType.includes(item.state) ? 'core' : '']">{{ item.state }}
-                            </div> -->
+                           <div class="tag " :class="[stateType.includes(item.state) ? 'core' : '']">{{ item.state }}
+                            </div> 
                         </div>
                         <div class="goods_remark flex_r flex_ac flex_jb" v-if="item.content">
                             <img src="https://img.shinemang.com/gachaStatic/static/img/market/ico2.png" class="m_ico big">
@@ -207,7 +207,7 @@ export default {
             navbar3: [
                 { txt: "全部", val: 0 },
                 { txt: "一口价", val: 1 },
-                { txt: "以物换物", val: 2 },
+                // { txt: "以物换物", val: 2 },
             ],
             state_type: [1, 0, 0], // 1最新、2最热、3一口价
             order_type: [0, 0, 0], // 1所有、2最热、3一口价
@@ -238,7 +238,7 @@ export default {
                             child: [
                                 { name: "全部", val: 0 },
                                 { name: "一口价", val: 1 },
-                                { name: "以物换物", val: 2 },
+                                // { name: "以物换物", val: 2 },
                             ],
                             id: 2,
                         },
@@ -253,7 +253,7 @@ export default {
                             child: [
                                 { name: "全部", val: 0 },
                                 { name: "一口价", val: 1 },
-                                { name: "以物换物", val: 2 },
+                                // { name: "以物换物", val: 2 },
                             ],
                             id: 1,
                         },
@@ -278,7 +278,7 @@ export default {
                             child: [
                                 { name: "全部", val: 0 },
                                 { name: "一口价", val: 1 },
-                                { name: "以物换物", val: 2 },
+                                // { name: "以物换物", val: 2 },
                             ],
                             id: 1,
                         },
@@ -309,7 +309,7 @@ export default {
                     child: [
                         { name: "全部", val: 0 },
                         { name: "一口价", val: 1 },
-                        { name: "以物换物", val: 2 },
+                        // { name: "以物换物", val: 2 },
                     ],
                     id: 2,
                 },
@@ -449,9 +449,10 @@ export default {
                         // if(res.order.state = getApp().globalData.MarketOrderState[res.order.state]){
                              
                         // }
-                         this.orderList.splice(this.oldInx.inx, 1, res.order);
-                        // res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
-                        // this.orderList.splice(this.oldInx.inx, 1, res.order);
+                    
+                       
+                        res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
+                        this.orderList.splice(this.oldInx.inx, 1, res.order);
                     }
                 });
             }
@@ -711,7 +712,7 @@ background-color: #F5F6F8;
 
             .tag {
                 padding: 12rpx 20rpx;
-                background: #25ba34;
+                background:linear-gradient(90deg, #31E597 0%, #40E0EA 100%);
                 border-radius: 32rpx;
                 font-size: 24rpx;
                 color: #fff;

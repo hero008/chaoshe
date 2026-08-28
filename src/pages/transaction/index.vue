@@ -381,7 +381,7 @@ export default {
         return {
             navbar: [
                 { txt: "一口价", val: 1 },
-                { txt: "以物换物", val: 2 },
+                // { txt: "以物换物", val: 2 },
             ],
             transactionType: 1, // 交易类型（一口价1/以物换物2）
 
@@ -464,7 +464,10 @@ export default {
         //     }, 100);
         // }
     },
-    mounted() { this.closeAutonym = this.userInfo.isAuthenticated; },
+    mounted() { this.closeAutonym = this.userInfo.isAuthenticated; 
+
+        this.$refs.addStock.getSubclassReward('SourceType_Market')
+    },
     methods: {
         
         formateList(value){
@@ -746,7 +749,7 @@ export default {
 
 .tabs_two {
     color: #1A1A1A;
-    width: 360rpx;
+    width: 180rpx;
     height: 64rpx;
     font-size: 28rpx;
     line-height: 28rpx;
