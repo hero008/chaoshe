@@ -462,7 +462,7 @@ export default {
             activityOpen: false,
 
 
-            recordLevelName:'宝箱',
+            recordLevelName:'',
             newRecordList:'',
    
             lordActivity:0
@@ -556,6 +556,13 @@ export default {
                     this.boxId = gachaBox.boxIndex;
                     this.coverImage = gacha.coverImage;
                     this.AllRewardsInfo = gachaAwards;
+
+                        if(gachaAwards.filter((item)=>item.levelIndex == 52).length){
+                        this.recordLevelName = '宝箱'
+                        }else{
+                            this.recordLevelName = 'SP'
+                        }
+                
                     this.gachainfo = { ...gacha, ...gachaBox };
                     this.gachaId = res.gacha.id;
                     // this.theme_id = res.gacha.themeId;
