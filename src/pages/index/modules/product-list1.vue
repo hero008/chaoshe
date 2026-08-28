@@ -5,7 +5,9 @@
             <view class="p-item flex_r flex_jb" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <!-- <image :src="item.coverImage" class="p-img" /> -->
                    <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/reward/ico_宝箱.png" alt="">
-                <view class="product-info">
+                   <img class="lordActivity" v-if="item.lordActivity && item.type == 7" src="https://img.shinemang.com/gachaStatic/static/duiduipeng/lz.png" alt="">
+
+                   <view class="product-info">
                  
                     <image :src="item.coverImage" class="p-img" />
                     <!-- <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/static/img/cw-new/wuxiansss.png"
@@ -615,6 +617,16 @@ export default {
         top: 0;
         z-index: 10;
     }
+
+    .lordActivity{
+        width: 86.4rpx;
+        height: 89.6rpx;
+         position: absolute;
+        left: 0;
+        top: 0;
+         z-index: 10;
+    }
+
 .product-info {
    width: 200rpx;
 height: 200rpx;

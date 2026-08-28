@@ -4,6 +4,7 @@
             <view class="p-item" v-for="(item, index) in evenList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
                 <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/reward/ico_宝箱.png" alt="">
+                <img class="lordActivity" v-if="item.lordActivity && item.type == 7" src="https://img.shinemang.com/gachaStatic/static/duiduipeng/lz.png" alt="">
                 <view class="product-info">
                       <img v-if="item.type == 3" src="https://img.shinemang.com/gachaStatic/home/wxc.png"
                         class="w-icon" />
@@ -89,6 +90,7 @@
             <view class="p-item" v-for="(item, index) in oddList" :key="index" @click="tn(item)">
                 <image :src="item.coverImage" class="p-img" />
                 <img v-if="hasBz(item)" class="bz" src="https://img.shinemang.com/gachaStatic/static/img/reward/ico_宝箱.png" alt="">
+                 <img class="lordActivity" v-if="item.lordActivity && item.type == 7" src="https://img.shinemang.com/gachaStatic/static/duiduipeng/lz.png" alt="">
                 <view class="product-info">
                     <view class="oneLine flex_r ">
                         <view class="p-name ">{{ item.themeName }}</view>
@@ -452,6 +454,13 @@ export default {
         width: 120rpx;
         height: 40rpx;
         position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .lordActivity{
+        width: 108rpx;
+        height: 112rpx;
+         position: absolute;
         left: 0;
         top: 0;
     }
