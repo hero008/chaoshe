@@ -464,7 +464,10 @@ export default {
         //     }, 100);
         // }
     },
-    mounted() { this.closeAutonym = this.userInfo.isAuthenticated; },
+    mounted() { this.closeAutonym = this.userInfo.isAuthenticated; 
+
+        this.$refs.addStock.getSubclassReward('SourceType_Market')
+    },
     methods: {
         
         formateList(value){
