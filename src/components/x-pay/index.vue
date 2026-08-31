@@ -333,7 +333,7 @@ import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { callPayment } from "@/utils/pay.js";
 import { isIos } from "../../utils/mgtv";
 import { goto } from "../../utils/fun";
-
+import { Parser, Player } from 'svgaplayer-weapp'
 //     GachaType_Nil = 0;
 //     GachaType_Kuji = 1;         // 一番赏
 //     GachaType_Gashapon = 2;     // 彩蛋机
@@ -531,6 +531,7 @@ export default {
     },
   },
   created() {
+
     // console.log(this.userInfo);
     that = this;
     this.UpselectTicket({});
@@ -575,10 +576,11 @@ export default {
       // #endif  微信小程序需要
       this.gachaInfo = gachaInfo;
 
-      if (!this.userInfo.id) {
-        this.goto("/pages/login/login");
-        return;
-      }
+      // if (!this.userInfo.id) {
+      //   this.goto("/pages/login/login");
+      //   return;
+      // }
+      this.preloadAnimation()
       this.goldNumber = this.userInfo.gold; // 金币
       this.goMitigate = false;
       this.goXcoin = false;
@@ -776,7 +778,40 @@ export default {
       }
     },
 
+    preloadAnimation(){
+       if(this.mtype == 3){
+         let preloadWsxTime = uni.getStorageSync('preloadWsxTime');
+         let now = new Date().getTime();
+         if(!preloadWsxTime || (now - preloadWsxTime) > 1296000000 ){
+              new Parser().load('https://img.shinemang.com/gachaStatic/svga/wxs_b.svga')
+              new Parser().load('https://img.shinemang.com/gachaStatic/svga/wxs_s.svga')
+              uni.setStorageSync('preloadWsxTime',now)
+          }
+      }
+      if(this.mtype == 4){
+         let preloadDdlTime = uni.getStorageSync('preloadDdlTime');
+         let now = new Date().getTime();
+          if(!preloadDdlTime || (now - preloadDdlTime) > 1296000000 ){
+              new Parser().load('https://img.shinemang.com/gachaStatic/svga/ddl.svga')
+              new Parser().load('https://img.shinemang.com/gachaStatic/svga/bomb.svga')
+              uni.setStorageSync('preloadDdlTime',now)
+          }
+      }
+      if(this.mtype == 2){
+         let preloadNdjTime = uni.getStorageSync('preloadNdjTime');
+         let now = new Date().getTime();
+          if(!preloadNdjTime || (now - preloadNdjTime) > 1296000000 ){
+              new Parser().load('https://img.shinemang.com/gachaStatic/svga/ndj_big.svga')
+              new Parser().load('https://img.shinemang.com/gachaStatic/svga/ndj_small.svga')
+              uni.setStorageSync('preloadNdjTime',now)
+          }
+      }
+    },
+
     async onPay() {
+
+     
+
       // 是否支付宝支付1 其它支付0
       // #小程序不需要ifndef MP-WEIXIN
       this.paytype = this.paytypeList.includes(1) ? 1 : 0;
