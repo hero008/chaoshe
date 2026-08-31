@@ -543,7 +543,7 @@ export default {
       goto("/page-a/balance/topUp");
     },
     ...mapMutations(["UpselectTicket", "UppayMessage"]),
-    ...mapActions(["asyncUpBalance"]),
+    ...mapActions(["asyncUpBalance","asyncUpOffsetInfo"]),
     onAnimationChange() {
       this.showAnimation = !this.showAnimation;
       this.$sl("IsAnimation", this.showAnimation);
@@ -574,6 +574,7 @@ export default {
       // if (this.userInfo.allowCoinBet && !["12", "13"].includes(this.mtype)) this.paytype;
       // else this.paytype = this.mtype !== "6" ? 1 : 0;
       // #endif  微信小程序需要
+      this.asyncUpOffsetInfo()
       this.gachaInfo = gachaInfo;
 
       // if (!this.userInfo.id) {
