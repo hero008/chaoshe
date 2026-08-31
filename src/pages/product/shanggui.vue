@@ -20,6 +20,9 @@
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
                         v-for="(i, s) in navbar2" :key="s">{{ i }}</view>
                 </view>
+
+
+                <view v-if="active_m == 2" class="exchangeRecords"> 兑换记录 </view>
                
                <!-- v-if="recycleState" -->
                 <!-- <view class="recycle flex_r flex_ac" @click="onGoRecycle()" >
@@ -29,7 +32,10 @@
                 <view v-if="active_m == 0"  @click="goto('/pages/common/rulepop', { val: 'ShippingRules' })" class="rules">
 
                 </view>
-                <view v-else  @click="goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules BZ">
+                <view v-else-if="active_m == 1"  @click="goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules BZ">
+
+                </view>
+                 <view v-else @click="goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules exchange">
 
                 </view>
 
@@ -92,7 +98,7 @@
                             </view>
                           
                         </view>
-                        <view v-else  class="lists">
+                        <view v-else-if="active_m == 1"  class="lists">
                             <view class="item BZ" v-for="(item, index) in cabinetData" :key="index">
                                
                                 <view class="donation" v-if="item.themeType == 'ItemThemeType_Donation'">
@@ -115,17 +121,40 @@
                             </view>
                           
                         </view>
+                        <view v-else class="lists">
+                            <view class="item exchange" v-for="(item, index) in cabinetData" :key="index">
+                                <view class="count">
+                                    x1
+                                </view>
+                                <view class="item_img_box">
+                                 <view class="item_img" :style="{
+                                    backgroundImage: `url(${item.item.coverThumb})`,
+                                }" @click="ondetail(item)">
+
+                                   <!-- <img src="https://img.shinemang.com/gachaStatic/tag_宝箱.png" alt=""> -->
+                                </view>
+                                </view>
+                               
+                                <view class="item_name ellipsis">{{
+                                    item.item.name
+                                    }}</view>
+                                <view class="item_no ellipsis">{{
+                                    item.itemId
+                                    }}</view>
+                            </view>
+                          
+                        </view>
                     </view>
                 </scroll-view>
                 <u-empty v-else :text="active_m ==0? '暂无赏品~':'暂无宝箱'" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png"
                     :marginTop="50" />
             </view>
 
-            <view class="activityBtn">
+            <view v-if="active_m == 0" class="activityBtn">
                 <view v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' || userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen')"  @click="onGoRecycle()" class="btn fs"></view>
                 <view v-if="userInfo.featureConfig && (userInfo.featureConfig.donation == 'FeatureFlag_Enable' ||   userInfo.featureConfig.donation == 'FeatureFlag_AdminOpen') " @click='toSendOther' class="btn zz"></view>
             </view>
-            <view class="foot_btn">
+            <view v-if="active_m == 0"  class="foot_btn">
 
                 <view v-show="userInfo.showMarket"  @click="goto('/pages/transaction/index')" class="selectToExchange"></view>
                 <view @click="goto('/pages/shipments/selectGoods')" class="selectToSend"></view>
@@ -142,7 +171,7 @@
 
         <show-modal></show-modal>
 
-          <u-popup mode='center' :show="confirmSendOthers" @close="confirmSendOthers = false"  :closeable="true" round="20"
+        <u-popup mode='center' :show="confirmSendOthers" @close="confirmSendOthers = false"  :closeable="true" round="20"
             bgColor="#fff">
             <div class="send_con">
                 <div class="title">确认将一下商品转赠?</div>
@@ -193,6 +222,39 @@
 	  </u-popup>
        <gachaDetails ref="gachaDetails" />
        <result ref="result" @onResult="onClickResult"></result>
+
+      <!-- <u-popup mode='center' :show="true" @close="false"  round="20"
+            bgColor="#fff">
+            <div class="confirmSureModal">
+                <div class="title">确认将一下商品转赠?</div>
+                 <div class="tips">
+                     是否兑换芒果会员年卡 x1
+                 </div>
+
+                <div class="actionBtns">
+                   <div class="btn cancel">取消</div>
+                   <div class="btn confirm">确认</div>
+                </div>
+                
+              
+            </div>
+        </u-popup> -->
+              <!-- <u-popup mode='center' :show="true" @close="false"  round="20"
+            bgColor="#fff">
+            <div class="confirmSureModal">
+                <div class="title">芒果会员年卡兑换码</div>
+                 <div style="font-size: 28rpx;" class="tips">
+                    搜索关注【芒果TV会员】公众号，点击 会员服务 - 会员卡兑换，输入兑换码
+                 </div>
+
+                <div class="actionBtns">
+                  
+                   <div class="btn confirm">一键复制</div>
+                </div>
+                
+              
+            </div>
+        </u-popup> -->
     </view>
 </template>
 <script>
@@ -229,6 +291,9 @@ export default {
                 },
                 {
                     name: "宝藏",
+                },
+                  {
+                    name: "虚拟权益",
                 },
             ],
             active_m: 0,
@@ -627,9 +692,13 @@ export default {
          background: url('https://img.shinemang.com/gachaStatic/chaogui/bzRule.png');
     background-size: 100% 100%;
     }
+     &.exchange{
+         background: url('https://img.shinemang.com/gachaStatic/exchangeRules.png');
+       background-size: 100% 100%;
+    }
 }
 .tabsOne{
-        width: 372rpx;
+        width: 500rpx;
     height: 48rpx;
     // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
     // background-size: 100% 100%;
@@ -811,6 +880,27 @@ margin-right: 16rpx;
         &.BZ{
             height: 300rpx;
         }
+        &.exchange{
+            height: 300rpx;
+            position: relative;
+            .count{
+                position: absolute;
+                padding: 0 16rpx;
+                height: 36rpx;
+                right: 0;
+                top: 0;
+                z-index: 22;
+                background: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                font-size: 24rpx;
+                line-height: 36rpx;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                // font-weight: bold;
+                border-radius: 0 24rpx 0 24rpx;
+            }
+        }
         &:nth-child(3n) {
             margin-right: 0;
             
@@ -820,11 +910,17 @@ margin-right: 16rpx;
         // .item_img_box{
        
         // }
+
+        &.exchange{
+            .item_img_box{
+              background: #fff
+            }
+        }
         .item_img_box{
                   width: 200rpx;
-height: 200rpx;
-background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
-border-radius: 16rpx 16rpx 16rpx 16rpx;
+                    height: 200rpx;
+                    background: linear-gradient( 180deg, #D6E5FF 0%, #FFFFFF 100%);
+                border-radius: 16rpx 16rpx 16rpx 16rpx;
             background-size: 100% 100%;
             position: relative;
         }
@@ -1005,5 +1101,21 @@ img{
     font-weight: bold;
     font-size: 16px;
     }
+}
+.exchangeRecords{
+    position: fixed;
+    width: 48rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    padding: 0 12rpx;
+    height: 154rpx;
+    background: rgba(0, 0, 0, 0.6);
+    color: #FFFFFF;
+    font-size: 24rpx;
+    border-radius: 8rpx 0 0 8rpx;
+    top: 452rpx;
+    z-index: 999;
 }
 </style>

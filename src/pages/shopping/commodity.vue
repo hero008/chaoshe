@@ -146,6 +146,7 @@ export default {
                         filteredNumbers[0].endTime
                     );
                 }
+                // 按钮可用
                 if (this.startTime == "" || this.startTime < 0) {
                     this.warning = "购买时间截止";
                     if (this.endTime == "" || this.endTime > 0) {

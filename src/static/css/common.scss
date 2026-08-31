@@ -394,3 +394,48 @@ span {
 
     }
 }
+
+
+.confirmSureModal{
+    width: 654rpx;
+    padding: 64rpx 40rpx;
+    color: #1A1A1A;
+    .title{
+       text-align: center;
+       font-size: 36rpx;
+       font-weight: bold;
+    }
+    .tips{
+      font-size: 32rpx;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 64rpx;
+    }
+    .actionBtns{
+        margin-top: 64rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .btn{
+          width: 264rpx;
+            height: 80rpx;
+           
+            border-radius: 40rpx;  
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1A1A1A;
+            font-size: 32rpx;
+            font-weight: 500;
+
+            &.cancel{
+              background: #F5F6F8;
+              margin-right: 30rpx;
+            }
+            &.confirm{
+              background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);  
+            }
+        }
+    }
+}
