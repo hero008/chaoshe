@@ -3,12 +3,26 @@
         <text class="icof Back_ico" @click.stop="gateBack">&#xe72c;</text>
         <image :src="goodsInfo.coverImage" class="img" />
         <view class="price">
-            <view class="a" v-if="itemPrice !== '0'">￥</view>
-            <view class="number" v-if="itemPrice !== '0'">{{ itemPrice }}</view>
-            <view class="integral" v-if="itemValue !== '0'">
-                <view class="integralImg">星光积分</view>
+            <block v-if="type == 2">
+                <view class="a" >￥</view>
+            <view class="number" >{{ itemPrice }}</view>
+            </block>
+               <block v-if="type == 1">
+                <view class="a" >星光积分</view>
+            <view class="number" >{{ itemValue }}</view>
+            </block>
+             <block v-if="type == 3">
+                <view class="a" >星币</view>
+            <view class="number" >{{ itemValue }}</view>
+            </block>
+            <!-- <view class="integral" v-if="type == 1">
+                <view class="integralImg"></view>
                 <view class="">{{ itemValue }}</view>
             </view>
+            <view class="integral" v-else-if="type == 3">
+                <view class="integralImg">星币</view>
+                <view class="">{{ itemValue }}</view>
+            </view> -->
         </view>
         <view class="particulars">{{ goodsInfo.name }}</view>
         <div
@@ -43,7 +57,7 @@
         <view class="foot-btn flex_r flex_ac flex_jse" v-if="isShow">
             <!-- #ifndef MP-WEIXIN -->
             <x-btn
-                v-if="itemPrice > 0"
+                v-if="type == 2"
                 txt="立即购买"
                 cor="2"
                 @click="
@@ -52,12 +66,13 @@
                         price: itemPrice,
                         stock: stock,
                         itemId: itemId,
+                        type:2
                     })
                 "
             />
             <!-- #endif -->
             <x-btn
-                v-if="itemValue > 0"
+                v-if="type == 1"
                 txt="星光积分兑换"
                 cor="3"
                 @click="
@@ -66,22 +81,44 @@
                         itemId: itemId,
                         value: itemValue,
                         stock: stock,
-                        onlyShipment:filteredNumbers.onlyShipment
+                        onlyShipment:filteredNumbers.onlyShipment,
+                         type:1
                     })
                 "
+            />
+              <x-btn
+                v-if="type == 3"
+                txt="星币兑换"
+                cor="3"
+                @click="
+                    goto('/pages/shopping/exchange', {
+                        id: configId,
+                        itemId: itemId,
+                        value: itemValue,
+                        stock: stock,
+                        onlyShipment:filteredNumbers.onlyShipment,
+                         type:3
+                    })"
             />
         </view>
         <view class="foot-btn flex_r flex_ac flex_jse" v-else>
             <x-btn
-                v-if="itemPrice > 0"
+               v-if="type == 2"
                 txt="立即购买"
                 cor="2"
                 @click="onTime"
                 :style="{ opacity: '0.5' }"
             />
             <x-btn
-                v-if="itemValue > 0"
+              v-if="type == 1"
                 txt="星光积分兑换"
+                cor="3"
+                @click="onTime"
+                :style="{ opacity: '0.5' }"
+            />
+             <x-btn
+               v-if="type == 3"
+                txt="星币兑换"
                 cor="3"
                 @click="onTime"
                 :style="{ opacity: '0.5' }"
@@ -107,7 +144,9 @@ export default {
             isShow: false,
             warning: "预售",
             objId: 0,
-            filteredNumbers:{}
+            filteredNumbers:{},
+            type:0
+        
         };
     },
     components: {
@@ -119,20 +158,22 @@ export default {
     onLoad(da) {
         // let obj = JSON.parse(da.itemJson);
         this.objId = da.id;
+        this.type = da.type
+   
         this.onGet();
     },
     methods: {
-        async onGet() {
-            await post("v1/activity/cost-award/list", {
-                user_id: this.userInfo.id,
-                type: 2,
+         onGet() {
+             post("v1/activity/cost-award/list", {
+                type: this.type,
+                order_price:0
             }).then((res) => {
                 let filteredNumbers = res.config.filter(
                     (item) => item.configId == this.objId
                 );
                 this.filteredNumbers = filteredNumbers[0]
                 this.itemId = filteredNumbers[0].itemList[0].id;
-                this.itemValue = Number(filteredNumbers[0].value);
+                this.itemValue =this.type ==  1? Number(filteredNumbers[0].value): Number(filteredNumbers[0].xCoin);
                 this.itemPrice = Number(filteredNumbers[0].price);
                 this.stock = filteredNumbers[0].stock || 9999;
                 this.configId = filteredNumbers[0].configId;
@@ -156,19 +197,21 @@ export default {
                         }
                     }
                 }
+
+                post("v1/goods/item/get", {
+                        item_id: this.itemId,
+                    }).then((req) => {
+                        req.item.itemParams.unshift({
+                            key: "赏品状态",
+                            value:
+                                req.item.saleType == 1
+                                    ? "现货"
+                                    : `预售（${req.item.bookingTime}）`,
+                        });
+                        this.goodsInfo = req.item;
+                    });
             });
-            await post("v1/goods/item/get", {
-                item_id: this.itemId,
-            }).then((res) => {
-                res.item.itemParams.unshift({
-                    key: "赏品状态",
-                    value:
-                        res.item.saleType == 1
-                            ? "现货"
-                            : `预售（${res.item.bookingTime}）`,
-                });
-                this.goodsInfo = res.item;
-            });
+          
         },
 
         onTime() {
@@ -194,8 +237,9 @@ export default {
     .price {
         width: 100%;
         height: 112rpx;
-        background: url("https://img.shinemang.com/gachaStatic/static/img/home/bg_plus.png");
-        color: #383228;
+        background: #fff;
+        // background: url("https://img.shinemang.com/gachaStatic/static/img/home/bg_plus.png");
+        color: #1A1A1A;
         font-weight: 800;
         background-size: 100% 100%;
         display: flex;

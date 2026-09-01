@@ -72,11 +72,11 @@
 
                 <!-- 蒙版层 -->
                 <view class="table_mask"></view>
-                <view class="table_grid">
-                    <view class="card_slot " v-for="(card, index) in tableSlots" :key="index"
+                <view class="table_grid" >
+                    <view class="card_slot " v-for="(card, index) in tableSlots"  :key="index"
                         @click="onCardClick(card, index)">
                         <template v-if="stateType == 1 && Object.keys(fateCard).length > 0">
-                            <image :src="resolveImg(card.cardImage)" class="card_img" mode="aspectFill" />
+                            <image v-show="card && card.cardImage" :src="resolveImg(card.cardImage)" class="card_img" mode="aspectFill" />
                             <view class="card_overlay" v-if="selectedCards.includes(index)">
                                 <image :src="pitchOnSrc" class="check_ico" />
                             </view>
@@ -94,7 +94,7 @@
             </view>
         
             <!-- 卡桌区域 -->
-               <view class="game_footer">
+               <view :class="['game_footer',stateType !=0?'remainCountFooter':'']">
                 <!-- <view class="progress_track">
                     <view class="progress_inner" :style="{ width: progressPercent + '%' }"></view>
                 </view> -->
@@ -107,6 +107,9 @@
                     <view class="crazy_switch" :class="{ crazy_switch_on: isCrazyMode }" @click="toggleCrazyMode">
                     </view>
                 </view>
+                <view v-else class="remainCount">
+                     剩余抽数 <span class="count">x{{(this.remainingCount - 1 ) }}</span>
+                </view>
             </view>
             <!-- <view class="game_footer">
                 <view class="start_row" v-if="stateType == 0">
@@ -116,7 +119,7 @@
             </view> -->
         </view>
         <!-- 选择天命卡弹窗 -->
-        <view class="fate_select_mask" v-if="stateType == 1 && Object.keys(fateCard).length === 0">
+        <view class="fate_select_mask" v-if="stateType == 1 && Object.keys(fateCard).length === 0 && this.settingMode != 1">
             <view class="fate_select_box">
                 <view class="fate_select_title"></view>
                 <view class="fate_select_tip">{{ fateTipText }}</view>
@@ -219,6 +222,58 @@
             :maxNum="buyMaxNum" />
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />
+        <u-popup mode='center' :show="showSetting" @close="showSetting=false"  round="20"
+            bgColor="#fff">
+            <div class="tuoGuanSetting">
+               
+                <div class="title">
+                     <span>托管设置</span>
+                     <img src="@/static/titleIcon.png" alt="">
+                </div>
+                <div class="selectCount">
+                     <div class="title">托管抽数</div>
+                     <div class="count">
+                         <img @click="changeCount(0)" src="@/static/reduceIcon.png" alt="">
+                         <div class="input"><input @input="inputChangeCount( $event.detail.value, 'input')" @blur="inputChangeCount( $event.detail.value, 'blue')" v-model="settingRmainCount" type="num"></div>
+                         <img @click="changeCount(1)" src="@/static/addIcon.png" alt="">
+                     </div>
+                </div>
+                <div class="line"></div>
+
+                <div class="mode">
+                     <div>天命模式：</div>
+                     <img v-if="settingCard && settingMode == 1" :src="settingCard.cardImage" alt="">
+                </div>
+                <div class="type">
+                    <div @click="settingModeClick(1)" class="btn">固定模式  <img v-if="settingMode == 1" class="select" src="@/static/select.png" alt=""></div>
+                    <div @click="settingModeClick(0)"  class="btn">随机模式
+                        <img v-if="settingMode == 0" class="select" src="@/static/select.png" alt="">
+                    </div>
+                </div>
+
+                <div @click="confirmSetting" class="confirmBtn">
+               确认
+                </div>
+              
+            </div>
+        </u-popup>
+         <view class="fate_select_mask selectFixedCard" v-if="showSelectFixedCard">
+            <view class="fate_select_box">
+                <view class="fate_select_title"></view>
+                <view class="fate_select_tip">{{ fateTipText }}</view>
+                <view class="fate_list">
+                    <view class="fate_option" v-for="(item, idx) in fateOptions" :key="idx" :class="{
+                        'fate_selected': selectedFateIndex === idx,
+                        'fate_greyed': (selectedFateIndex !== -1 && selectedFateIndex !== idx) || (isAutoRolling && autoRollIndex !== idx),
+                        'fate_rolling': isAutoRolling && autoRollIndex === idx,
+                        'fate_exit': isSelectingFate,
+                    }" @click="selectFixedCard(item, idx)">
+                        <image :src="resolveImg(item.cardImage)" class="fate_opt_img" mode="aspectFill" />
+                        <view class="fate_check" v-if="selectedFateIndex === idx && !isSelectingFate">✓</view>
+                    </view>
+                </view>
+            </view>
+        </view>
     </view>
 </template>
 
@@ -238,6 +293,13 @@ export default {
     name: "duiduipeng",
     data() {
         return {
+            useCount:-1,
+            settingRmainCount:0,
+            remainingCount:0,
+            settingMode:0,  //0 随机, 1固定
+            settingCard:'',
+            showSetting:false,
+            showSelectFixedCard:false,
              // 游戏核心数据
             tableSlots: [],         // 卡桌：当前可操作的卡片(最多9张)
             selectedCards: [],      // 当前选中的卡片位置索引(最多2个)
@@ -391,6 +453,89 @@ export default {
         }
     },
     methods: {
+        resetSeting(){
+          this.useCount =  -1;
+          this.settingMode = 0;
+          this.settingCard = ''
+          this.settingRmainCount = 0
+        },
+        selectFixedCard(value){
+           this.settingCard = value;
+           this.showSelectFixedCard = false;
+        },
+        confirmSetting(){
+           this.showSetting  = false;
+           this.openAutoModal()
+        },
+        settingModeClick(value){
+          this.settingMode = value;
+          if(value){
+            this.showSelectFixedCard = true;
+          }else{
+            this.settingCard = ''
+          }
+        },
+        inputChangeCount(value,type){
+          if(type == 'input'){
+            if(value> this.remainingCount - 1){
+                 this.$nextTick(()=>{
+                    this.settingRmainCount = this.remainingCount - 1
+                })
+            }else{
+                if(!value){
+                  this.$nextTick(()=>{
+                      this.settingRmainCount = 1
+                })
+                 
+                }else{
+                  this.$nextTick(()=>{
+                     this.settingRmainCount = value
+                })
+                   
+                }
+            }
+
+          }else{
+            if(value> this.remainingCount - 1){
+                 this.$nextTick(()=>{
+                    this.settingRmainCount = this.remainingCount - 1
+                })
+            }else{
+                if(!value){
+                  this.$nextTick(()=>{
+                      this.settingRmainCount = 1
+                })
+                }else{
+                  this.$nextTick(()=>{
+                     this.settingRmainCount = value
+                })
+                }
+            }
+          }
+        },
+        changeCount(value){
+          if(value){
+             if(this.settingRmainCount == this.remainingCount - 1){
+                this.$nextTick(()=>{
+                    this.settingRmainCount = this.remainingCount - 1
+                })
+             }else{
+                 this.$nextTick(()=>{
+                    this.settingRmainCount = this.settingRmainCount + 1
+                })
+             }
+          }else{
+            if(this.settingRmainCount == 1){
+                this.$nextTick(()=>{
+                    this.settingRmainCount = 1
+                })
+             }else{
+                 this.$nextTick(()=>{
+                    this.settingRmainCount = this.settingRmainCount - 1
+                })
+             }
+          }
+        },
         getTagPng(value){
            if(value == 0 || value ==1 || value ==12 || value ==13 || value ==14){
             return {
@@ -448,9 +593,47 @@ export default {
                     this.prizeList = res.gachaAwards
                     this.recordId = fateMatch.recordId
                     this.lordActivity=res.lordActivity
-                   
-                   
+                    this.remainingCount = res.gachaFateMatch.count
 
+                    if(this.remainingCount == 0){
+                      uni.removeStorageSync('isAuto')
+                      this.stopAuto(false);
+                      this.resetSeting()
+                    }
+                if(Object.keys(this.fateCard).length === 0 && this.isAutoMode && this.settingCard && this.settingMode == 1 && this.useCount != -1){
+                  this.fateCard = { ...this.settingCard };
+                  this.selectedFateIndex = -1;
+                  this.isSelectingFate = false;
+                   try {
+                         post('v1/gacha/choice_fate_card', {
+                            gacha_id: this.gachaId,
+                            card_index: this.settingCard.cardIndex,
+                            recordId: this.recordId
+                        }).then((res)=>{
+                                if (!res.code) {
+                                this.tableSlots = res.cards;
+                                this.fateCount = res.cardNum;
+                                // awards 非空表示游戏结束，展示奖励物品弹窗
+                                if (Array.isArray(res.awards) && res.awards.length > 0) {
+                                    this.awards = res.awards;
+                                    this.gameOver = true;
+                                    this.checkAwards(res.awards);
+                                    // 显示奖品 // 看是否能否放生
+                                    this.finishNumber = res.matchNum
+
+                                }
+                                  this.finishNumber = 0
+                                // 重新初始化游戏
+                                return this.initGame();
+                            } else {
+                                this.initGame();
+                            }
+                        })
+                      
+                    } catch (e) {
+                        console.error('选择天命卡接口失败', e);
+                    }
+                }
 
                 }
             }).catch((e) => {
@@ -593,6 +776,11 @@ export default {
         //支付成功回调
         onClickDraw(res, showAnim, type) {
             // 进入新一局：重置上一局的结束标记与奖励，保证托管待机后能继续自动接管
+            if (this.isAutoMode) {
+                uni.removeStorageSync('isAuto')
+                this.stopAuto(false);
+                this.resetSeting()
+            }
             this.gameOver = false;
             this.awards = [];
             this.selectedCards = [];
@@ -792,7 +980,10 @@ export default {
             this.selectedCards = []
             this.tableSlots = []
             this.stateType = 0
-            this.fateCard = {}
+  
+            //  this.fateCard = {}
+               
+           
             this.finishNumber = 0
             // 重新初始化游戏
             return this.restartGame();
@@ -807,16 +998,8 @@ export default {
         onCrazyStart() {
             this.onpay()
         },
-        // ============ 托管模式 ============
 
-        /** 点击托管按钮：未托管则开启，托管中则取消（保留当前游戏进度） */
-        toggleAutoMode() {
-            if (this.isAutoMode) {
-                uni.removeStorageSync('isAuto')
-                this.stopAuto(true);
-                return;
-            }
-            // 不校验支付状态：未支付也可开启，开启后立即进入托管调度（未支付时待机等待开局）
+        openAutoModal(){
             this.isAutoMode = true;
             uni.setStorageSync('isAuto',1)
             uni.showToast({
@@ -824,6 +1007,36 @@ export default {
                 icon: 'none'
             });
             this.scheduleAutoStep(400);
+        },
+        // ============ 托管模式 ============
+
+        /** 点击托管按钮：未托管则开启，托管中则取消（保留当前游戏进度） */
+        toggleAutoMode() {
+            if (this.isAutoMode) {
+                uni.removeStorageSync('isAuto')
+                 this.resetSeting()
+                this.stopAuto(true);
+                return;
+            }
+            if(this.remainingCount == 0){
+               uni.showToast({
+                title: '请先开始游戏',
+                icon: 'none'
+              });
+              return;
+            }
+            if(this.remainingCount == 1){
+                this.resetSeting()
+                this.openAutoModal()
+            }else{
+                this.resetSeting()
+                this.settingRmainCount = this.remainingCount - 1
+                this.showSetting = true
+            }
+
+
+            // 不校验支付状态：未支付也可开启，开启后立即进入托管调度（未支付时待机等待开局）
+          
         },
 
         /** 停止托管：仅清理定时器与开关，不改动游戏进度状态 */
@@ -860,6 +1073,17 @@ export default {
 
             // 奖励已发放：等待3秒后自动开始下一局
             if (this.showAwardsModal) {
+                if(this.settingRmainCount != 0){
+                    this.useCount ++ 
+                    if(this.useCount == this.settingRmainCount){
+                      uni.removeStorageSync('isAuto')
+                      this.stopAuto(false);
+                      this.resetSeting()
+                       await this.delay(1000);
+                      this.awardsPlayAgain()
+                     
+                    }
+                }
                 await this.delay(1000);
                 if (!this.isAutoMode) return;
                 // 等待期间用户手动关闭了弹窗，回到主流程重新判断
@@ -895,25 +1119,30 @@ export default {
                 this.scheduleAutoStep(1500);
                 return;
             }
+              
 
             // 开局需先选择天命卡：先确定随机目标，再播放选卡动画，最后落到实际选卡逻辑
             if (Object.keys(this.fateCard).length === 0) {
-                const pick = this.pickRandomFateOption();
-                if (!pick) {
-                    // 暂无可选天命卡（数据未就绪）：待机等待数据刷新
-                    this.scheduleAutoStep(1500);
+                   const pick = this.pickRandomFateOption();
+                    if (!pick) {
+                        // 暂无可选天命卡（数据未就绪）：待机等待数据刷新
+                        this.scheduleAutoStep(1500);
+                        return;
+                    }
+                    await this.playAutoFateRoll(pick.validIndexes, pick.index);
+                    if (!this.isAutoMode) return;
+                    // 动画期间天命卡已确定（如数据刷新）：回主流程重新判断
+                    if (Object.keys(this.fateCard).length > 0) {
+                        this.scheduleAutoStep(600);
+                        return;
+                    }
+                    await this.onSelectFate(pick.item, pick.index);
+                    this.scheduleAutoStep(800);
                     return;
-                }
-                await this.playAutoFateRoll(pick.validIndexes, pick.index);
-                if (!this.isAutoMode) return;
-                // 动画期间天命卡已确定（如数据刷新）：回主流程重新判断
-                if (Object.keys(this.fateCard).length > 0) {
-                    this.scheduleAutoStep(600);
-                    return;
-                }
-                await this.onSelectFate(pick.item, pick.index);
-                this.scheduleAutoStep(800);
-                return;
+
+
+                
+               
             }
 
             // 桌面上存在相同卡牌：自动点击进行对碰
@@ -1035,6 +1264,8 @@ export default {
             this.gameOver = false;
             this.fateCard = {};
             this.tableSlots = this.createEmptySlots();
+         
+
             return this.initGame();
         },
         /** 延迟Promise */
@@ -1903,6 +2134,25 @@ padding-bottom: 38rpx;
      margin-left: -12rpx;
     position: absolute;
     bottom: -20rpx;
+    &.remainCountFooter
+    {
+        bottom: -44rpx;
+    }
+    .remainCount{
+        background: url('https://img.shinemang.com/gachaStatic/static/duiduipeng/remainCountBgc.png');
+        width: 520rpx;
+        height: 72rpx;
+        display: flex;
+        align-items: center;
+        margin: auto;
+        justify-content: center;
+        font-family: '倍数欧气值';
+        font-size: 32rpx;
+        .count{
+            font-size: 40rpx;
+            color: #EE4326;
+        }
+    }
 
     /* 开始游戏按钮行（开始按钮居中，模式切换按钮靠右） */
     .start_row {
@@ -2020,6 +2270,156 @@ padding-bottom: 38rpx;
 .start_row {
     position: relative;
     width: 100%;
+}
+
+.tuoGuanSetting{
+ width: 654rpx;
+height: 772rpx;
+background: #FFFFFF;
+border-radius: 40rpx;
+padding-top: 48rpx;
+
+&::after{
+      content: "";
+    width: 100%;
+    height: 188rpx;
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    border-radius: 40rpx;
+    background: linear-gradient( 180deg, #BAFFF9 0%, #FFFFFF 100%);
+   
+}
+>.title{
+    font-size: 56rpx;
+    text-align: center;
+    font-family: '倍数欧气值';
+        position: relative;
+    span{
+        position: relative;
+        z-index:4;
+    }
+
+    img{
+      position: absolute;
+      bottom: 10rpx;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 234rpx;
+      height: 26rpx;
+    }
+}
+div{
+    position: relative;
+    z-index: 3;
+}
+
+.selectCount{
+    padding: 0 48rpx;
+    margin-top: 40rpx;
+    .title{
+    color: #1A1A1A;
+    font-size: 28rpx;
+    font-weight: bold;
+    margin-bottom: 32rpx;
+    }
+    .count{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+            width: 48rpx;
+            height: 48rpx;
+        }
+        .input{
+            width: 96rpx;
+            border: 2rpx solid #40E0EA;
+            border-radius: 24rpx;
+            margin: 0 24rpx;
+        }
+        input{
+            width:96prx ;
+            height: 96rpx;
+            text-align: center;
+            font-size: 32rpx;
+            color: #000;
+        }
+
+    }
+   
+}
+ .line{
+        width: 558rpx;
+        border-bottom: 2rpx dashed #E5E5E5;
+        margin: auto;
+        margin-top: 40rpx;
+       
+    }
+    .mode{
+        padding-left: 48rpx;
+        margin-top: 32rpx;
+        display: flex;
+        align-items: center;
+        font-size: 28rpx;
+        color: #1A1A1A;
+        font-weight: bold;
+        img{
+          width: 56rpx;
+          height: 56rpx;
+        }
+    }
+    .type{
+        margin-top: 20rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .btn{
+            width: 268rpx;
+            height: 96rpx;
+            background: #FFFFFF;
+            border-radius: 24rpx;
+            border: 2rpx solid  rgba(64, 224, 234, 1);
+            font-size: 28rpx;
+            color: #1A1A1A;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 96rpx;
+            position: relative;
+            &:last-child{
+                margin-left: 22rpx;
+            }
+            .select{
+                width: 48rpx;
+                height: 48rpx;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 16rpx;
+            }
+            
+            
+
+        }
+    }
+
+    .confirmBtn{
+        width: 400rpx;
+height: 80rpx;
+background: #1A1A1A;
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+
+display: flex;
+align-items: center;
+justify-content: center;
+color: #fff;
+font-size: 32rpx;
+font-weight: bold;
+margin: auto;
+margin-top: 48rpx;
+    }
 }
 
 /* 开始游戏按钮 */
@@ -2420,6 +2820,17 @@ padding-bottom: 38rpx;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    &.selectFixedCard{
+         background: rgba(0, 0, 0, 1);
+        z-index: 100100;
+         .fate_select_title {
+        width: 442rpx;
+        height: 80rpx;
+        background: url("https://img.shinemang.com/gachaStatic/static/duiduipeng/tmk1.png");
+        background-size: 100% 100%;
+        margin: 0 auto;
+    }
+    }
 }
 
 .fate_select_box {

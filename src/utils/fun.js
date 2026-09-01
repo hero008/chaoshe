@@ -15,6 +15,7 @@ let goto = (url, json,mgtvIsLogin=true) => {
         }
     }
     let params = "";
+    console.log(json)
     if (json) {
         params = [];
         let da = Object.keys(json).map(function (key) {
@@ -25,6 +26,7 @@ let goto = (url, json,mgtvIsLogin=true) => {
         });
         params = params.join("&")
     }
+        console.log(params)
     uni.navigateTo({ url: url + '?' + params });
 }
 // copy

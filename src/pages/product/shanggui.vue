@@ -16,9 +16,13 @@
                     </view>
                 </view>
             <view class="flex_r flex_jb">
-                <view class="tabs_two flex_r">
+                <view v-if="active_m == 0 || active_m == 1" class="tabs_two flex_r">
                     <view class="tab_item" :class="{ active: i == active }" @click="ontab2(i, s)"
                         v-for="(i, s) in navbar2" :key="s">{{ i }}</view>
+                </view>
+                 <view v-else class="tabs_two flex_r">
+                    <view class="tab_item" :class="{ active: i == active1 }" @click="ontab3(i, s)"
+                        v-for="(i, s) in navbar3" :key="s">{{ i }}</view>
                 </view>
 
 
@@ -123,9 +127,9 @@
                         </view>
                         <view v-else class="lists">
                             <view class="item exchange" v-for="(item, index) in cabinetData" :key="index">
-                                <view class="count">
+                                <!-- <view class="count">
                                     x1
-                                </view>
+                                </view> -->
                                 <view class="item_img_box">
                                  <view class="item_img" :style="{
                                     backgroundImage: `url(${item.item.coverThumb})`,
@@ -298,6 +302,8 @@ export default {
             ],
             active_m: 0,
             navbar2: ["全部", "现货", "预售"],
+             navbar3: ["待兑换", "已过期",],
+             active1:'待兑换',
             active: "全部",
             totalReward: 0, // 赏品总量
             cabinetData: [], // 赏品数据
@@ -389,6 +395,12 @@ export default {
         ontab2(item, index) {
             this.pageda.page = 1;
             this.active = item;
+            this.firstCondition = index;
+            this.loadDetail(1);
+        },
+        ontab3(item, index){
+            this.pageda.page = 1;
+            this.active1 = item;
             this.firstCondition = index;
             this.loadDetail(1);
         },
@@ -622,11 +634,11 @@ export default {
     }
 }
 .shanggui {
-    height: 100vh;
-    padding-top: 80rpx;
-    position: relative;
-    background-color: #F5F6F8;
-          &::after {
+        height: 100vh;
+        padding-top: 80rpx;
+        position: relative;
+        background-color: #F5F6F8;
+        &::after {
         content: "";
         width: 100vw;
         height: 600rpx;

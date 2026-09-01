@@ -893,7 +893,7 @@ export default {
             }
         },
         goChaoGui() {
-            uni.setStorageSync("currentChange", 3);
+            uni.setStorageSync("currentChange", 2);
             uni.reLaunch({
                 url: "/pages/index/index",
             });

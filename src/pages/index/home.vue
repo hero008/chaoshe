@@ -249,6 +249,12 @@ export default {
         {
           url: "https://img.shinemang.com/gachaStatic/ddl.png",
         },
+         {
+          url: "https://img.shinemang.com/gachaStatic/ddp.png",
+        },
+         {
+          url: "https://img.shinemang.com/gachaStatic/sc.png",
+        },
         {
           url: "https://img.shinemang.com/gachaStatic/jjzx.png",
         },
@@ -361,7 +367,11 @@ export default {
         this.ontab({ index: 2, type: 3, mode: "top" });
       } else if (index == 2) {
         this.ontab({ index: 3, type: 4, mode: "top" });
-      } else {
+      } else if(index == 3){
+         this.ontab({ index: 4, type: 7, mode: "top" });
+      } else if(index == 4){
+        this.goto("/pages/shopping/index");
+      }else{
         this.goto("/page-a/luck/index");
       }
     },

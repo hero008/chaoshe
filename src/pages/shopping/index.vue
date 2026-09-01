@@ -3,27 +3,49 @@
         <div :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt">商场</text>
+                <text class="txt"></text>
             </view>
         </div>
         <div class="shanggui_con" :style="{ height: conHeight }">
-            <view class="tabs_two flex_r flex_jb">
+            <view class="tabs_two flex_r">
                 <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
                     <text>{{i}}</text>
                     <view v-if="i==active" class="line"></view>
                 </view>
             </view>
+            <view class="filter">
+               <view @click="sort(0)" :class="['mr',  order_price == 0? 'active' : '']">默认</view>
+               <!-- <view class="sortFilter">
+                  <span>销量</span>
+               </view> -->
+                <view :class="['sortFilter',order_price == 1 || order_price == 2 ? 'active':'']">
+                  <span>价格</span>
+                  <img @click="sort(1)" v-if="order_price == 0" src="@/static/sort0.png" alt="">
+                  <img @click="sort(2)" v-else-if="order_price == 1" src="@/static/sort2.png" alt="">
+                  <img @click="sort(1)" v-if="order_price == 2" src="@/static/sort1.png" alt="">
+               </view>
+            </view>
             <view class="p_lists">
                 <div class="order_list" v-if="orderlist.length">
 					<scroll-view class="product-scroll" @scrolltolower="onReachScollBottom" :lower-threshold="400"
 						:scroll-y="true">
-                    <div class="order_item" v-for="(item,index) in orderlist" :key="index" @click="goto('/pages/shopping/commodity',{id:item.configId})">
-                      
-                        <img style="width: 100px;height: 100px;" :src="item.thumb" alt="">
-                    </div>
+                        <div class="list">
+                            <div class="order_item" v-for="(item,index) in orderlist" :key="index" @click="goto('/pages/shopping/commodity',{id:item.configId,type:order_state})">
+                                <img  :src="item.thumb" alt="">
+                                <view class="name ellipsis">{{ item.name }}</view>
+                                <view class="stock">库存:{{ item.stock? item.stock:'99999' }}</view>
+                                <view class="price">
+                                    <view v-if="order_state == 2">￥{{ item.price }}</view>
+                                    <view  style="color: #A156EF;" v-else-if="order_state == 1">{{ item.value }} <span style="font-size: 24rpx;">积分</span> </view>
+                                    <view style="color: #FF932B;" v-else-if="order_state == 3">{{ item.xCoin }}<span style="font-size: 24rpx;">星币</span> </view>
+                                    <view class="btn">{{ order_state == 2 ? '购买':"兑换" }}</view>
+                                </view>
+                            </div>
+                        </div>
+                       
 					</scroll-view>
                 </div>
-                <u-empty v-else text="暂无发货记录~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
+                <u-empty v-else text="暂无商品~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
             </view>
         </div>
     </view>
@@ -35,18 +57,22 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
-            navbar: ["全部", "备货中", "发货中", "已签收"],
-            active: "全部",
+            navbar: ["商城", "星光积分", "星币", ],
+            active: "商城",
             orderlist: [],
-            order_state: 0,
+            order_state: 2,
 			pageda: {
 				page: 1,
 				page_size: 20,
 				total: 20,
 			},
+            order_price:0
         };
     },
     onLoad(da) {
+      
+    },
+    onShow(){
         this.loadList()
     },
     computed: {
@@ -60,7 +86,11 @@ export default {
         },
     },
     methods: {
-               formateList(value){
+        sort(value){
+           this.order_price = value;
+           this.loadList()
+        },
+         formateList(value){
 
              let   data = marketGroupByItemId(value);
 
@@ -71,26 +101,25 @@ export default {
             this.active = item
 			this.pageda.page = 1
             if (index == 0) {
-                this.order_state = index;
+                this.order_state = 2;
             } else if (index == 1) {
-                this.order_state = 3
+                this.order_state = 1
             } else if (index == 2) {
-                this.order_state = 4
+                this.order_state = 3
             } else if (index == 3) {
                 this.order_state = 5
             }
             this.loadList()
         },
+                        // user_id: this.userInfo.id,
+// 
         loadList() {
             post('v1/activity/cost-award/list', {
-                type:2,
-                user_id: this.userInfo.id,
+                type: this.order_state,
+                order_price:this.order_price
                 // ...this.pageda
             }).then(res => {
-                console.log(res.config)
-				if (this.pageda.page == 1) this.orderlist = [];
-				this.orderlist = this.orderlist.concat(res.config);
-				this.pageda.total =  res.total;
+				this.orderlist =res.config
             })
         },
 		setTxtLength(item){
@@ -101,17 +130,54 @@ export default {
 			}
 		},
 		onReachScollBottom() {
-			if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
-				this.pageda.page++;
-				this.loadList()
-			}
+			// if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
+			// 	this.pageda.page++;
+			// 	this.loadList()
+			// }
 		},
     },
 };
 </script>
 <style lang='scss' scoped>
+
+.filter{
+    display: flex;
+    align-items: center;
+    padding-left: 32rpx;
+    margin-top: 30rpx;
+
+    view{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40rpx;
+        padding: 0 16rpx;
+        color: #1A1A1A;
+        font-size: 24rpx;
+        line-height: 40rpx;
+        background: #F5F6F8;
+        border-radius: 4rpx;
+        margin-right: 8rpx;
+
+        &.active{
+            color: #01C2D0;
+            background: #E6F9FB;
+        }
+
+        img{
+            width: 24rpx;
+            height: 24rpx;
+            margin-left: 4rpx;
+        }
+    }
+
+}
 .product-scroll {
-    height: calc(100% - 60rpx);
+    height: calc(100%);
+    .list{
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 .releaseRecord {
     width: 100vw;
@@ -121,17 +187,17 @@ export default {
     overflow-y: auto;
 
     background-color: #F5F6F8;
-    //       &::after {
-    //     content: "";
-    //     width: 100vw;
-    //     height: 600rpx;
-    //     left: 0;
-    //     top: 0;
-    //     position: absolute;
-    //     z-index: 1;
-    //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-    //     background-size: 100% 100%;
-    //   }
+          &::after {
+        content: "";
+        width: 100vw;
+        height: 240rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background:  linear-gradient( 180deg, #BAFFF9 0%, #F5F6F8 100%);
+        background-size: 100% 100%;
+      }
 }
 
 .navbar_x {
@@ -175,22 +241,23 @@ export default {
     font-size: 28rpx;
     color: #666666;
     line-height: 28rpx;
-       padding-left: 62rpx;
+    //    padding-left: 62rpx;
     padding-right: 62rpx;
 
     .tab_item {
-      width: 136rpx;
+      width: 150rpx;
 height: 56rpx;
 // background: #EEEEEE;
 // border-radius: 28rpx 28rpx 28rpx 28rpx;
 display: flex;
 color: #8D8D94;
-font-weight: bold;
+
 align-items: center;
 justify-content: center;
 line-height: 56rpx;
-margin-right: 16rpx;
+// margin-right: 16rpx;
 position: relative;
+font-size: 32rpx;
 .line{
     width: 64rpx;
 height: 12rpx;
@@ -213,6 +280,8 @@ text{
         }
 
         &.active {
+            font-weight: bold;
+            font-size: 36rpx;
             // background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
             color: #1A1A1A;
             // margin-top: -10rpx;
@@ -230,19 +299,21 @@ text{
 
 .shanggui_con {
     width: 100%;
-    height: calc(100% - 190rpx);
     position: absolute;
+    background: #fff;
+    border-radius: 32rpx 32rpx 0 0;
     bottom: 0;
+    padding-top: 24rpx;
     left: 0;
     z-index: 2;
 
     .p_lists {
-        height: calc(100% - 66rpx);
-        border-radius: 0 50rpx 0 0;
+        height: calc(100% - 128rpx);
         // background: #F4F4F4;
-        margin-top: -15rpx;
-        padding: 24rpx;
-        padding-top: 40rpx;
+  
+       padding-left: 32rpx;
+       padding-bottom: 20rpx;
+        padding-top: 30rpx;
     }
 }
 
@@ -252,13 +323,56 @@ text{
 }
 
 .order_item {
-    background-color: #fff;
-    border-radius: 16rpx;
-    // padding: 20rpx 26rpx;
-    padding: 0 24rpx 24rpx 24rpx;
-    width: 100%;
-    height: 348rpx;
-    margin-bottom: 16rpx;
+  width: 336rpx;
+height: 520rpx;
+background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+border-radius: 24rpx 24rpx 24rpx 24rpx;
+border: 2rpx solid #A1FAE3;
+padding-top: 2rpx;
+
+img{
+    width: 332rpx;
+height: 332rpx;
+margin-left: 2rpx;
+
+}
+.name{
+    padding: 0 16rpx;
+    margin-top: 18rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+}
+.stock{
+    padding-left: 16rpx;
+    color: #B3B3B3;
+    font-size: 24rpx;
+    margin-top: 8rpx;
+}
+
+.price{
+    display: flex;
+    align-items: center;
+    padding: 0 16rpx;
+    justify-content: space-between;
+    font-size: 24rpx;
+    color: #EE4326;
+    font-weight: bold;
+    .btn{
+        width: 104rpx;
+height: 48rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 24rpx 24rpx 24rpx 24rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 28rpx;
+color: #1A1A1A;
+
+
+
+    }
+
+}
 
 }
 </style>
