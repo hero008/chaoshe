@@ -73,13 +73,13 @@ export default {
 
     .btn {
         width: 686rpx;
-        height: 100rpx;
-        line-height: 100rpx;
+        height: 80rpx;
+        line-height: 80rpx;
         text-align: center;
-        background: #715cdd;
-        border-radius: 16rpx 16rpx 16rpx 16rpx;
+        background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+        border-radius: 40rpx;
         font-weight: 500;
-        color: #ffffff;
+        color: #1a1a1a;
         margin-top:460rpx;
     }
 }

@@ -201,7 +201,7 @@ export default {
       source_type: 0, // 充值类型（用户在什么地方支付：玩法、集市、快递...）
       // device_id: "", // 设备id
       source_id: 0, // GachaID, MarketOrder, MarketOffer, 0（钱包）
-      pays: [
+      pays:process.env.NODE_ENV === 'development'? [
       
         {
           name: "金币余额",
@@ -223,7 +223,14 @@ export default {
           consume: 0,
         },
      
-      ],
+      ]:[{
+          name: "芒果支付",
+          type: 1,
+          img: "xjzf",
+          show: true,
+          msg: "芒果支付",
+          consume: 0,
+        }],
       // #ifndef MP-WEIXIN
       paytypeList: [1], // 0潮币 1支付宝 2微信 3微信小程序
       // #endif
