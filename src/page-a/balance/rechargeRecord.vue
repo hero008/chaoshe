@@ -24,8 +24,8 @@
                 </div>
             </div> -->
             <view class="tabs_two flex_r">
-                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
-                    <text>{{i}}</text>
+                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i.name}}</text>
                     <view v-if="i==active" class="line"></view>
                 </view>
             </view>
@@ -40,7 +40,7 @@
                         @scrolltolower="onReachScollBottom"
                         :lower-threshold="400"
                     >
-                    <block  v-if="active == '星币'">
+                    <block  v-if="active == 1">
                           <div
                         
                             class="li_item flex_r flex_jb"
@@ -112,8 +112,14 @@ import { getSourceXcoinPoint ,formatDate} from '@/utils/mgtv';
 export default {
     data() {
         return {
-            navbar: [ "星光积分","星币",],
-            active: "星光积分",
+            navbar: [{
+                name: "星光积分",
+                type:0
+            },{
+                name:"星币",
+                type:1
+            },],
+            active: 0,
             balance: 0,
             pageda: {
                 page: 1,
@@ -167,7 +173,7 @@ export default {
         },
         ontab2(i, s) {
                this.transactionList = [];
-            this.active = i;
+            this.active = i.type;
             this.pageda.page = 1;
          
             this.getTransaction();
@@ -184,7 +190,7 @@ export default {
         // 获取流水
         getTransaction() {
             this.balance = this.userInfo.gold;
-            if(this.active == "星光积分"){
+            if(this.active == 0){
                 post("v1/activity/cost-award/log/list", {
                     ...this.pageda,
                 }).then((res) => {

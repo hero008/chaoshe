@@ -40,14 +40,14 @@
                             
                         </div>
                     </div>
-                        <div @click.stop="editAddr(i.id)" style="width: 48rpx;height: 48rpx;">
+                        <div @click.stop="editAddr(i.id)" style="width: 48rpx;height: 48rpx;margin-right: 30rpx;">
                             <image
                             style="width: 48rpx;height: 48rpx;"
                                 src="https://img.shinemang.com/gachaStatic/my/modifyEditIcon.png"
                                 mode="scaleToFill"
                             />
                         </div>
-                              <div
+                              <!-- <div
                                 class="btn flex_r flex_ac"
                                 @click.stop="ondelAddr(i.id)"
                             >
@@ -56,8 +56,8 @@
                                     src="https://img.shinemang.com/gachaStatic/static/img/shipments/delete.png"
                                     class="del_ico"
                                 />
-                                <!-- <span>删除</span> -->
-                            </div>
+                               
+                            </div> -->
                     </div>
                     <!-- <div class="address_btn flex_r flex_jb flex_ac">
                       
@@ -267,11 +267,11 @@ export default {
 
     .addr_item {
         width: 686rpx;
-        min-height: 230rpx;
+        // min-height: 230rpx;
         background: #ffffff;
         border-radius: 16rpx;
         margin-bottom: 20rpx;
-        padding: 32rpx 0rpx;
+        padding: 24rpx 0rpx;
         position: relative;
 
         .add_ico {
@@ -336,6 +336,7 @@ export default {
                 font-size: 28rpx;
                 line-height: 30rpx;
                 color: #8D8D94;
+                max-width: 570rpx;
             }
         }
     }

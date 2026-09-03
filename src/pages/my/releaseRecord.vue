@@ -8,9 +8,9 @@
         </div>
         <div class="shanggui_con" :style="{ height: conHeight }">
             <view class="tabs_two flex_r flex_jb">
-                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
-                    <text>{{i}}</text>
-                    <view v-if="i==active" class="line"></view>
+                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i.name}}</text>
+                    <view v-if="i.type==active" class="line"></view>
                 </view>
             </view>
             <view class="p_lists">
@@ -69,8 +69,21 @@ import { marketGroupByItemId } from "@/utils/mgtv";
 export default {
     data() {
         return {
-            navbar: ["全部", "备货中", "发货中", "已签收"],
-            active: "全部",
+            navbar: [{
+                name:"全部",
+                type:0,
+
+            }, {
+                name:"备货中",
+                type:1,
+            },{
+                name: "发货中",
+                type:2
+            },{
+                name: "已签收",
+                type:3
+            }],
+            active: 0,
             orderlist: [],
             order_state: 0,
 			pageda: {
@@ -101,7 +114,7 @@ export default {
                   
         },
         ontab2(item, index) {
-            this.active = item
+            this.active = item.type
 			this.pageda.page = 1
             if (index == 0) {
                 this.order_state = index;

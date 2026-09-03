@@ -72,11 +72,11 @@
 
                 <!-- 蒙版层 -->
                 <view class="table_mask"></view>
-                <view class="table_grid" >
+                <view class="table_grid"  >
                     <view class="card_slot " v-for="(card, index) in tableSlots"  :key="index"
                         @click="onCardClick(card, index)">
                         <template v-if="stateType == 1 && Object.keys(fateCard).length > 0">
-                            <image v-show="card && card.cardImage" :src="resolveImg(card.cardImage)" class="card_img" mode="aspectFill" />
+                            <image v-if="card && card.cardImage" :src="resolveImg(card.cardImage)" class="card_img" mode="aspectFill" />
                             <view class="card_overlay" v-if="selectedCards.includes(index)">
                                 <image :src="pitchOnSrc" class="check_ico" />
                             </view>
@@ -130,7 +130,7 @@
                         'fate_rolling': isAutoRolling && autoRollIndex === idx,
                         'fate_exit': isSelectingFate,
                     }" @click="onSelectFate(item, idx)">
-                        <image :src="resolveImg(item.cardImage)" class="fate_opt_img" mode="aspectFill" />
+                        <image v-if="item" :src="resolveImg(item.cardImage)" class="fate_opt_img" mode="aspectFill" />
                         <view class="fate_check" v-if="selectedFateIndex === idx && !isSelectingFate">✓</view>
                     </view>
                 </view>
@@ -261,14 +261,14 @@
             <view class="fate_select_box">
                 <view class="fate_select_title"></view>
                 <view class="fate_select_tip">{{ fateTipText }}</view>
-                <view class="fate_list">
+                <view class="fate_list" v-if="fateOptions.length > 0">
                     <view class="fate_option" v-for="(item, idx) in fateOptions" :key="idx" :class="{
                         'fate_selected': selectedFateIndex === idx,
                         'fate_greyed': (selectedFateIndex !== -1 && selectedFateIndex !== idx) || (isAutoRolling && autoRollIndex !== idx),
                         'fate_rolling': isAutoRolling && autoRollIndex === idx,
                         'fate_exit': isSelectingFate,
                     }" @click="selectFixedCard(item, idx)">
-                        <image :src="resolveImg(item.cardImage)" class="fate_opt_img" mode="aspectFill" />
+                        <image v-if="item" :src="resolveImg(item.cardImage)" class="fate_opt_img" mode="aspectFill" />
                         <view class="fate_check" v-if="selectedFateIndex === idx && !isSelectingFate">✓</view>
                     </view>
                 </view>
@@ -691,7 +691,7 @@ export default {
                     audio.play();
                     return;
                 } catch (e) { }
-            }
+            } 
             playDede();
         },
         /** 点击选择天命卡（带动画效果） */
@@ -1075,6 +1075,8 @@ export default {
             if (this.showAwardsModal) {
                 if(this.settingRmainCount != 0){
                     this.useCount ++ 
+
+                    console.log(this.useCount,this.settingRmainCount,'234234234234')
                     if(this.useCount == this.settingRmainCount){
                       uni.removeStorageSync('isAuto')
                       this.stopAuto(false);

@@ -42,7 +42,9 @@
                 </div>
             </u--form>
             <view  class="foot_btn">
+                 <view v-if="id" @click="ondelAddr" class="delete">删除</view>
                 <view class="add"  @click="confirmAdd">保存</view>
+               
             </view>
             <!-- <img class="foot_btn" src="https://img.shinemang.com/gachaStatic/static/img/transaction/btn5.png"> -->
             <select-address ref="AddressRef" :address.sync="address" @change="addressChange" />
@@ -108,6 +110,17 @@ export default {
         if (da.selectAddrId) this.getDeilvery(da.selectAddrId)
     },
     methods: {
+        ondelAddr(){
+           post("v1/delivery_address/delete", {
+                delivery_id: this.id,
+            }).then((res) => {
+                if (!res.code) {
+                    uni.$u.toast("删除成功");
+                    this.gateBack()
+                    
+                }
+            });
+        },
         ontag(va) {
             let str = this.formDa.address_tag == va ? "" : va
             this.$set(this.formDa, "address_tag", str)
@@ -125,10 +138,12 @@ export default {
             }
         },
         getDeilvery(id) {
+               this.id = id
             post('v1/delivery_address/get', {
                 delivery_id: id
             }).then(res => {
                 if (!res.code) {
+                 
                     let da = res.address
                     let { province, city, area, subArea } = da
                     this.addressChange({ province, city, area, street: subArea })
@@ -279,9 +294,24 @@ export default {
     height: 88rpx;
     position: fixed;
     bottom: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     left: 0;
+    .delete{
+        width: 224rpx;
+        height: 88rpx;
+        border-radius: 44rpx 44rpx 44rpx 44rpx;
+        border: 2rpx solid #1A1A1A;
+        display: flex;
+        align-items: center;
+        margin-right: 24rpx;
+        font-size: 32rpx;
+        color: #1A1A1A;
+        justify-content: center;
+    }
     .add{
-width: 686rpx;
+width: 438rpx;
 height: 88rpx;
 background: #1A1A1A;
 border-radius: 44rpx 44rpx 44rpx 44rpx;
@@ -291,7 +321,7 @@ justify-content: center;
 color: #fff;
 font-weight: bold;
 line-height: 88rpx;
-margin-left: 32rpx;
+// margin-left: 32rpx;
     }
 }
 </style>

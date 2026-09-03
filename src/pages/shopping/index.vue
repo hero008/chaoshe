@@ -8,8 +8,8 @@
         </div>
         <div class="shanggui_con" :style="{ height: conHeight }">
             <view class="tabs_two flex_r">
-                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
-                    <text>{{i}}</text>
+                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i.name}}</text>
                     <view v-if="i==active" class="line"></view>
                 </view>
             </view>
@@ -57,8 +57,16 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
-            navbar: ["商城", "星光积分", "星币", ],
-            active: "商城",
+            navbar: [{name:"商城",
+                type:2
+            }, {
+                name:"星光积分",
+                type:1
+            },{
+                name: "星币",
+                type:3
+            }, ],
+            active: 2,
             orderlist: [],
             order_state: 2,
 			pageda: {
@@ -98,17 +106,18 @@ export default {
                   
         },
         ontab2(item, index) {
-            this.active = item
+            this.active = item.type
+            this.order_state = item.type
 			this.pageda.page = 1
-            if (index == 0) {
-                this.order_state = 2;
-            } else if (index == 1) {
-                this.order_state = 1
-            } else if (index == 2) {
-                this.order_state = 3
-            } else if (index == 3) {
-                this.order_state = 5
-            }
+            // if (index == 0) {
+            //     this.order_state = 2;
+            // } else if (index == 1) {
+            //     this.order_state = 1
+            // } else if (index == 2) {
+            //     this.order_state = 3
+            // } else if (index == 3) {
+            //     this.order_state = 5
+            // }
             this.loadList()
         },
                         // user_id: this.userInfo.id,
@@ -323,31 +332,34 @@ text{
 }
 
 .order_item {
-  width: 336rpx;
-height: 520rpx;
-background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
-border-radius: 24rpx 24rpx 24rpx 24rpx;
-border: 2rpx solid #A1FAE3;
-padding-top: 2rpx;
+    width: 336rpx;
+    height: 520rpx;
+    background: linear-gradient( 180deg, #CCFFF4 0%, #FFFFFF 60%);
+    border-radius: 24rpx 24rpx 24rpx 24rpx;
+    border: 2rpx solid #A1FAE3;
+    padding-top: 2rpx;
+    margin-right: 18rpx;
+    &:nth-child(2n){
+        margin-right: 0;
+    }
+    img{
+        width: 332rpx;
+    height: 332rpx;
+    margin-left: 2rpx;
 
-img{
-    width: 332rpx;
-height: 332rpx;
-margin-left: 2rpx;
-
-}
-.name{
-    padding: 0 16rpx;
-    margin-top: 18rpx;
-    font-size: 28rpx;
-    font-weight: bold;
-}
-.stock{
-    padding-left: 16rpx;
-    color: #B3B3B3;
-    font-size: 24rpx;
-    margin-top: 8rpx;
-}
+    }
+    .name{
+        padding: 0 16rpx;
+        margin-top: 18rpx;
+        font-size: 28rpx;
+        font-weight: bold;
+    }
+    .stock{
+        padding-left: 16rpx;
+        color: #B3B3B3;
+        font-size: 24rpx;
+        margin-top: 8rpx;
+    }
 
 .price{
     display: flex;

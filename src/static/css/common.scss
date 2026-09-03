@@ -411,6 +411,19 @@ span {
       text-align: center;
       margin-top: 64rpx;
     }
+
+    .code{
+        padding: 32rpx;
+        text-align: center;
+        background: #F5F6F8;
+        border-radius: 24rpx 24rpx 24rpx 24rpx;
+        color: #1A1A1A;
+        font-size: 32rpx;
+        width: 100%;
+        font-weight: bold;
+        margin-top: 47rpx;
+
+    }
     .actionBtns{
         margin-top: 64rpx;
         display: flex;

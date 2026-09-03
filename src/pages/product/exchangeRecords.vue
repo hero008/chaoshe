@@ -10,12 +10,7 @@
       </view>
     </div>
     <div class="shanggui_con" :style="{ height: conHeight }">
-      <!-- <view class="tabs_two flex_r flex_jb">
-                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
-                    <text>{{i}}</text>
-                    <view v-if="i==active" class="line"></view>
-                </view>
-            </view> -->
+
       <view class="p_lists">
         <div class="order_list" v-if="orderlist.length">
           <scroll-view
@@ -28,18 +23,17 @@
               class="order_item"
               v-for="(item, index) in orderlist"
               :key="index"
-              @click="goto('/pages/my/releaseDetails', { id: item.id })"
             >
               <div class="title">
-                <div>234234</div>
-                <div class="status">234234</div>
+                <div>{{ item.itemName }}</div>
+                <div class="status">兑换成功</div>
               </div>
-              <div class="time">32423423</div>
+              <div class="time">{{ item.createTime }}</div>
               <div class="code">
                 <div>兑换码</div>
                 <div class="copyCode">
-                  <div>324</div>
-                  <div class="copy">复制</div>
+                  <div>{{ item.value }}</div>
+                  <div @click="copy(item.value)" class="copy">复制</div>
                 </div>
               </div>
             </div>
@@ -57,14 +51,11 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
-import { marketGroupByItemId } from "@/utils/mgtv";
 export default {
   data() {
     return {
-      navbar: ["全部", "备货中", "发货中", "已签收"],
-      active: "全部",
+    
       orderlist: [],
-      order_state: 0,
       pageda: {
         page: 1,
         page_size: 20,
@@ -85,43 +76,16 @@ export default {
     },
   },
   methods: {
-    formateList(value) {
-      let data = marketGroupByItemId(value);
-
-      return data;
-    },
-    ontab2(item, index) {
-      this.active = item;
-      this.pageda.page = 1;
-      if (index == 0) {
-        this.order_state = index;
-      } else if (index == 1) {
-        this.order_state = 3;
-      } else if (index == 2) {
-        this.order_state = 4;
-      } else if (index == 3) {
-        this.order_state = 5;
-      }
-      this.loadList();
-    },
     loadList() {
-      post("v1/order/list", {
-        type: 0,
-        state: this.order_state,
+      post("v1/goods/item/virtual/log", {
         ...this.pageda,
       }).then((res) => {
         if (this.pageda.page == 1) this.orderlist = [];
-        this.orderlist = this.orderlist.concat(res.orders);
+        this.orderlist = this.orderlist.concat(res.items);
         this.pageda.total = res.total;
       });
     },
-    setTxtLength(item) {
-      if (item.receiveAddress && item.receiveAddress.length > 13) {
-        return item.receiveAddress.slice(0, 13) + "...";
-      } else {
-        return item.receiveAddress + "...";
-      }
-    },
+
     onReachScollBottom() {
       if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
         this.pageda.page++;
@@ -143,17 +107,6 @@ export default {
   overflow-y: auto;
 
   background-color: #f5f6f8;
-  //       &::after {
-  //     content: "";
-  //     width: 100vw;
-  //     height: 600rpx;
-  //     left: 0;
-  //     top: 0;
-  //     position: absolute;
-  //     z-index: 1;
-  //     background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
-  //     background-size: 100% 100%;
-  //   }
 }
 
 .navbar_x {
