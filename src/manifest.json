@@ -159,7 +159,6 @@
         "usingComponents" : true
     },
     "h5" : {
-       
         "router" : {
             "base" : "./",
             "mode" : "hash"

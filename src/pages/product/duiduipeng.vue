@@ -251,9 +251,12 @@
                     </div>
                 </div>
 
-                <div @click="confirmSetting" class="confirmBtn">
+               <div class="btn">
+                <div class="cancel" @click="showSetting=false">取消</div>
+                  <div @click="confirmSetting" class="confirmBtn">
                确认
                 </div>
+               </div>
               
             </div>
         </u-popup>
@@ -288,9 +291,9 @@ import { cacheImage } from "@/utils/storage.js";
 import bigPng from '@/static/big.png'
 import middlePng from '@/static/middle.png'
 import smallPng from '@/static/small.png'
+import {isPositiveInteger} from '@/utils/mgtv.js'
 
 export default {
-    name: "duiduipeng",
     data() {
         return {
             useCount:-1,
@@ -477,51 +480,50 @@ export default {
         },
         inputChangeCount(value,type){
           if(type == 'input'){
-            if(value> this.remainingCount - 1){
-                 this.$nextTick(()=>{
-                    this.settingRmainCount = this.remainingCount - 1
+            if(!value || !isPositiveInteger(value)){
+                this.$nextTick(()=>{
+                     this.settingRmainCount = ''
                 })
             }else{
-                if(!value){
-                  this.$nextTick(()=>{
-                      this.settingRmainCount = 1
+               if(value> Number(this.remainingCount) - 1){
+                 this.$nextTick(()=>{
+                 this.settingRmainCount = Number(this.remainingCount) - 1
                 })
-                 
-                }else{
+              }else{
                   this.$nextTick(()=>{
-                     this.settingRmainCount = value
+                     this.settingRmainCount = Number(value)
                 })
-                   
-                }
+              }
             }
+        
 
           }else{
-            if(value> this.remainingCount - 1){
+            if(!value || !isPositiveInteger(value)){
                  this.$nextTick(()=>{
-                    this.settingRmainCount = this.remainingCount - 1
+                 this.settingRmainCount = 1
                 })
             }else{
-                if(!value){
-                  this.$nextTick(()=>{
-                      this.settingRmainCount = 1
+              if(value> Number(this.remainingCount) - 1){
+                 this.$nextTick(()=>{
+                 this.settingRmainCount = Number(this.remainingCount )- 1
                 })
-                }else{
+            }else{
                   this.$nextTick(()=>{
                      this.settingRmainCount = value
                 })
-                }
+            }
             }
           }
         },
         changeCount(value){
           if(value){
-             if(this.settingRmainCount == this.remainingCount - 1){
+             if(this.settingRmainCount == Number(this.remainingCount) - 1){
                 this.$nextTick(()=>{
-                    this.settingRmainCount = this.remainingCount - 1
+                    this.settingRmainCount = Number(this.remainingCount) - 1
                 })
              }else{
                  this.$nextTick(()=>{
-                    this.settingRmainCount = this.settingRmainCount + 1
+                    this.settingRmainCount = Number(this.settingRmainCount) + 1
                 })
              }
           }else{
@@ -531,7 +533,7 @@ export default {
                 })
              }else{
                  this.$nextTick(()=>{
-                    this.settingRmainCount = this.settingRmainCount - 1
+                    this.settingRmainCount =Number(this.settingRmainCount) - 1
                 })
              }
           }
@@ -1030,7 +1032,7 @@ export default {
                 this.openAutoModal()
             }else{
                 this.resetSeting()
-                this.settingRmainCount = this.remainingCount - 1
+                this.settingRmainCount = Number(this.remainingCount) - 1
                 this.showSetting = true
             }
 
@@ -2406,9 +2408,28 @@ div{
 
         }
     }
+.btn{
+margin-top: 48rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+.cancel{
+    width: 240rpx;
+height: 80rpx;
+background: #F5F6F8;
+border-radius: 40rpx 40rpx 40rpx 40rpx;
 
-    .confirmBtn{
-        width: 400rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #1A1A1A;
+font-size: 32rpx;
+font-weight: bold;
+
+    margin-right: 24rpx;
+}
+ .confirmBtn{
+        width: 240rpx;
 height: 80rpx;
 background: #1A1A1A;
 border-radius: 40rpx 40rpx 40rpx 40rpx;
@@ -2419,9 +2440,11 @@ justify-content: center;
 color: #fff;
 font-size: 32rpx;
 font-weight: bold;
-margin: auto;
-margin-top: 48rpx;
+
+
     }
+}
+   
 }
 
 /* 开始游戏按钮 */

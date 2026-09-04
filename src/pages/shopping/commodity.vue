@@ -740,9 +740,7 @@ export default {
 
       let res = await callPayment("v1/activity/cost-award/buy", data, type);
       let orderInfo = res.orderInfo;
-      console.log(res);
       if (!res.code) {
-        console.log(res);
         if (res.res && res.res.createPaymentReply) {
           if (window.mgtv) {
             mgtv.requestPaymentGameItem({

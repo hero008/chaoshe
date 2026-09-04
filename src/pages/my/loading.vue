@@ -16,7 +16,8 @@
 <script>
 import { post } from "@/utils/api.js";
 import { isMTVapp } from "../../utils/mgtv";
-import { mapState } from "vuex";
+import {  mapActions } from "vuex";
+
 import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 let that;
 export default {
@@ -44,19 +45,11 @@ export default {
   },
   // computed: { ...mapState(["isMTVLogin"]) },
   methods: {
+     ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
         if(window.mgtv){
-            // this.webLogin();
-            // return;
           this.loginMgtv((res)=>{
-            
-            //  let uuid = res.uuid;
-            // let ticket = res.ticket;
-            // let nickName = res.nickName;
-            // let avatarUrl = res.avatarUrl;
-            // this.webLogin();
             let channel = uni.getStorageSync('channel')
-
                post("v1/user/login", {
                 phone_num: "",
                 type: 8,
@@ -69,26 +62,21 @@ export default {
                 nickname:res.nickName,
                 avatar_url:res.avatarUrl
             }).then((res) => {
-              console.log(res);
                 if (res.code) {
                 uni.$u.toast(res.message);
                 this.show = true;
-                // that.backtrack();
                 } else {
                 uni.setStorageSync('isNew',res.isNew);
                 uni.setStorageSync("aToken", res.accessToken);
                 uni.setStorageSync("rToken", res.refreshToken);
                 uni.setStorageSync("uuid", res.uuid);
                 that.$store.commit("updateInfo", res);
+                that.asyncUpdateInfo()
                 that.backtrack();
                 }
             });
                // 登录成功// 获取到res 的用户信息,在去登录
           },(err)=>{
-            console.log('数据分类撒酒疯垃圾')
-                 //登录失败 
-                // uni.$u.toast('登录失败');
-                // that.backtrack();
                 this.show=true;
           });
         }else{
@@ -168,7 +156,7 @@ export default {
 // 19999999995
     webLogin(){
         post("v1/user/login", {
-                phone_num: "19999999997",
+                phone_num: "19999999998",
                 type: 0,
                 code: "260106",
                 login_platform: 0,
@@ -177,13 +165,13 @@ export default {
                 channel_id: 'Channel_Official',
             }).then((res) => {
                 if (res.code) {
-                // uni.$u.toast(res.message);
-                // that.backtrack();
+
                 } else {
                   uni.setStorageSync('isNew',res.isNew);  
                   uni.setStorageSync("aToken", res.accessToken);
                   uni.setStorageSync("rToken", res.refreshToken);
                   that.$store.commit("updateInfo", res);
+                   that.asyncUpdateInfo()
                   that.backtrack();
                 }
             });

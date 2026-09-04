@@ -383,3 +383,7 @@ export const choushangResultByItemId =(data)=>{
   
   return [...bzRewards,...spRewards,...otherArr]
 }
+
+export const isPositiveInteger = (value) => {
+  return /^[1-9]\d*$/.test(value);
+};

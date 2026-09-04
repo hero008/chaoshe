@@ -169,7 +169,6 @@ export default {
        
         ...mapState(["userInfo", "popupWebSocket"]),
         filteredTodos(val) {
-            console.log(val);
             return this.tabBarStyle.list.filter((todo) =>
                 todo.txt == "集市"
                     ? (todo.isVisible = this.userInfo.showMarket)
