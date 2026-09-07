@@ -165,7 +165,7 @@
             "mode" : "hash"
         },
         "devServer" : {
-             "disableHostCheck" : true
+             "allArowedHost":"all"
         }
     },
     "channel_list" : [
