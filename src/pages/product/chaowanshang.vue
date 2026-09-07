@@ -391,7 +391,7 @@ import ball from "@/page-activity/ball/ball.vue";
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
-import { formateGachaLevelName } from "../../utils/mgtv";
+import { formateGachaLevelName,shareUrl } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'

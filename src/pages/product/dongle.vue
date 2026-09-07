@@ -338,7 +338,7 @@ import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 import share from "./modules/share.vue";
 import result from '@/pages/product/modules/resultDetail'
-import {awardsSort} from '@/utils/mgtv.js'
+import {awardsSort,shareUrl} from '@/utils/mgtv.js'
 export default {
     data() {
         return {

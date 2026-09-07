@@ -276,7 +276,7 @@ import bgc4 from '@/static/bgc4.png'
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { MGTV_Channel } from "@/utils/mgtv";
 import result from '@/pages/product/modules/resultDetail'
-import {awardsSort} from '@/utils/mgtv.js'
+import {awardsSort,shareUrl} from '@/utils/mgtv.js'
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {

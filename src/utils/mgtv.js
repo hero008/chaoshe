@@ -2,6 +2,7 @@ import { post } from "./api";
 import { goto } from "./fun";
 import store from "../store";
 import BigNumber from "bignumber.js";
+export const  shareUrl = 'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
   return /imgo/i.test(window.navigator.userAgent);
 };

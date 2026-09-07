@@ -291,7 +291,7 @@ import { cacheImage } from "@/utils/storage.js";
 import bigPng from '@/static/big.png'
 import middlePng from '@/static/middle.png'
 import smallPng from '@/static/small.png'
-import {isPositiveInteger} from '@/utils/mgtv.js'
+import {isPositiveInteger,shareUrl } from '@/utils/mgtv.js'
 
 export default {
     data() {

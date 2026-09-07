@@ -3,7 +3,7 @@
   <view
     class="shanggui"
     :class="{ mpWeixin: ISmp() }"
-    :style="{ paddingTop: MBInfo().top + 36 + 'px' }"
+    :style="{ paddingTop: MBInfo().top  + 'px' }"
   >
     <view class="top_tabs">
       <!-- <u-tabs :list="navbar" @click="ontab" lineColor="#333" :activeStyle="activeStyl"></u-tabs> -->
@@ -12,7 +12,7 @@
                 <img class="ico" src="https://img.shinemang.com/gachaStatic/static/img/shanggui/group_3.png" />
             </view> -->
     </view>
-    <div :style="{ paddingTop: MBInfo().top + 36 + 'px' }" class="shanggui_con">
+    <div :style="{ paddingTop: MBInfo().top  + 'px' }" class="shanggui_con">
       <view class="tabsOne flex_r">
         <view
           class="tab_item"
