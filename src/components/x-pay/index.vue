@@ -979,10 +979,18 @@ export default {
             },
             click_type,
           );
-
+        if(!res.code){
+            that.$emit("success", res, that.showAnimation, click_type);
            that.close();
            window.location.href =  res.res.createPaymentReply.payUrl
-           that.$emit("success", res, that.showAnimation, click_type);
+         
+        }else{
+          uni.showToast({
+            title:res.message,
+            icon:'none'
+          })
+        }
+        
     
           // if (window.mgtv) {
           //   mgtv.requestPaymentGameItem({
