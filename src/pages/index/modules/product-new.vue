@@ -39,6 +39,7 @@ export default {
                 type: 0, // 0: 所有, 1:一番赏, 2:彩蛋机, 3:潮游赏
                 ...this.pageda
             }).then(res => {
+                if(res.code) return;
                 this.content = res.gachas
 				if (this.pageda.page == 1) this.content = [];
 				this.content = this.content.concat(res.gachas);
