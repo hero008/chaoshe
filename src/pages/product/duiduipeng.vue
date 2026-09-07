@@ -1410,7 +1410,7 @@ export default {
             title:"对对碰", // 分享标题
             desc: ((this.initialData && this.initialData.gacha) ? this.initialData.gacha.themeName : ''), // 分享描述
             shareUrl: url, // 分享链接
-            shareIcon: "https://img.shinemang.com/static/rednote/shareImg.jpg",
+            shareIcon:(this.initialData && this.initialData.gacha)?(this.initialData.gacha.coverThumb || this.initialData.gacha.coverImage):'',
             },
             (resp) => { },
         );

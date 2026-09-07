@@ -480,7 +480,7 @@ this.shareTo=false
             title: "炸弹赏", // 分享标题
             desc: this.gachainfo.themeName, // 分享描述
             shareUrl: url, // 分享链接
-            shareIcon: "https://img.shinemang.com/static/rednote/shareImg.jpg",
+            shareIcon: this.gachainfo.coverThumb ||  this.gachainfo.coverImage,
             },
             (resp) => { },
         );
