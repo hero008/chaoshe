@@ -11,11 +11,14 @@
       bgColor="rgba(0,0,0,0)"
     />
     <u-modal @confirm="confirm" :show="show" :title="title" :content='content'></u-modal>
+      <view @click="toLogin" v-if="needLogin" class="loginBtn">
+        登录
+    </view>
   </view>
 </template>
 <script>
 import { post } from "@/utils/api.js";
-import { isMTVapp } from "../../utils/mgtv";
+import { isMTVapp,shareUrl } from "../../utils/mgtv";
 import {  mapActions } from "vuex";
 
 import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
@@ -27,6 +30,7 @@ export default {
       show:false,
       title:'提示',
       content:'登录失败,请重试,体验更多内容吧',
+       needLogin:false,
     };
   },
   created() {
@@ -47,42 +51,80 @@ export default {
   methods: {
      ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
-        if(window.mgtv){
-          this.loginMgtv((res)=>{
-            let channel = uni.getStorageSync('channel')
-               post("v1/user/login", {
+      if (!isMTVapp()) {
+        let url = shareUrl;
+          const params = new URLSearchParams(window.location.search);
+         let gachaName = params && params.get("gachaName")|| '';
+            let gachaId =  params && params.get("gachaId") || '';
+             let channel = params && params.get("channel") || '';
+               let inviteCode = params && params.get("inviteCode") || '';
+             if(inviteCode){
+              url= url+'&inviteCode='+inviteCode
+             }
+             if(channel){
+              url= url+'&channel='+channel
+             }
+             if(gachaName && gachaId){
+               url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+             }
+           window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+          `imgotv://webview?url=${encodeURIComponent(url)}`,
+        )}`;
+        return;
+      }
+
+      if (window.MgtvApi) {
+        MgtvApi.getUserInfo((user_info) => {
+          if (user_info && user_info.length !== 0) {
+            const userInfo = JSON.parse(user_info);
+            if (userInfo.ticket && userInfo.uuid) {
+                this.needLogin = false;
+              let channel = uni.getStorageSync("channel");
+              post("v1/user/login", {
                 phone_num: "",
                 type: 8,
-                code:res.ticket,
+                code: userInfo.ticket,
                 login_platform: 0,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
-                channel_id: channel ? channel : 'Channel_Official',
-                uuid:res.uuid,
-                nickname:res.nickName,
-                avatar_url:res.avatarUrl
-            }).then((res) => {
+                channel_id: channel ? channel : "Channel_Official",
+                uuid: userInfo.uuid,
+                nickname: userInfo.nickname,
+                avatar_url: userInfo.avatar.l,
+              }).then((res) => {
                 if (res.code) {
-                uni.$u.toast(res.message);
-                this.show = true;
+                  uni.$u.toast(res.message);
+                  this.show = true;
+                  // that.backtrack();
                 } else {
-                uni.setStorageSync('isNew',res.isNew);
-                uni.setStorageSync("aToken", res.accessToken);
-                uni.setStorageSync("rToken", res.refreshToken);
-                uni.setStorageSync("uuid", res.uuid);
-                that.$store.commit("updateInfo", res);
-                that.asyncUpdateInfo()
-                that.backtrack();
+                  uni.setStorageSync("isNew", res.isNew);
+                  uni.setStorageSync("aToken", res.accessToken);
+                  uni.setStorageSync("rToken", res.refreshToken);
+                  uni.setStorageSync("uuid", res.uuid);
+                  that.$store.commit("updateInfo", res);
+                   that.asyncUpdateInfo()
+                  that.backtrack();
                 }
+              });
+            } else {
+              //登錄
+              this.needLogin = true
+              MgtvApi.login((res) => {
+                // window.location.reload();
+                this.toLogin()
+              },(err)=>{
+              });
+            }
+          } else {
+             this.needLogin = true
+            //登錄
+            MgtvApi.login(() => {
+              // window.location.reload();
+               this.toLogin()
             });
-               // 登录成功// 获取到res 的用户信息,在去登录
-          },(err)=>{
-                this.show=true;
-          });
-        }else{
-            this.webLogin();
-            // this.show=true
-        }
+          }
+        });
+      }
       
     },
     confirm(){
@@ -94,65 +136,7 @@ export default {
           
         }
     },
-    loginMgtv(success_, fail_) {
-      let isLogin = mgtv.isLogin();
-      if (!isLogin) {
-        mgtv.login({
-          success(res) {
-            that.getUserInfo(success_, fail_);
-          },
-          fail(res) {
-            fail_ && fail_(res);
-          },
-        });
-      } else {
-        this.getUserInfo(success_, fail_);
-      }
-    },
 
-    getUserInfo(success_, fail_) {
-      mgtv.getSetting({
-        success(res) {
-          if (!res.authSetting["scope.userProfile"]) {
-            mgtv.authorize({
-              scope: "scope.userProfile",
-              success() {
-                console.log("授权成功");
-                mgtv.getUserProfile({
-                  success(res) {
-                    console.log("getUserProfile success:", JSON.stringify(res));
-                    //注意查看返回的值 res.data
-                    success_ && success_(res.data);
-                  },
-                  fail(res) {
-                    console.log(res)
-                    fail_ && fail_(res);
-                  },
-                });
-              },
-              fail(res) {
-                fail_ && fail_(res);
-              },
-            });
-          } else {
-            console.log("授权成功");
-            mgtv.getUserProfile({
-              success(res) {
-                console.log("getUserProfile success:", JSON.stringify(res));
-                //注意查看返回的值 res.data
-                success_ && success_(res.data);
-              },
-              fail(res) {
-                fail_ && fail_(res);
-              },
-            });
-          }
-        },
-        fail(res) {
-          fail_ && fail_(res);
-        },
-      });
-    },
 // 19999999995
     webLogin(){
         post("v1/user/login", {
@@ -177,56 +161,7 @@ export default {
             });
     },
 
-    mgTvLogin() {
-      // 芒果登录 测试环境
-   
 
-      // 正式芒果登录
-
-      // if(!isMTVapp()){
-      //         post("v1/user/login", {
-      //             phone_num: '13888888888',
-      //             type: 0,
-      //             code: '260106',
-      //             login_platform: 0,
-      //             device_id: this.SystemInfo.deviceId,
-      //             invite_code: this.inviteCode,
-      //             channel_id:1,
-      //         }).then(res => {
-      //           if (res.code) {
-      //         uni.$u.toast(res.message);
-      //          } else {
-      //             uni.setStorageSync("aToken", res.accessToken)
-      //             uni.setStorageSync("rToken", res.refreshToken)
-      //             that.$store.commit('updateInfo', res)
-      //             that.backtrack()
-      //     }
-      //         })
-      // }else{
-      //     if(this.isMTVLogin){
-      //        post("v1/user/login", {
-      //             phone_num: '13888888888',
-      //             type: 0,
-      //             code: '260106',
-      //             login_platform: 0,
-      //             device_id: this.SystemInfo.deviceId,
-      //             invite_code: this.inviteCode,
-      //             channel_id:1,
-      //         }).then(res => {
-      //           if (res.code) {
-      //         uni.$u.toast(res.message);
-      //          } else {
-      //             uni.setStorageSync("aToken", res.accessToken)
-      //             uni.setStorageSync("rToken", res.refreshToken)
-      //             that.$store.commit('updateInfo', res)
-      //             that.backtrack()
-      //     }
-      //         })
-      //     }else{
-      //         this.backtrack()
-      //     }
-      // }
-    },
     backtrack() {
       let routes = uni.$u.pages();
       let rout = uni.$u.deepClone(routes).reverse();

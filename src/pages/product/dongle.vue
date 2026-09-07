@@ -472,14 +472,20 @@ this.shareTo=false
           this.loadDetail();
         },
      toShare(){
-            if(window.mgtv){
-                let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
-                mgtv.showShareMenu({
-                    title:"炸弹赏 : " + this.gachainfo.themeName,
-                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
-                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("gachaName=ddl&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
-                })
-            }
+             let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+            let url = shareUrl+"&gachaName=ddl&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+'&channel='+channel
+
+            MgtvApi.showShareMenus(
+            {
+            title: "炸弹赏", // 分享标题
+            desc: this.gachainfo.themeName, // 分享描述
+            shareUrl: url, // 分享链接
+            shareIcon: "https://img.shinemang.com/static/rednote/shareImg.jpg",
+            },
+            (resp) => { },
+        );
+           MgtvApi.showShare();
+
         },
         ...mapMutations(["UppayMessage"]),
         async saveFile() {
