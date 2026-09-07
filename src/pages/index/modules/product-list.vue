@@ -303,6 +303,7 @@ export default {
                     type: 2,
                 };
                 post(url, da).then((res) => {
+                    if(res.code) return;
                     const Arr = res.config.reduce((acc, item) => {
                         if (
                             item.itemList.length &&

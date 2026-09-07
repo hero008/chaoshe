@@ -246,6 +246,7 @@ export default {
                     // console.log(p,this.pageda.page,'ksfhskd');
              if (p >= this.pageda.page) {
                     post(url, da).then((res) => {
+                        if(res.code) return;
                         if (p < this.pageda.page  || this.pageda.page == 1) {
                             this.evenList = [];
                             this.oddList = [];
