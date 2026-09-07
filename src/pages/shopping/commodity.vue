@@ -411,6 +411,9 @@
         </div>
       </div>
     </u-popup>
+
+    <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
+
   </view>
 </template>
 <script>
@@ -418,9 +421,11 @@ let that;
 import xBtn from "@/components/modules/x-btn";
 import { post } from "@/utils/api.js";
 import remark from "./remark.vue";
-import { timesAmount } from "../../utils/mgtv.js";
+import { timesAmount,isProd } from "../../utils/mgtv.js";
 import { mapState, mapActions } from "vuex";
 import { callPayment } from "@/utils/pay.js";
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
+
 import color from "uview-ui/libs/config/color.js";
 export default {
   //  id: configId,
@@ -453,7 +458,7 @@ export default {
       selectId: undefined,
       amount: 0, // 支付总额
       pays:
-        process.env.NODE_ENV === "development"
+       !isProd
           ? [
               {
                 name: "金币余额",
@@ -517,7 +522,8 @@ export default {
 
       myPrice: 0,
       exchangeConfirmModal: false,
-      paySearchMessage:''
+      paySearchMessage:'',
+      payMessage:''
     };
   },
   watch: {
@@ -543,6 +549,7 @@ export default {
   components: {
     xBtn,
     remark,
+    surePayModal
   },
   computed: {
     ...mapState(["userInfo"]),
@@ -564,8 +571,36 @@ export default {
 
     this.loadAddrList();
     this.getMessage();
+
+      if(this.payMessage){
+          this.$refs.surePayModal.open()
+        }
   },
   methods: {
+    surePaySuccess(val){
+           post('v1/pay/payment/status',{
+             id:this.payMessage.payId
+           }).then((res)=>{
+            if(!code){
+              if(res.status == 4){
+                uni.showToast({
+                  title:'商品购买成功！可前往我的订单中查看',
+                  icon:'none'
+                })
+              }else{
+                if(val){
+                   uni.showToast({
+                  title:'暂未查到支付信息,请稍后再试',
+                  icon:'none'
+                })
+                }
+                 
+              }
+            }else{
+              uni.$u.toast(res.message);
+            }
+           })
+     },
     onClickExchange() {
       let that = this;
 
@@ -747,7 +782,7 @@ export default {
         data = {
           ...data,
           create_payment_request: {
-            platform_id:that.paytypeList.includes(1)?7:7,  //1 支付宝
+            platform_id:that.paytypeList.includes(1)?7:8,  //1 支付宝
             amount: this.floatingPoint(that.amount, "-", allNum),
             device_id: "",
             source_type: 100004,
@@ -761,22 +796,24 @@ export default {
       let orderInfo = res.orderInfo;
       if (!res.code) {
         if (res.res && res.res.createPaymentReply) {
-          if (window.mgtv) {
-            mgtv.requestPaymentGameItem({
-              signData: res.res.createPaymentReply.signData,
-              sign: res.res.createPaymentReply.sign,
-              timestamp: Number(res.res.createPaymentReply.timestamp),
-              success: (eq) => {
-                uni.$u.toast("商品购买成功！可前往我的订单中查看");
-                this.showBuyGoodsModal = false;
-                this.onGet();
-                  this.getMessage()
-                // this.asyncUpBalance();
+           this.showBuyGoodsModal = false;
+           window.location.href=  res.res.createPaymentReply.payUrl
+          // if (window.mgtv) {
+          //   mgtv.requestPaymentGameItem({
+          //     signData: res.res.createPaymentReply.signData,
+          //     sign: res.res.createPaymentReply.sign,
+          //     timestamp: Number(res.res.createPaymentReply.timestamp),
+          //     success: (eq) => {
+          //       uni.$u.toast("商品购买成功！可前往我的订单中查看");
+          //       this.showBuyGoodsModal = false;
+          //       this.onGet();
+          //         this.getMessage()
+          //       // this.asyncUpBalance();
                 
-              },
-              fail: (err) => {},
-            });
-          }
+          //     },
+          //     fail: (err) => {},
+          //   });
+          // }
         } else {
           uni.$u.toast("商品购买成功！可前往我的订单中查看");
           this.showBuyGoodsModal = false;

@@ -138,8 +138,8 @@ export default {
         if (this.$refs.shangGui && inx == 3) this.$refs.shangGui.loadDetail(1);//刷新对应的界面
     },
     methods: {
-        test(){
- const randomMsg = this.messages[Math.floor(Math.random() * this.messages.length)];
+      test(){
+      const randomMsg = this.messages[Math.floor(Math.random() * this.messages.length)];
       const randomColor = this.colors[Math.floor(Math.random() * this.colors.length)];
       const randomSize = 16 + Math.floor(Math.random() * 10);
       

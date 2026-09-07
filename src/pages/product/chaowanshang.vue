@@ -503,14 +503,13 @@ export default {
     onShow() {
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
+        if(this.payMessage){
+            this.$refs.surePayModal.open()
+        }
     },
     methods: {
         surePaySuccess(val){
-            if(val){
-                //点击已支付
-            }else{
-
-            }
+            this.onClickPrize(this.payMessage.payId,true,val);
         },
         openLordPopup() {
             this.$refs.feudalLord.open(this.gachaId)
@@ -844,21 +843,33 @@ export default {
                 // this.chaoPlay(this.previewType);
                 return;
             } else {
-                this.onClickPrize(res.res.createPaymentReply.payId, true);
+                this.payMessage = {
+                    payId:res.res.createPaymentReply.payId
+                }
+                // this.onClickPrize(res.res.createPaymentReply.payId, true);
             }
         },
-        onClickPrize(payId, showAnim) {
+        onClickPrize(payId, showAnim,val) {
             const that = this;
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
+                this.payMessage = ''
                 if (!res.code) {
-                    if (!Array.isArray(res.awards)) return
+                    if (!Array.isArray(res.awards)){
+                         return
+                    }
                      if(res.awards && res.awards.length > 0){
                         res.awards = awardsSort(res.awards);
-                    //   res.awards.sort((a,b)=>b.levelIndex - a.levelIndex)
                       res.awards[0].requestId = res.requestId
-                // res.awards[]
+                      that.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
+                  }else{
+                    if(val){
+                        uni.showToast({
+                        title: '暂无查询到支付记录,请稍后再试',
+                        icon: 'none',
+                     })
+                    }
                   }
-                    that.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
+                 
                     // that.loadDetail();
                     // that.chaoPlay(that.previewType);
                 } else uni.$u.toast(res.message);

@@ -2,7 +2,7 @@
 <script>
 import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
-import { isMTVapp,isHonery, mgTvIsLogin,parseQueryString,shareUrl } from "./utils/mgtv.js";
+import { isMTVapp,isHonery, mgTvIsLogin,parseQueryString,shareUrl,isProd } from "./utils/mgtv.js";
 import store from "./store";
 import {goto} from "./utils/fun";
 
@@ -182,7 +182,7 @@ export default {
       uni.setStorageSync('hideHeader', 1);
     }
    
-         if(window.MgtvApi){
+     if(window.MgtvApi){
             const params = new URLSearchParams(window.location.search);
              if( params && params.get("channel")){
                  uni.setStorageSync('channel',params.get("channel"))
@@ -208,13 +208,34 @@ export default {
              })
        
      }
-  
-  
-          uni.setStorageSync("currentChange", 0);
-         
-  
-        
 
+     if(!isMTVapp()){
+        if(isProd){
+            let url = shareUrl;
+            let gachaName =  uni.getStorageSync('gachaName') || '';
+            let gachaId =   uni.getStorageSync('gachaId') || '';
+             let channel = uni.getStorageSync('channel') || '';
+               let inviteCode = this.inviteCode;
+             if(inviteCode){
+              url= url+'&inviteCode='+inviteCode
+             }
+             if(channel){
+              url= url+'&channel='+channel
+             }
+             if(gachaName && gachaId){
+               url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+             }
+           window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+          `imgotv://webview?url=${encodeURIComponent(url)}`,
+          )}`;
+        }
+        return;
+       
+     }
+     uni.setStorageSync("currentChange", 0);
+  
+  
+    
 
         // #ifdef APP-PLUS
         let that = this;

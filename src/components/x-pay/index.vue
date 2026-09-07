@@ -965,7 +965,7 @@ export default {
             {
               ...this.payMessage.message,
               create_payment_request: {
-                platform_id: this.paytypeList.includes(1)?7:7, // 微信7 支付宝8
+                platform_id: this.paytypeList.includes(1)?7:8, 
                 amount:
                   (this.paytypeList.includes(3) ? this.amount : allNum) + "",
                 device_id: this.device_id,
@@ -979,29 +979,26 @@ export default {
             },
             click_type,
           );
-          orderInfo = res.orderInfo;
-          // 在这里应该拿到 url.
-          // 这里需要调支付,有问题.
-          console.log(
-            res.res.createPaymentReply.signData,
-            res.res.createPaymentReply.sign,
-            Number(res.res.createPaymentReply.timestamp),
-          );
-          if (window.mgtv) {
-            mgtv.requestPaymentGameItem({
-              signData: res.res.createPaymentReply.signData,
-              sign: res.res.createPaymentReply.sign,
-              timestamp: Number(res.res.createPaymentReply.timestamp),
-              success: (eq) => {
-                // console.log(res,'成功')
-                that.$emit("success", res, that.showAnimation, click_type);
-                that.close();
-              },
-              fail: (err) => {
-                that.close();
-              },
-            });
-          }
+
+           that.close();
+           window.location.href =  res.res.createPaymentReply.payUrl
+           that.$emit("success", res, that.showAnimation, click_type);
+    
+          // if (window.mgtv) {
+          //   mgtv.requestPaymentGameItem({
+          //     signData: res.res.createPaymentReply.signData,
+          //     sign: res.res.createPaymentReply.sign,
+          //     timestamp: Number(res.res.createPaymentReply.timestamp),
+          //     success: (eq) => {
+          //       // console.log(res,'成功')
+              
+          //       that.close();
+          //     },
+          //     fail: (err) => {
+          //       that.close();
+          //     },
+          //   });
+          // }
           // uni.requestPayment({
           //     provider: this.paytypeList.includes(3) ? "wxpay" : "alipay",
           //     // #ifndef MP-WEIXIN

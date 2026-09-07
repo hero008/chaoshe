@@ -21,7 +21,6 @@ import { post } from "@/utils/api.js";
 import { isMTVapp,shareUrl,isProd } from "../../utils/mgtv";
 import {  mapActions } from "vuex";
 
-import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 let that;
 export default {
   data() {
