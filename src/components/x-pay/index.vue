@@ -404,7 +404,7 @@ export default {
         //     show: false,
         //     msg: "微信APP支付",
         // },  // 是否金币和潮币支付
-        {
+          {
           name: "余额",
           type: 0,
           img: "chao",
@@ -416,6 +416,18 @@ export default {
           number: 0,
           payType: 1,
         },
+          {
+            name: "微信支付",
+            type: 2,
+            img: "WeChat",
+            show: true,
+            msg: "微信APP支付",
+            consume: 0,
+          // number: this.$gl("userInfo").coin,
+            number: 0,
+            payType: 1,
+        },  // 是否金币和潮币支付
+      
         // {
         //     name: "金币余额",
         //     type: 4,
@@ -815,13 +827,13 @@ export default {
 
       // 是否支付宝支付1 其它支付0
       // #小程序不需要ifndef MP-WEIXIN
-      this.paytype = this.paytypeList.includes(1) ? 1 : 0;
+          this.paytype = this.paytypeList.includes(1) || this.paytypeList.includes(2) ? 1 : 0;
       // #endif
       // #ifdef MP-WEIXIN
       // this.paytype = 1;
       // #endif
       // 金币支付3 潮币支付1 支付宝支付3 支付宝金币合并支付3
-      this.type_Coin = this.paytypeList.includes(0) ? 1 : 3;
+      this.type_Coin = this.paytypeList.includes(0) ? 1 : 3;    
       let goldNum = 0; // 金币勾选
       let allNum = 0; // 支付宝勾选
       this.pays.map((i) => {

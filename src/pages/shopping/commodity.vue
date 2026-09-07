@@ -474,11 +474,27 @@ export default {
                 msg: "芒果支付",
                 consume: 0,
               },
+               {
+                name: "芒果支付",
+                type: 2,
+                img: "xjzf",
+                show: true,
+                msg: "芒果支付",
+                consume: 0,
+              },
             ]
           : [
               {
                 name: "芒果支付",
                 type: 1,
+                img: "xjzf",
+                show: true,
+                msg: "芒果支付",
+                consume: 0,
+              },
+               {
+                name: "芒果支付",
+                type: 2,
                 img: "xjzf",
                 show: true,
                 msg: "芒果支付",
