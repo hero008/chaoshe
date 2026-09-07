@@ -446,6 +446,10 @@ export default {
         this.preloadPitchOn();
         this.initMatchAudio();
     },
+
+    beforeDestroy(){
+
+    },
     onUnload() {
         // 页面卸载时停止托管，清理定时器
         this.stopAuto(false);
