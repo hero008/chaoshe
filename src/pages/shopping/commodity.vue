@@ -542,7 +542,7 @@ export default {
     that = this;
   },
   onShow() {
-    const data = JSON.parse(uni.getStorageSync("returnData"));
+    const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")) : '';
     this.address_id = data;
     console.log(this.address_id,'324234234')
     this.loadAddrList();
