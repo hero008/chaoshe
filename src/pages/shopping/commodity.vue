@@ -467,37 +467,37 @@ export default {
                 payType: 3,
               },
               {
-                name: "芒果支付",
+                name: "支付宝支付",
                 type: 1,
-                img: "xjzf",
+                img: "Ali",
                 show: true,
-                msg: "芒果支付",
+                msg: "支付宝支付",
                 consume: 0,
               },
                {
-                name: "芒果支付",
+                name: "微信支付",
                 type: 2,
-                img: "xjzf",
+                img: "WeChat",
                 show: true,
-                msg: "芒果支付",
+                msg: "微信支付",
                 consume: 0,
               },
             ]
           : [
-              {
-                name: "芒果支付",
+             {
+                name: "支付宝支付",
                 type: 1,
-                img: "xjzf",
+                img: "Ali",
                 show: true,
-                msg: "芒果支付",
+                msg: "支付宝支付",
                 consume: 0,
               },
                {
-                name: "芒果支付",
+                name: "微信支付",
                 type: 2,
-                img: "xjzf",
+                img: "WeChat",
                 show: true,
-                msg: "芒果支付",
+                msg: "微信支付",
                 consume: 0,
               },
             ],
@@ -517,6 +517,7 @@ export default {
 
       myPrice: 0,
       exchangeConfirmModal: false,
+      paySearchMessage:''
     };
   },
   watch: {
@@ -558,9 +559,9 @@ export default {
     that = this;
   },
   onShow() {
-    const data = JSON.parse(uni.getStorageSync("returnData"));
+    const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")):'';
     this.address_id = data;
-    console.log(this.address_id,'324234234')
+
     this.loadAddrList();
     this.getMessage();
   },
@@ -718,9 +719,11 @@ export default {
         this.number = 1;
         return;
       }
+
+      console.log(this.paytypeList,'that.paytypeList');
       let that = this;
       let type =
-        that.paytypeList.includes(1) || that.paytypeList.includes(3) ? 1 : 0;
+        that.paytypeList.includes(1) || that.paytypeList.includes(2) ? 1 : 0;
       let data = {
         config_id: that.configId,
         address_id: that.selectAddr.id, // 收货地址ID
@@ -736,7 +739,7 @@ export default {
         let a = that.gold == 0 ? "您的金币不足！" : "您的金币不足！";
         uni.$u.toast(a);
         return;
-      } else if (that.paytypeList.includes(1) || that.paytypeList.includes(3)) {
+      } else if (that.paytypeList.includes(1) || that.paytypeList.includes(2)) {
         let allNum = 0;
         this.pays.map((i) => {
           if (i.type == 4) allNum = i.consume;
@@ -744,7 +747,7 @@ export default {
         data = {
           ...data,
           create_payment_request: {
-            platform_id: 6,
+            platform_id:that.paytypeList.includes(1)?7:7,  //1 支付宝
             amount: this.floatingPoint(that.amount, "-", allNum),
             device_id: "",
             source_type: 100004,

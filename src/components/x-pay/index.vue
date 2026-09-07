@@ -417,11 +417,21 @@ export default {
           payType: 1,
         },
           {
+          name: "支付宝支付",
+          type: 1,
+          img: "Ali",
+          show: true,
+          msg: "支付宝支付",
+          randomShow: true,
+          consume: 0,
+          payType: 0,
+        },
+          {
             name: "微信支付",
             type: 2,
             img: "WeChat",
             show: true,
-            msg: "微信APP支付",
+            msg: "微信支付",
             consume: 0,
           // number: this.$gl("userInfo").coin,
             number: 0,
@@ -440,16 +450,7 @@ export default {
         //     number: 0,
         //     payType: 3,
         // },
-        {
-          name: "芒果支付",
-          type: 1,
-          img: "xjzf",
-          show: true,
-          msg: "芒果支付",
-          randomShow: true,
-          consume: 0,
-          payType: 0,
-        },
+      
         // #endif
       ],
       payss: [
@@ -964,7 +965,7 @@ export default {
             {
               ...this.payMessage.message,
               create_payment_request: {
-                platform_id: 6,
+                platform_id: this.paytypeList.includes(1)?7:7, // 微信7 支付宝8
                 amount:
                   (this.paytypeList.includes(3) ? this.amount : allNum) + "",
                 device_id: this.device_id,

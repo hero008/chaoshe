@@ -52,25 +52,26 @@ export default {
      ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
       if (!isMTVapp()) {
-        let url = shareUrl;
-          const params = new URLSearchParams(window.location.search);
-         let gachaName = params && params.get("gachaName")|| '';
-            let gachaId =  params && params.get("gachaId") || '';
-             let channel = params && params.get("channel") || '';
-               let inviteCode = params && params.get("inviteCode") || '';
-             if(inviteCode){
-              url= url+'&inviteCode='+inviteCode
-             }
-             if(channel){
-              url= url+'&channel='+channel
-             }
-             if(gachaName && gachaId){
-               url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
-             }
-           window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
-          `imgotv://webview?url=${encodeURIComponent(url)}`,
-        )}`;
-        return;
+        this.webLogin()
+        // let url = shareUrl;
+        //   const params = new URLSearchParams(window.location.search);
+        //  let gachaName = params && params.get("gachaName")|| '';
+        //     let gachaId =  params && params.get("gachaId") || '';
+        //      let channel = params && params.get("channel") || '';
+        //        let inviteCode = params && params.get("inviteCode") || '';
+        //      if(inviteCode){
+        //       url= url+'&inviteCode='+inviteCode
+        //      }
+        //      if(channel){
+        //       url= url+'&channel='+channel
+        //      }
+        //      if(gachaName && gachaId){
+        //        url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+        //      }
+        //    window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+        //   `imgotv://webview?url=${encodeURIComponent(url)}`,
+        // )}`;
+        // return;
       }
 
       if (window.MgtvApi) {
@@ -140,7 +141,7 @@ export default {
 // 19999999995
     webLogin(){
         post("v1/user/login", {
-                phone_num: "19999999998",
+                phone_num: "19999999996",
                 type: 0,
                 code: "260106",
                 login_platform: 0,
