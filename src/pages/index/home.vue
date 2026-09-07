@@ -670,7 +670,7 @@ export default {
       let w = this.SystemInfo.windowWidth;
       let va = this.MBInfo().width;
       let str = w - va - 32 + "px";
-      return va > 0 ? str : "500rpx";
+      return va > 0 ? str : "686rpx";
     },
   },
 };

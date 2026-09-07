@@ -272,6 +272,7 @@ export default {
                 }
                 if (p >= this.pageda.page) {
                     post(url, da).then((res) => {
+                        if(res.code) return;
                         if (this.pageda.page == 1) {
                             this.evenList = [];
                             this.oddList = [];
