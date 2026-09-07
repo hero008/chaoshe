@@ -51,15 +51,22 @@ import highPrecision from "@/utils/highPrecision";
 Vue.prototype.$h = highPrecision;
 // 返回上一级页面
 Vue.prototype.gateBack = (url) => {
+	console.log('3242342342311')
 	let routes = getCurrentPages();
+	console.log(routes.length)
 	if (routes.length > 1) {
 		uni.navigateBack({
 			delta: 1,
-			fail() {
+			success(res){
+               console.log(res);
+			}, 
+			fail(err) {
+				console.log(err)
 				goto('/pages/index/index')
 			}
 		})
 	} else {
+		console.log('32423423423')
 		uni.reLaunch({
 			url: '/pages/index/index'
 		});

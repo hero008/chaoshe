@@ -467,7 +467,8 @@ export default {
             recordLevelName:'',
             newRecordList:'',
    
-            lordActivity:0
+            lordActivity:0,
+            payMessage:''
             
 
 

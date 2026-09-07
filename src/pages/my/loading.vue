@@ -52,7 +52,7 @@ export default {
      ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
       if (!isMTVapp()) {
-        if(isProd){
+        if(!isProd){
          let url = shareUrl;
             let gachaName =  uni.getStorageSync('gachaName') || '';
             let gachaId =   uni.getStorageSync('gachaId') || '';

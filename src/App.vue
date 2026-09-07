@@ -2,7 +2,7 @@
 <script>
 import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
-import { isMTVapp,isHonery, mgTvIsLogin,parseQueryString } from "./utils/mgtv.js";
+import { isMTVapp,isHonery, mgTvIsLogin,parseQueryString,shareUrl } from "./utils/mgtv.js";
 import store from "./store";
 import {goto} from "./utils/fun";
 
@@ -196,6 +196,7 @@ export default {
                if( params && params.get("gachaId")){
                  uni.setStorageSync('gachaId',params.get("gachaId"))
              }
+           
 
              mgTvIsLogin().then(res=>{
                 if(!res){

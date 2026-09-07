@@ -959,6 +959,7 @@ export default {
         goBack() {
             uni.setStorageSync('lotteryMode', '')
             let routes = getCurrentPages();
+            console.log(routes.length)
             if (routes.length > 1) {
                 uni.navigateBack({
                     delta: 1,
