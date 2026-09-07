@@ -99,8 +99,15 @@
 			}
 		},
 		{
+			"path": "pages/product/exchangeRecords",
+			"style": { 
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/product/rewardResult",
-			"style": { //"navigationStyle": "custom"
+			"style": { 
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -111,6 +118,12 @@
 		},
 		{
 			"path": "pages/product/shanggui",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shopping/index",
 			"style": {
 				"navigationStyle": "custom"
 			}

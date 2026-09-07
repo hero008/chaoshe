@@ -1,7 +1,7 @@
 <template>
     <view class="header" :style="{ paddingTop: MBInfo().top + 'px' }" >
         <view  :style="{ height: MBInfo().height + 'px' }" >
-            <view class="top_Back" @click.stop="gateBack()" :style="{color:tcolor}">
+            <view class="top_Back" @click.stop="gateBack" :style="{color:tcolor}">
                 <text :style="{
                     color:whiteBack ? '#fff':'#1c1c1c'
                 }" class="icof Back_ico">&#xe72c;</text>

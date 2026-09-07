@@ -272,7 +272,7 @@ export default {
                 uni.request({
                     url: "https://img.chaoshewang.com/download/app.version",
                     success: (res) => {
-                        let newVer = Number(res.data.replace(/\./g, ""));
+                        let newVer = Number(res.data.replace(/\./g, "")); // 当前
                         let toVer = that.appversion.replace(/[.]/g, ""); //获取的是上一个包的版本号
                         if (["android", "ios"].includes(osname)) {
                             if (newVer > Number(toVer)) {
@@ -282,7 +282,7 @@ export default {
                                 //         : "https://img.chaoshewang.com/download_channel/chaoshe.wgt";
                                 // let firstTime = uni.getStorageSync('firstTime')
                                 // console.log(firstTime,'是否更新过');|| !firstTime
-                                if (newVer > Number(popupVersion) ) {
+                                if (newVer > Number(popupVersion) ) { 
                                     // uni.setStorageSync("firstTime", true)
                                     uni.downloadFile({
                                         url: "https://img.chaoshewang.com/download/chaoshe.wgt",

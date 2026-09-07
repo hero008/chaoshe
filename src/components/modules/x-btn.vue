@@ -32,22 +32,23 @@ export default {
     width: 246rpx;
     height: 82rpx;
     border-radius: 40rpx;
-    background: rgba(80, 80, 80, 0.25);
-    box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(80, 80, 80, 0.2);
+     background: linear-gradient(90deg, #31e597 0%, #40e0ea 100%);
+    // background: rgba(80, 80, 80, 0.25);
+    // box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(80, 80, 80, 0.2);
 
     &.cor1 {
-        background: rgba(124, 243, 105, 0.4);
-        box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(124, 243, 105, 0.2);
+        // background: rgba(124, 243, 105, 0.4);
+        // box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(124, 243, 105, 0.2);
     }
 
     &.cor2 {
-        background: rgba(255, 190, 116, 0.4);
-        box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(255, 190, 116, 0.2);
+        // background: rgba(255, 190, 116, 0.4);
+        // box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(255, 190, 116, 0.2);
     }
 
     &.cor3 {
-        background: rgba(145, 129, 229, 0.4);
-        box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(145, 129, 229, 0.2);
+        // background: rgba(145, 129, 229, 0.4);
+        // box-shadow: 0rpx 4rpx 10rpx 4rpx rgba(145, 129, 229, 0.2);
     }
 
     .btn-bor {
@@ -60,26 +61,27 @@ export default {
         border-radius: 40rpx;
         font-size: 28rpx;
         font-weight: bold;
-        background: linear-gradient(180deg, #FFF0DE 0%, #EFEFEF 0%, #D3D3D3 100%);
-        box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
+         color: #1a1a1a;
+        // background: linear-gradient(180deg, #FFF0DE 0%, #EFEFEF 0%, #D3D3D3 100%);
+        // box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
 
         &.bcor {
-            color: #343434;
+           
         }
 
         &.bcor1 {
-            background: linear-gradient(180deg, #4FEF5F 0%, #1BAB04 100%);
-            box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
+            // background: linear-gradient(180deg, #4FEF5F 0%, #1BAB04 100%);
+            // box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
         }
 
         &.bcor2 {
-            background: linear-gradient(180deg, #D9D9D9 0%, #FFBE74 0%, #FE922C 100%);
-            box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
+            // background: linear-gradient(180deg, #D9D9D9 0%, #FFBE74 0%, #FE922C 100%);
+            // box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
         }
 
         &.bcor3 {
-            background: linear-gradient(180deg, #9181E5 0%, #5A45C8 100%);
-            box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
+            // background: linear-gradient(180deg, #9181E5 0%, #5A45C8 100%);
+            // box-shadow: inset 0rpx 4rpx 4rpx 0rpx rgba(255, 255, 255, 0.25);
         }
     }
 }

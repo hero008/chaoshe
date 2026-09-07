@@ -24,9 +24,9 @@
                 </div>
             </div> -->
             <view class="tabs_two flex_r">
-                <view class="tab_item" :class="{active:i==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
-                    <text>{{i}}</text>
-                    <view v-if="i==active" class="line"></view>
+                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i.name}}</text>
+                    <view v-if="i.type==active" class="line"></view>
                 </view>
             </view>
             <div class="bill_log">
@@ -64,7 +64,7 @@
                             </view>
 
                              <view class="itb flex_jb flex_r">
-                                <view v-if="active == '转赠记录'" class="itb2">转赠给({{
+                                <view v-if="active ==0" class="itb2">转赠给({{
                                    item.targetUserId
                                 }})</view>
                                   <view v-else class="itb2">({{
@@ -73,7 +73,7 @@
                                 <view class="itb1">{{ item.decomposeXPoint }}星币</view>
                             </view>
                               <view class="itb flex_jb flex_r">
-                                <view v-if="active == '转赠记录'" class="itb1">转赠时间</view>
+                                <view v-if="active == 0" class="itb1">转赠时间</view>
                                   <view v-else class="itb1">获赠时间</view>
                                 <view class="itb1">{{ item.createdAt }}</view>
                             </view>
@@ -110,8 +110,14 @@ import {groupByItemName1} from '../../utils/mgtv';
 export default {
     data() {
         return {
-              navbar: [ "转赠记录","获赠记录",],
-            active: "转赠记录",
+              navbar: [ {
+                name:"转赠记录",
+                type:0
+              },{
+                name:"获赠记录",
+                type:1
+              },],
+            active: 0,
             balance: 0,
             pageda: {
                 page: 1,
@@ -165,7 +171,7 @@ export default {
         },
        ontab2(i, s) {
             this.transactionList = [];
-            this.active = i;
+            this.active = i.type;
             this.pageda.page = 1;
             this.getTransaction();
         },
@@ -182,8 +188,7 @@ export default {
         getTransaction() {
             this.balance = this.userInfo.gold;
             post("v1/cabinet/donation/record/list", {
-                mode:this.active == '转赠记录' ? 1:2, 
-            
+                mode:this.active == 0 ? 1:2, 
                 ...this.pageda,
             }).then((res) => {
                 if (this.pageda.page == 1) this.transactionList = [];

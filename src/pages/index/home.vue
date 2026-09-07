@@ -246,8 +246,15 @@ export default {
         {
           url: "https://img.shinemang.com/gachaStatic/wxs.png",
         },
+         {
+          url: "https://img.shinemang.com/gachaStatic/ddp.png",
+        },
         {
           url: "https://img.shinemang.com/gachaStatic/ddl.png",
+        },
+        
+         {
+          url: "https://img.shinemang.com/gachaStatic/sc.png",
         },
         {
           url: "https://img.shinemang.com/gachaStatic/jjzx.png",
@@ -276,14 +283,15 @@ export default {
           name: "无限赏",
           type: 3,
         },
+         {
+          name: "对对碰",
+          type: 7,
+        },
         {
           name: "炸弹赏",
           type: 4,
         },
-        {
-          name: "对对碰",
-          type: 7,
-        },
+       
       ],
       // navbar: [
       //     {
@@ -360,8 +368,13 @@ export default {
       } else if (index == 1) {
         this.ontab({ index: 2, type: 3, mode: "top" });
       } else if (index == 2) {
-        this.ontab({ index: 3, type: 4, mode: "top" });
-      } else {
+        this.ontab({ index: 3, type: 7, mode: "top" });
+      } else if(index == 3){
+         this.ontab({ index: 4, type: 4, mode: "top" });
+        
+      } else if(index == 4){
+        this.goto("/pages/shopping/index");
+      }else{
         this.goto("/page-a/luck/index");
       }
     },
@@ -375,6 +388,7 @@ export default {
       this.data = data;
     },
     ontab(item) {
+      console.log(item)
       if (item.mode == "top") {
         this.scrollTop = this.scrollTop1;
         this.$nextTick(() => {
@@ -881,7 +895,7 @@ export default {
 }
 
 .tab {
-  display: flex;
+ // display: flex;
   z-index: 1;
   ::v-deep .u-tabs__wrapper__nav__line {
     bottom: 15px !important;

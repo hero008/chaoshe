@@ -1,7 +1,7 @@
 <template>
-    <u-overlay :show="visible">
+    <u-overlay @click="onclose('')" zIndex="11000" :show="visible">
         <view class="warp flex_wrap">
-            <img class="close_btn" src="https://img.shinemang.com/gachaStatic/static/img/transaction/close.png" @click="onclose('')" />
+            <img class="close_btn" src="@/static/close.png" @click="onclose('')" />
             <view class="header">备注</view>
             <textarea
                 placeholder="请输入备注(最大长度50字)"
@@ -39,7 +39,7 @@ export default {
 <style lang='scss' scoped>
 
 .warp {
-    height: 1000rpx;
+    height: 600rpx;
     width: 750rpx;
     position: absolute;
     background: #f4f4f4;
@@ -57,7 +57,7 @@ export default {
     .header {
         font-weight: bold;
         font-size: 32rpx;
-        color: #383228;
+        color: #1a1a1a;
     }
     .textarea {
         margin-top: 20rpx;
@@ -68,19 +68,20 @@ export default {
         border-radius: 16rpx 16rpx 16rpx 16rpx;
 
         font-weight: 500;
+        color: #1a1a1a;
         font-size: 28rpx;
     }
 
     .btn {
         width: 686rpx;
-        height: 100rpx;
-        line-height: 100rpx;
+        height: 80rpx;
+        line-height: 80rpx;
         text-align: center;
-        background: #715cdd;
-        border-radius: 16rpx 16rpx 16rpx 16rpx;
+        background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+        border-radius: 40rpx;
         font-weight: 500;
-        color: #ffffff;
-        margin-top:460rpx;
+        color: #1a1a1a;
+        margin-top:160rpx;
     }
 }
 </style>

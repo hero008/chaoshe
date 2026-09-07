@@ -17,7 +17,7 @@
                     /><text>分享</text>
         </view> 
         <DanmakuSimple :data="danmuList" :top="MBInfo().top +48" ></DanmakuSimple>
-        <scroll-view :style="{ height: conHeight, }" scroll-y="true" @scroll="onScroll">
+        <scroll-view :style="{ height: conHeight }" scroll-y="true" @scroll="onScroll">
             <view class="chaowanshang_con">
                 <view class="gashapon_machine_box">
                     <view class="gashapon_machine">
@@ -899,7 +899,7 @@ export default {
             }
         },
         goChaoGui() {
-            uni.setStorageSync("currentChange", 3);
+            uni.setStorageSync("currentChange", 2);
             uni.reLaunch({
                 url: "/pages/index/index",
             });

@@ -54,6 +54,7 @@ export default {
   },
   // computed: { ...mapState(["isMTVLogin"]) },
   methods: {
+     ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
       if (!isMTVapp()) {
         let url = shareUrl;
@@ -106,6 +107,7 @@ export default {
                   uni.setStorageSync("rToken", res.refreshToken);
                   uni.setStorageSync("uuid", res.uuid);
                   that.$store.commit("updateInfo", res);
+                   that.asyncUpdateInfo()
                   that.backtrack();
                 }
               });

@@ -13,7 +13,9 @@ export default ({ url, method, params, header = {}, baseURL }) => {
                 ...params
             },
             success(res) {
-                resolve(res.data);
+                // if(res.statusCode == 200){
+                    resolve(res.data)
+                // }
             },
             fail(err) {
                 reject(err);

@@ -6,14 +6,14 @@ let goto = (url, json,mgtvIsLogin=true) => {
     if (!url) {
         // uni.$u.toast('该功能暂未开放，敬请期待！');
     }
-    if(!mgtvIsLogin){
-        if(!isMTVapp()){
-           // 跳转到芒果
-        }else{
-            mgTvLogin()
-            return;
-        }
-    }
+    // if(!mgtvIsLogin){
+    //     if(!isMTVapp()){
+    //        // 跳转到芒果
+    //     }else{
+    //         mgTvLogin()
+    //         return;
+    //     }
+    // }
     let params = "";
     if (json) {
         params = [];
@@ -25,6 +25,7 @@ let goto = (url, json,mgtvIsLogin=true) => {
         });
         params = params.join("&")
     }
+    
     uni.navigateTo({ url: url + '?' + params });
 }
 // copy
