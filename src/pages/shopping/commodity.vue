@@ -559,7 +559,7 @@ export default {
     that = this;
   },
   onShow() {
-    const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")):'';
+    const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")) : '';
     this.address_id = data;
 
     this.loadAddrList();
