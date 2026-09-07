@@ -229,8 +229,11 @@
 
                 <view class="item_name ellipsis">{{ item.item.name }}</view>
                 <view class="item_no ellipsis"
-                  >有效期至{{ item.expireTime }}</view
+                  >有效期至
+                   <view>{{ item.expireTime }}</view>
+                  </view
                 >
+
               </view>
             </view>
           </view>
@@ -1078,7 +1081,7 @@ export default {
       height: 300rpx;
     }
     &.exchange {
-      height: 300rpx;
+      height: 324rpx;
       position: relative;
       .count {
         position: absolute;
