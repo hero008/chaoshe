@@ -181,13 +181,7 @@ export default {
       uni.setStorageSync('safeTop', 0);
       uni.setStorageSync('hideHeader', 1);
     }
-
-
-
-
-
-        
-         
+   
          if(window.MgtvApi){
             const params = new URLSearchParams(window.location.search);
              if( params && params.get("channel")){
@@ -204,7 +198,6 @@ export default {
              }
 
              mgTvIsLogin().then(res=>{
-                console.log(res,'login')
                 if(!res){
                 uni.removeStorageSync("aToken");
                 uni.removeStorageSync("rToken");

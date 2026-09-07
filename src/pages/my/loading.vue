@@ -18,7 +18,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
-import { isMTVapp,shareUrl } from "../../utils/mgtv";
+import { isMTVapp,shareUrl,isProd } from "../../utils/mgtv";
 import {  mapActions } from "vuex";
 
 import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
@@ -52,26 +52,27 @@ export default {
      ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
       if (!isMTVapp()) {
-        this.webLogin()
-        // let url = shareUrl;
-        //   const params = new URLSearchParams(window.location.search);
-        //  let gachaName = params && params.get("gachaName")|| '';
-        //     let gachaId =  params && params.get("gachaId") || '';
-        //      let channel = params && params.get("channel") || '';
-        //        let inviteCode = params && params.get("inviteCode") || '';
-        //      if(inviteCode){
-        //       url= url+'&inviteCode='+inviteCode
-        //      }
-        //      if(channel){
-        //       url= url+'&channel='+channel
-        //      }
-        //      if(gachaName && gachaId){
-        //        url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
-        //      }
-        //    window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
-        //   `imgotv://webview?url=${encodeURIComponent(url)}`,
-        // )}`;
-        // return;
+        if(isProd){
+         let url = shareUrl;
+            let gachaName =  uni.getStorageSync('gachaName') || '';
+            let gachaId =   uni.getStorageSync('gachaId') || '';
+             let channel = uni.getStorageSync('channel') || '';
+               let inviteCode = this.inviteCode;
+             if(inviteCode){
+              url= url+'&inviteCode='+inviteCode
+             }
+             if(channel){
+              url= url+'&channel='+channel
+             }
+             if(gachaName && gachaId){
+               url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+             }
+           window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+          `imgotv://webview?url=${encodeURIComponent(url)}`,
+        )}`;
+        }else{
+          this.webLogin()
+        }
       }
 
       if (window.MgtvApi) {

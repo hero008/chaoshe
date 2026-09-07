@@ -376,6 +376,7 @@
 		</u-popup>
         <feudalLord ref="feudalLord" :gachaId="gachaId" />
         <bzModal ref="bzModal" ></bzModal>
+        <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
 
       <gachaDetails ref="gachaDetails" />
     </view>
@@ -398,6 +399,7 @@ import DanmakuSimple from '@/components/danmu/danmu'
 import {awardsSort} from '@/utils/mgtv.js'
 import feudalLord from "@/components/feudalLord/index.vue";
 import bzModal from "@/components/bzModal/bzModal.vue";
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
 export default {
     data() {
         return {
@@ -479,7 +481,8 @@ export default {
         xPrize,
         DanmakuSimple,
         feudalLord,
-        bzModal
+        bzModal,
+        surePayModal
     },
     computed: {
        ...mapState(["userInfo"]),
@@ -501,6 +504,13 @@ export default {
         this.loadDetail();
     },
     methods: {
+        surePaySuccess(val){
+            if(val){
+                //点击已支付
+            }else{
+
+            }
+        },
         openLordPopup() {
             this.$refs.feudalLord.open(this.gachaId)
             return

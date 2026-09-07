@@ -2,7 +2,9 @@ import { post } from "./api";
 import { goto } from "./fun";
 import store from "../store";
 import BigNumber from "bignumber.js";
-export const  shareUrl = 'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
+
+export const isProd = false
+export const  shareUrl = isProd ?'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1':'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
   return /imgo/i.test(window.navigator.userAgent);
 };
@@ -162,11 +164,15 @@ if (isVideo(link)) {
 export const mgTvIsLogin = () => {
    return new Promise((resolve, reject) => {
         MgtvApi.getUserInfo((user_info) => {
-                if (user_info && user_info.length !== 0) {
+            if (user_info && user_info.length !== 0) {
                 const userInfo = JSON.parse(user_info);
                 if (userInfo.ticket && userInfo.uuid) {
-                
-                    resolve(true)
+                   const localUUid = uni.getStorageSync('uuid')
+                   if(localUUid && localUUid == userInfo.uuid){
+                     resolve(true)
+                   }else{
+                    resolve(false)
+                   }
                 } else {
                     resolve(false)
                 }
