@@ -1,6 +1,6 @@
 <template>
     <!-- 领主接力弹窗（公共组件）：样式与交互与 duiduipeng.vue 保持一致 -->
-    <u-popup mode="center" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
+    <u-popup mode="center" :safeAreaInsetBottom="false" bgColor="transparent" round="16" @close="showBzcPopup = false" :show="showBzcPopup">
           <view class="BzcList">
             <view @click=" goto('/pages/common/rulepop', { val: 'TreasureChest' })" class="rules"></view>
             <scroll-view class="scrollView" scroll-y>

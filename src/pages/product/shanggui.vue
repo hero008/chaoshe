@@ -310,6 +310,7 @@
       :closeable="true"
       round="20"
       bgColor="#fff"
+      :safeAreaInsetBottom="false"
     >
       <div class="send_con">
         <div class="title">确认将一下商品转赠?</div>
@@ -342,6 +343,7 @@
       round="16"
       @close="showBzcPopup = false"
       :show="showBzcPopup"
+      :safeAreaInsetBottom="false"
     >
       <view class="BzcList">
         <view class="rules"></view>
@@ -380,6 +382,7 @@
       @close="confirmExchangeModal = false"
       round="20"
       bgColor="#fff"
+      :safeAreaInsetBottom="false"
     >
       <div v-if="confirmExchangeDetail" class="confirmSureModal">
         <div class="title">确认兑换?</div>
@@ -399,6 +402,7 @@
       @close="exchangeSucessModal = false"
       round="20"
       bgColor="#fff"
+      :safeAreaInsetBottom="false"
     >
       <div class="confirmSureModal">
         <div v-if="confirmExchangeDetail" class="title">

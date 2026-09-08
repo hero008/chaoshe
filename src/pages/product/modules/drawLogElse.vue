@@ -1,7 +1,7 @@
 <template>
     
    <view>
-      <u-popup round="16" :overlay="true" mode="bottom"  :show="show">
+      <u-popup round="16" :safeAreaInsetBottom="false" :overlay="true" mode="bottom"  :show="show">
         <view class="warp">
             <view class="title">抽赏记录</view>
             <view @click.stop="refresh" class="refresh">

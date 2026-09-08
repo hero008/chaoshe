@@ -573,6 +573,7 @@ export default {
             }
         },
         onClickPrize(payId, showAnim,val=0) {
+            this.payMessage = ''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                    if(res.awards && res.awards.length>0){

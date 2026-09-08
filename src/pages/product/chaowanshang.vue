@@ -310,7 +310,7 @@
             :message="AReward.openMessage" />
         <duoyou @onDuoyouDetail="onDuoyouDetail" ref="duoyou" @onDuoyou="onClickDuoyou" />
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
-        <u-popup round="16" @close="showRecards = false" :show="showRecards">
+        <u-popup round="16" :safeAreaInsetBottom="false" @close="showRecards = false" :show="showRecards">
           <view class="recordList">
              <view class="title">中奖记录</view>
              <view class="tab">
@@ -498,6 +498,7 @@ export default {
     onLoad(da) {
         if (da.gacha_id || da.id) this.gachaId = da.gacha_id || da.id;
         else this.theme_id = da.theme_id
+        
 
     },
     onShow() {

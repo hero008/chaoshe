@@ -1,5 +1,5 @@
 <template>
-  <view class="shoppingBox">
+  <view  class="shoppingBox">
     <text class="icof Back_ico" @click.stop="gateBack">&#xe72c;</text>
     <image :src="goodsInfo.coverImage" class="img" />
     <view class="price">
@@ -117,6 +117,7 @@
     <!-- 订单购买弹框 -->
     <u-popup
       round="16"
+      :safeAreaInsetBottom="false"
       :show="showBuyGoodsModal"
       @close="showBuyGoodsModal = false"
     >
@@ -260,6 +261,7 @@
       round="16"
       :show="showExchangeGoodsModal"
       @close="showExchangeGoodsModal = false"
+        :safeAreaInsetBottom="false"
     >
       <view class="exchangeGoods">
         <div class="title">商品兑换</div>
@@ -395,6 +397,7 @@
       mode="center"
       :show="exchangeConfirmModal"
       @close="exchangeConfirmModal = false"
+        :safeAreaInsetBottom="false"
       round="20"
     >
       <div class="confirmSureModal">
@@ -421,7 +424,7 @@ let that;
 import xBtn from "@/components/modules/x-btn";
 import { post } from "@/utils/api.js";
 import remark from "./remark.vue";
-import { timesAmount,isProd } from "../../utils/mgtv.js";
+import { timesAmount,isProd, jumpUrl } from "../../utils/mgtv.js";
 import { mapState, mapActions } from "vuex";
 import { callPayment } from "@/utils/pay.js";
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
@@ -579,8 +582,9 @@ export default {
   methods: {
     surePaySuccess(val){
            post('v1/pay/payment/status',{
-             id:this.payMessage.payId
+             pay_id:this.payMessage.payId
            }).then((res)=>{
+            this.payMessage=''
              this.onGet();
              this.getMessage()
             if(!res.code){
@@ -799,6 +803,10 @@ export default {
       if (!res.code) {
         if (res.res && res.res.createPaymentReply) {
            this.showBuyGoodsModal = false;
+           this.payMessage = {
+            payId:res.res.createPaymentReply.payId
+           }
+           jumpUrl(res.res.createPaymentReply.payUrl)
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {
           //   mgtv.requestPaymentGameItem({

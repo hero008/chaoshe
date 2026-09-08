@@ -135,7 +135,8 @@ export function isVideo(url) {
 
 export const  jumpUrl =(link)=>{
   if(!isMTVapp()){
-   window.location.href = link
+    window.open(link);
+  //  window.location.href = link
    return;
   }
 

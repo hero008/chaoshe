@@ -18,7 +18,7 @@
             <!-- <mp-privacy initiative /> -->
             <!-- #endif -->
 
-           <u-popup zIndex='999999999' bgColor='transparent' class="bannerPoupon"  :overlayStyle="{background:'rgba(0,0,0,0.7)'}"  round="24" :show="showBannersActivity"  mode="center">
+           <u-popup zIndex='999999999' bgColor='transparent' :safeAreaInsetBottom="false" class="bannerPoupon"  :overlayStyle="{background:'rgba(0,0,0,0.7)'}"  round="24" :show="showBannersActivity"  mode="center">
             <scroll-view v-if="showBannerActivityDetail" scroll-y class="showBannerActivityContent">
                 <!-- <text>出淤泥而不染，濯清涟而不妖</text> -->
                  <div @click="toTarget(showBannerActivityDetail)" v-html="showBannerActivityDetail.content">

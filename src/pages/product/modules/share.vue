@@ -1,5 +1,5 @@
 <template>
-   <u-popup :show="true" @close="close" :round="16" >
+   <u-popup :safeAreaInsetBottom="false" :show="true" @close="close" :round="16" >
             <view class="shareContent">
                  <view @click="share(1)">
                      <img src="https://img.shinemang.com/gachaStatic/static/img/imgs/WeChat.png" alt="">

@@ -1,6 +1,6 @@
 <template>
     <!-- 领主接力弹窗（公共组件）：样式与交互与 duiduipeng.vue 保持一致 -->
-    <u-popup :show="show" bgColor="transparent" @close="close" >
+    <u-popup :safeAreaInsetBottom="false" :show="show" bgColor="transparent" @close="close" >
         <view class="lord_popup" @touchstart="onLordTouchStart" @touchmove="onLordTouchMove"
             @touchend="onLordTouchEnd" @touchcancel="onLordTouchEnd">
             <view class="close" @click="close"></view>

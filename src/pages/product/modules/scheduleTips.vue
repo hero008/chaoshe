@@ -1,5 +1,5 @@
 <template>
-    <u-popup :show="LuckyVisible" bgColor="transparent" >
+    <u-popup :show="LuckyVisible" :safeAreaInsetBottom="false" bgColor="transparent" >
         <view class="scheduleTips flex_r flex_jb flex_ac">
             <view class="title">进度节点</view>
             <view class="center">抽赏进度条达到当前整箱<text class="highlight">{{ scheduleNum }}%</text>进度节点时，将触发该 Lucky 赏的掉落机制 ——

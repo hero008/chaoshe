@@ -131,7 +131,7 @@
                 <view>立即抽赏</view>
             </view>
         </view>
-        <u-popup :show="selectBoxShow" bgColor="transparent">
+        <u-popup :show="selectBoxShow" :safeAreaInsetBottom="false" bgColor="transparent">
             <view class="warp_box">
                 <view class="warp">
                     <uni-icons class="close" @click="onOffSelect" type="close" color="#fff" size="35"></uni-icons>
@@ -223,7 +223,7 @@
                 </view>
             </view>
         </u-popup>
-        <u-popup :show="JSON.stringify(jqsShow) !== '{}'" bgColor="transparent">
+        <u-popup  :safeAreaInsetBottom="false" :show="JSON.stringify(jqsShow) !== '{}'" bgColor="transparent">
             <view class="jinqushang_box" v-if="jqsShow.levelName == 'Surprise'">
                 <view class="jinqushang transform">
                     <view class="btn" :class="{ active: jqsItem.leftNums == 0 }"></view>

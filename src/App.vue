@@ -179,8 +179,8 @@ export default {
       })
       uni.setStorageSync('hideHeader', 0);
     }else{
-      uni.setStorageSync('safeTop', 0);
-      uni.setStorageSync('hideHeader', 1);
+    //   uni.setStorageSync('safeTop', 0);
+    //   uni.setStorageSync('hideHeader', 1);
     }
    
      if(window.MgtvApi){

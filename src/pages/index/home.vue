@@ -205,6 +205,7 @@
       round="16"
       @close="showServerModal = false"
       :show="showServerModal"
+      :safeAreaInsetBottom="false"
     >
       <view class="serverPopop">
         <img

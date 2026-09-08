@@ -1,5 +1,5 @@
 <template>
-    <u-popup :show="visible" @close="onclose" :closeable="true" round="26">
+    <u-popup :show="visible" @close="onclose" :safeAreaInsetBottom="false" :closeable="true" round="26">
         <div class="ipFilt">
             <div class="title">IP筛选</div>
             <view class="h-tit">所属IP</view>

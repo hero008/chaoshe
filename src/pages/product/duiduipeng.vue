@@ -164,7 +164,7 @@
                 <view class="awards_btn_group " @click="awardsPlayAgain"> </view>
             </view>
         </view>
-        <u-popup  @close="showList"  :show="popupShow" bgColor="transparent">
+        <u-popup :safeAreaInsetBottom="false" @close="showList"  :show="popupShow" bgColor="transparent">
             <view class="popupShow">
                 <view class="title">{{ popupTitle }}</view>
                 <view class="close" @click="showList()"></view>
@@ -218,7 +218,7 @@
             :maxNum="buyMaxNum" />
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />
-        <u-popup mode='center' :show="showSetting" @close="showSetting=false"  round="20"
+        <u-popup mode='center' :safeAreaInsetBottom="false" :show="showSetting" @close="showSetting=false"  round="20"
             bgColor="#fff">
             <div class="tuoGuanSetting">
                
@@ -386,7 +386,7 @@ export default {
         surePayModal
     },
 
-    onshow(){
+    onShow(){
       if(this.payMessage){
          this.$refs.surePayModal.open()
       }
@@ -470,6 +470,8 @@ export default {
     },
     methods: {
        surePaySuccess(val){
+
+        this.payMessage=''
            this.initGame(val);
             // this.onClickPrize(this.payMessage.payId,true,val);
         },
@@ -587,6 +589,7 @@ export default {
 
         /** 初始化游戏：从后端获取数据并设置初始状态    */
         initGame(val=0) {
+            console.log(val);
             return post("v1/gacha/detail", {
                 gacha_id: this.gachaId,
                 box_index: 1
@@ -801,6 +804,7 @@ export default {
         // #endif
         //支付成功回调
         onClickDraw(res, showAnim, type) {
+            console.log('234234234234')
 
             this.payMessage = {
                   payId:res.res.createPaymentReply.payId

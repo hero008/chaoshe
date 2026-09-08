@@ -15,49 +15,35 @@ export default {
         };
     },
     onLoad(da){
+        MgtvApi.setWebviewTitle({
+            title:'支付'
+        })
+        this.targetUrl = da.url
+        console.log(this.targetUrl);
         const addReturnUrl = uni.getStorageSync('returnUrl');
         if(addReturnUrl){
-            
-        }
-        if(!isMTVapp()){
-            try{
-                 window.location.href = 'imgotv://';
-            }catch(e){
-
+            if(this.targetUrl.includes('alipay')){
+             this.targetUrl = this.targetUrl + '&return_url'+ encodeURIComponent(addReturnUrl)  //支付宝
+            }else{ 
+              this.targetUrl = this.targetUrl + '&redirect_url'+ encodeURIComponent(addReturnUrl) // 微信
+            // 支付宝
             }
-         
-         //      window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
-        //   `imgotv://webview?url=${encodeURIComponent(shareUrl)}`,)}`;
-        }
-        this.targetUrl = da.url
-        if(this.targetUrl.includes('apli')){
-          // 支付宝
-        }else{ 
-          // 微信
+        }else{
+
         }
     },
-    mounted(e){
-     
-    },
+
     onShow(da){
-      
-     if(location.href.includes('isPay=1')){
-        MgtvApi.closeWebView();
+     if(window.location.href.includes('isPay=1')){
+        // MgtvApi.closeWebView();
      }else{
         history.replaceState(null, '',location.href +'&isPay=1')
-        window.location.href= this.targetUrl
+        if(this.targetUrl.includes('http')){
+            window.location.href= this.targetUrl
+        }else{
+            MgtvApi.closeWebView();
+        }
      }
-        
-        //    console.log(window.location.search)
-        //    const params = new URLSearchParams(window.location.search);
-        //    console.log(params);
-        //    console.log(params.get('url'))
-        
-        //  window.location.href = this.targetUrl
-         
-    //    if(this.pay){
-    //      MgtvApi.closeWebView();
-    //    }
     }
    
 };

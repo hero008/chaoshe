@@ -262,7 +262,7 @@
                 </div>
             </div>
         </u-popup>
-        <u-popup :show="visible" @close="onclose" :overlay="true" :closeable="true" round="20">
+        <u-popup :safeAreaInsetBottom="false" :show="visible" @close="onclose" :overlay="true" :closeable="true" round="20">
             <div class="preview_con">
                 <div class="title">奖品概览</div>
                 <view class="preview_box">
@@ -293,7 +293,7 @@
                 </view>
             </div>
         </u-popup>
-        <u-popup :show="RandomShow" @close="RandomShow = false" :overlay="false" :closeable="true" round="20"
+        <u-popup :show="RandomShow" :safeAreaInsetBottom="false" @close="RandomShow = false" :overlay="false" :closeable="true" round="20"
             bgColor="#F4F4F4">
             <div class="random_con">
                 <div class="title">请选择随机数量</div>
@@ -457,7 +457,7 @@ export default {
             this.onClickPrize(this.payMessage.payId,this.payMessage.showAnim,val);
         },
         resetData(){
-this.shareTo=false
+            this.shareTo=false
             this.selectGrid=[] // 选中的格子
             this.totalAwards= 0, // 洞洞乐总数
             this.leftAwards= 0 // 洞洞乐剩余数
@@ -638,6 +638,7 @@ this.shareTo=false
         },
 
         onClickPrize(payId, showAnim) {
+            this.payMessage=''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                     this.handleDrawResult(res, showAnim);

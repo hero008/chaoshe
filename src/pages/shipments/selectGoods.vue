@@ -199,6 +199,7 @@ export default {
             selectAddr: {}, //选择的地址
             selectId: undefined,
             typeId: 0,
+            surePayMessage:""
         };
     },
     components: {
@@ -233,12 +234,16 @@ export default {
     },
     onShow() {
         this.loadAddrList();
+        if(this.surePayMessage){
+            this.$refs.surePayModal.open()
+        }
     },
     methods: {
          surePaySuccess(val){
            post('v1/pay/payment/status',{
-             id:this.payMessage.payId
+             pay_id:this.surePayMessage.payId
            }).then((res)=>{
+            this.surePayMessage=''
             if(!res.code){
               if(res.status == 4){
                 uni.showToast({
@@ -334,7 +339,7 @@ export default {
         confirmOrder(res) {
             if (!res.code) {
                 if(res.res.createPaymentReply.payId){
-                 this.payMessage={
+                 this.surePayMessage={
                     payId:res.res.createPaymentReply.payId
                  }
                 }else{
