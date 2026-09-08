@@ -223,7 +223,7 @@ export default {
         },
         open(da, showAnim, id, index) {
 
-             this.hasBx = da.filter((item)=>item.levelIndex == 52).length
+             this.hasBx = da.filter((item)=>item.levelIndex == 52 || item.isDecomposable == 2).length
               this.cysType = this.verdictBig(da)
              this.originalList = da//原数据
             // this.originalList.sort((a,b)=> b.levelIndex - a.levelIndex )
