@@ -28,8 +28,93 @@
                         @scrolltolower="onReachScollBottom"
                         :lower-threshold="400"
                         :scroll-y="true"
-                    >
-                        <div
+                    > 
+                       <block v-if="secondCondition == -1">
+                            <div 
+                            class="order_item"
+                            v-for="(item, index) in myRewardData"
+                            :key="index"
+                          
+                        >
+                            <view style="padding:  0 32rpx;">
+                                <div   @click="onclickHistoryDetail(item)" class="row flex_r flex_jb flex_ac">
+                                <div class="flex_r flex_ac">
+                                    <span class="txt">套系</span
+                                    ><span class="txt">{{
+                                        item.gachaName || '非抽赏获得'
+                                    }}</span>
+                                </div>
+                                <div
+                                    class="detail"
+                               
+                                >
+                                    <span>查看详情</span
+                                    ><span class="icof">&#xe72b;</span>
+                                </div>
+                            </div>
+                            <div    @click="onclickHistoryDetail(item)" class="row flex_r flex_ac">
+                                <span class="txt">宝箱</span
+                                ><span class="txt">{{ item.boxItems.itemName }}</span>
+                            </div>
+                            <div   @click="onclickHistoryDetail(item)" class="row flex_r flex_ac flex_jb">
+                              
+                                <div class="flex_r flex_ac">
+                                    <span class="txt">开箱时间</span
+                                    ><span class="txt">{{
+                                        item.createTime 
+                                    }}</span>
+                                </div>
+                            </div>
+                            <div
+                                class="goods"
+                                :class="{
+                                    yifansh:
+                                        secondCondition == 1 &&
+                                        item.items.length > 1,
+                                }"
+                            >
+                                <template v-for="(a, b) in item.items">
+                                    <div
+                                        class="goods_item"
+                                        @click="ondetail(a.itemId)"
+                                        :key="b"
+                                    >
+                                        <!-- <div
+                                            class="name ellipsis"
+                                            v-if="secondCondition == 1"
+                                        >
+                                            {{ a.levelIndex | levelNum }}赏
+                                        </div> v-else-->
+                                        <!-- <div class="name ellipsis" >
+                                         {{ a.itemName }}
+                                        </div> -->
+                                        
+                                        <div :style="{
+                                           backgroundImage:`url(${a.itemCover})`,
+                                           backgroundSize:'100% 100%'
+                                        }" class="img">
+                                              <div class="num">
+                                            {{
+                                               "x" + a.count
+                                            }}
+                                        </div>
+                                        </div>
+                                        <!-- <img :src="a.itemCover" class="img" /> -->
+                                    </div>
+                                   
+                                </template>
+                               
+                            </div>
+                             <div class="total">
+                                    共{{ item.count }}件
+                                </div>
+                            </view>
+                             <view style="margin-top: 24rpx;" class="bgcBox"></view>
+                        </div>
+                       </block>
+                       
+                       <block v-else>
+                            <div 
                             class="order_item"
                             v-for="(item, index) in myRewardData"
                             :key="index"
@@ -137,6 +222,8 @@
                             </view>
                              <view style="margin-top: 24rpx;" class="bgcBox"></view>
                         </div>
+                       </block>
+                       
                     </scroll-view>
                 </div>
                 <u-empty
@@ -161,7 +248,7 @@ export default {
                 { txt: "无限赏", val: 3 },
                 { txt: "炸弹赏", val: 4 },
                 { txt: "对对碰", val: 7 },
-                { txt: "宝箱赏", val: 8 },
+                { txt: "宝藏赏", val: -1 },
                 // { txt: "芒星赏", val: 5 },
                 // { txt: "一网打尽", val: 6 },
             ],
