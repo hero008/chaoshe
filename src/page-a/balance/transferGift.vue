@@ -53,8 +53,9 @@
                                     }" class="img">
                                     
                                   <view class="count">
-                                        <text>{{ value.point }}星币</text>
-                                        <text>x{{value.num}}</text>
+                                      <view>x{{value.num}}</view>
+                                        <view>{{ value.point }}星币</view>
+                                      
                                     </view>
                                 </div>
                                     <!-- <img  :src="value.img" alt=""> -->
@@ -490,13 +491,13 @@ text{
                                 border-radius: 0 0 12rpx 12rpx;
                                 width: 100%;
                                 background-color: rgba(0,0,0,.3);
-                                padding: 6rpx 6rpx;
+                                padding: 3rpx 6rpx;
                                 font-size: 18rpx;
 
                                 color: #fff;
-                                display: flex;
-                                align-items: center;
-                                justify-content: space-between;
+                                // display: flex;
+                                // align-items: center;
+                                // justify-content: space-between;
                             }
                         }
                         .name{
