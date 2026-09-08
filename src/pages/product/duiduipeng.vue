@@ -6,12 +6,8 @@
                 class="Back_ico" />
             <view class="title">对对碰</view>
         </view>
-       
-      
-
-     
          <!-- #ifndef MP-WEIXIN -->
-           
+ 
             <!-- #endif -->
             
             <view class="theme_card">

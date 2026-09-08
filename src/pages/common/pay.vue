@@ -4,6 +4,7 @@
     </view>
 </template>
 <script>
+import { isMTVapp,shareUrl } from '../../utils/mgtv';
 
 export default {
     data() {
@@ -13,22 +14,32 @@ export default {
         };
     },
     onLoad(da){
+        if(!isMTVapp()){
+             window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+          `imgotv://webview?url=${encodeURIComponent(shareUrl)}`,)}`;
+        }
         this.targetUrl = da.url
-        
       
+
+    },
+    mounted(e){
+     
     },
     onShow(da){
-         if(!this.pay){
-            this.pay = 1
-         }else{
-
-         }
-         console.log(this.pay);
-       
-           console.log(window.location.search)
-           const params = new URLSearchParams(window.location.search);
-           console.log(params);
-           console.log(params.get('url'))
+        
+     if(location.href.includes('isPay=1')){
+         MgtvApi.closeWebView();
+     }else{
+        
+        history.replaceState(null, '',location.href +'&isPay=1')
+        window.location.href= this.targetUrl
+      
+     }
+        
+        //    console.log(window.location.search)
+        //    const params = new URLSearchParams(window.location.search);
+        //    console.log(params);
+        //    console.log(params.get('url'))
         
         //  window.location.href = this.targetUrl
          
