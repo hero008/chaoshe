@@ -607,7 +607,7 @@ export default {
       if (page == 1) this.cabinetData = [];
       post("v1/cabinet/stock/list", {
         item_type: this.active_m + 1,
-        sale_type: this.active_m == 2 ? this.active1 : this.firstCondition,
+        sale_type: this.active_m == 2 ? 0 : this.firstCondition,
         state: this.active_m == 2 ? this.active1 : this.secondCondition,
         order_by_award_level: 1,
         order_by_theme_type: 1,
