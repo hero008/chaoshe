@@ -54,12 +54,12 @@
                             </div>
                             <div    @click="onclickHistoryDetail(item)" class="row flex_r flex_ac">
                                 <span class="txt">宝箱</span
-                                ><span class="txt">{{ item.boxItems.itemName }}</span>
+                                ><span class="txt">{{ item.boxItems && item.boxItems.itemName }}</span>
                             </div>
                             <div   @click="onclickHistoryDetail(item)" class="row flex_r flex_ac flex_jb">
                               
                                 <div class="flex_r flex_ac">
-                                    <span class="txt">开箱时间</span
+                                    <span class="txt">开赏时间</span
                                     ><span class="txt">{{
                                         item.createTime 
                                     }}</span>
