@@ -1,6 +1,7 @@
 <template>
     <view class="agreement">
         
+        
     </view>
 </template>
 <script>
@@ -10,16 +11,30 @@ export default {
     data() {
         return {
              targetUrl:'',
-            
+             
         };
     },
     onLoad(da){
+        const addReturnUrl = uni.getStorageSync('returnUrl');
+        if(addReturnUrl){
+            
+        }
         if(!isMTVapp()){
-          window.location.href = 'imgotv://';
+            try{
+                 window.location.href = 'imgotv://';
+            }catch(e){
+
+            }
+         
          //      window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
         //   `imgotv://webview?url=${encodeURIComponent(shareUrl)}`,)}`;
         }
         this.targetUrl = da.url
+        if(this.targetUrl.includes('apli')){
+          // 支付宝
+        }else{ 
+          // 微信
+        }
     },
     mounted(e){
      
