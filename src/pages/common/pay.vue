@@ -15,25 +15,22 @@ export default {
     },
     onLoad(da){
         if(!isMTVapp()){
-             window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
-          `imgotv://webview?url=${encodeURIComponent(shareUrl)}`,)}`;
+          window.location.href = 'imgotv://';
+         //      window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+        //   `imgotv://webview?url=${encodeURIComponent(shareUrl)}`,)}`;
         }
         this.targetUrl = da.url
-      
-
     },
     mounted(e){
      
     },
     onShow(da){
-        
+      
      if(location.href.includes('isPay=1')){
-         MgtvApi.closeWebView();
+        MgtvApi.closeWebView();
      }else{
-        
         history.replaceState(null, '',location.href +'&isPay=1')
         window.location.href= this.targetUrl
-      
      }
         
         //    console.log(window.location.search)
