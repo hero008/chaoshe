@@ -982,7 +982,12 @@ export default {
         if(!res.code){
             that.$emit("success", res, that.showAnimation, click_type);
            that.close();
-           
+           console.log(window.location.origin);
+
+           if(window.MgtvApi){
+               jumpUrl(window.location.origin + '#/pages/common/pay?url='+res.res.createPaymentReply.payUrl)
+
+           }
           //  window.location.href =  res.res.createPaymentReply.payUrl
          
         }else{

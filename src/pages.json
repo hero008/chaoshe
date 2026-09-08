@@ -37,6 +37,12 @@
 				"navigationStyle": "custom"
 			}
 		},
+		{
+			"path": "pages/common/pay",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
 		// #endif
 		{
 			"path": "pages/login/login",
