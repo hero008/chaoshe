@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     loadList() {
-      post("v1/goods/item/virtual/log", {
+      post("v1/cabinet/item/virtual/log", {
         ...this.pageda,
       }).then((res) => {
         if (this.pageda.page == 1) this.orderlist = [];
