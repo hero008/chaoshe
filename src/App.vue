@@ -124,6 +124,7 @@ export default {
         },
     },
     onLaunch: function () {
+       
         
    const honery = isHonery()
     if(honery){

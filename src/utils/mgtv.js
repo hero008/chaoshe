@@ -4,7 +4,7 @@ import store from "../store";
 import BigNumber from "bignumber.js";
 
 export const isProd =  process.env.NODE_ENV === "production"
-export const  shareUrl = isProd ?'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1':'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
+export const  shareUrl = isProd ?'https://mxs.mgworld.cn?isFullScreen=1&isHideNavBar=1':'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
   return /imgo/i.test(window.navigator.userAgent);
 };
