@@ -273,6 +273,9 @@
                 </view>
             </view>
         </view>
+
+        <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
+
     </view>
 </template>
 
@@ -382,6 +385,12 @@ export default {
         feudalLord,
         surePayModal
     },
+
+    onshow(){
+      if(this.payMessage){
+         this.$refs.surePayModal.open()
+      }
+    },
     computed: {
 
           ...mapState(["userInfo"]),
@@ -460,6 +469,10 @@ export default {
         }
     },
     methods: {
+       surePaySuccess(val){
+           this.initGame(val);
+            // this.onClickPrize(this.payMessage.payId,true,val);
+        },
         resetSeting(){
           this.useCount =  -1;
           this.settingMode = 0;
@@ -573,7 +586,7 @@ export default {
         // ============ 游戏初始化 ============
 
         /** 初始化游戏：从后端获取数据并设置初始状态    */
-        initGame() {
+        initGame(val=0) {
             return post("v1/gacha/detail", {
                 gacha_id: this.gachaId,
                 box_index: 1
@@ -600,7 +613,14 @@ export default {
                     this.recordId = fateMatch.recordId
                     this.lordActivity=res.lordActivity
                     this.remainingCount = res.gachaFateMatch.count
-
+                    if(val){
+                        if(this.remainingCount == 0){
+                               uni.showToast({
+                                title: '暂无查询到支付记录,请稍后再试',
+                                icon: 'none',
+                            })
+                        }
+                    }
                     if(this.remainingCount == 0){
                       uni.removeStorageSync('isAuto')
                       this.stopAuto(false);
@@ -781,6 +801,10 @@ export default {
         // #endif
         //支付成功回调
         onClickDraw(res, showAnim, type) {
+
+            this.payMessage = {
+                  payId:res.res.createPaymentReply.payId
+            }
             // 进入新一局：重置上一局的结束标记与奖励，保证托管待机后能继续自动接管
             if (this.isAutoMode) {
                 uni.removeStorageSync('isAuto')

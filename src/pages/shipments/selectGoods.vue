@@ -176,6 +176,8 @@
         <!-- 支付  付邮费12-->
         <x-pay @success="confirmOrder" ref="xPay" mtype="12" :probabilityShow=[]  />
         <select-goods ref="addStock" @confirmSelect="SelectIds" typeClass="1" />
+        <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
+
     </view>
 </template>
 <script>
@@ -186,6 +188,8 @@ import selectGoods from "@/components/selectGoods/index";
 import { mapMutations, mapState } from "vuex";
 import { callPayment } from "@/utils/pay.js";
 import { groupByItemName } from "../../utils/mgtv";
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
+
 export default {
     data() {
         return {
@@ -201,6 +205,7 @@ export default {
         xBtn,
         xPay,
         selectGoods,
+        surePayModal
     },
     computed: {
         isTransaction() {
@@ -230,6 +235,35 @@ export default {
         this.loadAddrList();
     },
     methods: {
+         surePaySuccess(val){
+           post('v1/pay/payment/status',{
+             id:this.payMessage.payId
+           }).then((res)=>{
+            if(!res.code){
+              if(res.status == 4){
+                uni.showToast({
+                  title:'发货成功',
+                  icon:'none'
+                })
+               setTimeout(() => {
+                    uni.redirectTo({
+                        url: "/pages/my/releaseRecord",
+                    }); // 关闭当前页面跳转到发货记录页
+                }, 2000);
+              }else{
+                if(val){
+                   uni.showToast({
+                  title:'暂未查到支付信息,请稍后再试',
+                  icon:'none'
+                })
+                }
+                 
+              }
+            }else{
+              uni.$u.toast(res.message);
+            }
+           })
+     },
         ...mapMutations(["UppayMessage"]),
         loadAddrList() {
             post("v1/delivery_address/list").then((res) => {
@@ -270,13 +304,15 @@ export default {
                 uni.$u.toast("选择赏品超过2000！请重新选择");
                 return;
             }
+          
             if (this.selectRewardIds.length < 5) {
-                // #ifdef MP-WEIXIN
-                uni.$u.toast(
-                    "微信不支持支付运费！如需少于5件商品发货请联系客服，或者下载APP进行发货!"
-                );
-                return;
-                // #endif
+                  
+                // // #ifdef MP-WEIXIN
+                // uni.$u.toast(
+                //     "微信不支持支付运费！如需少于5件商品发货请联系客服，或者下载APP进行发货!"
+                // );
+                // return;
+                // // #endif
                 this.$refs.xPay.open(
                     10,
                     1,
@@ -297,12 +333,19 @@ export default {
         },
         confirmOrder(res) {
             if (!res.code) {
+                if(res.res.createPaymentReply.payId){
+                 this.payMessage={
+                    payId:res.res.createPaymentReply.payId
+                 }
+                }else{
                 uni.$u.toast("赏品发货成功！");
                 setTimeout(() => {
                     uni.redirectTo({
                         url: "/pages/my/releaseRecord",
                     }); // 关闭当前页面跳转到发货记录页
                 }, 2000);
+                }
+              
             }
         },
 
