@@ -251,6 +251,8 @@
         <bzModal ref="bzModal" ></bzModal>
 
          <gachaDetails ref="gachaDetails" />
+        <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
+
         <!-- 抽赏动效 -->
         <!-- <dynamic-effect ref="animation" @childData="handleChildData" /> -->
         <!-- <xPrize ref="refPrize" :prize="prize" /> -->
@@ -277,6 +279,8 @@ import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { MGTV_Channel } from "@/utils/mgtv";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort,shareUrl} from '@/utils/mgtv.js'
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
+
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
 export default {
@@ -342,6 +346,7 @@ export default {
             LuckyVisible: false,
             scheduleNum: null,
             previewType:1,
+              payMessage:''
         };
     },
     components: {
@@ -353,7 +358,8 @@ export default {
         ball,
         scheduleTips,
         drawLogOther,
-        result
+        result,
+        surePayModal
         // dynamicEffect,
         // xPrize
     },
@@ -392,11 +398,17 @@ export default {
             { num: 200, className: "btn-item4", text: '二百抽' },
             { num: this.gachainfo.leftAwards, className: "btn-item5", text: '全包' }]
         }
+           if(this.payMessage){
+            this.$refs.surePayModal.open()
+        }
     },
     created() {
         this.saveFile();
     },
     methods: {
+         surePaySuccess(val){
+            this.onClickPrize(this.payMessage.payId,this.payMessage.showAnim,val);
+        },
         resetData(){
           this.istry = false;
           this.cartoonShow = false;
@@ -543,7 +555,6 @@ export default {
         },
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
-                
                 if(res.awards && res.awards.length>0){
                     res.awards = awardsSort(res.awards)
                     // res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
@@ -554,19 +565,30 @@ export default {
                 this.onClickPay(showAnim);
                 return;
             } else {
-                this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
+                this.payMessage={
+                     payId:res.res.createPaymentReply.payId,
+                     showAnim:showAnim
+                }
+                // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },
-        onClickPrize(payId, showAnim) {
+        onClickPrize(payId, showAnim,val=0) {
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                    if(res.awards && res.awards.length>0){
                     res.awards = awardsSort(res.awards)
                     //   res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
                     res.awards[0].requestId = res.requestId
-                   }
-                    this.Winning = res.awards;
+                     this.Winning = res.awards;
                     this.onClickPay(showAnim);
+                   }else{
+                     if(val){
+                        uni.showToast({
+                            title: '暂无查询到支付记录,请稍后再试',
+                            icon: 'none',
+                        })
+                     }
+                   }
                 } else uni.$u.toast(res.message);
             });
         },

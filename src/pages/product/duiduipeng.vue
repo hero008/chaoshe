@@ -292,6 +292,7 @@ import bigPng from '@/static/big.png'
 import middlePng from '@/static/middle.png'
 import smallPng from '@/static/small.png'
 import {isPositiveInteger,shareUrl } from '@/utils/mgtv.js'
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
 
 export default {
     data() {
@@ -375,12 +376,15 @@ export default {
             awardsList: [],
             lordRecord: [],//领主记录
             lordActivity:0,
-            multiple:1
+            multiple:1,
+
+            payMessage:''
         };
     },
     components: {
         xPay,
-        feudalLord
+        feudalLord,
+        surePayModal
     },
     computed: {
 

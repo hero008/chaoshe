@@ -1,10 +1,10 @@
 <template>
-    <u-popup  :show="show" mode="center" @close="show=false" :closeOnClickOverlay="false">
-        <view class="sureModal">
+    <u-popup  round="20" :show="show" mode="center" @close="close" >
+        <view class="confirmSureModal">
               <view class="title">确认支付</view>
                <view class="tips">您是否已支付当前订单?</view>
-               <view class="btns">
-                <view class="btn" @click="confirm">未支付</view>
+               <view class="actionBtns">
+                <view class="btn cancel" @click="confirm">未支付</view>
                 <view @click="close" class="btn confirm">已支付</view>
                </view>
         </view>
@@ -13,12 +13,12 @@
 <script>
 export default {
     name: "surePayModal",
-    props:{
-        show:{
-            type:Boolean,
-            default:false
-        }
-    },
+   data(){
+    return {
+         show:false
+    }
+   
+   },
     methods: {
      confirm(){
         this.$emit('surePaySuccess',1)
@@ -29,16 +29,12 @@ export default {
      },
      close(){
        this.$emit('surePaySuccess',0)
-        this.show=false;
+       this.show=false;
      },
   
     },
   
-    data() {
-        return {
-
-        };
-    }
+  
 }
 </script>
 <style lang="scss" scoped>

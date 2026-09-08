@@ -581,7 +581,9 @@ export default {
            post('v1/pay/payment/status',{
              id:this.payMessage.payId
            }).then((res)=>{
-            if(!code){
+             this.onGet();
+             this.getMessage()
+            if(!res.code){
               if(res.status == 4){
                 uni.showToast({
                   title:'商品购买成功！可前往我的订单中查看',
@@ -797,7 +799,7 @@ export default {
       if (!res.code) {
         if (res.res && res.res.createPaymentReply) {
            this.showBuyGoodsModal = false;
-           window.location.href=  res.res.createPaymentReply.payUrl
+          //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {
           //   mgtv.requestPaymentGameItem({
           //     signData: res.res.createPaymentReply.signData,

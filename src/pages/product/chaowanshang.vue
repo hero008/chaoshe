@@ -633,7 +633,7 @@ export default {
                 (res) => {
                     if (!res.code) {
 
-                        this.$refs.refPrize.open(this.waterList.subTask[0].award, res.num);
+                     this.$refs.refPrize.open(this.waterList.subTask[0].award, res.num);
                     } else uni.$u.toast(res.message);
                 }
             );
@@ -851,8 +851,8 @@ export default {
         },
         onClickPrize(payId, showAnim,val) {
             const that = this;
+            this.payMessage = ''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
-                this.payMessage = ''
                 if (!res.code) {
                     if (!Array.isArray(res.awards)){
                          return

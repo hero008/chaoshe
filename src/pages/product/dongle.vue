@@ -321,6 +321,7 @@
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
         <share v-if="shareTo" @closeSharePoupon="shareTo = false" @shareTo="shareToWechat"></share>
            <result ref="result" @onResult="onClickResult"></result>
+        <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
 
     </view>
 </template>
@@ -339,6 +340,8 @@ import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 import share from "./modules/share.vue";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort,shareUrl} from '@/utils/mgtv.js'
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
+
 export default {
     data() {
         return {
@@ -413,6 +416,7 @@ export default {
             activityOpen: false,
             LuckyVisible: false,
             scheduleNum: null,
+             payMessage:''
         };
     },
     components: {
@@ -423,7 +427,8 @@ export default {
         xPrize,
         scheduleTips,
         share,
-        result
+        result,
+        surePayModal
     },
     computed: {
         ...mapState(["userInfo", "selectTicket"]),
@@ -440,11 +445,17 @@ export default {
         this.loadDetail();
         this.oldRandomNum = this.$gl("selectRandomNumber");
         this.RandomNum = this.oldRandomNum || 1;
+           if(this.payMessage){
+            this.$refs.surePayModal.open()
+        }
     },
     created() {
         this.saveFile();
     },
     methods: {
+          surePaySuccess(val){
+            this.onClickPrize(this.payMessage.payId,this.payMessage.showAnim,val);
+        },
         resetData(){
 this.shareTo=false
             this.selectGrid=[] // 选中的格子
@@ -589,14 +600,13 @@ this.shareTo=false
             }
         },
         // 提取公共方法
-        handleDrawResult(res, showAnim) {
+        handleDrawResult(res, showAnim,val=0) {
             if(res.awards && res.awards.length > 0){
                 // res.awards.sort((a,b)=>  b.levelIndex - a.levelIndex)
                 res.awards = awardsSort(res.awards)
                 res.awards[0].requestId = res.requestId
                 // res.awards[]
-            }
-            this.Winning = res.awards;
+                this.Winning = res.awards;
             if (res.isBomb) {
                 this.showAnim = showAnim;
                 this.showDh = true;
@@ -604,13 +614,26 @@ this.shareTo=false
             } else {
                 this.onClickPay(showAnim);
             }
+            }else{
+                if(val){
+                        uni.showToast({
+                        title: '暂无查询到支付记录,请稍后再试',
+                        icon: 'none',
+                     })
+                    }
+            }
+            
         },
 
         onClickDraw(res, showAnim, type) {
             if (type == 0) {
                 this.handleDrawResult(res, showAnim); // 直接出结果,查询结果
             } else {
-                this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
+                  this.payMessage = {
+                    payId:res.res.createPaymentReply.payId,
+                    showAnim:showAnim
+                }
+                // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },
 
