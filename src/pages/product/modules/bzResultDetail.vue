@@ -62,7 +62,7 @@
                       <view class="goodsName ellipsis">{{ originalList[0].name }}</view>
                 </view>
                 <view class="btn">
-                     <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') &&  originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view>
+                     <!-- <view  @click='fangsheng' v-if="userInfo.featureConfig && (userInfo.featureConfig.decomposed == 'FeatureFlag_Enable' ||   userInfo.featureConfig.decomposed == 'FeatureFlag_AdminOpen') &&  originalList && originalList[0].requestId" style="margin-right:32rpx;" class="fangsheng"></view> -->
                      <view class="all_btn" @click="close"></view>
                      
                 </view>
