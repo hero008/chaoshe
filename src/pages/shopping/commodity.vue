@@ -424,7 +424,7 @@ let that;
 import xBtn from "@/components/modules/x-btn";
 import { post } from "@/utils/api.js";
 import remark from "./remark.vue";
-import { timesAmount,isProd, jumpUrl } from "../../utils/mgtv.js";
+import { timesAmount,isProd, jumpPayUrl,originUrl } from "../../utils/mgtv.js";
 import { mapState, mapActions } from "vuex";
 import { callPayment } from "@/utils/pay.js";
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
@@ -806,7 +806,7 @@ export default {
            this.surePayMessage = {
             payId:res.res.createPaymentReply.payId
            }
-           jumpUrl(res.res.createPaymentReply.payUrl)
+           jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type})
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {
           //   mgtv.requestPaymentGameItem({

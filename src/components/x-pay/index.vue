@@ -331,7 +331,7 @@ import { integralPrice } from "@/utils/getData.js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import mpPrivacy from "@/components/modules/mp-privacy.vue";
 import { callPayment } from "@/utils/pay.js";
-import { isIos, jumpUrl } from "../../utils/mgtv";
+import { isIos, jumpPayUrl,originUrl } from "../../utils/mgtv";
 import { goto } from "../../utils/fun";
 import { Parser, Player } from 'svgaplayer-weapp'
 //     GachaType_Nil = 0;
@@ -984,8 +984,19 @@ export default {
         if(!res.code){
             that.$emit("success", res, that.showAnimation, click_type);
            that.close();
-            jumpUrl(window.location.origin + '#/pages/common/pay?url='+res.res.createPaymentReply.payUrl)
-          //  window.location.href =  res.res.createPaymentReply.payUrl
+           let gachaName = '';
+           if(this.mtype == 2){
+            gachaName = 'ndj'
+           }else if(this.mtype == 3){
+            gachaName = 'wxs'
+           }else if(this.mtype == 4){
+            gachaName == 'ddl'
+           }else if(this.mtype == 7){
+            gachaName = 'ddp'
+           }else if(this.mtype == 12){
+            gachaName = 'fh'
+           }
+            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:gachaName,gachaId:this.source_id})
          
         }else{
           uni.showToast({

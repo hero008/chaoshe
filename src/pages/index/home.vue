@@ -11,10 +11,13 @@
       <!-- <img src="https://img.shinemang.com/gachaStatic/static/img/home/ico_ico2.png" class="logo_img"
                 :style="{ height: MBInfo().height - 2 + 'px' }" /> -->
       <!-- 微信小程序不用-->
+        <img v-if="MTVapp()" @click="closeMGTVWebview"  style="width: 46rpx;height: 46rpx;" src="https://img.shinemang.com/gachaStatic/back.png" alt="">
       <view
         class="notice-bar flex_r flex_jb flex_ac"
         :style="{ height: 56 + 'rpx', width: boundW }"
       >
+
+     
         <view
           @click="goto('/page-activity/notice/notice-list')"
           class="notice_con flex_r flex_ac"
@@ -671,7 +674,7 @@ export default {
       let w = this.SystemInfo.windowWidth;
       let va = this.MBInfo().width;
       let str = w - va - 32 + "px";
-      return va > 0 ? str : "686rpx";
+      return va > 0 ? str : this.MTVapp()? "626rpx":"686rpx";
     },
   },
 };
@@ -789,9 +792,11 @@ export default {
 
 .notice_top {
   margin-bottom: 28rpx;
-  padding-left: 32rpx;
+  padding-left: 24rpx;
+  padding-right: 32rpx;
   position: relative;
   z-index: 4;
+  
   .logo_img {
     width: 126rpx;
   }
@@ -804,7 +809,6 @@ export default {
     color: $motif-color;
     padding: 0 16rpx 0 22rpx;
     padding-left: 0;
-
     .notice_con {
       width: calc(100%);
       height: 100%;

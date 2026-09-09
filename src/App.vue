@@ -124,8 +124,7 @@ export default {
         },
     },
     onLaunch: function () {
-       console.log('束带结发猎杀对决付了款')
-        
+ 
    const honery = isHonery()
     if(honery){
 
@@ -183,8 +182,8 @@ export default {
     //   uni.setStorageSync('hideHeader', 1);
     }
    
-     if(window.MgtvApi){
-            const params = new URLSearchParams(window.location.search);
+    //  if(isMTVapp()){
+            // const params = new URLSearchParams(window.location.search);
              if( params && params.get("channel")){
                  uni.setStorageSync('channel',params.get("channel"))
              }
@@ -198,8 +197,8 @@ export default {
                  uni.setStorageSync('gachaId',params.get("gachaId"))
              }
            
-
-             mgTvIsLogin().then(res=>{
+            if(isMTVapp()){
+               mgTvIsLogin().then(res=>{
                 if(!res){
                 uni.removeStorageSync("aToken");
                 uni.removeStorageSync("rToken");
@@ -207,11 +206,13 @@ export default {
                 uni.removeStorageSync('uuid')
                 }
              })
+            }
+            
        
-     }
+    //  }
 
      if(!isMTVapp()){
-        if(isProd){
+        if(!isProd){
             let url = shareUrl;
             let params = getLocalParams();
             let gachaName = params.gachaName;
@@ -227,12 +228,13 @@ export default {
              if(gachaName && gachaId){
                url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
              }
+            
+            //  alert(url)
            window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
           `imgotv://webview?url=${encodeURIComponent(url)}`,
           )}`;
         }
-      
-       
+
      }else{
        if(!honery){
         post('v1/system/middle-page-jump-target',{
@@ -252,7 +254,8 @@ export default {
                      if(gachaName && gachaId){
                         mpParams+='&gachaName='+gachaName + '&gachaId='+gachaId
                      }
-                     window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
+                    //  setTimeout(()=>{ window.MgtvApi.closeWebView()},1000)
+                    //  window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
                }
         })
        }

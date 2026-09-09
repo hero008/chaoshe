@@ -5,7 +5,7 @@
     </view>
 </template>
 <script>
-import { isMTVapp,shareUrl } from '../../utils/mgtv';
+import {originUrl} from '../../utils/mgtv';
 
 export default {
     data() {
@@ -18,24 +18,25 @@ export default {
         MgtvApi.setWebviewTitle({
             title:'支付'
         })
-        this.targetUrl = da.url
-        console.log(this.targetUrl);
-        const addReturnUrl = uni.getStorageSync('returnUrl');
-        if(addReturnUrl){
+            this.targetUrl = da.url
+            let returnUrl = originUrl+'#/pages/common/pay?isPay=1'
+            const addReturnUrl = uni.getStorageSync('returnUrl');
             if(this.targetUrl.includes('alipay')){
-             this.targetUrl = this.targetUrl + '&return_url'+ encodeURIComponent(addReturnUrl)  //支付宝
+                if(addReturnUrl){
+                  this.targetUrl = this.targetUrl + '&return_url'+ encodeURIComponent(returnUrl)  //支付宝
+                }
             }else{ 
-              this.targetUrl = this.targetUrl + '&redirect_url'+ encodeURIComponent(addReturnUrl) // 微信
-            // 支付宝
+                if(addReturnUrl){
+                   this.targetUrl = this.targetUrl + '&redirect_url'+ encodeURIComponent(returnUrl) // 微信
+                }
             }
-        }else{
-
-        }
+      
     },
 
     onShow(da){
+       
      if(window.location.href.includes('isPay=1')){
-        // MgtvApi.closeWebView();
+        MgtvApi.closeWebView();
      }else{
         history.replaceState(null, '',location.href +'&isPay=1')
         if(this.targetUrl.includes('http')){
