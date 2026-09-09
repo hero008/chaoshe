@@ -468,7 +468,7 @@ export default {
             newRecordList:'',
    
             lordActivity:0,
-            payMessage:''
+            surePayMessage:''
             
 
 
@@ -504,13 +504,13 @@ export default {
     onShow() {
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
-        if(this.payMessage){
+        if(this.surePayMessage){
             this.$refs.surePayModal.open()
         }
     },
     methods: {
         surePaySuccess(val){
-            this.onClickPrize(this.payMessage.payId,true,val);
+            this.onClickPrize(this.surePayMessage.payId,true,val);
         },
         openLordPopup() {
             this.$refs.feudalLord.open(this.gachaId)
@@ -844,7 +844,7 @@ export default {
                 // this.chaoPlay(this.previewType);
                 return;
             } else {
-                this.payMessage = {
+                this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId
                 }
                 // this.onClickPrize(res.res.createPaymentReply.payId, true);
@@ -852,7 +852,7 @@ export default {
         },
         onClickPrize(payId, showAnim,val) {
             const that = this;
-            this.payMessage = ''
+            this.surePayMessage = ''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                     if (!Array.isArray(res.awards)){

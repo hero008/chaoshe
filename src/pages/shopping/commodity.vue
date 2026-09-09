@@ -526,7 +526,7 @@ export default {
       myPrice: 0,
       exchangeConfirmModal: false,
       paySearchMessage:'',
-      payMessage:''
+      surePayMessage:''
     };
   },
   watch: {
@@ -575,16 +575,16 @@ export default {
     this.loadAddrList();
     this.getMessage();
 
-      if(this.payMessage){
+      if(this.surePayMessage){
           this.$refs.surePayModal.open()
         }
   },
   methods: {
     surePaySuccess(val){
            post('v1/pay/payment/status',{
-             pay_id:this.payMessage.payId
+             pay_id:this.surePayMessage.payId
            }).then((res)=>{
-            this.payMessage=''
+            this.surePayMessage=''
              this.onGet();
              this.getMessage()
             if(!res.code){
@@ -803,7 +803,7 @@ export default {
       if (!res.code) {
         if (res.res && res.res.createPaymentReply) {
            this.showBuyGoodsModal = false;
-           this.payMessage = {
+           this.surePayMessage = {
             payId:res.res.createPaymentReply.payId
            }
            jumpUrl(res.res.createPaymentReply.payUrl)

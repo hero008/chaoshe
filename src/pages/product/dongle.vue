@@ -416,7 +416,7 @@ export default {
             activityOpen: false,
             LuckyVisible: false,
             scheduleNum: null,
-             payMessage:''
+             surePayMessage:''
         };
     },
     components: {
@@ -445,7 +445,7 @@ export default {
         this.loadDetail();
         this.oldRandomNum = this.$gl("selectRandomNumber");
         this.RandomNum = this.oldRandomNum || 1;
-           if(this.payMessage){
+           if(this.surePayMessage){
             this.$refs.surePayModal.open()
         }
     },
@@ -454,7 +454,7 @@ export default {
     },
     methods: {
           surePaySuccess(val){
-            this.onClickPrize(this.payMessage.payId,this.payMessage.showAnim,val);
+            this.onClickPrize(this.surePayMessage.payId,this.surePayMessage.showAnim,val);
         },
         resetData(){
             this.shareTo=false
@@ -629,7 +629,7 @@ export default {
             if (type == 0) {
                 this.handleDrawResult(res, showAnim); // 直接出结果,查询结果
             } else {
-                  this.payMessage = {
+                  this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId,
                     showAnim:showAnim
                 }
@@ -638,7 +638,7 @@ export default {
         },
 
         onClickPrize(payId, showAnim) {
-            this.payMessage=''
+            this.surePayMessage=''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                     this.handleDrawResult(res, showAnim);

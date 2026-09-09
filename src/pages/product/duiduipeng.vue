@@ -377,7 +377,7 @@ export default {
             lordActivity:0,
             multiple:1,
 
-            payMessage:''
+            surePayMessage:''
         };
     },
     components: {
@@ -387,7 +387,7 @@ export default {
     },
 
     onShow(){
-      if(this.payMessage){
+      if(this.surePayMessage){
          this.$refs.surePayModal.open()
       }
     },
@@ -471,7 +471,7 @@ export default {
     methods: {
        surePaySuccess(val){
 
-        this.payMessage=''
+        this.surePayMessage=''
            this.initGame(val);
             // this.onClickPrize(this.payMessage.payId,true,val);
         },
@@ -806,7 +806,7 @@ export default {
         onClickDraw(res, showAnim, type) {
             console.log('234234234234')
 
-            this.payMessage = {
+            this.surePayMessage = {
                   payId:res.res.createPaymentReply.payId
             }
             // 进入新一局：重置上一局的结束标记与奖励，保证托管待机后能继续自动接管

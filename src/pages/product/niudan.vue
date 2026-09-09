@@ -346,7 +346,7 @@ export default {
             LuckyVisible: false,
             scheduleNum: null,
             previewType:1,
-              payMessage:''
+              surePayMessage:''
         };
     },
     components: {
@@ -398,7 +398,7 @@ export default {
             { num: 200, className: "btn-item4", text: '二百抽' },
             { num: this.gachainfo.leftAwards, className: "btn-item5", text: '全包' }]
         }
-           if(this.payMessage){
+           if(this.surePayMessage){
             this.$refs.surePayModal.open()
         }
     },
@@ -407,7 +407,7 @@ export default {
     },
     methods: {
          surePaySuccess(val){
-            this.onClickPrize(this.payMessage.payId,this.payMessage.showAnim,val);
+            this.onClickPrize(this.surePayMessage.payId,this.surePayMessage.showAnim,val);
         },
         resetData(){
           this.istry = false;
@@ -565,7 +565,7 @@ export default {
                 this.onClickPay(showAnim);
                 return;
             } else {
-                this.payMessage={
+                this.surePayMessage={
                      payId:res.res.createPaymentReply.payId,
                      showAnim:showAnim
                 }
@@ -573,7 +573,7 @@ export default {
             }
         },
         onClickPrize(payId, showAnim,val=0) {
-            this.payMessage = ''
+            this.surePayMessage = ''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                    if(res.awards && res.awards.length>0){
