@@ -234,9 +234,6 @@ export default {
       
        
      }else{
-    
-     }
-
        if(!honery){
         post('v1/system/middle-page-jump-target',{
             source:isIos()?'MiddlePageSource_Android':'MiddlePageSource_IOS'
@@ -245,7 +242,7 @@ export default {
                    let params = getLocalParams();
                     let gachaName = params.gachaName;
                     let gachaId =  params.gachaId;
-                    let channel = params.channel;
+                    let channel = params.channel || "Channel_Official";
                     let inviteCode = params.inviteCode;
                      let mpParams = ''
                      mpParams+='channel='+channel
@@ -259,6 +256,8 @@ export default {
                }
         })
        }
+     }
+
      uni.setStorageSync("currentChange", 0);
     
 
@@ -285,15 +284,15 @@ export default {
     const is_app = /imgo/i.test(window.navigator.userAgent)
    const is_android = /android/i.test(window.navigator.userAgent)
 
-if(is_app && is_android) {
-      // 兼容安卓端会员频道里面弹窗打开后无法下拉的问题
-      document.addEventListener('click', () => {
-        if(document.documentElement.scrollTop === 0) {
-          document.documentElement.scrollTop = 1
+    if(is_app && is_android) {
+        // 兼容安卓端会员频道里面弹窗打开后无法下拉的问题
+        document.addEventListener('click', () => {
+            if(document.documentElement.scrollTop === 0) {
+            document.documentElement.scrollTop = 1
+            }
+        })
         }
-      })
-    }
-  },
+    },
     computed: { ...mapState(["popupWebSocket","userInfo"]) },
     onShow: function () {
         //  this.SystemInfo.uniPlatform == "app" &&
