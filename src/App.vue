@@ -2,10 +2,10 @@
 <script>
 import { mapState,mapMutations } from "vuex";
 import { getMsg, getWebSocket } from "./utils/webSocket";
-import { isMTVapp,isHonery, mgTvIsLogin,parseQueryString,shareUrl,isProd } from "./utils/mgtv.js";
+import { isMTVapp,isHonery, mgTvIsLogin,getLocalParams,shareUrl,isProd,isIos } from "./utils/mgtv.js";
 import store from "./store";
 import {goto} from "./utils/fun";
-
+import { post } from "./utils/api";
 
 export default {
     data() {
@@ -124,7 +124,7 @@ export default {
         },
     },
     onLaunch: function () {
-       
+       console.log('束带结发猎杀对决付了款')
         
    const honery = isHonery()
     if(honery){
@@ -213,10 +213,11 @@ export default {
      if(!isMTVapp()){
         if(isProd){
             let url = shareUrl;
-            let gachaName =  uni.getStorageSync('gachaName') || '';
-            let gachaId =   uni.getStorageSync('gachaId') || '';
-             let channel = uni.getStorageSync('channel') || '';
-               let inviteCode = this.inviteCode;
+            let params = getLocalParams();
+            let gachaName = params.gachaName;
+            let gachaId =  params.gachaId;
+            let channel = params.channel;
+            let inviteCode = params.inviteCode;
              if(inviteCode){
               url= url+'&inviteCode='+inviteCode
              }
@@ -230,11 +231,37 @@ export default {
           `imgotv://webview?url=${encodeURIComponent(url)}`,
           )}`;
         }
-        return;
+      
        
+     }else{
+    
      }
+
+       if(!honery){
+        post('v1/system/middle-page-jump-target',{
+            source:isIos()?'MiddlePageSource_Android':'MiddlePageSource_IOS'
+        }).then((res)=>{
+               if(res.target == 'JumpTarget_MP'){
+                   let params = getLocalParams();
+                    let gachaName = params.gachaName;
+                    let gachaId =  params.gachaId;
+                    let channel = params.channel;
+                    let inviteCode = params.inviteCode;
+                     let mpParams = ''
+                     mpParams+='channel='+channel
+                     if(inviteCode){
+                        mpParams+='&inviteCode='+inviteCode
+                     }
+                     if(gachaName && gachaId){
+                        mpParams+='&gachaName='+gachaName + '&gachaId='+gachaId
+                     }
+                     window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
+               }
+        })
+       }
      uni.setStorageSync("currentChange", 0);
-  
+    
+
   
     
 

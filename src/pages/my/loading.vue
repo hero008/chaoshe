@@ -18,7 +18,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
-import { isMTVapp,shareUrl,isProd } from "../../utils/mgtv";
+import { isMTVapp,shareUrl,isProd, getLocalParams } from "../../utils/mgtv";
 import {  mapActions } from "vuex";
 
 let that;
@@ -53,10 +53,11 @@ export default {
       if (!isMTVapp()) {
         if(isProd){
          let url = shareUrl;
-            let gachaName =  uni.getStorageSync('gachaName') || '';
-            let gachaId =   uni.getStorageSync('gachaId') || '';
-             let channel = uni.getStorageSync('channel') || '';
-               let inviteCode = this.inviteCode;
+         let params = getLocalParams()
+            let gachaName = params.gachaName
+            let gachaId =  params.gachaId
+             let channel =params.channel;
+             let inviteCode = this.inviteCode;
              if(inviteCode){
               url= url+'&inviteCode='+inviteCode
              }

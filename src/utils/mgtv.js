@@ -395,3 +395,13 @@ export const choushangResultByItemId =(data)=>{
 export const isPositiveInteger = (value) => {
   return /^[1-9]\d*$/.test(value);
 };
+
+
+export const getLocalParams=()=>{
+    let gachaName =  uni.getStorageSync('gachaName') || '';
+    let gachaId =   uni.getStorageSync('gachaId') || '';
+    let channel = uni.getStorageSync('channel') || '';
+    let inviteCode =uni.getStorageSync('inviteCode') || '';
+
+    return {gachaName,gachaId,channel,inviteCode}
+}
