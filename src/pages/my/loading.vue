@@ -222,4 +222,22 @@ export default {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #f0f0f0 50%);
   }
 }
+.loginBtn{
+  position: absolute;
+  bottom: 80px;
+  width: 686rpx;
+  height: 80rpx;
+  background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+  border-radius: 40rpx 40rpx 40rpx 40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  color:#1A1A1A;
+  font-size: 32rpx;
+  font-weight: blod;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+}
 </style>

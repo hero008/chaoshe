@@ -212,7 +212,7 @@ export default {
     //  }
 
      if(!isMTVapp()){
-        if(!isProd){
+        if(isProd){
             let url = shareUrl;
             let params = getLocalParams();
             let gachaName = params.gachaName;
@@ -237,7 +237,7 @@ export default {
 
      }else{
        if(!honery){
-        post('v1/system/middle-page-jump-target',{
+          post('v1/system/middle-page-jump-target',{
             source:isIos()?'MiddlePageSource_Android':'MiddlePageSource_IOS'
         }).then((res)=>{
                if(res.target == 'JumpTarget_MP'){
@@ -254,8 +254,8 @@ export default {
                      if(gachaName && gachaId){
                         mpParams+='&gachaName='+gachaName + '&gachaId='+gachaId
                      }
-                    //  setTimeout(()=>{ window.MgtvApi.closeWebView()},1000)
-                    //  window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
+                     setTimeout(()=>{ window.MgtvApi.closeWebView()},1000)
+                     window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
                }
         })
        }
