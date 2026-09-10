@@ -1,5 +1,5 @@
 {
-    "common":{
+  "common":{
         "rules":"规则",
         "share":"分享",
         "cancel":"取消",
@@ -15,7 +15,7 @@
         "tips":"提示",
         "refresh":"刷新",
         "refreshSuccess":"刷新成功"
-    },
+   },
   "index":{
     "wechatQr":"微信扫码进群解锁更多福利~",
     "hot":"热门推荐",
@@ -406,5 +406,4 @@
   
 
   }
-
 }
