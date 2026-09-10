@@ -5,7 +5,7 @@
                 SystemInfo.uniPlatform == 'app' ? '' : { display: 'none' },
             ]" />
         </u-navbar> -->
-        <x-navbar tit="进阶行动" />
+        <x-navbar tit="进阶中心" />
         <div class="con_box" :style="{ height: conHeight }">
             <div class="time flex_r flex_ac flex_jc">
                 <view class="timeTiele">进阶时间：</view>
