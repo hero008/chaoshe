@@ -6,6 +6,7 @@ import { isMTVapp,isHonery, mgTvIsLogin,getLocalParams,shareUrl,isProd,isIos } f
 import store from "./store";
 import {goto} from "./utils/fun";
 import { post } from "./utils/api";
+import SVGA from 'svgaplayerweb'
 
 export default {
     data() {
@@ -122,6 +123,8 @@ export default {
             'LotteryTargetType_Gacha_ChaoShe': 105,//芒星赏
             'LotteryTargetType_Gacha_ShareBill': 106,//一网打尽
         },
+        wxs_b:'',
+        wxs_s:''
     },
     onLaunch: function () {
  
@@ -279,7 +282,22 @@ export default {
                 },
             });
         }, 1000);
+      
         // #endif
+
+     
+         const parserLoad = new SVGA.Parser()
+       
+         parserLoad.load('https://img.shinemang.com/gachaStatic/svga/wxs_b.svga',(res)=>{
+         this.globalData.wxs_b = res   
+             console.log(getApp().globalData.wxs_b,getApp().globalData.wxs_s,'23423423423')
+        })
+         parserLoad.load('https://img.shinemang.com/gachaStatic/svga/wxs_s.svga',(res)=>{
+            this.globalData.wxs_s =  res
+              console.log(getApp().globalData.wxs_b,getApp().globalData.wxs_s,'23423423423')
+         })
+
+       
     },
     methods: {
         // ...mapMutations(["updateMgTvLogin"]),
