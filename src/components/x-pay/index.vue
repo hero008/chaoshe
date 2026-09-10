@@ -581,7 +581,6 @@ export default {
       //   this.goto("/pages/login/login");
       //   return;
       // }
-      this.preloadAnimation()
       this.goldNumber = this.userInfo.gold; // 金币
       this.goMitigate = false;
       this.goXcoin = false;
@@ -779,35 +778,7 @@ export default {
       }
     },
 
-    preloadAnimation(){
-       if(this.mtype == 3){
-         let preloadWsxTime = uni.getStorageSync('preloadWsxTime');
-         let now = new Date().getTime();
-         if(!preloadWsxTime || (now - preloadWsxTime) > 1296000000 ){
-              new Parser().load('https://img.shinemang.com/gachaStatic/svga/wxs_b.svga')
-              new Parser().load('https://img.shinemang.com/gachaStatic/svga/wxs_s.svga')
-              uni.setStorageSync('preloadWsxTime',now)
-          }
-      }
-      if(this.mtype == 4){
-         let preloadDdlTime = uni.getStorageSync('preloadDdlTime');
-         let now = new Date().getTime();
-          if(!preloadDdlTime || (now - preloadDdlTime) > 1296000000 ){
-              new Parser().load('https://img.shinemang.com/gachaStatic/svga/ddl.svga')
-              new Parser().load('https://img.shinemang.com/gachaStatic/svga/bomb.svga')
-              uni.setStorageSync('preloadDdlTime',now)
-          }
-      }
-      if(this.mtype == 2){
-         let preloadNdjTime = uni.getStorageSync('preloadNdjTime');
-         let now = new Date().getTime();
-          if(!preloadNdjTime || (now - preloadNdjTime) > 1296000000 ){
-              new Parser().load('https://img.shinemang.com/gachaStatic/svga/ndj_big.svga')
-              new Parser().load('https://img.shinemang.com/gachaStatic/svga/ndj_small.svga')
-              uni.setStorageSync('preloadNdjTime',now)
-          }
-      }
-    },
+
 
     async onPay() {
 

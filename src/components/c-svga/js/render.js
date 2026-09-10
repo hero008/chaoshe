@@ -47,7 +47,42 @@ export default {
 					player.clearsAfterStop=data.clearsAfterStop
 					player.fillMode=data.fillMode
 					// console.time("test");
-					parser.load(await getfile(data.src),(videoItem)=>{
+					console.log(data.src,'324234234')
+                     
+
+					
+					if(data.src.includes('wxs_b') && getApp().globalData.wxs_b){
+
+                       player.setVideoItem(getApp().globalData.wxs_b);
+						
+						// console.log(player,videoItem);
+						// let {audios,images} = videoItem
+						// let audioFile="data:audio/x-mpeg;base64," + images[audios[0].audioKey] 
+						// console.log(URL.createObjectURL(this.dataURLtoBlob(audioFile)));
+						// console.timeEnd("test"); 
+						
+						this.$ownerInstance.callMethod('receiveRenderData',{name:'loaded'})
+						if(data.autoPlay){
+							player.startAnimation();
+						}
+					}else if(data.src.includes('wxs_s') && getApp().globalData.wxs_s){
+
+						
+						 player.setVideoItem(getApp().globalData.wxs_s);
+						
+						// console.log(player,videoItem);
+						// let {audios,images} = videoItem
+						// let audioFile="data:audio/x-mpeg;base64," + images[audios[0].audioKey] 
+						// console.log(URL.createObjectURL(this.dataURLtoBlob(audioFile)));
+						// console.timeEnd("test"); 
+						
+						this.$ownerInstance.callMethod('receiveRenderData',{name:'loaded'})
+						if(data.autoPlay){
+							player.startAnimation();
+						}
+					}else{
+                      parser.load(await getfile(data.src),(videoItem)=>{
+						
 						player.setVideoItem(videoItem);
 						
 						// console.log(player,videoItem);
@@ -63,6 +98,10 @@ export default {
 					},err=>{
 						console.error(err);
 					})
+					}
+                    
+
+				
 					
 					player.onFinished(()=>{ //只有在loop不为0时候触发
 						// console.log('动画停止播放时回调');

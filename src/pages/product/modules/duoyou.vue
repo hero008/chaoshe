@@ -165,7 +165,7 @@ export default {
  
     },
     mounted() {
-        this.loadLocalImages();
+        // this.loadLocalImages();
     },
     components: { cSvga },
     methods: {
@@ -237,7 +237,7 @@ export default {
            }
            this.show = true;
            
-                this.dynamicEffectShow = true;
+           this.dynamicEffectShow = true;
             
            
             this.totalPage = Math.ceil(da.length / 10)
