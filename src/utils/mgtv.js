@@ -3,10 +3,11 @@ import { goto } from "./fun";
 import store from "../store";
 import BigNumber from "bignumber.js";
 
-export const isProd =  process.env.NODE_ENV === "production"
-export const originUrl= isProd? 'https://mxs.mgworld.cn':"http://t8080.mgtv.com:8080"
+export const isProd = process.env.NODE_ENV === "production"
+//  'https://mxs.mgworld.cn'
+export const originUrl= isProd? 'http://t8080.mgtv.com:8080':"http://t8080.mgtv.com:8080"
 
-export const  shareUrl = isProd ?originUrl+'?isFullScreen=1&isHideNavBar=1':'http://t8080.mgtv.com:8080?isFullScreen=1&isHideNavBar=1'
+export const  shareUrl = originUrl+'?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
   return /imgo/i.test(window.navigator.userAgent);
 };

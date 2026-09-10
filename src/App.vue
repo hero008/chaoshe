@@ -236,9 +236,11 @@ export default {
         }
 
      }else{
-       if(!honery){
-          post('v1/system/middle-page-jump-target',{
-            source:isIos()?'MiddlePageSource_Android':'MiddlePageSource_IOS'
+        if(!honery){
+          let params = getLocalParams();
+          post('v1/system/middle-page/jump/target',{
+            source:isIos()?'MiddlePageSource_IOS':'MiddlePageSource_Android',
+            channel:params.channel
         }).then((res)=>{
                if(res.target == 'JumpTarget_MP'){
                    let params = getLocalParams();
@@ -260,7 +262,7 @@ export default {
         })
        }
      }
-
+    
      uni.setStorageSync("currentChange", 0);
     
 
