@@ -290,11 +290,9 @@ export default {
        
          parserLoad.load('https://img.shinemang.com/gachaStatic/svga/wxs_b.svga',(res)=>{
          this.globalData.wxs_b = res   
-             console.log(getApp().globalData.wxs_b,getApp().globalData.wxs_s,'23423423423')
         })
          parserLoad.load('https://img.shinemang.com/gachaStatic/svga/wxs_s.svga',(res)=>{
             this.globalData.wxs_s =  res
-              console.log(getApp().globalData.wxs_b,getApp().globalData.wxs_s,'23423423423')
          })
 
        

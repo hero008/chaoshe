@@ -50,7 +50,7 @@ export default {
 
 					
 					if(data.src.includes('wxs_b') && getApp().globalData.wxs_b){
-
+                       console.log('wxs_b')
                        player.setVideoItem(getApp().globalData.wxs_b);
 						
 						// console.log(player,videoItem);
@@ -64,7 +64,8 @@ export default {
 							player.startAnimation();
 						}
 					}else if(data.src.includes('wxs_s') && getApp().globalData.wxs_s){
-						 player.setVideoItem(getApp().globalData.wxs_s);
+						 console.log('wxs_s')
+						player.setVideoItem(getApp().globalData.wxs_s);
 						
 						// console.log(player,videoItem);
 						// let {audios,images} = videoItem
@@ -77,6 +78,7 @@ export default {
 							player.startAnimation();
 						}
 					}else{
+						console.log('other')
                       parser.load(await getfile(data.src),(videoItem)=>{
 						
 						player.setVideoItem(videoItem);
