@@ -47,8 +47,6 @@ export default {
 					player.clearsAfterStop=data.clearsAfterStop
 					player.fillMode=data.fillMode
 					// console.time("test");
-					console.log(data.src,'324234234')
-                     
 
 					
 					if(data.src.includes('wxs_b') && getApp().globalData.wxs_b){
@@ -66,8 +64,6 @@ export default {
 							player.startAnimation();
 						}
 					}else if(data.src.includes('wxs_s') && getApp().globalData.wxs_s){
-
-						
 						 player.setVideoItem(getApp().globalData.wxs_s);
 						
 						// console.log(player,videoItem);
