@@ -967,7 +967,7 @@ export default {
            }else if(this.mtype == 12){
             gachaName = 'fh'
            }
-            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:gachaName,gachaId:this.source_id})
+            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:gachaName,gachaId:this.source_id,payId:res.res.createPaymentReply.payId})
          
         }else{
           uni.showToast({

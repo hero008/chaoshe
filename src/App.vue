@@ -216,23 +216,28 @@ export default {
 
      if(!isMTVapp()){
         if(isProd){
-            let url = shareUrl;
-            let params = getLocalParams();
-            let gachaName = params.gachaName;
-            let gachaId =  params.gachaId;
-            let channel = params.channel;
-            let inviteCode = params.inviteCode;
-             if(inviteCode){
-              url= url+'&inviteCode='+inviteCode
-             }
-             if(channel){
-              url= url+'&channel='+channel
-             }
-             if(gachaName && gachaId){
-               url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
-             }
-            
-            //  alert(url)
+            //分享用  // 如果是回调 
+           var url = ''
+            if(window.location.hash.length > 15){
+                url = window.location.href;
+            }else{
+                url = shareUrl;
+                let params = getLocalParams();
+                let gachaName = params.gachaName;
+                let gachaId =  params.gachaId;
+                let channel = params.channel;
+                let inviteCode = params.inviteCode;
+                if(inviteCode){
+                url= url+'&inviteCode='+inviteCode
+                }
+                if(channel){
+                url= url+'&channel='+channel
+                }
+                if(gachaName && gachaId){
+                url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+                }
+
+            }
            window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
           `imgotv://webview?url=${encodeURIComponent(url)}`,
           )}`;

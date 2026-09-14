@@ -806,7 +806,7 @@ export default {
            this.surePayMessage = {
             payId:res.res.createPaymentReply.payId
            }
-           jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type})
+           jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type,payId:res.res.createPaymentReply.payId})
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {
           //   mgtv.requestPaymentGameItem({

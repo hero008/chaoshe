@@ -11,7 +11,6 @@ export default {
     data() {
         return {
              targetUrl:'',
-             
         };
     },
     onLoad(da){
@@ -32,12 +31,12 @@ export default {
             }
       
     },
-
     onShow(da){
-       
-     if(window.location.href.includes('isPay=1')){
+     if(window.location.href.includes('isPay=1') || uni.getStorageSync('isPay')){
+        uni.removeStorageSync('isPay')
         MgtvApi.closeWebView();
      }else{
+        uni.setStorageSync('isPay',1)
         history.replaceState(null, '',location.href +'&isPay=1')
         if(this.targetUrl.includes('http')){
             window.location.href= this.targetUrl

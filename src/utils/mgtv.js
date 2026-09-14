@@ -138,58 +138,41 @@ export function isVideo(url) {
 
 export const jumpPayUrl = (link,data)=>{
    if(!isMTVapp()){
-    // if(data){
-      //  if(link.includes('alipay')){
-      //  }else{
-      //     if(data.gachaName){
-      //       if(data.gachaName == 'shop'){
-      //         const addReturnUrl = originUrl+'#/pages/shopping/commodity?id='+data.gachaId+'&type='+data.type
-      //         link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
-      //       }else if(data.gachaName == 'wxs'){
-      //           const addReturnUrl = originUrl+'#/pages/product/chaowanshang?id='+data.gachaId
-      //         link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
-      //       }else if(data.gachaName == 'ddl'){
-      //           const addReturnUrl = originUrl+'#/pages/product/dongle?id='+data.gachaId
-      //         link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
-      //       }else if(data.gachaName == 'ndj'){
-      //             const addReturnUrl = originUrl+'#/pages/product/niudan?id='+data.gachaId
-      //         link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
-      //       }else if(data,gachaName == 'ddp'){
-      //         const addReturnUrl = originUrl+'#/pages/product/duiduipeng?id='+data.gachaId
-      //         link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
-      //       }else if(data.gachaName == 'fw'){
-      //          const addReturnUrl = originUrl+'#/pages/shipments/selectGoods'
-      //         link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
-      //       }
-      //     }
-      //  }
-
+    // if(data){ 
+    //    if(link.includes('alipay')){
+    //    }else{
+    //       if(data.gachaName){
+    //         if(data.gachaName == 'shop'){
+    //           const addReturnUrl = originUrl+'#/pages/shopping/commodity?id='+data.gachaId+'&type='+data.type+'&payid='+data.payId
+    //           link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
+    //         }else if(data.gachaName == 'wxs'){
+    //             const addReturnUrl = originUrl+'#/pages/product/chaowanshang?id='+data.gachaId+'&payid='+data.payId
+    //           link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
+    //         }else if(data.gachaName == 'ddl'){
+    //             const addReturnUrl = originUrl+'#/pages/product/dongle?id='+data.gachaId+'&payid='+data.payId
+    //           link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
+    //         }else if(data.gachaName == 'ndj'){
+    //               const addReturnUrl = originUrl+'#/pages/product/niudan?id='+data.gachaId+'&payid='+data.payId
+    //           link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
+    //         }else if(data,gachaName == 'ddp'){
+    //           const addReturnUrl = originUrl+'#/pages/product/duiduipeng?id='+data.gachaId+'&payid='+data.payId
+    //           link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
+    //         }else if(data.gachaName == 'fh'){
+    //            const addReturnUrl = originUrl+'#/pages/shipments/selectGoods'+'?payid'+data.payId
+    //           link+=  '&redirect_url'+ encodeURIComponent(addReturnUrl) 
+    //         }
+    //       }
+    //    }
     // }
+    // window.location.href = link;
     window.open(link);
   //  window.location.href = link
    return;
   }
 
-const is_app = /imgo/i.test(window.navigator.userAgent)
-const is_ipad = /ipad/i.test(window.navigator.userAgent)
-
-if (isVideo(link)) { 
-    let schema = link;
-    if (is_app) {
-      if (is_ipad) {
-        schema = video_schema(link, 'pad')
-      } else {
-        schema = video_schema(link, 'mobile')
-      }
-      window.location.href = schema
-    }else{
-      window.location.href = link;
-    }
-  }else{
-      MgtvApi.jumpPage({
+ MgtvApi.jumpPage({
          url:originUrl + '#/pages/common/pay?url='+ link,
         });
-  }
 }
 export const  jumpUrl =(link,data='')=>{
   if(!isMTVapp()){
