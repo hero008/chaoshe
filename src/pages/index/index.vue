@@ -57,7 +57,7 @@ export default {
             showBannerActivityDetail:null,
             bannersActivityList:[],
             tbStyle: {
-                selectIndex: 2,  // 默认展示首页
+                selectIndex: 0,  // 默认展示首页
             },
             chaowanInx: 1,  // 潮玩tab 默认一
             isPopupVisible: true, // 没用到, 
@@ -130,7 +130,7 @@ export default {
   
     onShow() {
         let inx = uni.getStorageSync("currentChange"); //当前底部的tab
-        inx = [0, 1, 2, 3, 4].includes(inx) ? inx : 2; // 是否包含在tab上面
+        inx = [0, 1, 2, 3, 4].includes(inx) ? inx : 0; // 是否包含在tab上面
         this.tbStyle.selectIndex = inx; //当前tab 选中
         if (this.$refs.xtabbar) this.$refs.xtabbar.upindex(inx); // 修改
         if (this.$refs.marketPage && inx == 1) this.$refs.marketPage.refresh(); //刷新对应的界面

@@ -209,6 +209,7 @@ export const mgTvIsLogin = () => {
             if (user_info && user_info.length !== 0) {
                 const userInfo = JSON.parse(user_info);
                 if (userInfo.ticket && userInfo.uuid) {
+                   uni.setStorageSync('ticket',userInfo.ticket)
                    const localUUid = uni.getStorageSync('uuid')
                    if(localUUid && localUUid == userInfo.uuid){
                      resolve(true)

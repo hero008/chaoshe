@@ -80,6 +80,7 @@ export default {
           if (user_info && user_info.length !== 0) {
             const userInfo = JSON.parse(user_info);
             if (userInfo.ticket && userInfo.uuid) {
+               uni.setStorageSync('ticket',userInfo.ticket)
                 this.needLogin = false;
               let channel = uni.getStorageSync("channel");
               post("v1/user/login", {
