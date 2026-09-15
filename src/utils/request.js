@@ -34,6 +34,10 @@ uni.addInterceptor('request', {
         if(args && args.header){
           args.header.Channel =  channel ? channel : 'Channel_Official';
         }
+        let ticket = uni.getStorageSync('ticket')
+         if(args && args.header){
+          args.header.Mgtv_ticket =  ticket ? ticket : '';
+        }
     },
 
     // 请求成功

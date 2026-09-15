@@ -49,6 +49,7 @@ export default {
     toLogin() {
         if(window.mgtv){
           this.loginMgtv((res)=>{
+            uni.setStorageSync('ticket',res.ticket)
             let channel = uni.getStorageSync('channel')
                post("v1/user/login", {
                 phone_num: "",

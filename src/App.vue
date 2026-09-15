@@ -198,7 +198,8 @@ export default {
                     success(res) {
                             const uuid = res.data.uuid;
                             const localUUid = uni.getStorageSync('uuid')
-                            console.log(localUUid);
+
+                            uni.setStorageSync('ticket',res.data.ticket)
                          if(localUUid != uuid){
                             uni.removeStorageSync("aToken");
                             uni.removeStorageSync("rToken");
