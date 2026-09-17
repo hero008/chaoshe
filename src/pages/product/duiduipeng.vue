@@ -1912,7 +1912,7 @@ position: relative;
     position: absolute;
     right: 32rpx;
     top: 685rpx;
-    width: 102rpx;
+    width: 104rpx;
     height: 120rpx;
       pointer-events:auto;
     position: absolute;

@@ -229,7 +229,7 @@
 
      
     </u-popup>
-     <view @click="testWEb" class="testNtm">23423423</view>
+     <!-- <view @click="testWEb" class="testNtm">23423423</view> -->
   </view>
 </template>
 <script>
