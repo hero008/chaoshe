@@ -169,7 +169,7 @@
                     "
                     :class="[value.className, {forbid_btn: probability > 10 && value.text == '全包'}]"
                     
-                    @click="probability > 10 && value.text == '全包'?tipQb(): onpay(value.num)">
+                    @click="probability > 10 && value.text == '全包'?tipQb(): onpay(value.num,0,1)">
                     {{ value.text }}</view>
             </view>
             <view  class="special_btn1 flex_c" v-else :class="{
@@ -240,7 +240,7 @@
         <!-- 详情弹窗 -->
       
         <!-- 支付 -->
-        <x-pay @success="onClickDraw" ref="xPay" mtype="2" :probabilityShow="probabilityShow" />
+        <x-pay :maxNum="buyMaxNum"  @success="onClickDraw" ref="xPay" mtype="2" :probabilityShow="probabilityShow" />
         <!-- 中赏记录 -->
         <draw-log-else ref="drawLog" :drawType="2"  @onRefresh="onRefresh"  />
         <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="eggTwister.gacha.themeName"
@@ -358,6 +358,11 @@ export default {
         // xPrize
     },
     computed: {
+          buyMaxNum() {
+            let max =this.userInfo &&  this.userInfo.featureConfig && (this.userInfo.featureConfig.biggerBetNum == 'FeatureFlag_Enable' ||   this.userInfo.featureConfig.biggerBetNum == 'FeatureFlag_AdminOpen')? 200: 50
+            const left = this.gachainfo ? Number(this.gachainfo.leftAwards) : 0;
+            return left === -1 ?  max : (left > max ? max : left);
+      },
         ...mapState(["userInfo"]),
         probability() {
             let num =
@@ -514,7 +519,7 @@ export default {
             // });
 
         },
-        onpay(num, special = 0) {
+        onpay(num, special = 0,canSelectAmount=0) {
          
             let res = Postpayment(this.eggTwister, num, special);
             if (res && res.m > 0) {
@@ -528,7 +533,9 @@ export default {
                     0,
                     this.gachainfo.discount,
                     this.gachainfo.themeId,
-                    this.gachainfo
+                    this.gachainfo,
+                    this.eggTwister,
+                    canSelectAmount
                 );
                 this.UppayMessage({
                     url: "v1/gacha/open",

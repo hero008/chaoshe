@@ -264,7 +264,7 @@
                     <view :class="[cutPattern + 'Img']"> </view>
                 </view>
                 <view v-for="(value, index) in payOptions" :key="index" class="btn-item flex_c flex_jc"
-                    :class="value.class" @click="onpay(value.num)">
+                    :class="value.class" @click="onpay(value.num,0,1)">
                     <view>{{ value.text }} </view>
                     <!-- #ifdef MP-WEIXIN -->
                     <!-- <view class="number">{{ value.price }} </view> -->
@@ -303,7 +303,7 @@
        
          </movable-area>
         <!-- 支付 潮玩赏-->
-        <x-pay @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
+        <x-pay  :maxNum="buyMaxNum"  @success="onClickDraw" ref="xPay" mtype="3" :probabilityShow="probabilityShow" />
         <!-- 详情弹窗 -->
      
         <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"
@@ -482,6 +482,11 @@ export default {
         bzModal
     },
     computed: {
+
+      buyMaxNum() {
+            const left = this.gachainfo ? Number(this.gachainfo.leftAwards) : 0;
+            return left === -1 ? 100 : (left > 100 ? 100 : left);
+      },
        ...mapState(["userInfo"]),
         conHeight() {
             let h = this.SystemInfo.screenHeight;
@@ -785,7 +790,7 @@ export default {
                 uni.hideLoading();
             }, 1200);
         },
-        onpay(num, special = 0) {
+        onpay(num, special = 0,canSelectAmount=0) {
             let res = Postpayment(this.AReward, num, special);
       
             if (res && res.m > 0) {
@@ -799,7 +804,9 @@ export default {
                     0,
                     this.gachainfo.discount,
                     this.gachainfo.themeId,
-                    this.gachainfo
+                    this.gachainfo,
+                    this.AReward,
+                    canSelectAmount
                 );
                 this.UppayMessage({
                     url: "v1/gacha/open",

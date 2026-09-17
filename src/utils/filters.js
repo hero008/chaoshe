@@ -13,7 +13,7 @@ function levelNum(va) {
 
 // 优惠券使用条件
 function userange(da) {
-    let playType = ['一番赏', '扭蛋赏', '潮游赏', '炸弹赏', '芒星赏','对对碰']
+    let playType = ['一番赏', '扭蛋赏', '无限赏', '炸弹赏', '','','对对碰']
     switch (da.va) {
         case 2:
             return '仅' + playType[da.target - 1] + '可用'
@@ -21,6 +21,7 @@ function userange(da) {
             return '仅' + da.name + '可用'
         case 4:
             return '仅' + da.name + '可用'
+
         default:
             return "无限制"
     }

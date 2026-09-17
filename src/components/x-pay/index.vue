@@ -9,7 +9,7 @@
   >
     <view class="pay_module">
       <div class="title">
-        确认订单 <span v-if="gachaInfo">({{ payNum }}{{showMultiple?'倍':'抽'}})</span>
+        确认订单 <span v-if="gachaInfo">({{ payNum }}{{showMultiple?'倍':'抽'}}){{ selectTicket && selectTicket.type == 'COUPON_TYPE_FREE' && selectTicket.ids.length > 1?'x'+selectTicket.ids.length:'' }}</span>
       </div>
       <div @click="close" class="closeBtn"></div>
 
@@ -29,10 +29,12 @@
                 >￥{{ item.price }}/抽</view
               >
             </view>
-            <view v-if="mtype == 7" class="quantity flex_r flex_jb flex_ac">
-              <view class="flex_r flex_ac" v-if="showQuantity">
-                <view class="quantity_btn reduce" @click="onChangeQuantity(-1)"
-                  ></view
+            <view v-if="mtype == 7 || ( mtype == 3 && this.canSelectAmount) || ( mtype == 2 && this.canSelectAmount)" class="quantity flex_r flex_jb flex_ac">
+              <!-- <view class="txt">x{{ selectTicket.ids.length  }}</view> -->
+
+              <!-- ( mtype != 7 && selectTicket &&  selectTicket.type!= 'COUPON_TYPE_FREE' ) || (showQuantity && mtype == 7&& selectTicket &&  selectTicket.type!= 'COUPON_TYPE_FREE')  -->
+              <view class="flex_r flex_ac"  v-if="showQuantity">
+                <view class="quantity_btn reduce" @click="onChangeQuantity(-1)"></view
                 >
                 <input
                   class="quantity_input"
@@ -43,7 +45,8 @@
                 />
                 <view class="quantity_btn add" @click="onChangeQuantity(1)"></view>
               </view>
-              <view class="txt" v-if="showMultiple">x1</view>
+               <!-- || (selectTicket && selectTicket.type== 'COUPON_TYPE_FREE') {{showMultiple?"x"+(selectTicket.ids && selectTicket.ids.length?selectTicket.ids.length:1):'x'+selectTicket.ids.length}}-->
+             <view class="txt" v-if="showMultiple">x1</view>
             </view>
           </view>
         </view>
@@ -109,7 +112,7 @@
           <div v-if="!fetchCoupon" class="tickets flex_r flex_ac">
             <span v-if="selectTicket.id" class="ticket_item">{{
               selectTicket.name
-            }}</span>
+            }}{{ selectTicket.type == 'COUPON_TYPE_FREE'?('x'+selectTicket.ids.length):'' }}</span>
             <span v-else-if="severalPieces" style="color: red" class="no_msg"
               >您有{{ severalPieces }}张优惠券可以使用</span
             >
@@ -133,14 +136,14 @@
         >
           <span class="txt">星光积分抵扣</span>
           <view class="integral_r flex_r flex_ac">
-            <view class="integral_num"
+           <block  v-if="!fetchCoupon"> <view class="integral_num"
               >({{
                 timesAmount(mitigate, offsetInfo.config[0].offsetAmount)
               }}星光积分)</view
             >
             <view class="integral_nums" v-if="Number(mitigate) > 0.0"
               >-￥{{ mitigate }}</view
-            >
+            ></block>
             <view
               class="integral_btn"
               :class="{ av: goMitigate }"
@@ -334,6 +337,7 @@ import { callPayment } from "@/utils/pay.js";
 import { isIos } from "../../utils/mgtv";
 import { goto } from "../../utils/fun";
 import { Parser, Player } from 'svgaplayer-weapp'
+import { Postpayment } from "../../utils/pay";
 //     GachaType_Nil = 0;
 //     GachaType_Kuji = 1;         // 一番赏
 //     GachaType_Gashapon = 2;     // 彩蛋机
@@ -501,6 +505,8 @@ export default {
       baseAmount: 0, // 单份支付总额（未乘倍数/数量）
       baseNum: 0, // 单份购买次数（未乘倍数/数量）
       fetchCoupon: false,
+      AReward:'',
+      canSelectAmount:false
     };
   },
 
@@ -517,7 +523,7 @@ export default {
     },
     // 对对碰普通模式展示购买次数加减
     showQuantity() {
-      return this.mtype == "7" && !this.isMultiple;
+      return (this.mtype == "7" || (this.mtype == '3' && this.canSelectAmount) || (this.mtype == '2' && this.canSelectAmount)) && !this.isMultiple;
     },
     // 当前生效的换算系数：疯狂模式取倍数，普通模式取购买次数
     payFactor() {
@@ -527,7 +533,15 @@ export default {
     },
     // 当前倍数/数量下未优惠的应付总额，作为优惠重算的基数（不改动 oldamount）
     originalAmount() {
-      return Number(this.$h.Mul(this.baseAmount, this.payFactor).toFixed(2));
+      if((this.mtype == 3 && this.canSelectAmount) || (this.mtype == 2 && this.canSelectAmount)){
+        if(this.AReward){
+           const res = Postpayment(this.AReward,this.payQuantity,0)
+        return res.m
+        }
+      }else{
+           return Number(this.$h.Mul(this.baseAmount, this.payFactor).toFixed(2));
+
+      }
     },
   },
   created() {
@@ -568,6 +582,8 @@ export default {
       discount = 0,
       theme_id,
       gachaInfo = "",
+      AReward='',
+      canSelectAmount=false
     ) {
       // #ifndef MP-WEIXIN 微信小程序需要
       // 0潮币 1支付宝 2微信 3微信小程序 推荐使用this.mtype !== "12"
@@ -587,11 +603,21 @@ export default {
       this.amount = amount; // 传过来的金额
       this.oldamount = amount; // 传过来的金额
       this.payNum = num; // 数量
+      this.canSelectAmount = canSelectAmount
+      this.AReward = AReward
 
-      this.baseAmount = amount;
-      this.baseNum = num;
-      this.payMultiple = this.showMultiple ? this.multipleOptions[0] : 1;
-      this.payQuantity = 1;
+       if((this.mtype == 3 && this.canSelectAmount) || (this.mtype == 2 && this.canSelectAmount)){
+           this.baseAmount = 1;
+        this.baseNum = 1
+        this.payQuantity = num
+       }else{
+           this.baseAmount = amount;
+          this.baseNum = num;
+          this.payQuantity = 1;
+       }
+    
+       this.payMultiple = this.showMultiple ? this.multipleOptions[0] : 1;
+     
       this.applyPayFactor();
 
       this.source_type = source_type;
@@ -653,9 +679,8 @@ export default {
     },
 
     applyPayFactor() {
-      this.payNum = this.$h.Mul(this.baseNum, this.payFactor);
-      this.amount = this.originalAmount;
-      console.log(this.amount);
+        this.payNum = this.$h.Mul(this.baseNum, this.payFactor);
+        this.amount = this.originalAmount;
     },
     /** 倍数/数量变化后：重算金额，并重置重新查询依赖金额与次数的优惠信息 */
     refreshPayAmount() {
@@ -759,7 +784,15 @@ export default {
         });
         this.severalPieces = a.tableData.length;
         if (a.tableData.length > 0) {
-          this.UpselectTicket(a.tableData[0].id ? a.tableData[0] : {});
+          if(a.tableData[0].type == 'COUPON_TYPE_FREE'){
+            let ticket = a.tableData[0]
+            ticket.ids = [a.tableData[0].id]
+            a.tableData[0].ids = [a.tableData[0].id]
+            this.UpselectTicket(ticket);
+          }else{
+             this.UpselectTicket(a.tableData[0].id ? a.tableData[0] : {});
+
+          }
         }
         this.fetchCoupon = false;
       }
@@ -781,6 +814,7 @@ export default {
 
 
     async onPay() {
+      console.log(this.selectTicket,'sleectTick');
 
      
 
@@ -1012,6 +1046,9 @@ export default {
         : 0;
     },
     xCoinBanlance() {
+      if(this.amount == 0){
+        return;
+      }
       const ticketPrice = this.selectTicket.id
         ? this.selectTicket.discountPrice
         : 0;
@@ -1052,12 +1089,12 @@ export default {
       }
     },
     onGoMitigate() {
-      // if(!this.goMitigate){
-      //     if(this.amount == 0){
-      //         uni.$u.toast("金额为0,不用抵扣了");
-      //         return;
-      //     }
-      // }
+      if(!this.goMitigate){
+          if(this.amount == 0){
+              uni.$u.toast("金额为0,不用抵扣了");
+              return;
+          }
+      }
 
       if (Number(this.mitigate) < 0.1) {
         if (
@@ -1099,6 +1136,9 @@ export default {
       } else {
         this.goMitigate = false;
         this.mitigate = 0;
+        this.goXcoin = false;
+        this.xCoinDisountPrice = null
+        
         this.pays.forEach((i) => (i.consume = 0));
       }
       if (type) {
@@ -1186,6 +1226,23 @@ export default {
     },
   },
   watch: {
+    "selectTicket":{
+immediate: true,
+      deep: true,
+      handler(value){
+
+        if(value.type == 'COUPON_TYPE_FREE'){
+           
+          if(value.length <= this.maxNum){
+          
+            this.payQuantity = value.length;
+            this.applyPayFactor()
+          }
+        }
+        
+ 
+      }
+    },
     "selectTicket.discountPrice": {
       immediate: true,
       deep: true,
