@@ -220,9 +220,16 @@
           <img src="https://img.shinemang.com/gachaStatic/qrcode.png" alt="" />
         </view>
         <view class="tips">微信扫码进群解锁更多福利~</view>
+        <view @click="shareToWechat" class="shareToWechat">
+            分享到微信
+        </view>
         <view @click="showServerModal = false" class="close"></view>
+
       </view>
+
+     
     </u-popup>
+     <view @click="testWEb" class="testNtm">23423423</view>
   </view>
 </template>
 <script>
@@ -360,6 +367,19 @@ export default {
   },
 
   methods: {
+    shareToWechat(){
+      MgtvApi.shareTo({
+        type: 'wechat', // 分享平台：wechat(微信好友), moments(微信朋友圈)
+        style: 1, // 分享类型 0(链接), 1(图片)
+        title: '长按识别二维码加入', // 分享标题 
+        shareUrl: 'https://img.shinemang.com/gachaStatic/qrcode.png',// 分享链接（当style为1时，这里填写分享的图片地址或base64），dom生成base64 图片可使用 html2canvas,dom-to-image,vue-canvas-poster 等
+        shareDesc: '', // 分享描述
+        shareIcon: '' // 分享图标
+    });
+    },
+    testWEb(){
+       window.location.href = 'https://mxs.mgworld.cn?isFullScreen=1&isHideNavBar=1'
+    },
     getDanmu() {
       post("v1/publicize/push/barrage/all").then((res) => {
         this.danmuList = res.list;
@@ -694,7 +714,7 @@ export default {
   background: #ffffff;
   border-radius: 40rpx 40rpx 40rpx 40rpx;
   padding-top: 260rpx;
-  height: 758rpx;
+  height: 830rpx;
   .top {
     width: 654rpx;
     height: 260rpx;
@@ -1029,5 +1049,33 @@ export default {
   .notice-bar {
     width: calc(100% - 160rpx);
   }
+}
+
+.testNtm{
+  position: fixed;
+  width: 100%;
+  height: 30px;
+  bottom: 120px;
+  background: red;
+  z-index: 999999999;
+
+
+}
+
+.shareToWechat{
+  width: 264rpx;
+height: 80rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 40rpx 40rpx 40rpx 40rpx;
+margin: auto;
+margin-top: 20rpx;
+color:#1A1A1A;
+font-size: 28rpx;
+display: flex;
+font-weight: 800;
+align-items: center;
+justify-content: center;
+
+
 }
 </style>

@@ -1,6 +1,11 @@
 <template>
-    <view class="balance">
-        <x-navbar tit="交易记录" />
+    <view :style="{ paddingTop: MBInfo().top + 'px' }" class="balance">
+         <div :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
+            <view class="top_Back" @click.stop="gateBack">
+                <text class="icof Back_ico">&#xe72c;</text>
+                <text class="txt">交易记录</text>
+            </view>
+        </div>
         <div class="balance_con" :style="{ height: conHeight }">
             <!-- <div class="top_cord">
                 <div class="tit flex_r flex_ac flex_jb">
@@ -362,7 +367,31 @@ text{
       }
 }
 .navbar_x {
+    padding: 0 32rpx;
     position: relative;
+    z-index: 2;
+
+    .btn_r {
+        width: 162rpx;
+        height: 46rpx;
+    }
+
+    .top_Back {
+        color: #1c1c1c;
+
+        text {
+            vertical-align: middle;
+        }
+
+        .Back_ico {
+            font-size: 50rpx;
+            margin-right: 8rpx;
+        }
+
+        .txt {
+            font-size: 36rpx;
+        }
+    }
 }
 .balance_con {
     position: absolute;

@@ -136,17 +136,17 @@ export default {
 				return
 			} else {
 				switch (item.useRange) {
-					case 2:
-						this.goto('/pages/chaowan/gachasList', { type: item.target })
-						break;
-					case 3:
-						this.loadDetail({ gacha_id: item.target, box_index: 0, })
-						break;
-					case 4:
-						this.loadDetail({ theme_id: item.target })
-						break;
+					// case 2:
+					// 	this.goto('/pages/chaowan/gachasList', { type: item.target })
+					// 	break;
+					// case 3:
+					// 	this.loadDetail({ gacha_id: item.target, box_index: 0, })
+					// 	break;
+					// case 4:
+					// 	this.loadDetail({ theme_id: item.target })
+					// 	break;
 					default:
-						this.$sl("chaowanInx", 1, 1)
+						// this.$sl("chaowanInx", 1, 1)
 						uni.setStorageSync("currentChange", 0);
 						uni.reLaunch({
 							url: "/pages/index/index?chaowanInx=1"
@@ -162,21 +162,21 @@ export default {
 				// 1: 一番赏 2: 彩蛋机 3: 潮游赏 4：洞洞乐 res.gacha.type
 				var url = ''
 				switch (res.gacha.type) {
-					case 1:
-						url = '/pages/product/yifanshang'
-						break;
-					case 2:
-						url = '/pages/product/niudan'
-						break;
-					case 3:
-						url = '/pages/product/chaowanshang'
-						break;
-					case 4:
-						url = '/pages/product/dongle'
-						break;
-					case 5:
-						url = '/pages/product/chaosheshang'
-						break;
+					// case 1:
+					// 	url = '/pages/product/yifanshang'
+					// 	break;
+					// case 2:
+					// 	url = '/pages/product/niudan'
+					// 	break;
+					// case 3:
+					// 	url = '/pages/product/chaowanshang'
+					// 	break;
+					// case 4:
+					// 	url = '/pages/product/dongle'
+					// 	break;
+					// case 5:
+					// 	url = '/pages/product/chaosheshang'
+					// 	break;
 					default:
 						url = '/pages/index/index'
 						break;
