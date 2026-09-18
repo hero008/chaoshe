@@ -292,6 +292,7 @@ import middlePng from '@/static/middle.png'
 import smallPng from '@/static/small.png'
 import {isPositiveInteger,shareUrl } from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
+import { isIos } from "../../utils/mgtv.js";
 
 export default {
     data() {
@@ -377,7 +378,8 @@ export default {
             lordActivity:0,
             multiple:1,
 
-            surePayMessage:''
+            surePayMessage:'',
+            ios:isIos()
         };
     },
     components: {
@@ -387,9 +389,12 @@ export default {
     },
 
     onShow(){
-      if(this.surePayMessage){
-         this.$refs.surePayModal.open()
-      }
+        // if(!isIos){
+        //   if(this.surePayMessage){
+        //      this.$refs.surePayModal.open()
+        //    }
+        // }
+     
     },
     computed: {
 
@@ -804,11 +809,13 @@ export default {
         // #endif
         //支付成功回调
         onClickDraw(res, showAnim, type) {
-            console.log('234234234234')
-
+        
             this.surePayMessage = {
                   payId:res.res.createPaymentReply.payId
             }
+              setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                 }, 2000);
             // 进入新一局：重置上一局的结束标记与奖励，保证托管待机后能继续自动接管
             if (this.isAutoMode) {
                 uni.removeStorageSync('isAuto')

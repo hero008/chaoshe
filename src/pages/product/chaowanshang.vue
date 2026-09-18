@@ -392,7 +392,7 @@ import ball from "@/page-activity/ball/ball.vue";
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
-import { formateGachaLevelName,shareUrl } from "../../utils/mgtv";
+import { formateGachaLevelName,shareUrl,isIos } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
@@ -468,7 +468,8 @@ export default {
             newRecordList:'',
    
             lordActivity:0,
-            surePayMessage:''
+            surePayMessage:'',
+            ios:isIos()
             
 
 
@@ -504,9 +505,6 @@ export default {
     onShow() {
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
-        if(this.surePayMessage){
-            this.$refs.surePayModal.open()
-        }
     },
     methods: {
         surePaySuccess(val){
@@ -847,6 +845,9 @@ export default {
                 this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId
                 }
+                    setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                    }, 2000);
                 // this.onClickPrize(res.res.createPaymentReply.payId, true);
             }
         },

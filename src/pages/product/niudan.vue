@@ -398,9 +398,9 @@ export default {
             { num: 200, className: "btn-item4", text: '二百抽' },
             { num: this.gachainfo.leftAwards, className: "btn-item5", text: '全包' }]
         }
-           if(this.surePayMessage){
-            this.$refs.surePayModal.open()
-        }
+        //    if(this.surePayMessage){
+        //     this.$refs.surePayModal.open()
+        // }
     },
     created() {
         this.saveFile();
@@ -569,6 +569,9 @@ export default {
                      payId:res.res.createPaymentReply.payId,
                      showAnim:showAnim
                 }
+                 setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                 }, 2000);
                 // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },

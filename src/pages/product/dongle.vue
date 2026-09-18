@@ -341,6 +341,7 @@ import share from "./modules/share.vue";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort,shareUrl} from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
+import { isIos } from "../../utils/mgtv.js";
 
 export default {
     data() {
@@ -416,7 +417,8 @@ export default {
             activityOpen: false,
             LuckyVisible: false,
             scheduleNum: null,
-             surePayMessage:''
+             surePayMessage:'',
+             ios:isIos()
         };
     },
     components: {
@@ -445,9 +447,12 @@ export default {
         this.loadDetail();
         this.oldRandomNum = this.$gl("selectRandomNumber");
         this.RandomNum = this.oldRandomNum || 1;
-           if(this.surePayMessage){
-            this.$refs.surePayModal.open()
-        }
+        // if(!this.ios){
+        //    if(this.surePayMessage){
+        //     this.$refs.surePayModal.open()
+        // }
+        // }
+        
     },
     created() {
         this.saveFile();
@@ -633,6 +638,11 @@ export default {
                     payId:res.res.createPaymentReply.payId,
                     showAnim:showAnim
                 }
+              
+                    setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                    }, 2000);
+    
                 // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },

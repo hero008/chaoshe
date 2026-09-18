@@ -170,9 +170,28 @@ export const jumpPayUrl = (link,data)=>{
    return;
   }
 
- MgtvApi.jumpPage({
-         url:originUrl + '#/pages/common/pay?url='+ link,
-        });
+  const ios = isIos();
+ 
+  if(link.includes('alipay')){
+       if(ios){
+    window.location.href = link;
+  }else{
+      uni.setStorageSync('jumpUrl',link)
+     MgtvApi.jumpPage({
+         url:originUrl + '#/pages/common/pay',
+    });   
+  }
+  }else{
+    uni.setStorageSync('jumpUrl',link)
+     MgtvApi.jumpPage({
+         url:originUrl + '#/pages/common/pay',
+    });
+  }
+
+
+    
+    
+  
 }
 export const  jumpUrl =(link,data='')=>{
   if(!isMTVapp()){

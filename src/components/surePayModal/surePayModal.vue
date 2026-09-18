@@ -28,7 +28,7 @@ export default {
         this.show=true
      },
      close(){
-       this.$emit('surePaySuccess',0)
+    //    this.$emit('surePaySuccess',0)
        this.show=false;
      },
   
