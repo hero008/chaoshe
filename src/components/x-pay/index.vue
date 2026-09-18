@@ -105,6 +105,7 @@
               amount: oldamount,
               price: unitPrice,
               gacha_theme_id: theme_id,
+              is_free:( selectTicket.id && selectTicket.type == 'COUPON_TYPE_FREE') ? 1:2
             })
           "
         >
@@ -768,6 +769,9 @@ export default {
         this.payMessage.discount
       ) {
         this.fetchCoupon = true;
+
+        
+
         let a = await post("v1/coupon/list", {
           state: 1,
           ...{
@@ -780,6 +784,7 @@ export default {
             amount: this.amount,
             price: this.unitPrice,
             gacha_theme_id: this.theme_id,
+            is_free:1
           },
         });
         this.severalPieces = a.tableData.length;
@@ -791,8 +796,34 @@ export default {
             this.UpselectTicket(ticket);
           }else{
              this.UpselectTicket(a.tableData[0].id ? a.tableData[0] : {});
-
           }
+        }else{
+          let a = await post("v1/coupon/list", {
+          state: 1,
+          ...{
+            gacha_id: this.source_id,
+            gacha_type: Number(this.mtype),
+            nums: this.payNum,
+            page: 1,
+            page_size: 30,
+            state: 1,
+            amount: this.amount,
+            price: this.unitPrice,
+            gacha_theme_id: this.theme_id,
+            is_free:2
+          },
+        });
+        this.severalPieces = a.tableData.length;
+        if (a.tableData.length > 0) {
+          if(a.tableData[0].type == 'COUPON_TYPE_FREE'){
+            let ticket = a.tableData[0]
+            ticket.ids = [a.tableData[0].id]
+            a.tableData[0].ids = [a.tableData[0].id]
+            this.UpselectTicket(ticket);
+          }else{
+             this.UpselectTicket(a.tableData[0].id ? a.tableData[0] : {});
+          }
+        }
         }
         this.fetchCoupon = false;
       }
@@ -814,7 +845,6 @@ export default {
 
 
     async onPay() {
-      console.log(this.selectTicket,'sleectTick');
 
      
 
@@ -896,6 +926,13 @@ export default {
         // }
 
         //UppayMessage 只是存储值
+
+        let user_free_coupon_ids = [];
+        if(this.selectTicket.type == "COUPON_TYPE_FREE"){
+          this.selectTicket.ids.forEach((item)=>{
+            user_free_coupon_ids.push(Number(item))
+          })
+        }
         if (this.payMessage.url == "v1/gacha/open") {
           this.UppayMessage({
             url: "v1/gacha/open",
@@ -905,7 +942,8 @@ export default {
               box_index: this.box_index,
               nums: this.payNum,
               take_all: this.payNum > 0 ? 0 : 1,
-              user_coupon_id: this.selectTicket.id,
+              user_coupon_id:this.selectTicket.type == 'COUPON_TYPE_FREE' ? 0: this.selectTicket.id,
+              user_free_coupon_id:user_free_coupon_ids,
               is_offset: this.goMitigate ? 1 : 0, // 欧气值抵扣
               offset_money: this.goMitigate ? this.mitigate : 0, // 欧气值抵扣
               x_coin_discount: this.xCoinDisountPrice
@@ -922,8 +960,10 @@ export default {
             url: "ddl",
             message: {
               ...this.payMessage.message,
+
               pay_type: this.type_Coin,
-              user_coupon_id: this.selectTicket.id,
+              user_coupon_id:this.selectTicket.type == 'COUPON_TYPE_FREE' ? 0: this.selectTicket.id,
+              user_free_coupon_id:user_free_coupon_ids,
               is_offset: this.goMitigate ? 1 : 0,
               offset_money: this.goMitigate ? this.mitigate : 0,
               x_coin_discount: this.xCoinDisountPrice

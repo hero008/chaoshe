@@ -8,7 +8,7 @@
 		</div>
 		<div :style="{ height: conHeight }" class="shanggui_con">
 			 <view class="tabs_two flex_r">
-                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i,s)" v-for="(i,s) in navbar" :key="s">
+                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i.type)" v-for="(i,s) in navbar" :key="s">
                     <text>{{i.name}}</text>
                     <view v-if="i.type==active" class="line"></view>
                 </view>
@@ -137,8 +137,8 @@ export default {
         },
 	},
 	onLoad(da) {
-		if (da == {}) {
-			this.data = { state: 0, }
+		if (!da.gacha_id) {
+			this.data = { state: 0,is_free:2 }
 			return
 		}
 		Object.keys(da).forEach(key => {
@@ -147,6 +147,9 @@ export default {
 			}
 		});
 		this.data = da
+		if(this.data.is_free == 1){
+			this.active = 1
+		}
 	},
 	onShow() {
 		this.pageda.page = 1
@@ -175,14 +178,22 @@ export default {
 			this.selectTicketIds = [];
 		 }
 		},
-		 ontab2(item, index) {
-			// if(this.data.state == 1 && this.selectTicket.ids ){
-			// 	console.log(this.selectTicket.ids)
-            //  this.selectTicketIds = this.selectTicket.ids
+		 ontab2(item) {
 
-			// }
-			
-            this.active = item.type
+			if(this.active == item){
+				return;
+			}
+			this.active = item;
+			this.data.is_free = item == 1?1:2
+
+			this.pageda={
+				page: 1,
+				page_size: 30,
+				total: 30,
+			}
+
+			this.getMyCoupons()
+       
         },
 		...mapMutations(['UpselectTicket']),
 		getMyCoupons() {
