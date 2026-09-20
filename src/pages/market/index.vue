@@ -449,9 +449,10 @@ export default {
                         // if(res.order.state = getApp().globalData.MarketOrderState[res.order.state]){
                              
                         // }
+                        res.order.state = getApp().globalData.MarketOrderState[res.order.state];
                     
                        
-                        res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
+                        // res.order.map((i) => { i.state = getApp().globalData.MarketOrderState[i.state]; });
                         this.orderList.splice(this.oldInx.inx, 1, res.order);
                     }
                 });
