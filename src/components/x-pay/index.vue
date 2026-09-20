@@ -1313,6 +1313,9 @@ export default {
           
             this.payQuantity = value.length;
             this.applyPayFactor()
+          }else{
+            this.payQuantity = this.maxNum
+            this.applyPayFactor()
           }
         }
         
