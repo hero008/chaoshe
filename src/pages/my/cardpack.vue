@@ -7,10 +7,26 @@
 			</view>
 		</div>
 		<div :style="{ height: conHeight }" class="shanggui_con">
+			 <view class="tabs_two flex_r">
+                <view class="tab_item" :class="{active:i.type==active}" @click="ontab2(i.type)" v-for="(i,s) in navbar" :key="s">
+                    <text>{{i.name}}</text>
+                    <view v-if="i.type==active" class="line"></view>
+                </view>
+
+				<view  v-if="selectTicket && selectTicket.id && active == 1" class="selectAll">
+					<img @click="selectAllFree(false)" v-if="selectAll" src="https://img.shinemang.com/gachaStatic/select.png" alt="">
+					<img @click="selectAllFree(true)" v-else src="https://img.shinemang.com/gachaStatic/notSelect.png" alt="">
+					<span>全选</span>
+
+					<view @click="toUse" class="toUse">
+                      使用
+					</view>
+				</view>
+            </view>
 			<view class="p_lists">
-				<div class="title" v-if="data.state == 1">可用卡包</div>
+				<!-- <div class="title" v-if="data.state == 1">可用卡包</div> -->
 				<div class="order_list">
-					<template>
+					<template v-if="active == 0">
 						<scroll-view class="product-scroll" @scrolltolower="onReachScollBottom" :scroll-y="true"
 							v-if="myCouponData.length || myPostcardData.length">
 							<div class="order_item  flex_r flex_ac" :class="{ usedTicket: item.state != 1 }"
@@ -42,6 +58,41 @@
 						</scroll-view>
 						<u-empty v-else text="暂无卡券~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
 					</template>
+					<template v-else>
+						<scroll-view class="product-scroll" @scrolltolower="onReachScollBottom" :scroll-y="true"
+							v-if="myCouponData.length || myPostcardData.length">
+							<div class="order_item  flex_r flex_ac" :class="{ usedTicket: item.state != 1 }"
+								v-for="(item, index) in myCouponData" :key="index" @click="onclickToChaowan(item)">
+								<div class="rowl ticket flex_c flex_jc flex_ac">
+									<span class="txt">{{ item.discountPrice || "0" }}</span>
+									<span class="txt1">{{ {va: item.useRange, target: item.target, name:item.targetName} |userange }}</span>
+								</div>
+								<div class="row_r flex_r flex_ac flex_jb">
+									<div class="rowc borr flex_c flex_jc flex_as">
+										<div >
+											<div class="txt">{{ item.name }}</div>
+										</div>
+										<div class="ico"
+											@click.stop="goto('/pages/common/rulepop', { val: 'CouponRule' })">
+											<span>使用规则</span><span class="icof">&#xe72b;</span>
+										</div>
+										<div class="desc ellipsis">{{ item.desc }}</div>
+										<div class="date">有效期至：{{ item.expiredAt }}</div>
+									</div>
+									 <div class="rowr flex_r flex_jc flex_ac">
+										<div class="select" v-if="selectTicket && selectTicket.id && selectTicketIds.includes(item.id)"></div>
+									     
+										<div :class="['txt',item.state==4?'expired':'']" v-else-if="item.state != 1">{{ item.state== 3 ?"已使用" : item.state == 4 ? "" : "锁定" }}</div>
+										
+										 <div class="select notSelect" v-else-if="selectTicket && selectTicket.id && !selectTicketIds.includes(item.id)"></div>
+										<div class="txt" style="opacity: 1;" v-else>去使用</div> 
+									</div> 
+								</div>
+							</div>
+							<div class="con_msg" v-if="data.state == 1">~ 已过期或不能使用的券不予展示 ~</div>
+						</scroll-view>
+						<u-empty v-else text="暂无卡券~" icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
+					</template>
 				</div>
 			</view>
 		</div>
@@ -63,6 +114,17 @@ export default {
 			couponState: [''],
 			selectTicketId: undefined,
 			data: { state: 0, },
+			  navbar: [{
+                name:"卡券",
+                type:0,
+
+            }, {
+                name:"福利券",
+                type:1,
+            }],
+            active: 0,
+			selectTicketIds:[],
+			selectAll:false
 		};
 	},
 	computed: { ...mapState(['selectTicket']),
@@ -75,8 +137,8 @@ export default {
         },
 	},
 	onLoad(da) {
-		if (da == {}) {
-			this.data = { state: 0, }
+		if (!da.gacha_id) {
+			this.data = { state: 0,is_free:2 }
 			return
 		}
 		Object.keys(da).forEach(key => {
@@ -85,13 +147,54 @@ export default {
 			}
 		});
 		this.data = da
+		if(this.data.is_free == 1){
+			this.active = 1
+		}
 	},
 	onShow() {
 		this.pageda.page = 1
-		this.getMyCoupons()
+	
 		if (this.selectTicket.id) this.selectTicketId = this.selectTicket.id;
+		if(this.selectTicket.id){
+			if(this.selectTicket.type == 'COUPON_TYPE_FREE'){
+				this.selectTicketIds = this.selectTicket.ids || []
+				this.active = 1
+			}
+		}
+		this.getMyCoupons()
+
 	},
 	methods: {
+		
+		selectAllFree(val){
+         if(val){
+			this.selectAll = true;
+			this.selectTicketIds = [];
+			this.myCouponData.forEach((item)=>{
+				this.selectTicketIds.push(item.id)
+			})
+		 }else{
+			this.selectAll = false;
+			this.selectTicketIds = [];
+		 }
+		},
+		 ontab2(item) {
+
+			if(this.active == item){
+				return;
+			}
+			this.active = item;
+			this.data.is_free = item == 1?1:2
+
+			this.pageda={
+				page: 1,
+				page_size: 30,
+				total: 30,
+			}
+
+			this.getMyCoupons()
+       
+        },
 		...mapMutations(['UpselectTicket']),
 		getMyCoupons() {
 			post("v1/coupon/list", {
@@ -117,11 +220,39 @@ export default {
 				this.pageda.total = res.total;
 			})
 		},
+        toUse(){
+          if(this.selectTicketIds.length){
+			let useTicket = this.myCouponData[0];
+			useTicket.ids = this.selectTicketIds;
+			useTicket.freeAmount = this.myCouponData.length
+
+             	this.UpselectTicket(useTicket)
+				this.gateBack()
+			
+		  }else{
+            uni.showToast({
+				title:'请选择需要使用的券',
+				icon:'none'
+			})
+		  }
+		},
 		onclickToChaowan(item) {
+			if(this.active == 1 && this.data.state == 1){
+		
+				if(this.selectTicketIds.includes(item.id)){
+					this.selectTicketIds = this.selectTicketIds.filter(i=>i!=item.id)
+				}else{
+					this.selectTicketIds.push(item.id);
+				}
+				return;
+			}
 			// 所有, 1:未使用, 2:锁定, 3:已使用，4:过期
 			if (this.data.state == 1) {
 				let id = this.selectTicketId == item.id ? "" : item.id
 				this.selectTicketId = id
+				if(item.type == 'COUPON_TYPE_FREE'){
+					item.ids = [item.id]
+				}
 				this.UpselectTicket(id ? item : {})
 				this.gateBack()
 				return
@@ -137,7 +268,10 @@ export default {
 			} else {
 				switch (item.useRange) {
 					// case 2:
-					// 	this.goto('/pages/chaowan/gachasList', { type: item.target })
+					// 	uni.setStorageSync("currentChange", 0);
+					// uni.reLaunch({
+					// 		url: "/pages/index/index?chaowanInx=1"
+					// 	});
 					// 	break;
 					// case 3:
 					// 	this.loadDetail({ gacha_id: item.target, box_index: 0, })
@@ -149,7 +283,7 @@ export default {
 						// this.$sl("chaowanInx", 1, 1)
 						uni.setStorageSync("currentChange", 0);
 						uni.reLaunch({
-							url: "/pages/index/index?chaowanInx=1"
+							url: "/pages/index/index"
 						});
 						break;
 				}
@@ -253,58 +387,84 @@ background-color: #F5F6F8;
 	}
 }
 
+
 .tabs_two {
-	width: 276rpx;
-	height: 76rpx;
-	background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
-	background-size: 100% 100%;
-	font-size: 28rpx;
-	color: #FFFFFF;
-	line-height: 28rpx;
+    // width: 650rpx;
+    // background: #ac8afc;
+    // border-radius: 0 30rpx 0 0;
+    // padding-right: 20rpx;
+    // width: 468rpx;
+    height: 56rpx;
+    // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tabs_bg.png");
+    // background-size: 100% 100%;
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 28rpx;
+       padding-left: 32rpx;
+    padding-right: 62rpx;
+	position: relative;
 
-	.tab_item {
-		width: 50%;
-		line-height: 60rpx;
-		text-align: center;
+    .tab_item {
+      width: 136rpx;
+height: 56rpx;
+// background: #EEEEEE;
+// border-radius: 28rpx 28rpx 28rpx 28rpx;
+display: flex;
+color: #8D8D94;
+font-weight: bold;
+align-items: center;
+justify-content: center;
+line-height: 56rpx;
+margin-right: 16rpx;
+position: relative;
+.line{
+    width: 64rpx;
+height: 12rpx;
+background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+border-radius: 6rpx 6rpx 6rpx 6rpx;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+bottom: 4rpx;
+}
+text{
+    position: relative;
+    z-index: 2;
+}
+        &:first-child {
+            // margin-left: -16rpx;
+        }
+        &:last-of-type {
+            // margin-right: 10rpx;
+        }
 
-		&:first-child {
-			&.active {
-				margin-left: -16rpx;
-			}
-		}
-
-		&:last-child {
-			&.active {
-				margin-right: -4rpx;
-			}
-		}
-
-		&.active {
-			margin-top: -10rpx;
-			color: #333;
-			width: 156rpx;
-			height: 86rpx;
-			line-height: 76rpx;
-			font-weight: bold;
-			background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
-			background-size: 100% 100%;
-			font-size: 30rpx;
-		}
-	}
+        &.active {
+            // background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+            color: #1A1A1A;
+            // margin-top: -10rpx;
+            // color: #333;
+            // width: 156rpx;
+            // height: 86rpx;
+            // line-height: 76rpx;
+            // font-weight: bold;
+            // background: url("https://img.shinemang.com/gachaStatic/static/img/shanggui/tab_bg.png");
+            // background-size: 100% 100%;
+            // font-size: 30rpx;
+        }
+    }
 }
 
 .shanggui_con {
 	z-index: 2;
 	width: 100%;
-	height: calc(100% - 180rpx);
+	// height: calc(100% - 180rpx);
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	background-color: #fff;
 
 	.p_lists {
-		// height: calc(100% - 66rpx);
-		height: 100%;
+		height: calc(100% - 66rpx);
 		border-radius: 0 50rpx 0 0;
 		// background: #F4F4F4;
 		// margin-top: -15rpx;
@@ -320,8 +480,9 @@ background-color: #F5F6F8;
 }
 
 .order_list {
-	// height: 100%;
-	height: calc(100% - 66rpx);
+	height: 100%;
+	overflow-y: auto;
+	// height: calc(100% - 66rpx);
 
 	.product-scroll {
 		height: 100%;
@@ -482,7 +643,7 @@ background-color: #F5F6F8;
 
 	.rowr {
 		position: absolute;
-		right: 0;
+		right: 10rpx;
 		top: 0;
 		height: 100%;
 		// width: 88rpx;
@@ -493,8 +654,12 @@ background-color: #F5F6F8;
 			width: 36rpx;
 			height: 36rpx;
 			border-radius: 50%;
-			background-image: url(https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png);
+			background-image: url(https://img.shinemang.com/gachaStatic/select.png);
 			background-size: 100% 100%;
+			&.notSelect{
+					background-image: url(https://img.shinemang.com/gachaStatic/notSelect.png);
+			background-size: 100% 100%;
+			}
 		}
 
 		.txt {
@@ -617,6 +782,37 @@ background-color: #F5F6F8;
 		.row_r {
 			opacity: 0.6;
 		}
+	}
+}
+
+.selectAll{
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	right: 20rpx;
+	transform: translateY(-50%);
+	font-size: 28rpx;
+	color: #1A1A1A;
+	img{
+		width: 40rpx;
+		height: 40rpx;
+		margin-right: 8rpx;
+	}
+
+	.toUse{
+		    width: 100rpx;
+    height: 50rpx;
+    background: linear-gradient(90deg, #31e597 0%, #40e0ea 100%);
+    border-radius: 20px 20px 20px 20px;
+   
+    color: #1a1a1a;
+    font-size: 26rpx;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	margin-left: 20rpx;
 	}
 }
 </style>
