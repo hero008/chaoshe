@@ -482,14 +482,14 @@ export default {
                 msg: "支付宝支付",
                 consume: 0,
               },
-               {
-                name: "微信支付",
-                type: 2,
-                img: "WeChat",
-                show: true,
-                msg: "微信支付",
-                consume: 0,
-              },
+              //  {
+              //   name: "微信支付",
+              //   type: 2,
+              //   img: "WeChat",
+              //   show: true,
+              //   msg: "微信支付",
+              //   consume: 0,
+              // },
             ]
           : [
              {
@@ -500,14 +500,14 @@ export default {
                 msg: "支付宝支付",
                 consume: 0,
               },
-               {
-                name: "微信支付",
-                type: 2,
-                img: "WeChat",
-                show: true,
-                msg: "微信支付",
-                consume: 0,
-              },
+              //  {
+              //   name: "微信支付",
+              //   type: 2,
+              //   img: "WeChat",
+              //   show: true,
+              //   msg: "微信支付",
+              //   consume: 0,
+              // },
             ],
 
       paytypeList: [1], // 0潮币 1支付宝 2微信 3微信小程序
@@ -603,7 +603,9 @@ export default {
                  
               }
             }else{
-              uni.$u.toast(res.message);
+              if(val){
+                uni.$u.toast(res.message);
+              }
             }
            })
      },

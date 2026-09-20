@@ -213,7 +213,8 @@ export default {
             return this.selectRewardsInfo.length > 0;
         },
         conHeight() {
-            let h = this.SystemInfo.screenHeight;
+            let h = this.SystemInfo.windowHeight;
+
             let va = this.MBInfo();
             let th = va.height + va.top + 10;
             let str = h - th + "px";
@@ -265,7 +266,9 @@ export default {
                  
               }
             }else{
-              uni.$u.toast(res.message);
+                if(val){
+                    uni.$u.toast(res.message);
+                }
             }
            })
      },

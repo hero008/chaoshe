@@ -247,7 +247,7 @@ import DanmakuSimple from "@/components/danmu/danmu";
 export default {
   data() {
     return {
-        y:this.SystemInfo.screenHeight * 0.7,
+        y:this.SystemInfo.windowHeight * 0.7,
       danmuList: [],
 
       gachaList: [

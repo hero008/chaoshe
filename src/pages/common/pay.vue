@@ -25,17 +25,16 @@ export default {
         let targetUrl = uni.getStorageSync('jumpUrl')
   
         if(window.location.href.includes('isPay=1') || !targetUrl){
+            uni.removeStorageSync('jumpUrl')
             MgtvApi.closeWebView();
         }else{
             if(targetUrl.includes('alipay')){
-            this.targetUrl = targetUrl
+              this.targetUrl = targetUrl
             }else{
-            this.targetUrl = targetUrl 
+              this.targetUrl = targetUrl 
             }
-
-           
-            uni.removeStorageSync('jumpUrl')
-            window.location.href= this.targetUrl
+              uni.removeStorageSync('jumpUrl')
+              window.location.href= this.targetUrl
         }
     }
    

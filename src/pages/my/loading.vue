@@ -18,7 +18,7 @@
 </template>
 <script>
 import { post } from "@/utils/api.js";
-import { isMTVapp,shareUrl,isProd, getLocalParams } from "../../utils/mgtv";
+import { isMTVapp,shareUrl,isProd, getLocalParams, isIos } from "../../utils/mgtv";
 import {  mapActions } from "vuex";
 
 let that;
@@ -30,6 +30,7 @@ export default {
       title:'提示',
       content:'登录失败,请重试,体验更多内容吧',
        needLogin:false,
+       ios:isIos()
     };
   },
   created() {
@@ -87,7 +88,7 @@ export default {
                 phone_num: "",
                 type: 8,
                 code: userInfo.ticket,
-                login_platform: 0,
+                login_platform:  this.isIos ? 2 : 1,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
                 channel_id: channel ? channel : "Channel_Official",

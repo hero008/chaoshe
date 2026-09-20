@@ -137,7 +137,7 @@ export default {
             return num > 100 ? 100 : num;
         },
         conHeight() {
-            let h = this.SystemInfo.screenHeight;
+            let h = this.SystemInfo.windowHeight;
             let va = this.MBInfo();
             console.log(this.MBInfo());
             let th = va.height + va.top;

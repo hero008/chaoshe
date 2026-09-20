@@ -371,7 +371,7 @@ export default {
             return num < 10 ? num.toFixed(2) : Math.floor(num);
         },
         conHeight() {
-            let h = this.SystemInfo.screenHeight;
+            let h = this.SystemInfo.windowHeight;
             let va = this.MBInfo();
             let th = va.height + va.top;
             let str = h - th + "px";
@@ -575,7 +575,7 @@ export default {
                 // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },
-        onClickPrize(payId, showAnim,val=0) {
+        onClickPrize(payId, showAnim,val) {
             this.surePayMessage = ''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
@@ -593,7 +593,11 @@ export default {
                         })
                      }
                    }
-                } else uni.$u.toast(res.message);
+                } else {
+                    if(val){
+                         uni.$u.toast(res.message);
+                    }
+                }
             });
         },
         // onClickPay(showAnim) {

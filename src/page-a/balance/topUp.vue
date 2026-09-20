@@ -196,13 +196,13 @@ export default {
             payShow: false,
             payList: [
                 // #ifdef MP-WEIXIN
-                {
-                    name: "微信支付",
-                    type: 3,
-                    img: "WeChat",
-                    show: false,
-                    msg: "微信小程序支付",
-                },
+                // {
+                //     name: "微信支付",
+                //     type: 3,
+                //     img: "WeChat",
+                //     show: false,
+                //     msg: "微信小程序支付",
+                // },
                 // #endif
                 // #ifndef MP-WEIXIN
 

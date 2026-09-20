@@ -426,17 +426,17 @@ export default {
           consume: 0,
           payType: 0,
         },
-          {
-            name: "微信支付",
-            type: 2,
-            img: "WeChat",
-            show: true,
-            msg: "微信支付",
-            consume: 0,
-          // number: this.$gl("userInfo").coin,
-            number: 0,
-            payType: 1,
-        },  // 是否金币和潮币支付
+        //   {
+        //     name: "微信支付",
+        //     type: 2,
+        //     img: "WeChat",
+        //     show: true,
+        //     msg: "微信支付",
+        //     consume: 0,
+        //   // number: this.$gl("userInfo").coin,
+        //     number: 0,
+        //     payType: 1,
+        // },  // 是否金币和潮币支付
       
         // {
         //     name: "金币余额",

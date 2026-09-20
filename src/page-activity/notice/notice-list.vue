@@ -233,7 +233,7 @@ export default {
         ...mapState(["mail"]),
     
         conHeight() {
-            let h = this.SystemInfo.screenHeight;
+            let h = this.SystemInfo.windowHeight;
             let va = this.MBInfo();
             let th =  va.top + 95;
             let str = h - th + "px";

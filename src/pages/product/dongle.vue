@@ -647,13 +647,15 @@ export default {
             }
         },
 
-        onClickPrize(payId, showAnim) {
+        onClickPrize(payId, showAnim,val) {
             this.surePayMessage=''
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
                     this.handleDrawResult(res, showAnim);
                 } else {
-                    uni.$u.toast(res.message);
+                    if(val){
+                     uni.$u.toast(res.message);
+                    }
                 }
             });
         },

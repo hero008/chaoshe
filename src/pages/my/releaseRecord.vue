@@ -98,7 +98,7 @@ export default {
     },
     computed: {
         conHeight() {
-            let h = this.SystemInfo.screenHeight;
+            let h = this.SystemInfo.windowHeight;
             let va = this.MBInfo();
             let th = va.height + va.top + 10;
             let str = h - th + "px";
