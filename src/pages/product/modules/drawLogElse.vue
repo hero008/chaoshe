@@ -38,7 +38,7 @@
                             </div>
                             <div class="goods">
                                 <template v-for="(a, b) in i.awardItems || i.award">
-                                    <div @click="ondetail(a.itemId)" class="goods_item flex_r flex_ac flex_jb"
+                                    <div @click="ondetail(a)" class="goods_item flex_r flex_ac flex_jb"
                                         :class="{ sp: a.levelIndex == 28, a: a.levelIndex == 1, dt: drawType == 3 }"
                                         :key="b">
                                         <div class="name ellipsis">{{ a.itemName || a.name }}</div>
@@ -65,11 +65,13 @@
             </div>
         </view>
     </u-popup >
+     <bzModal ref="bzModal" ></bzModal>
        <gachaDetails ref="gachaDetails" />
 </view>
 </template>
 <script>
 import { post } from "@/utils/api.js";
+import bzModal from "@/components/bzModal/bzModal.vue";
 
 export default {
     data() {
@@ -93,9 +95,21 @@ export default {
             default: 2,
         },
     },
+    components:{
+         bzModal
+    },
     methods: {
-      ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+        ondetail(item) {
+           if(item.levelIndex && item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.bzcRewards = res.item.boxItems
+                    this.$refs.bzModal.open(res.item.boxItems)
+                })
+            }else{
+             this.gachaDetailsMethod(this, item.itemId);
+            }
         },
         refresh() {
             this.pageda=  {

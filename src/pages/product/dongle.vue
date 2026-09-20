@@ -309,6 +309,8 @@
                 <div class="random_btn" @click="onpay(1)">去支付</div>
             </div>
         </u-popup>
+         <bzModal ref="bzModal" ></bzModal>
+
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />
         <!-- 支付弹窗 -->
@@ -342,6 +344,8 @@ import result from '@/pages/product/modules/resultDetail'
 import {awardsSort,shareUrl} from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
 import { isIos } from "../../utils/mgtv.js";
+import bzModal from "@/components/bzModal/bzModal.vue";
+
 
 export default {
     data() {
@@ -430,7 +434,8 @@ export default {
         scheduleTips,
         share,
         result,
-        surePayModal
+        surePayModal,
+        bzModal
     },
     computed: {
         ...mapState(["userInfo", "selectTicket"]),
@@ -579,8 +584,19 @@ export default {
                 }
             );
         },
-        ondetail(data) {
-            itemDetails(data, this.$refs.gachaDetails, "初始获奖概率", this.price)
+      ondetail(item) {
+             if(item.levelIndex && item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.$refs.bzModal.open(res.item.boxItems)
+
+                })
+             
+            }else{
+               itemDetails(item, this.$refs.gachaDetails, "初始获奖概率", this.price)
+
+            }
         },
         onpay(type, special = 0) {
             this.RandomShow = false;

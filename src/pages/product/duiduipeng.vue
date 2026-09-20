@@ -155,7 +155,7 @@
                 <view class="awards_title"></view>
                 <view class="awardsImg ">
                     <view class="awards_number">x{{ finishNumber }}碰</view>
-                    <image class="awards_img" :src="awards.length ? awards[0].coverThumb : ''" />
+                    <image @click="showRewardsDetail(awards[0])" class="awards_img" :src="awards.length ? awards[0].coverThumb : ''" />
                     <view class="awards_name flex_r flex_ac flex_jc">
                         <view class="awardsName ellipsis">{{ awards[0].itemName }}</view>
                         <view class="awardsNumber">x{{ multiple }}</view>
@@ -172,7 +172,7 @@
                     <view class="prizeItem" v-for="(value, index) in prizeList" :key="index">
                         <view class="prizeBox">
                             <view class="probability ellipsis">概率：{{ value.ratio }}%</view>
-                               <image :src="value.itemCover" class="prizeImg" @click="ondetail(value.itemId)" />
+                               <image :src="value.itemCover" class="prizeImg" @click="ondetail(value)" />
                         </view>
                         <view class="prizeName ellipsis">{{ value.itemName }}</view>
                         
@@ -186,7 +186,7 @@
                         <view :style="{
                             backgroundImage:`url(${value.awardItems[0].itemCover})`,
                             backgroundSize:'100% 100%'
-                        }" class="recordImg"  @click="ondetail(value.awardItems[0].itemId)">
+                        }" class="recordImg"  @click="ondetail(value.awardItems[0])">
                         <view v-if="value.awardNum > 1" class="count">
                             x{{ value.awardNum }}
                         </view></view>
@@ -275,7 +275,7 @@
         </view>
 
         <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
-
+        <bzModal ref="bzModal" ></bzModal>
     </view>
 </template>
 
@@ -293,6 +293,7 @@ import smallPng from '@/static/small.png'
 import {isPositiveInteger,shareUrl } from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
 import { isIos } from "../../utils/mgtv.js";
+import bzModal from "@/components/bzModal/bzModal.vue";
 
 export default {
     data() {
@@ -379,13 +380,15 @@ export default {
             multiple:1,
 
             surePayMessage:'',
-            ios:isIos()
+            ios:isIos(),
+            bzcRewards:[]
         };
     },
     components: {
         xPay,
         feudalLord,
-        surePayModal
+        surePayModal,
+        bzModal
     },
 
     onShow(){
@@ -474,6 +477,16 @@ export default {
         }
     },
     methods: {
+         showRewardsDetail(item){
+          if(item.levelIndex == 52){
+              uni.showToast({
+                    title:'宝藏已放入星仓,请到星仓点击宝藏寻宝',
+                    icon:'none'
+                })
+            }else{
+                 this.gachaDetailsMethod(this, item.itemId);
+            }
+        },
        surePaySuccess(val){
 
         this.surePayMessage=''
@@ -1341,8 +1354,19 @@ export default {
                 console.error('获取中奖记录失败', e);
             })
         },
-        ondetail(id) {
-            this.gachaDetailsMethod(this, id);
+        ondetail(item) {
+           if(item.levelIndex && item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.bzcRewards = res.item.boxItems
+                    this.$refs.bzModal.open(res.item.boxItems)
+
+                })
+             
+            }else{
+                this.gachaDetailsMethod(this, item.itemId);
+            }
         },
         onReachScollBottom() {
             if (this.pageda.total > this.pageda.page * this.pageda.page_size) {
