@@ -1309,12 +1309,11 @@ export default {
 
         if(value.type == 'COUPON_TYPE_FREE'){
            
-          if(value.length <= this.maxNum){
-          
-            this.payQuantity = value.length;
+          if(this.maxNum > 0 && value.length > this.maxNum){
+            this.payQuantity = this.maxNum;
             this.applyPayFactor()
           }else{
-            this.payQuantity = this.maxNum
+            this.payQuantity = value.length;
             this.applyPayFactor()
           }
         }
