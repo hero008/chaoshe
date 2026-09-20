@@ -309,6 +309,7 @@
                 <div class="random_btn" @click="onpay(1)">去支付</div>
             </div>
         </u-popup>
+         <bzModal ref="bzModal" ></bzModal>
         <!-- 详情弹窗 -->
         <gachaDetails ref="gachaDetails" />
         <!-- 支付弹窗 -->
@@ -320,8 +321,8 @@
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
         <share v-if="shareTo" @closeSharePoupon="shareTo = false" @shareTo="shareToWechat"></share>
-           <result ref="result" @onResult="onClickResult"></result>
-
+        <result ref="result" @onResult="onClickResult"></result>
+      
     </view>
 </template>
 <script>
@@ -339,6 +340,7 @@ import { tr } from "@dcloudio/vue-cli-plugin-uni/packages/postcss/tags";
 import share from "./modules/share.vue";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort} from '@/utils/mgtv.js'
+import bzModal from "@/components/bzModal/bzModal.vue";
 export default {
     data() {
         return {
@@ -423,7 +425,8 @@ export default {
         xPrize,
         scheduleTips,
         share,
-        result
+        result,
+         bzModal
     },
     computed: {
         ...mapState(["userInfo", "selectTicket"]),
@@ -557,8 +560,19 @@ this.shareTo=false
                 }
             );
         },
-        ondetail(data) {
-            itemDetails(data, this.$refs.gachaDetails, "初始获奖概率", this.price)
+        ondetail(item) {
+             if(item.levelIndex && item.levelIndex == 52){
+                post('v1/goods/item/get',{
+                    item_id:item.itemId
+                }).then((res)=>{
+                    this.$refs.bzModal.open(res.item.boxItems)
+
+                })
+             
+            }else{
+               itemDetails(item, this.$refs.gachaDetails, "初始获奖概率", this.price)
+
+            }
         },
         onpay(type, special = 0) {
             this.RandomShow = false;
