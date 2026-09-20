@@ -1273,8 +1273,10 @@ immediate: true,
 
         if(value.type == 'COUPON_TYPE_FREE'){
            
-          if(value.length <= this.maxNum){
-          
+          if(this.maxNum > 0 && value.length > this.maxNum){
+            this.payQuantity = this.maxNum;
+            this.applyPayFactor()
+          }else{
             this.payQuantity = value.length;
             this.applyPayFactor()
           }
