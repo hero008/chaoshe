@@ -88,7 +88,7 @@
 
                              
                               <div class="p-probability flex_r flex_ac ">
-                                <div class="prob_item" v-for="(i, s) in probability" :key="i.id">
+                                <div class="prob_item" v-if="s != 'Lucky'" v-for="(i, s) in probability" :key="i.id">
                            
                                     <text :class="['prob_name',s]"> 
                                           {{ formatName(s) }}
@@ -105,8 +105,14 @@
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
                                 @click="ondetail(item)">
                                 <img :src="item.itemHalfImage" class="p-img" />
-                                <img :src="`https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png`"
-                                    :class="['badge','badge'+item.levelName]" />
+                                <view :style="{
+                                    backgroundSize:'100% 100%',
+                                    backgroundImage:`url(https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png)`
+                                }" :class="['badge','badge'+item.levelName]">
+                                    <div  class="text"> {{ item.levelName == 'Lucky' ? item.levelName+(item.luckyNo ? item.luckyNo: '')+'赏':'' }}</div>
+                                </view>
+                                <!-- <img :src="`https://img.shinemang.com/gachaStatic/tag_${item.levelName}.png`"
+                                    :class="['badge','badge'+item.levelName]" /> -->
                                 <!-- <view class="bor"></view> -->
                                 <view class="p-name flex_c flex_jb">
                                     <div class="tit ellipsis">{{ item.itemName }}</div>
@@ -130,7 +136,7 @@
                     <view class="tab">
 
                         <view @click="refreshBtn" class="refresh"></view>
-                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-if="value.levelName != 'Lucky'" v-for="value in sortList" :class="['tabItem','tabItem'+value.levelName,value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
+                     <view @click="recordsTab(value.levelName)" :key="value.levelName" v-for="value in sortList" :class="['tabItem','tabItem'+value.levelName,value.levelName == recordLevelName ? 'active':'']">{{ formatName(value.levelName) }}</view>
                   <!-- <view class="tabItem">史诗</view>
                   <view class="tabItem">稀有</view>
                   <view class="tabItem">普通</view> -->
@@ -392,7 +398,7 @@ import ball from "@/page-activity/ball/ball.vue";
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
-import { formateGachaLevelName,shareUrl,isIos } from "../../utils/mgtv";
+import { formateGachaLevelName,shareUrl,isIos,ensureLuckyAfterSp } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
@@ -400,6 +406,7 @@ import {awardsSort} from '@/utils/mgtv.js'
 import feudalLord from "@/components/feudalLord/index.vue";
 import bzModal from "@/components/bzModal/bzModal.vue";
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
+
 export default {
     data() {
         return {
@@ -579,6 +586,7 @@ export default {
                         if(gachaAwards.filter((item)=>item.levelIndex == 52).length){
                         this.recordLevelName = '宝箱'
                         }else{
+                        
                             this.recordLevelName = 'SP'
                         }
                 
@@ -722,8 +730,9 @@ export default {
                 }
             }
             let A = [...map.values()];
-            this.sortList = A;
-         
+            this.sortList = ensureLuckyAfterSp(A);
+            console.log(this.sortList);
+            
             this.probability = obj;
             console.log(this.probability);
             // #ifdef APP
@@ -1685,8 +1694,36 @@ text-transform: none;
             left: 0;
             top: 168rpx;
 
-            &.badge宝箱{
+            &.badge宝箱,&.badgeLucky{
                 width: 120rpx;
+            }
+            &.badgeLucky{
+                display: flex;
+                align-items: center;
+                text-align: center;
+                .text{
+                     text-align: center;
+                 font-family:'倍数欧气值';
+                font-weight: 400;
+                font-size:22rpx;
+                color: #FF5C7A;
+                width: 100%;
+                //  background: linear-gradient(360deg, #FF91F9 10%, #FF91F9 40%, #FFF0FE 80%, #FFCFFB 100%);
+                // text-stroke:0.4px #000000;
+              
+                //   -webkit-background-clip: text;
+            //   -webkit-text-fill-color: transparent;
+            //  background-clip: text;
+                font-style: normal;
+                text-transform: none;
+                    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    
+                // -webkit-text-stroke: 0.4px #000000;
+                }
+               
+            //    width: 64rpx;
+            //     height: 40rpx;
+               
             }
         }
 
@@ -1832,6 +1869,11 @@ text-transform: none;
             background: #FF93C7;
         }
         }
+       &.tabItemLucky {
+            &.active{
+            background: #FF5C7A;
+        } 
+        }
         &.tabItemA{
             &.active{
             background: #F9E650;
@@ -1901,6 +1943,12 @@ padding: 0 26rpx;
         &.active{
             background: #FF93C7;
         }
+        
+        }
+         &.tabItemLucky {
+            &.active{
+            background: #FF5C7A;
+        } 
         }
         &.tabItemA{
             &.active{
