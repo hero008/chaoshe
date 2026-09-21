@@ -17,13 +17,9 @@ export default {
         MgtvApi.setWebviewTitle({
             title:'支付'
         })
-          
-      
     },
     onShow(da){
-
         let targetUrl = uni.getStorageSync('jumpUrl')
-  
         if(window.location.href.includes('isPay=1') || !targetUrl){
             uni.removeStorageSync('jumpUrl')
             MgtvApi.closeWebView();
