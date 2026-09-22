@@ -1064,7 +1064,18 @@ export default {
 
 }
 
+.cl_Lucky {
+  width: 168rpx;
+    height: 32rpx;
+    background: url('@/static/result/tag_Lucky1.png');
+    background-size: 100% 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 25rpx;
+    z-index: 2;
 
+}
 
 .card-front {
     width: 374rpx;
@@ -1114,7 +1125,10 @@ export default {
      background: url('@/static/result/kuang_C.png');
      background-size: 100% 100%;
     }
-
+ &.kuang_Lucky{
+     background: url('@/static/result/kuang_Lucky.png');
+     background-size: 100% 100%;
+    }
 
    }
     .share_btn {

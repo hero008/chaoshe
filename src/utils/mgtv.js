@@ -251,16 +251,18 @@ export const mgTvIsLogin = () => {
 
 
 export const formateGachaLevelName = (levelName) => {
-   if(levelName == 'SP'){
+          if(levelName == 'SP'){
             return '传说'
            }else if(levelName == 'A'){
             return '史诗'
            }else if(levelName == 'B'){
             return '稀有'
            }else if(levelName == 'C'){
-               return '普通'
+             return '普通'
            }else if(levelName == '宝箱'){
             return '宝藏'
+           }else if(levelName == 'Lucky'){
+            return 'Lucky'
            }
 }
 
@@ -469,4 +471,29 @@ export const getLocalParams=()=>{
 
 export const closeMGTVWebview = ()=>{
   window.MgtvApi.closeWebView()
+}
+export const  ensureLuckyAfterSp = (list) =>{
+  const spIndex = list.findIndex(item => item.levelName === 'SP');
+  const luckyIndex = list.findIndex(item => item.levelName === 'Lucky');
+
+  // 没有 SP 或没有 Lucky，直接返回原数组
+  if (spIndex === -1 || luckyIndex === -1) {
+    return list;
+  }
+
+  // 如果 Lucky 已经在 SP 后面，直接返回
+  if (luckyIndex > spIndex) {
+    return list;
+  }
+
+  // 否则把 Lucky 移动到 SP 后面
+  const result = [...list];
+  const [luckyItem] = result.splice(luckyIndex, 1);
+
+  // 删除 Lucky 后，SP 的下标可能会变化
+  const newSpIndex = result.findIndex(item => item.levelName === 'SP');
+
+  result.splice(newSpIndex + 1, 0, luckyItem);
+
+  return result;
 }
