@@ -625,7 +625,7 @@ export default {
       this.AReward = AReward
 
        if((this.mtype == 3 && this.canSelectAmount) || (this.mtype == 2 && this.canSelectAmount)){
-           this.baseAmount = 1;
+           this.baseAmount = amount;
         this.baseNum = 1
         this.payQuantity = num
        }else{
@@ -1302,25 +1302,7 @@ export default {
     },
   },
   watch: {
-     "selectTicket":{
-      immediate: true,
-      deep: true,
-      handler(value){
 
-        if(value.type == 'COUPON_TYPE_FREE'){
-           
-          if(this.maxNum > 0 && value.length > this.maxNum){
-            this.payQuantity = this.maxNum;
-            this.applyPayFactor()
-          }else{
-            this.payQuantity = value.length;
-            this.applyPayFactor()
-          }
-        }
-        
- 
-      }
-    },
     "selectTicket.discountPrice": {
       immediate: true,
       deep: true,
