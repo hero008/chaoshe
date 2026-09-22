@@ -341,7 +341,7 @@ export default {
         },
         confirmOrder(res) {
             if (!res.code) {
-                if(res.res.createPaymentReply.payId){
+                if(res.res && res.res.createPaymentReply && res.res.createPaymentReply.payId){
                  this.surePayMessage={
                     payId:res.res.createPaymentReply.payId
                  }
