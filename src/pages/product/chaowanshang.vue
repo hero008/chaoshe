@@ -520,7 +520,7 @@ export default {
     },
     methods: {
         surePaySuccess(val){
-            this.onClickPrize(this.surePayMessage.payId,true,val);
+            this.onClickPrize(this.surePayMessage.payId,this.surePayMessage.showAnim,val);
         },
         openLordPopup() {
             this.$refs.feudalLord.open(this.gachaId)
@@ -853,13 +853,14 @@ export default {
                 this.awardsList = res.awards;
 
                 
-                this.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
+                this.$refs.duoyou.open(res.awards, showAnim, this.gachaId, this.boxId);
                 // this.loadDetail();
                 // this.chaoPlay(this.previewType);
                 return;
             } else {
                 this.surePayMessage = {
-                    payId:res.res.createPaymentReply.payId
+                    payId:res.res.createPaymentReply.payId,
+                    showAnim:showAnim
                 }
                     setTimeout(() => {
                           this.$refs.surePayModal.open()
@@ -878,7 +879,7 @@ export default {
                      if(res.awards && res.awards.length > 0){
                         res.awards = awardsSort(res.awards);
                       res.awards[0].requestId = res.requestId
-                      that.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
+                      that.$refs.duoyou.open(res.awards, showAnim, this.gachaId, this.boxId);
                   }else{
                     if(val){
                         uni.showToast({
