@@ -10,7 +10,6 @@ import {originUrl,isIos} from '../../utils/mgtv';
 export default {
     data() {
         return {
-             targetUrl:'',
         };
     },
     onLoad(da){
@@ -24,13 +23,8 @@ export default {
             uni.removeStorageSync('jumpUrl')
             MgtvApi.closeWebView();
         }else{
-            if(targetUrl.includes('alipay')){
-              this.targetUrl = targetUrl
-            }else{
-              this.targetUrl = targetUrl 
-            }
               uni.removeStorageSync('jumpUrl')
-              window.location.href= this.targetUrl
+              window.location.href = targetUrl
         }
     }
    
