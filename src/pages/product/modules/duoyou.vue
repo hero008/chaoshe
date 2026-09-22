@@ -128,6 +128,7 @@ import bgc from '@/static/result/resultBg.png'
 export default {
     data() {
         return {
+            showAnim:false,
             hasBx:0,
             percentage:0,
             cartoonsrc:'https://img.shinemang.com/gachaStatic/svga/wxs_b.svga',
@@ -222,6 +223,7 @@ export default {
            })
         },
         open(da, showAnim, id, index) {
+            this.showAnim = showAnim
 
              this.hasBx = da.filter((item)=>item.levelIndex == 52 || item.isDecomposable == 2).length
               this.cysType = this.verdictBig(da)
@@ -236,8 +238,13 @@ export default {
               this.voiceUrl = 'https://img.shinemang.com/gachaStatic/svga/wxs_s.wav'
            }
            this.show = true;
-           
-           this.dynamicEffectShow = true;
+           console.log(this.showAnim,'23423423432432')
+           if(!this.showAnim){
+               this.dynamicEffectShow = true;
+           }else{
+            this.dynamicEffectShow = false;
+           }
+       
             
            
             this.totalPage = Math.ceil(da.length / 10)

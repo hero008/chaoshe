@@ -839,12 +839,12 @@ export default {
                 this.awardsList = res.awards;
 
                 
-                this.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
+                this.$refs.duoyou.open(res.awards, showAnim, this.gachaId, this.boxId);
                 // this.loadDetail();
                 // this.chaoPlay(this.previewType);
                 return;
             } else {
-                this.onClickPrize(res.res.createPaymentReply.payId, true);
+                this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },
         onClickPrize(payId, showAnim) {
@@ -858,7 +858,7 @@ export default {
                       res.awards[0].requestId = res.requestId
                 // res.awards[]
                   }
-                    that.$refs.duoyou.open(res.awards, true, this.gachaId, this.boxId);
+                    that.$refs.duoyou.open(res.awards, showAnim, this.gachaId, this.boxId);
                     // that.loadDetail();
                     // that.chaoPlay(that.previewType);
                 } else uni.$u.toast(res.message);

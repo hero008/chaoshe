@@ -263,7 +263,7 @@
       <div
         class="appoint flex_r flex_ac"
         @click="onAnimationChange"
-        v-if="['1', '2', '4', '5'].includes(mtype)"
+        v-if="['1', '2', '3','4', '5'].includes(mtype)"
       >
         <div class="select" :class="{ active: showAnimation }"></div>
         <div>跳过抽赏动画（内存较小的机型建议勾选）</div>
