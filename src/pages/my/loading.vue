@@ -74,9 +74,10 @@ export default {
         }else{
           this.webLogin()
         }
+        return;
       }
 
-      if (window.MgtvApi) {
+      if (isMTVapp()) {
         MgtvApi.getUserInfo((user_info) => {
           if (user_info && user_info.length !== 0) {
             const userInfo = JSON.parse(user_info);

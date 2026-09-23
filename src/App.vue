@@ -154,7 +154,7 @@ export default {
         if(!isMTVapp()){
          uni.setStorageSync('safeTop', 0);
         }
-    MgtvApi.callhandler('getScreenCutoutInfo', {}, function(data){
+    window.MgtvApi.callhandler('getScreenCutoutInfo', {}, function(data){
         const resp = typeof data === 'string' ? JSON.parse(data) : data;
         if (resp.code == 200 && resp.data) { //响应正常
           const t = JSON.parse(resp.data)

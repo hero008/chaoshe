@@ -43,6 +43,11 @@
         <!-- <view v-if="mail !== '0' && mail" class="notice_num">{{ mail > 99 ? '99+' : mail }}</view> -->
         <!-- </view>  -->
       </view>
+
+      <view @click="testWEb" v-if="!honery && MTVapp()" class="downLoad">
+           <u-icon size="24" color="#40E0EA" name="download"></u-icon>
+            <div>保存到桌面</div>
+      </view>
     </view>
     <DanmakuSimple :data="danmuList" :top="MBInfo().top + 42"></DanmakuSimple>
     <movable-area class="area">
@@ -210,7 +215,9 @@
       :show="showServerModal"
       :safeAreaInsetBottom="false"
     >
-      <view class="serverPopop">
+      <view :style="{
+        height:honery ? '750rpx': '830rpx'
+      }" class="serverPopop">
         <img
           class="top"
           src="https://img.shinemang.com/gachaStatic/serverTop.png"
@@ -220,7 +227,7 @@
           <img src="https://img.shinemang.com/gachaStatic/qrcode.png" alt="" />
         </view>
         <view class="tips">微信扫码进群解锁更多福利~</view>
-        <view @click="shareToWechat" class="shareToWechat">
+        <view v-if="!honery" @click="shareToWechat" class="shareToWechat">
             分享到微信
         </view>
         <view @click="showServerModal = false" class="close"></view>
@@ -242,7 +249,7 @@ import xModal from "@/components/modules/x-modal";
 import { service } from "@/utils/fun.js";
 import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
 import homeInfiniteScroll from "../../components/homeInfiniteScroll/homeInfiniteScroll.vue";
-import { parseQueryString } from "../../utils/mgtv.js";
+import { isIos, parseQueryString,logoBase64, isHonery } from "../../utils/mgtv.js";
 import DanmakuSimple from "@/components/danmu/danmu";
 export default {
   data() {
@@ -332,6 +339,7 @@ export default {
       egg: { open: true },
       slectType: 1,
       showServerModal: false,
+      honery:isHonery()
     };
   },
   components: {
@@ -378,7 +386,23 @@ export default {
     });
     },
     testWEb(){
-       window.location.href = 'https://mxs.mgworld.cn?isFullScreen=1&isHideNavBar=1'
+
+      const ios = isIos()
+      if(ios){
+          MgtvApi.callhandler("openBrowser", {
+destinationUrl: `https://img.shinemang.com/install/index.html`,
+});
+      }else{
+        let schema = "imgotv://webview?url=https%3A%2F%2Fmxs.mgworld.cn%3FisFullScreen%3D1%26isHideNavBar%3D1"
+
+MgtvApi.callhandler("createShortCut", {
+              id: "mgtv:minigamecenter_shortcut", //写死
+              label: "芒星赏", // 游戏名称
+              schema, // 游戏链接
+              base64BitmapData: logoBase64, // 图标
+            });
+      }
+      //  window.location.href = 'https://mxs.mgworld.cn?isFullScreen=1&isHideNavBar=1'
     },
     getDanmu() {
       post("v1/publicize/push/barrage/all").then((res) => {
@@ -694,7 +718,7 @@ export default {
       let w = this.SystemInfo.windowWidth;
       let va = this.MBInfo().width;
       let str = w - va - 32 + "px";
-      return va > 0 ? str : this.MTVapp()? "626rpx":"686rpx";
+      return va > 0 ? str : this.MTVapp()? (this.honery? '626rpx': "516rpx"):"686rpx";
     },
   },
 };
@@ -1077,5 +1101,14 @@ align-items: center;
 justify-content: center;
 
 
+}
+
+.downLoad{
+  color: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
