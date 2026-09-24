@@ -104,6 +104,7 @@
                            <view class="list">
                              <view class="list-item" v-for="(item, index) in AllRewardsInfo" :key="index"
                                 @click="ondetail(item)">
+                                <view v-if="item.luckyCycle" class="luckyCycleTag">每{{ item.luckyCycle }}抽触发</view>
                                 <img :src="item.itemHalfImage" class="p-img" />
                                 <view :style="{
                                     backgroundSize:'100% 100%',
@@ -1680,7 +1681,19 @@ text-transform: none;
         &:nth-child(3n) {
             margin-right: 0;
         }
-      
+        .luckyCycleTag{
+            position: absolute;
+            padding: 4rpx 12rpx;
+            color: #fff;
+            // height: 48rpx;
+           
+            font-size: 18rpx;
+            // font-weight: bold;
+            background: linear-gradient( 180deg, #E55FAE 0%, #E51284 100%);
+            border-radius: 32rpx 32rpx 32rpx 32rpx;
+            top:0;
+            left: 0;
+        }
 
         .p-img {
             width: 208rpx;
