@@ -245,7 +245,10 @@ export default {
 
      }else{
         if(!honery){
-          let params = getLocalParams();
+          if(window.location.href.includes('common/pay')){
+            
+            }else{
+              let params = getLocalParams();
           post('v1/system/middle-page/jump/target',{
             source:isIos()?'MiddlePageSource_IOS':'MiddlePageSource_Android',
             channel:params.channel
@@ -268,6 +271,9 @@ export default {
                      window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
                }
         })
+
+            }
+         
        }
      }
     
