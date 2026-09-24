@@ -89,7 +89,7 @@ export default {
                 phone_num: "",
                 type: 8,
                 code: userInfo.ticket,
-                login_platform:  this.isIos ? 2 : 1,
+                login_platform:  this.ios ? 2 : 1,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
                 channel_id: channel ? channel : "Channel_H5",
