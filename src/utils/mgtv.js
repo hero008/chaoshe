@@ -416,7 +416,7 @@ export const formatDate = (date)=> {
     pad(date.getSeconds());
 }
 
-export const MGTV_Channel = 'Channel_Official'
+export const MGTV_Channel = 'Channel_H5'
 
 export const  awardsSort = (awards)=>{
   let splist = awards.filter((item)=>{

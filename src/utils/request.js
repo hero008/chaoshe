@@ -33,7 +33,7 @@ uni.addInterceptor('request', {
         let channel = uni.getStorageSync('channel')
         let ticket = uni.getStorageSync('ticket')
         if(args && args.header){
-          args.header.Channel =  channel ? channel : 'Channel_Official';
+          args.header.Channel =  channel ? channel : 'Channel_H5';
           args.header.Mgtv_ticket =  ticket ? ticket : '';
         }
     },

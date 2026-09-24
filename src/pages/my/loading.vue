@@ -92,7 +92,7 @@ export default {
                 login_platform:  this.isIos ? 2 : 1,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
-                channel_id: channel ? channel : "Channel_Official",
+                channel_id: channel ? channel : "Channel_H5",
                 uuid: userInfo.uuid,
                 nickname: userInfo.nickname,
                 avatar_url: userInfo.avatar.l,
@@ -151,7 +151,7 @@ export default {
                 login_platform: 0,
                 device_id: this.SystemInfo.deviceId,
                 invite_code: this.inviteCode,
-                channel_id: 'Channel_Official',
+                channel_id: 'Channel_H5',
             }).then((res) => {
                 if (res.code) {
 
