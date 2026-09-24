@@ -9,7 +9,7 @@
   >
     <view class="pay_module">
       <div class="title">
-          确认订单 <span v-if="gachaInfo">({{ payNum }}{{showMultiple?'倍':'抽'}}){{ selectTicket && selectTicket.type == 'COUPON_TYPE_FREE' && selectTicket.ids.length > 1?'x'+selectTicket.ids.length:'' }}</span>
+          确认订单 <span v-if="gachaInfo">({{ payNum }}{{showMultiple?'倍':'抽'}}){{ selectTicket && selectTicket.type == 'COUPON_TYPE_FREE'&& selectTicket.ids && selectTicket.ids.length > 1?'x'+selectTicket.ids.length:'' }}</span>
       </div>
       <div @click="close" class="closeBtn"></div>
 
@@ -112,7 +112,7 @@
           <div v-if="!fetchCoupon" class="tickets flex_r flex_ac">
             <span v-if="selectTicket.id" class="ticket_item">{{
               selectTicket.name
-            }}{{ selectTicket.type == 'COUPON_TYPE_FREE'?('x'+selectTicket.ids.length):'' }}</span>
+            }}{{( selectTicket.type == 'COUPON_TYPE_FREE' && selectTicket.ids)?('x'+selectTicket.ids.length):'' }}</span>
             <span v-else-if="severalPieces" style="color: red" class="no_msg"
               >您有{{ severalPieces }}张优惠券可以使用</span
             >
