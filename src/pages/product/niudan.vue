@@ -463,7 +463,7 @@ export default {
           }
         },
          toShare(){
-            let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+            let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_H5'
             let url = shareUrl+"&gachaName=ndj&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode +'&channel='+channel
 
             MgtvApi.showShareMenus(

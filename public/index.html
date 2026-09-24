@@ -6,35 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="shortcut icon" type="image/png" href="https://lego.mgtv.com/tpl/favicon.ico"/>  
+    <!-- <script type="text/javascript" src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+    <script type="text/javascript">
+    new window.VConsole();
+    </script>   -->
     <script>
-   function isHarmonyApp() {
-    return /harmony/i.test(window.navigator.userAgent)
-  }
-  let isHoneny = isHarmonyApp()
-  const script = document.createElement('script');
-  if(isHoneny){
-     script.src = 'https://club.mgtv.com/act/jssdk/mgtv-js-sdk-third-0.0.1.js';   // 或 '/static/mgtv.js'，按你项目路径调整
-  }else  {
-    // 其他环境（如普通浏览器），按需处理，这里也加载线上版兜底
-    script.src = 'https://app.mgtv.com/js/mgtv-js-sdk-2021.js';
-  }
-  script.async = false;
-    script.onload = function () {
-
-  };
-   document.head.appendChild(script);
+       (function () {
+         function isHarmonyApp() {
+           return /harmony/i.test(window.navigator.userAgent) ||  /ImgoTV-hphone/i.test(window.navigator.userAgent);
+          }
+        let isHoneny = isHarmonyApp()
+        const script = document.createElement('script');
+        var src = isHoneny
+              ? 'https://club.mgtv.com/act/jssdk/mgtv-js-sdk-third-0.0.1.js'
+              : 'https://app.mgtv.com/js/mgtv-js-sdk-2021.js';
+            // 注意 <\/script> 必须转义
+        document.write('<script src="' + src + '"><\/script>');
+       })()
 </script>
     <script>
     var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
     document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')
     </script>
     <link rel="stylesheet" href="<%= BASE_URL %>static/index.<%= VUE_APP_INDEX_CSS_HASH %>.css" />
-     <!-- <script src="https://app.mgtv.com/js/mgtv-js-sdk-2021.js"></script> -->
-      <!-- <script src="/static/mgtv.js"></script> -->
-    <script type="text/javascript" src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-    <script type="text/javascript">
-    new window.VConsole();
-    </script>  
+ 
 </head>
 
 
