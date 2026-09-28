@@ -36,7 +36,7 @@
                     <view class="user_name">
                         <div @click="copy" class="u_ID">ID: <span :style="{textDecoration: 'underline'}">{{ userInfo.id || "" }}</span></div>
                         <!-- 先出现不需要 -->
-                     
+                         <div @click="synchronization" class="synchronization">同步芒果信息</div>
                         <!-- #endif -->
                     </view>
                 </div>
@@ -284,6 +284,29 @@ export default {
         // #endif
     },
     methods: {
+        synchronization(){
+             mgtv.getUserProfile({
+                  success(res) {
+                    if(res.data.nickName){
+                     post("v1/user/self/update", {
+                        nickname:res.data.nickName,
+                        avatar_url:res.data.avatarUrl
+                     }).then((res) => {
+                        if (!res.code) {
+                            uni.$u.toast("同步成功");
+                            this.asyncUpdateInfo();
+                        
+                        } else {
+                            uni.$u.toast(res.message);
+                        }
+                  });
+                    }
+                  },
+                  fail(res) {
+                  
+                  },
+                });
+        },
         copy(){
             copyCode(this.userInfo.id)
         },
@@ -611,6 +634,19 @@ export default {
                 color: #1A1A1A;
                 font-size: 28rpx;
                 font-weight: bold;
+            }
+            .synchronization{
+                // width: 136rpx;
+                padding: 0 12rpx;
+                height: 48rpx;
+                background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+                border-radius: 40rpx 40rpx 40rpx 40rpx;
+                display: flex;
+                margin-left: 6rpx;
+                align-items: center;
+                justify-content: center;
+                color: #1A1A1A;
+                font-size:24rpx;
             }
 
             .vip_icon {
