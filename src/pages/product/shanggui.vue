@@ -288,7 +288,13 @@
                 <x-btn txt="选择发货" cor="3" @click="goto('/pages/shipments/selectGoods')" /> -->
       </view>
     </div>
-
+          <view v-if="dynamicEffectShow" >
+             <view class="svga_it">
+                    <c-svga ref="cSvgaRef" :src="cartoonsrc" :loops="1" :autoPlay="false" :isOnChange="true"
+                        @finished="onFinished"  @loaded="onLoaded" width="100%"
+                        height="100%" />
+              </view>
+            </view>
     <select-goods
       ref="addStock"
       @totalNums="
@@ -502,6 +508,9 @@ export default {
       confirmExchangeModal: false,
       exchangeSucessModal: false,
       code: "",
+      dynamicEffectShow:false,
+      cartoonsrc:'https://img.shinemang.com/gachaStatic/svga/bz.svga',
+      resultRewards:[]
     };
   },
   components: {
@@ -526,6 +535,20 @@ export default {
     // if (!this.userInfo.showMarket) this.navbar = [{ name: "全部" }];
   },
   methods: {
+        onFinished(){
+          this.dynamicEffectShow = false;
+           this.$refs.result.open(this.resultRewards, true, "", "");
+        },
+        onLoaded() {
+            this.$refs.cSvgaRef.call("startAnimation");
+
+              //  playDede(0,this.voiceUrl)
+
+ 
+            // if (this.vibrat) vibratePhone(3000)
+            // console.log("动画加载完成，播放时回调");
+        },
+
     confirmExchange() {
       post("v1/cabinet/item/virtual/redeem", {
         stock_id: this.confirmExchangeDetail.id,
@@ -557,7 +580,9 @@ export default {
         stock_ids: [this.showBzInfo.id],
       }).then((res) => {
         this.showBzcPopup = false;
-        this.$refs.result.open(res.item, true, "", "");
+        this.dynamicEffectShow = true;
+        this.resultRewards = res.item
+       
       });
     },
     sureSend() {
@@ -747,6 +772,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+ .svga_it {
+        width: 100vw;
+        height: calc(100vw / 0.4618);
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        z-index: 333;
+    }
 .BzcList {
   width: 670rpx;
   height: 1082rpx;
