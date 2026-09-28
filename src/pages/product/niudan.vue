@@ -701,7 +701,8 @@ export default {
             }
 
             this.show = false;
-            if (!this.spList.length && showAnim ) {
+            // !this.spList.length && 
+            if (showAnim) {
                 // 开启动画且无大赏 → 直接跳转到结果详情页
                   this.navigateToResultDetail(winningList);
             } else {
