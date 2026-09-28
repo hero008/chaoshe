@@ -153,6 +153,7 @@ import { integralPrice } from "@/utils/getData.js";
 import autonym from "@/components/autonym/index.vue";
 import { mgTvLogin,MGTV_Channel } from "../../utils/mgtv";
 import { copyCode, goto } from '../../utils/fun';
+import { post } from "../../utils/api";
 
 let that;
 export default {
