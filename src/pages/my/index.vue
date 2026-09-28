@@ -153,7 +153,7 @@ import { integralPrice } from "@/utils/getData.js";
 import autonym from "@/components/autonym/index.vue";
 import { mgTvLogin,MGTV_Channel } from "../../utils/mgtv";
 import { copyCode, goto } from '../../utils/fun';
-
+import { post } from "../../utils/api";
 let that;
 export default {
     data() {
@@ -285,27 +285,26 @@ export default {
     },
     methods: {
         synchronization(){
-             mgtv.getUserProfile({
-                  success(res) {
-                    if(res.data.nickName){
-                     post("v1/user/self/update", {
-                        nickname:res.data.nickName,
-                        avatar_url:res.data.avatarUrl
-                     }).then((res) => {
-                        if (!res.code) {
-                            uni.$u.toast("同步成功");
-                            this.asyncUpdateInfo();
-                        
-                        } else {
-                            uni.$u.toast(res.message);
-                        }
+             MgtvApi.getUserInfo((user_info)=> {
+                console.log(user_info,'32423423423')
+                 if (user_info && user_info.length !== 0) {
+                     const userInfo = JSON.parse(user_info);
+                     console.log(userInfo.nickname,userInfo.avatar.l,'234234234234')
+                      if (userInfo.nickname) {
+                        post("v1/user/self/update", {
+                            nickname:userInfo.nickname,
+                            avatar_url:userInfo.avatar.l
+                        }).then((res) => {
+                            if (!res.code) {
+                                uni.$u.toast("同步成功");
+                                this.asyncUpdateInfo();
+                            } else {
+                                uni.$u.toast(res.message);
+                            }
+                        });
+                      }
+                   }
                   });
-                    }
-                  },
-                  fail(res) {
-                  
-                  },
-                });
         },
         copy(){
             copyCode(this.userInfo.id)
