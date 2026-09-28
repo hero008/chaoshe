@@ -628,7 +628,7 @@ export default {
                 res.awards[0].requestId = res.requestId
                 // res.awards[]
                 this.Winning = res.awards;
-            if (res.isBomb) {
+            if (res.isBomb && !showAnim) {
                 this.showAnim = showAnim;
                 this.showDh = true;
                 this.cartoonShowDh = true;
@@ -703,7 +703,8 @@ export default {
             }
 
             console.log(this.spList.length,showAnim,'阿是两节课弗利萨记录')
-            if (!this.spList.length && showAnim) {
+            // !this.spList.length && 
+            if (showAnim) {
 
                 uni.hideLoading();
                this.$refs.result.open(this.Winning, true, this.gachaId, this.boxindex)
