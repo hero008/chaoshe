@@ -123,7 +123,8 @@ export default {
             'LotteryTargetType_Gacha_ShareBill': 106,//一网打尽
         },
         wxs_b:'',
-        wxs_s:''
+        wxs_s:'',
+        bz:''
     },
     onLaunch:  function () {
            console.log('2222')
@@ -252,7 +253,9 @@ export default {
             this.globalData.wxs_s =  res
               console.log(getApp().globalData.wxs_b,getApp().globalData.wxs_s,'23423423423')
          })
-
+parserLoad.load('https://img.shinemang.com/gachaStatic/svga/bz.svga',(res)=>{
+            this.globalData.bz =  res
+         })
        
     },
     methods: {

@@ -80,6 +80,20 @@ export default {
 						if(data.autoPlay){
 							player.startAnimation();
 						}
+					}else if(data.src.includes('bz') && getApp().globalData.bz){
+						 console.log('bz')
+						player.setVideoItem(getApp().globalData.bz);
+						
+						// console.log(player,videoItem);
+						// let {audios,images} = videoItem
+						// let audioFile="data:audio/x-mpeg;base64," + images[audios[0].audioKey] 
+						// console.log(URL.createObjectURL(this.dataURLtoBlob(audioFile)));
+						// console.timeEnd("test"); 
+						
+						this.$ownerInstance.callMethod('receiveRenderData',{name:'loaded'})
+						if(data.autoPlay){
+							player.startAnimation();
+						}
 					}else{
                       parser.load(await getfile(data.src),(videoItem)=>{
 						
