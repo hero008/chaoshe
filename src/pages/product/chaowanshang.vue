@@ -531,7 +531,7 @@ export default {
     //    ,
      toShare(){
             if(window.mgtv){
-                let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+                let channel = this.userInfo.channel
                 mgtv.showShareMenu({
                     title:"无限赏 : " + this.gachainfo.themeName,
                      typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
