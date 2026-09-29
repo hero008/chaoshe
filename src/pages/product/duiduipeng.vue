@@ -1403,7 +1403,7 @@ export default {
         },
         onShare() {
             if(window.mgtv){
-                let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_Official'
+                let channel = this.userInfo.channel
                 mgtv.showShareMenu({
                     title:"对对碰 : " +  ((this.initialData && this.initialData.gacha) ? this.initialData.gacha.themeName : ''),
                      typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
