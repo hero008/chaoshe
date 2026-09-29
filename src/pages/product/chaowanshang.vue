@@ -526,7 +526,7 @@ export default {
     //     }
     //    ,
      toShare(){
-            let channel = uni.getStorageSync('channel') ?  uni.getStorageSync('channel') : 'Channel_H5'
+            let channel = this.userInfo.channel
             let url = shareUrl+"&gachaName=wxs&gachaId="+this.gachaId+"&inviteCode="+this.userInfo.inviteCode+"&channel="+channel;
 
             MgtvApi.showShareMenus(
