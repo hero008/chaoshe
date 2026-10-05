@@ -1,6 +1,6 @@
 <template>
   <view class="rankContent">
-    <x-navbar :whiteBack="true" tcolor="#fff" tit="星光夺赏榜" />
+    <x-navbar :whiteBack="true" tcolor="#fff" tit="邀请夺赏榜" />
     <div class="balance_con">
       <div class="topContent">
         <view v-if="topThree.length">
@@ -43,13 +43,13 @@
           <img src="../../static/new/rule.png" alt="" />
           <view
             @click="
-              goto('/pages/common/rulepop', { val: 'LuckExpRankingRules' })
+              goto('/pages/common/rulepop', { val: 'LuckExpRankingRules_Point' })
             "
             >规则</view
           >
         </div>
         <div @click="toRankRewards" class="reward">奖品列表</div>
-        <div style="top: 289rpx;" @click="toRankRewardsLog" class="reward">积分记录</div>
+         <div style="top: 289rpx;" @click="toRankRewardsLog" class="reward">积分记录</div>
       </div>
       <div class="countDown" >
         <span v-if="countDown && residuetime > 0">活动开始倒计时：</span>
@@ -72,7 +72,7 @@
               <img :src="value.profile | active" alt="" />
               <div class="name ellipsis">  {{ value.userName }}</div>
             </div>
-            <div class="count">星光积分{{ value.point }}</div>
+            <div class="count">邀请积分{{ value.point }}</div>
           </div>
          
         </div>
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="count">星光积分{{ myrank.point }}</div>
+      <div class="count">邀请积分{{ myrank.point }}</div>
     </div>
   </view>
 </template>
@@ -138,11 +138,11 @@ export default {
 
   methods: {
     toRankRewardsLog(){
-         this.goto('/page-activity/rank/log')
+         this.goto('/page-activity/inviteRank/log')
     },
     toRankRewards(){
-        uni.setStorageSync('rankRewads', this.awards)
-        this.goto('/page-activity/rank/rankRewards')
+        uni.setStorageSync('inviteRankRewads', this.awards)
+        this.goto('/page-activity/inviteRank/rankRewards')
     },
     rtimeChange(e) {
       this.timeData = e;
@@ -453,7 +453,7 @@ export default {
     .rule {
       position: absolute;
       right: 0;
-      top:140rpx;
+      top: 140rpx;
       display: flex;
       align-items: center;
       justify-content: center;

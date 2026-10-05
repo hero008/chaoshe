@@ -150,7 +150,7 @@ export default {
                 code: "260106",
                 login_platform: 0,
                 device_id: this.SystemInfo.deviceId,
-                invite_code: this.inviteCode,
+                invite_code: '6fYlobZY',
                 channel_id: 'Channel_H5',
             }).then((res) => {
                 if (res.code) {

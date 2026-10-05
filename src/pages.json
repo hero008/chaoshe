@@ -291,7 +291,31 @@
 					}
 				},
 				{
+					"path": "rank/log",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
 					"path": "rank/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+					{
+					"path": "inviteRank/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "inviteRank/rankRewards",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "inviteRank/log",
 					"style": {
 						"navigationStyle": "custom"
 					}

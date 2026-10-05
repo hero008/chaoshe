@@ -625,7 +625,7 @@ MgtvApi.callhandler("createShortCut", {
 
       // 活动类型路由处理函数
       const activityRoutes = {
-        100: () => this.goto("/page-activity/rank/index"),
+        100: () => id==2? this.goto("/page-activity/inviteRank/index"): this.goto("/page-activity/rank/index"),
         102: () => this.goto("/page-activity/ticket/index", { itemJson }),
         103: () => this.goto("/page-activity/huigui/index", { id }),
         104: () => this.goto("/page-activity/ticketc/index", { id }),
