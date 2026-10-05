@@ -10,7 +10,7 @@
             </div>
             <div class="myaward">
                 <div class="award_card flex_c flex_ac">
-                    <div class="tit"></div>
+                    <!-- <div class="tit"></div>
                     <div class="qr">
                         <image
                             class="qr_img"
@@ -27,23 +27,23 @@
                             @click="getCopy(QRdata.inviteCode)"
                             ><view class="cp_icon"></view>复制</view
                         >
-                    </div>
+                    </div> -->
                     <view class="data">
-                        <view class="data_box flex_r flex_jb">
+                        <view class="data_box flex_r flex_jc">
                             <view class="box">
                                 <view class="text">已邀请好友</view>
                                 <view class="number">{{
                                     pointData.inviteeNum || 0
                                 }}</view>
                             </view>
-                            <view class="box">
+                            <!-- <view class="box">
                                 <view class="text1">邀请奖励</view>
                                 <view class="number">{{
                                     pointData.point || 0
                                 }}</view>
-                            </view>
+                            </view> -->
                         </view>
-                        <div class="msg">* 邀请的好友奖励10天内领取有效</div>
+                        <!-- <div class="msg">* 邀请的好友奖励10天内领取有效</div> -->
                     </view>
                 </div>
             </div>
@@ -72,18 +72,18 @@
                     />
                 </div>
                 <div class="flow_txt flex_r flex_ac flex_jb">
-                    <div class="t">分享给好友 或者扫描二维码</div>
+                    <div class="t">分享给好友</div>
                     <div class="t">好友通过你分享的 链接登入平台</div>
                     <div class="t">你获得奖励</div>
                 </div>
             </div>
-            <div class="cord_bar flex_c flex_ac" style="marginbottom: 650rpx">
+            <div class="cord_bar flex_c flex_ac" style="margin-bottom: 100rpx">
                 <div class="tit">
                     <div class="img img1"></div>
                 </div>
                 <div class="th flex_r flex_ac flex_jb">
                     <span>好友昵称</span>
-                    <span>奖励 (星光积分)</span>
+                    <!-- <span>奖励 (邀请积分)</span> -->
                 </div>
                 <div
                     class="td flex_r flex_ac flex_jb"
@@ -94,7 +94,7 @@
                         <img :src="i.profile | active" class="user_img" />
                         <span>{{ i.userName }}</span>
                     </div>
-                    <span>{{ i.point }}</span>
+                    <!-- <span>{{ i.point }}</span> -->
                 </div>
                 <u-empty
                     v-if="!pointData.inviteeList.length"
@@ -119,6 +119,7 @@
 import xNavbar from "@/components/modules/x-navbar";
 import { uniShare, copyCode } from "@/utils/fun.js";
 import { post } from "@/utils/api.js";
+import { shareUrl } from "../../utils/mgtv";
 export default {
     data() {
         return {
@@ -141,7 +142,7 @@ export default {
     },
     created() {
         this.loadData();
-        this.getImg();
+        // this.getImg();
     },
     /**
      * 组件挂载后执行的钩子函数
@@ -159,14 +160,14 @@ export default {
                     this.pointData = res;
                 }
             });
-            uni.downloadFile({
-                url: "https://img.chaoshewang.com/product/258b301a00d9ada7ab51825bf2180ccb.png", //仅为示例，并非真实的资源
-                success: (res) => {
-                    if (res.statusCode === 200) {
-                        this.getTu(res.tempFilePath)
-                    }
-                },
-            });
+            // uni.downloadFile({
+            //     url: "https://img.chaoshewang.com/product/258b301a00d9ada7ab51825bf2180ccb.png", //仅为示例，并非真实的资源
+            //     success: (res) => {
+            //         if (res.statusCode === 200) {
+            //             this.getTu(res.tempFilePath)
+            //         }
+            //     },
+            // });
         },
         getTu(img) {
             uni.compressImage({
@@ -217,11 +218,28 @@ export default {
             // #endif
         },
         onShare() {
-            uniShare(
-                { tit: "邀请好友，领星光积分", path: "pages/login/sharePage" },
-                { inviteCode: this.userInfo.inviteCode },
-                this.shareimg
-            );
+            if(window.mgtv){
+                let channel = this.userInfo.channel
+                mgtv.showShareMenu({
+                    title:"邀请好友一起来玩吧!",
+                     typeList: ["moments", "wechat", "weibo", "qq", "qzone", "fantuan"],
+                    url:`https://app.mgtv.com/mgmp-share/?appid=mgkgw1fkyk9fw95nw&host=mgtv&path=${encodeURIComponent("inviteCode="+this.userInfo.inviteCode+'&channel='+channel)}`
+                })
+            }
+
+        //     let channel = this.userInfo.channel
+        //     let url = shareUrl+"&inviteCode="+this.userInfo.inviteCode+"&channel="+channel;
+
+        //     MgtvApi.showShareMenus(
+        //     {
+        //     title: "邀请", // 分享标题
+        //     desc: '邀请好友一起玩吧', // 分享描述
+        //     shareUrl: url, // 分享链接
+        //     shareIcon: 'https://img.shinemang.com/static/logo.png',
+        //     },
+        //     (resp) => { },
+        // );
+        //    MgtvApi.showShare();
         },
         getCopy(v) {
             copyCode(v);
@@ -276,7 +294,7 @@ export default {
 
     .award_card {
         width: 100%;
-        height: 768rpx;
+       // height: 768rpx;
         background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/card.png");
         background-size: 100% 100%;
         .tit {
@@ -355,7 +373,7 @@ export default {
                     }
                     .text1 {
                         &::after {
-                            content: "(星光积分)";
+                            content: "(邀请积分)";
                             color: #aaacbb;
                             font-weight: 500;
                             font-size: 24rpx;
@@ -480,15 +498,15 @@ export default {
     .btn {
         width: 582rpx;
         height: 80rpx;
-        color: #fff;
+        color: #1a1a1a;
         font-size: 32rpx;
         font-weight: 500;
         text-align: center;
         line-height: 76rpx;
-        background: #ff5070;
+      background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
         border-radius: 40rpx;
-        text-shadow: 0px 2px 2px #e6183e;
-        box-shadow: inset 0rpx 8rpx 24rpx 0rpx rgba(255, 248, 248, 0.5);
+        // text-shadow: 0px 2px 2px #e6183e;
+        // box-shadow: inset 0rpx 8rpx 24rpx 0rpx rgba(255, 248, 248, 0.5);
     }
 }
 </style>
