@@ -224,7 +224,7 @@ export default {
             MgtvApi.showShareMenus(
             {
             title: "邀请", // 分享标题
-            desc: '邀请好友一起玩吧', // 分享描述
+            desc: '邀请好友一起玩吧!', // 分享描述
             shareUrl: url, // 分享链接
             shareIcon: 'https://img.shinemang.com/static/logo.png',
             },
