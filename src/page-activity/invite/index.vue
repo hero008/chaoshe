@@ -142,7 +142,7 @@ export default {
     },
     created() {
         this.loadData();
-        this.getImg();
+        // this.getImg();
     },
     /**
      * 组件挂载后执行的钩子函数
