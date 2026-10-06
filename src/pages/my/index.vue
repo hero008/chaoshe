@@ -180,7 +180,7 @@ export default {
                  {
                     name: "https://img.shinemang.com/gachaStatic/static/img/my/ico15.png",
                     path: "/page-activity/invite/index",
-                    title: "邀请好友，得神秘大礼~",
+                    title: "邀请好友",
                 },
                 {
                     name: "https://img.shinemang.com/gachaStatic/my/addressIcon.png",
