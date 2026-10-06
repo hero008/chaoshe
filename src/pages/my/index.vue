@@ -107,7 +107,7 @@
             </div>
         </div>
         <!-- <button class="invite_bar" open-type="share" id="invite"></button> -->
-        <button class="invite_bar" @click="goto('/page-activity/invite/index')"></button> 
+        <!-- <button class="invite_bar" @click="goto('/page-activity/invite/index')"></button>  -->
         <div class="grid_bar">
             <!-- v-if="!userInfo.isAuthenticated && i.title === '实名认证' || i.title !== '实名认证'" -->
             <!-- <div class="grid_tit">常用功能</div> -->
@@ -176,6 +176,11 @@ export default {
                 },
             ],
             baseList2: [
+                 {
+                    name: "https://img.shinemang.com/gachaStatic/my/ico15.png",
+                    path: "/page-activity/invite/index",
+                    title: "邀请好友，得神秘大礼~",
+                },
                 {
                     name: "https://img.shinemang.com/gachaStatic/my/addressIcon.png",
                     path: "/pages/shipments/addressList",
