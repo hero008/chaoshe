@@ -105,6 +105,8 @@
               amount: oldamount,
               price: unitPrice,
               gacha_theme_id: theme_id,
+              is_free:( selectTicket.id && selectTicket.type == 'COUPON_TYPE_FREE') ? 1:2
+
             })
           "
         >

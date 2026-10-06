@@ -822,13 +822,19 @@ export default {
         // #endif
         //支付成功回调
         onClickDraw(res, showAnim, type) {
-        
-            this.surePayMessage = {
+            
+            if(type != 0){
+                if(res.res && res.res.createPaymentReply){
+               this.surePayMessage = {
                   payId:res.res.createPaymentReply.payId
-            }
+              }
               setTimeout(() => {
                           this.$refs.surePayModal.open()
                  }, 2000);
+              }
+            }
+       
+           
             // 进入新一局：重置上一局的结束标记与奖励，保证托管待机后能继续自动接管
             if (this.isAutoMode) {
                 uni.removeStorageSync('isAuto')

@@ -222,7 +222,7 @@ export default {
 		},
         toUse(){
           if(this.selectTicketIds.length){
-			let useTicket = this.myCouponData[0];
+			let useTicket = this.myCouponData.find((item)=>item.id == this.selectTicketIds[0]);
 			useTicket.ids = this.selectTicketIds;
 			useTicket.freeAmount = this.myCouponData.length
 
@@ -230,15 +230,16 @@ export default {
 				this.gateBack()
 			
 		  }else{
-            uni.showToast({
-				title:'请选择需要使用的券',
-				icon:'none'
-			})
+			this.UpselectTicket({})
+				this.gateBack()
+            // uni.showToast({
+			// 	title:'请选择需要使用的券',
+			// 	icon:'none'
+			// })
 		  }
 		},
 		onclickToChaowan(item) {
 			if(this.active == 1 && this.data.state == 1){
-		
 				if(this.selectTicketIds.includes(item.id)){
 					this.selectTicketIds = this.selectTicketIds.filter(i=>i!=item.id)
 				}else{
