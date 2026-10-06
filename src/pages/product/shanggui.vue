@@ -374,6 +374,10 @@
           </view>
         </scroll-view>
         <view @click="openBzGacha" class="confirm"></view>
+        <view  @click="onAnimationChange" class="closeAnimation">
+           <div class="select" :class="{ active: showAnimation }"></div>
+        <div>跳过动画</div>
+        </view>
         <view @click="showBzcPopup = false" class="close"> </view>
       </view>
     </u-popup>
@@ -506,7 +510,8 @@ export default {
       code: "",
       dynamicEffectShow:false,
       cartoonsrc:'https://img.shinemang.com/gachaStatic/svga/bz.svga',
-      resultRewards:[]
+      resultRewards:[],
+      showAnimation:false
     };
   },
   components: {
@@ -576,8 +581,15 @@ export default {
         stock_ids: [this.showBzInfo.id],
       }).then((res) => {
         this.showBzcPopup = false;
-        this.dynamicEffectShow = true;
+        if(!this.showAnimation){
+           this.dynamicEffectShow = true;
         this.resultRewards = res.item
+        }else{
+          this.dynamicEffectShow = false;
+        this.resultRewards = res.item
+         this.$refs.result.open(this.resultRewards, true, "", "");
+        }
+       
        
       });
     },
@@ -651,6 +663,10 @@ export default {
         }
       });
     },
+     onAnimationChange() {
+      this.showAnimation = !this.showAnimation;
+      this.$sl("IsAnimation", this.showAnimation);
+    },
     ondetail(item) {
       if (item.levelIndex == 52) {
         post("v1/goods/item/get", {
@@ -658,6 +674,7 @@ export default {
         }).then((res) => {
           this.showBzInfo = item;
           this.bzRewards = res.item.boxItems;
+          this.showAnimation = this.$gl("IsAnimation") || false;
           this.showBzcPopup = true;
         });
       } else {
@@ -842,6 +859,33 @@ export default {
       }
     }
   }
+
+  .closeAnimation{
+  font-size: 24rpx;
+  // font-weight: 500;
+  color: #fff;
+  margin-top: 25rpx;
+  display: flex;
+  align-items: center;
+  position: absolute;
+   bottom: -50rpx;
+   right: 60rpx;
+  .select {
+  width: 36rpx;
+  margin-right: 8rpx;
+  height: 36rpx;
+  // background: #eee;
+  border-radius: 50%;
+  background: url("https://img.shinemang.com/gachaStatic/notSelect.png");
+  background-size: 100%;
+  border-radius: 50%;
+
+  &.active {
+    background: url("https://img.shinemang.com/gachaStatic/select.png") !important;
+    background-size: 100% 100% !important;
+  }
+}
+  }
   .confirm {
     width: 406rpx;
     height: 120rpx;
@@ -849,7 +893,7 @@ export default {
     background-size: 100% 100%;
     position: absolute;
     bottom: -86rpx;
-    left: 50%;
+    left: 40%;
     transform: translateX(-50%);
   }
   .close {
