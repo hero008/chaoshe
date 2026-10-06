@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="cord_bar flex_c flex_ac">
-                <div class="tit"><div class="img"></div></div>
+                <div class="tit"><div class="img">活动流程</div></div>
                 <div class="flow flex_r flex_ac flex_jb">
                     <img
                         src="https://img.shinemang.com/gachaStatic/matt/static/img/index/friend_icon.png"
@@ -79,7 +79,9 @@
             </div>
             <div class="cord_bar flex_c flex_ac" style="margin-bottom: 100rpx">
                 <div class="tit">
-                    <div class="img img1"></div>
+                    <div class="img img1">
+                        邀请记录
+                    </div>
                 </div>
                 <div class="th flex_r flex_ac flex_jb">
                     <span>好友昵称</span>
@@ -242,26 +244,39 @@ export default {
 .invitePage {
     height: 100vh;
     overflow: hidden;
+     &::after {
+        content: "";
+        width: 100vw;
+        height: 600rpx;
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+        background: url('https://img.shinemang.com/gachaStatic/chaogui/topBg.png');
+        background-size: 100% 100%;
+      }
     // overflow-y: auto;
 }
 
 .invite {
     // height: 2000rpx;
     height: 100%;
-    background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/share_bg.png");
+    // background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/share_bg.png");
     background-size: cover; /* 图片覆盖整个容器 */
     background-position: top;
     background-repeat: no-repeat; /* 不重复 */
     overflow-y: auto;
     padding: 0rpx 36rpx 180rpx;
+    position: relative;
+    z-index:4;
 }
 
 .gz {
     position: absolute;
     width: 48rpx;
     height: 144rpx;
-    background: #aa5de5;
-    border: 2rpx solid #ffffff;
+    background:rgba(26, 26, 26, .5) ;
+    // border: 2rpx solid #ffffff;
     border-radius: 16rpx 0 0 16rpx;
     font-weight: 800;
     font-size: 24rpx;
@@ -277,7 +292,9 @@ export default {
 
 .myaward {
     text-align: center;
-    margin-top: 350rpx;
+    margin-top: 150rpx;
+    box-shadow: 0rpx 3rpx 11rpx 0rpx rgba(211,211,211,0.6);
+     border-radius: 32rpx;
     .Pikachu {
         width: 236rpx;
         height: 224rpx;
@@ -285,9 +302,11 @@ export default {
 
     .award_card {
         width: 100%;
+        border-radius: 32rpx;
        // height: 768rpx;
-        background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/card.png");
-        background-size: 100% 100%;
+       background: #fff;
+        // background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/card.png");
+        // background-size: 100% 100%;
         .tit {
             width: 260rpx;
             height: 60rpx;
@@ -354,6 +373,9 @@ export default {
                 color: #000000;
                 .box {
                     .text {
+                        font-size: 32rpx;
+                        color: #1a1a1a;
+                        font-weight: bold;
                         &::after {
                             content: "(人)";
                             color: #aaacbb;
@@ -394,27 +416,34 @@ export default {
     overflow: hidden;
     margin-top: 16rpx;
     padding-bottom: 48rpx;
+    box-shadow: 0rpx 3rpx 11rpx 0rpx rgba(211,211,211,0.6);
     .tit {
         width: 100%;
         height: 96rpx;
-        background: linear-gradient(
-            180deg,
-            #f5dbfc 0%,
-            rgba(245, 219, 252, 0) 100%
-        );
+        font-size: 32rpx;
+        text-align: center;
+        color: #1a1a1a;
+        font-weight: bold;
+        line-height: 96rpx;
 
-        .img {
-            margin: auto;
-            width: 176rpx;
-            height: 60rpx;
-            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/flow.png");
-            background-size: 100% 100%;
-            margin-top: 32rpx;
-        }
-        .img1 {
-            background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/Invitation_record.png");
-            background-size: 100% 100%;
-        }
+        // background: linear-gradient(
+        //     180deg,
+        //     #f5dbfc 0%,
+        //     rgba(245, 219, 252, 0) 100%
+        // );
+
+        // .img {
+        //     margin: auto;
+        //     width: 176rpx;
+        //     height: 60rpx;
+        //     background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/flow.png");
+        //     background-size: 100% 100%;
+        //     margin-top: 32rpx;
+        // }
+        // .img1 {
+        //     background-image: url("https://img.shinemang.com/gachaStatic/matt/static/img/index/Invitation_record.png");
+        //     background-size: 100% 100%;
+        // }
     }
 
     .flow {
