@@ -365,8 +365,10 @@ export const  awardsSort = (awards)=>{
 
 export const choushangResultByItemId =(data)=>{
   let bzRewards = data.filter((item)=>item.levelIndex == 52)
+  let LuckyRewards = data.filter((item)=>item.levelName == 'Lucky')
+
    let spRewards = data.filter((item)=>item.levelIndex == 28)
-   let otherRewards =  data.filter((item)=>item.levelIndex != 28 && item.levelIndex != 52)
+   let otherRewards =  data.filter((item)=>item.levelIndex != 28 && item.levelIndex != 52 && item.levelName !== 'Lucky')
     const map = new Map();
   
   otherRewards.forEach(item => {
@@ -383,7 +385,7 @@ export const choushangResultByItemId =(data)=>{
   });
   let otherArr = Array.from(map.values());
   
-  return [...bzRewards,...spRewards,...otherArr]
+  return [...bzRewards,...LuckyRewards,...spRewards,...otherArr]
 }
 
 export const isPositiveInteger = (value) => {

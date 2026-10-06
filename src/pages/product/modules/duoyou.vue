@@ -36,7 +36,7 @@
                         <view class="card-contents card-back" @click="ondetail(k)"
                             :class="['card' + k.levelName,]">
 
-                            <view v-if="k.levelIndex != 28 && k.levelIndex != 52" class="count">
+                            <view v-if="k.levelIndex != 28 && k.levelIndex != 52 && k.levelName != 'Lucky'" class="count">
                                <view>x{{ k.num }}</view>
                             </view>
 
