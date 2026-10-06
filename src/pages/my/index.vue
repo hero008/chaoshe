@@ -36,7 +36,7 @@
                     <view class="user_name">
                         <div @click="copy" class="u_ID">ID: <span :style="{textDecoration: 'underline'}">{{ userInfo.id || "" }}</span></div>
                         <!-- 先出现不需要 -->
-                         <div @click="synchronization" class="synchronization">同步芒果信息</div>
+                         <div @click="synchronization" class="synchronization"></div>
                         <!-- #endif -->
                     </view>
                 </div>
@@ -302,7 +302,7 @@ export default {
                             avatar_url:userInfo.avatar.l
                         }).then((res) => {
                             if (!res.code) {
-                                uni.$u.toast("同步成功");
+                                uni.$u.toast("信息已更新");
                                 this.asyncUpdateInfo();
                             } else {
                                 uni.$u.toast(res.message);
@@ -642,16 +642,15 @@ export default {
             }
             .synchronization{
                 // width: 136rpx;
-                padding: 0 12rpx;
-                height: 48rpx;
-                background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
-                border-radius: 40rpx 40rpx 40rpx 40rpx;
-                display: flex;
-                margin-left: 6rpx;
-                align-items: center;
-                justify-content: center;
-                color: #1A1A1A;
-                font-size:24rpx;
+               width: 40rpx;
+            height: 40rpx;
+            margin-left: 12rpx;
+            // position: absolute;
+            // top: 50%;
+            // transform: translateY(-50%);
+            // right: 12rpx;
+            background: url('@/static/refresh.png');
+            background-size: 100% 100%;
             }
 
             .vip_icon {
