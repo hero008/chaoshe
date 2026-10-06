@@ -13,7 +13,7 @@
                     <view v-if="i.type==active" class="line"></view>
                 </view>
 
-				<view  v-if="selectTicket && selectTicket.id && active == 1" class="selectAll">
+				<view  v-if="active == 1 && gachaId" class="selectAll">
 					<img @click="selectAllFree(false)" v-if="selectAll" src="https://img.shinemang.com/gachaStatic/select.png" alt="">
 					<img @click="selectAllFree(true)" v-else src="https://img.shinemang.com/gachaStatic/notSelect.png" alt="">
 					<span>全选</span>
@@ -80,11 +80,11 @@
 										<div class="date">有效期至：{{ item.expiredAt }}</div>
 									</div>
 									 <div class="rowr flex_r flex_jc flex_ac">
-										<div class="select" v-if="selectTicket && selectTicket.id && selectTicketIds.includes(item.id)"></div>
+										<div class="select" v-if="selectTicketIds.includes(item.id) && gachaId"></div>
 									     
 										<div :class="['txt',item.state==4?'expired':'']" v-else-if="item.state != 1">{{ item.state== 3 ?"已使用" : item.state == 4 ? "" : "锁定" }}</div>
 										
-										 <div class="select notSelect" v-else-if="selectTicket && selectTicket.id && !selectTicketIds.includes(item.id)"></div>
+										 <div class="select notSelect" v-else-if="(!selectTicketIds.includes(item.id)) && gachaId"></div>
 										<div class="txt" style="opacity: 1;" v-else>去使用</div> 
 									</div> 
 								</div>
@@ -124,7 +124,8 @@ export default {
             }],
             active: 0,
 			selectTicketIds:[],
-			selectAll:false
+			selectAll:false,
+			gachaId:''
 		};
 	},
 	computed: { ...mapState(['selectTicket']),
@@ -141,6 +142,7 @@ export default {
 			this.data = { state: 0,is_free:2 }
 			return
 		}
+		this.gachaId = da.gacha_id
 		Object.keys(da).forEach(key => {
 			if (key != "gacha_id" && typeof da[key] === 'string' && !isNaN(Number(da[key]))) {
 				da[key] = Number(da[key]);
@@ -239,7 +241,9 @@ export default {
 		  }
 		},
 		onclickToChaowan(item) {
+			
 			if(this.active == 1 && this.data.state == 1){
+				console.log('234234234')
 				if(this.selectTicketIds.includes(item.id)){
 					this.selectTicketIds = this.selectTicketIds.filter(i=>i!=item.id)
 				}else{
