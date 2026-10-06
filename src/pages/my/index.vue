@@ -114,11 +114,12 @@
             <view class="grid_content">
                 <view  @click="topGrid(i)" v-for="(i, s) in baseList2" :key="s" class="x_grid"  >
                     <view class="leftIcon">
-                        <view class="icon"
+                        <view v-if="s!=0" class="icon"
                          :style="{
                             backgroundImage:'url('+i.name+')'
                          }"
                         ></view>
+                        <u-icon color="#39e2c2" style="margin-left: -4rpx;margin-right: 10rpx;" size="28" v-else name="gift-fill"></u-icon>
                         <!-- <u-icon :name="i.name" :size="22" ></u-icon> -->
                     <text class="ellipsis">{{ i.title }}</text>
                     </view>
@@ -177,7 +178,7 @@ export default {
             ],
             baseList2: [
                  {
-                    name: "https://img.shinemang.com/gachaStatic/my/ico15.png",
+                    name: "https://img.shinemang.com/gachaStatic/static/img/my/ico15.png",
                     path: "/page-activity/invite/index",
                     title: "邀请好友，得神秘大礼~",
                 },
