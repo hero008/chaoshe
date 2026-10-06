@@ -19,7 +19,7 @@
 					<span>全选</span>
 
 					<view @click="toUse" class="toUse">
-                      使用
+                      确定
 					</view>
 				</view>
             </view>
