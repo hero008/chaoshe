@@ -869,7 +869,7 @@ export default {
   align-items: center;
   position: absolute;
    bottom: -50rpx;
-   right: 60rpx;
+   right: -10rpx;
   .select {
   width: 36rpx;
   margin-right: 8rpx;
@@ -893,7 +893,7 @@ export default {
     background-size: 100% 100%;
     position: absolute;
     bottom: -86rpx;
-    left: 40%;
+    left: 50%;
     transform: translateX(-50%);
   }
   .close {
