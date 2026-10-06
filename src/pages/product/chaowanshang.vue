@@ -164,7 +164,7 @@
                                             v-for="(item, i) in newRecordList.records.slice(0, newRecordList.records.lengthNumber)" :key="i">
                                             <div class="lr_r">
                                                 <img class="lr_img" :src="item.itemCover" />
-                                                <div class="nums">{{ item.no }}发</div>
+                                                <div  v-if="recordLevelName != 'Lucky'" class="nums">{{ item.no }}发</div>
                                             </div>
                                             <div class="bor"></div>
                                             <div class="lr_info flex_c flex_jb">
