@@ -796,7 +796,7 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        z-index: 333;
+        z-index: 333444444444;
     }
 .BzcList {
   width: 670rpx;
