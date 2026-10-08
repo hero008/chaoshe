@@ -203,11 +203,11 @@ export default {
                     // path:'/page-a/couponPackage/discountCoupon',
                     title: "我的卡包",
                 },
-                //  {
-                //     name: "https://img.shinemang.com/gachaStatic/my/exchangeIcon.png",
-                //     path: "/page-activity/conversion/index",
-                //     title: "福利兑换",
-                // },
+                 {
+                    name: "https://img.shinemang.com/gachaStatic/my/exchangeIcon.png",
+                    path: "/page-activity/conversion/index",
+                    title: "福利兑换",
+                },
                   {
                     name: "https://img.shinemang.com/gachaStatic/my/centerIcon.png",
                     path: '/page-a/luck/index',
