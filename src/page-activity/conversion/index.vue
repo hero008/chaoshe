@@ -7,7 +7,7 @@
         </view>
         <view class="center_box">
             <view class="center">
-                <view class="shou"></view>
+                <!-- <view class="shou"></view> -->
                 <input
                     class="number"
                     v-model="inviteCode"
@@ -156,7 +156,7 @@ export default {
             height: 480rpx;
             margin: 0 auto;
             position: relative;
-            background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/conversion_ box.png");
+            // background-image: url("https://img.shinemang.com/gachaStatic/static/img/activity/conversion_ box.png");
             background-size: 100% 100%;
             .shou {
                 width: 406rpx;
@@ -219,6 +219,7 @@ export default {
             .parse_con{
                 height: 300rpx;
                 overflow-y: auto;
+                padding-right: 32rpx;
                 padding-bottom: 50rpx;
             }
         }
