@@ -86,7 +86,7 @@ export default {
                 this.needLogin = false;
               let channel = uni.getStorageSync("channel");
               post("v1/user/login", {
-                phone_num: "",
+                phone_num:userInfo.mobile || '',
                 type: 8,
                 code: userInfo.ticket,
                 login_platform:  this.ios ? 2 : 1,

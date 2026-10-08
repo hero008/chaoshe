@@ -85,7 +85,7 @@
                 </div>
                 <div class="th flex_r flex_ac flex_jb">
                     <span>好友昵称</span>
-                    <!-- <span>奖励 (邀请积分)</span> -->
+                    <!-- <span>奖励 (积分)</span> -->
                 </div>
                 <div
                     class="td flex_r flex_ac flex_jb"
@@ -386,7 +386,7 @@ export default {
                     }
                     .text1 {
                         &::after {
-                            content: "(邀请积分)";
+                            content: "(积分)";
                             color: #aaacbb;
                             font-weight: 500;
                             font-size: 24rpx;

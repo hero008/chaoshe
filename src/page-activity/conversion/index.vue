@@ -210,7 +210,7 @@ export default {
         .text {
             font-weight: 500;
             font-size: 26rpx;
-            color: #ffffff;
+            color: #888;
             margin: 40rpx 0 0 64rpx;
             .title {
                 font-weight: bold;
