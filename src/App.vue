@@ -235,16 +235,10 @@ export default {
                 url= url+'&channel='+channel
                 }
                 if(gachaName && gachaId){
-                url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+                  url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+                  uni.removeStorageSync('gachaName')
+                  uni.removeStorageSync('gachaId')
                 }
-
-                if(gachaName){
-                    uni.removeStorageSync('gachaName')
-                }
-                if(gachaId){
-                   uni.removeStorageSync('gachaId')
-                }
-
             }
            window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
           `imgotv://webview?url=${encodeURIComponent(url)}`,
@@ -273,6 +267,8 @@ export default {
                      }
                      if(gachaName && gachaId){
                         mpParams+='&gachaName='+gachaName + '&gachaId='+gachaId
+                        uni.removeStorageSync('gachaName')
+                        uni.removeStorageSync('gachaId')
                      }
                      setTimeout(()=>{ window.MgtvApi.closeWebView()},1000)
                      window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
