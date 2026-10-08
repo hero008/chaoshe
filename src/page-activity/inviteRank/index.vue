@@ -72,7 +72,7 @@
               <img :src="value.profile | active" alt="" />
               <div class="name ellipsis">  {{ value.userName }}</div>
             </div>
-            <div class="count">邀请积分{{ value.point }}</div>
+            <div class="count">积分{{ value.point }}</div>
           </div>
          
         </div>
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="count">邀请积分{{ myrank.point }}</div>
+      <div class="count">积分{{ myrank.point }}</div>
     </div>
   </view>
 </template>
