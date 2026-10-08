@@ -238,6 +238,13 @@ export default {
                 url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
                 }
 
+                if(gachaName){
+                    uni.removeStorageSync('gachaName')
+                }
+                if(gachaId){
+                   uni.removeStorageSync('gachaId')
+                }
+
             }
            window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
           `imgotv://webview?url=${encodeURIComponent(url)}`,
