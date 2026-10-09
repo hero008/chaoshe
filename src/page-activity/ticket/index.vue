@@ -1,6 +1,12 @@
 <template>
     <view class="ticket">
-        <view class="topBack">
+        <view  class="topBack"
+         :style="{
+             top: MBInfo().top + 'px',
+             height:'40px',
+             alignItems:'center'
+         }"
+        >
             <img
                 src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                 @click.stop="gateBack"
