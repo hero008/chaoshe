@@ -1,9 +1,13 @@
 <template>
     <view
         class="ticket"
-        :style="{ backgroundImage: `url(${message.imageUrlMap.bg})` }"
+        :style="{ backgroundImage: `url(${message.imageUrlMap.bg})`}"
     >
-        <view class="topBack">
+        <view :style="{
+            top: MBInfo().top + 'px' ,
+            height:'40px',
+            alignItems:'center'
+        }" class="topBack">
             <img
                 src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png"
                 @click.stop="gateBack"
@@ -55,8 +59,8 @@
                 </view>
                 <view class="text"
                     >1.公司有权根据实际情况对活动规则进行必要的调整或解<br />释，以确保活动的公平、公正和顺利进行。
-                    <br />2.用户参与活动时需遵守芒星赏APP的相关规定和法律法规要
-                    <br />求，不得采用任何不正当手段参与活动或获取奖励。对于违<br />规行为，芒星赏文化传播公司有权取消用户的参与资格及已获
+                    <br />2.用户参与活动时需遵守芒星赏的相关规定和法律法规要
+                    <br />求，不得采用任何不正当手段参与活动或获取奖励。对于违<br />规行为，芒星赏有权取消用户的参与资格及已获
                     <br />得的奖励。</view
                 >
             </view>
