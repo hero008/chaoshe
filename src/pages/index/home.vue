@@ -249,7 +249,7 @@ import xModal from "@/components/modules/x-modal";
 import { service } from "@/utils/fun.js";
 import infiniteScroll from "../../components/infiniteScroll/infiniteScroll.vue";
 import homeInfiniteScroll from "../../components/homeInfiniteScroll/homeInfiniteScroll.vue";
-import { isIos, parseQueryString,logoBase64, isHonery } from "../../utils/mgtv.js";
+import { isIos, parseQueryString,logoBase64, isHonery, shareUrl } from "../../utils/mgtv.js";
 import DanmakuSimple from "@/components/danmu/danmu";
 export default {
   data() {
@@ -393,7 +393,7 @@ export default {
 destinationUrl: `https://img.shinemang.com/install/index.html`,
 });
       }else{
-        let schema = "imgotv://webview?url=https%3A%2F%2Fmxs.mgworld.cn%3FisFullScreen%3D1%26isHideNavBar%3D1"
+        let schema = "imgotv://webview?url="+encodeURIComponent(shareUrl)
 
 MgtvApi.callhandler("createShortCut", {
               id: "mgtv:minigamecenter_shortcut", //写死
@@ -402,7 +402,6 @@ MgtvApi.callhandler("createShortCut", {
               base64BitmapData: logoBase64, // 图标
             });
       }
-      //  window.location.href = 'https://mxs.mgworld.cn?isFullScreen=1&isHideNavBar=1'
     },
     getDanmu() {
       post("v1/publicize/push/barrage/all").then((res) => {
