@@ -13,15 +13,15 @@
                 @click.stop="gateBack"
                 class="Back_ico"
             />
-            <text class="title">{{ message.name }}</text>
+            <text style="color: #fff;" class="title">{{ message.name }}</text>
         </view>
         <view class="particulars">
             <!-- #ifndef MP-WEIXIN -->
-            <button open-type="share" class="btns_2 t_btn" @click="onShare">
+            <!-- <button open-type="share" class="btns_2 t_btn" @click="onShare">
                 <image
                     src="https://img.shinemang.com/gachaStatic/static/img/chaowanshang/cws_icon-share.png"
                 />
-            </button>
+            </button> -->
             <!-- #endif -->
             <img
                 class="rule"
@@ -34,11 +34,15 @@
             />
             <!-- style="bottom" -->
             <view class="box">
-                <view class="time"
+                
+                <view :style="{
+                    color:message.paramsMap.time
+                }" class="time"
                     >{{ message.startTime }} - {{ message.endTime }}</view
                 >
+                <view style="height: 610rpx;"></view>
                 <!-- margin-top -->
-                <view class="number">优惠券可领：{{ money }} </view>
+               
                 <!-- margin-top -->
                 <img
                     class="get"
@@ -49,6 +53,7 @@
                     "
                     @click="getInquire"
                 />
+                 <view class="number">优惠券可领：{{ money }} </view>
             </view>
 
             <view class="attention">
@@ -70,6 +75,7 @@
 <script>
 import { post, activityLIst } from "@/utils/api.js";
 import { uniShare } from "@/utils/fun.js";
+import color from "uview-ui/libs/config/color";
 export default {
     data() {
         return {
@@ -114,7 +120,13 @@ export default {
             });
         },
         getInquire() {
-            if (this.state !== 0) return;
+            if (this.state !== 0){
+                uni.showToast({
+                    title:'暂无可领优惠券',
+                    icon:"none"
+                })
+                return
+            };
             post("v1/activity/cost-gift-coupon-summary/accept").then((res) => {
                 uni.showToast({
                     title: "您已领取成功~",
@@ -143,6 +155,9 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+page{
+    background:#0d4799 ;
+}
 .ticket {
     // width: 750rpx;
     background-size: 100% 100%;
@@ -199,21 +214,23 @@ export default {
     .box {
         width: 100%;
         position: absolute;
-        bottom: 405rpx;
+        bottom: 350rpx;
         .time {
             text-align: center;
             font-size: 28rpx;
-            color: #e97102;
+            color: #fff;
+            
         }
         .number {
-            margin-top: 470rpx;
+             margin-top: -10rpx;
             text-align: center;
             font-weight: 800;
             font-size: 28rpx;
-            color: #e97102;
+            color: #fff;
         }
         .get {
             display: block;
+            transform: scale(1.5);
             width: 366rpx;
             height: 132rpx;
             margin: 40rpx auto 0;
@@ -229,6 +246,7 @@ export default {
         background: rgba(255, 255, 255, 0.5);
         border-radius: 16rpx 16rpx 16rpx 16rpx;
         padding: 24rpx;
+        overflow-y: auto;
         .title {
             display: flex;
             width: 100%;
@@ -244,7 +262,7 @@ export default {
                 border-image: linear-gradient(
                         90deg,
                         rgba(227, 142, 0, 0),
-                        rgba(227, 142, 0, 1)
+                        rgba(255, 255, 0, 1)
                     )
                     2 2;
             }
@@ -252,7 +270,7 @@ export default {
                 width: 112rpx;
                 font-weight: 800;
                 font-size: 28rpx;
-                color: #e38e00;
+                color: #fff;
                 margin: 0 20rpx 0;
             }
             .r {
@@ -262,18 +280,18 @@ export default {
                 border: 2rpx solid;
                 border-image: linear-gradient(
                         90deg,
-                        rgba(227, 142, 0, 1),
+                        rgba(255, 255, 0, 1),
                         rgba(227, 142, 0, 0)
                     )
                     2 2;
             }
         }
         .text {
-            height: 40rpx;
+            // height: 40rpx;
             line-height: 40rpx;
             font-weight: 500;
             font-size: 24rpx;
-            color: #e38e00;
+            color: #fff;
         }
     }
 }
