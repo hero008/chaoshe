@@ -40,7 +40,7 @@
                 }" class="time"
                     >{{ message.startTime }} - {{ message.endTime }}</view
                 >
-                <view style="height: 610rpx;"></view>
+                <view style="height: 614rpx;"></view>
                 <!-- margin-top -->
                
                 <!-- margin-top -->
@@ -59,10 +59,14 @@
             <view class="attention">
                 <view class="title">
                     <view class="l"> </view>
-                    <view class="title">注意事项 </view>
+                    <view  :style="{
+                    color:message.paramsMap.text
+                }" class="title">注意事项 </view>
                     <view class="r"> </view>
                 </view>
-                <view class="text"
+                <view :style="{
+                    color:message.paramsMap.text
+                }" class="text"
                     >1.公司有权根据实际情况对活动规则进行必要的调整或解<br />释，以确保活动的公平、公正和顺利进行。
                     <br />2.用户参与活动时需遵守芒星赏的相关规定和法律法规要
                     <br />求，不得采用任何不正当手段参与活动或获取奖励。对于违<br />规行为，芒星赏有权取消用户的参与资格及已获
@@ -222,7 +226,7 @@ page{
             
         }
         .number {
-             margin-top: -10rpx;
+             margin-top: -16rpx;
             text-align: center;
             font-weight: 800;
             font-size: 28rpx;
