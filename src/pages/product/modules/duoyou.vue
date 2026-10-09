@@ -174,9 +174,12 @@ export default {
             return choushangResultByItemId(list)
         },
          onLoaded() {
-            this.$refs.cSvgaRef.call("startAnimation");
-
+            this.$refs.cSvgaRef.call("startAnimation")
+              
+            if(!this.showAnim){
                playDede(0,this.voiceUrl)
+            }
+
 
  
             if (this.vibrat) vibratePhone(3000)
