@@ -175,10 +175,10 @@ export default {
         },
          onLoaded() {
             this.$refs.cSvgaRef.call("startAnimation");
-
+            if(!this.showAnim){
                playDede(0,this.voiceUrl)
+            }
 
- 
             if (this.vibrat) vibratePhone(3000)
             // console.log("动画加载完成，播放时回调");
         },
