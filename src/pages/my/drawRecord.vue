@@ -45,6 +45,7 @@
                                     }}</span>
                                 </div>
                                 <div
+                                    v-if="item.gachaType != 0"
                                     class="detail"
                                
                                 >
@@ -129,6 +130,7 @@
                                     }}</span>
                                 </div>
                                 <div
+                                   v-if="item.gachaType != 0"
                                     class="detail"
                                
                                 >
@@ -304,8 +306,11 @@ export default {
         },
         getRecordDetails(gachaId, boxIndex) {},
         onclickHistoryDetail(data) {
+            if(data.gachaType == 0){
+                return;
+            }
             let da = { id: data.gachaId, index: data.boxIndex };
-            let s = "/pages/product/yifanshang";
+            let s = "/pages/product/chaowanshang";
             if (data.gachaType == 1) s = "/pages/product/yifanshang";
             else if (data.gachaType == 2) s = "/pages/product/niudan";
             else if (data.gachaType == 3) s = "/pages/product/chaowanshang";
