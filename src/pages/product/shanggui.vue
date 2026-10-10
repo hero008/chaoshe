@@ -668,7 +668,7 @@ export default {
       this.$sl("IsAnimation", this.showAnimation);
     },
     ondetail(item) {
-      if (item.levelIndex == 52) {
+      if (item.item && item.item.type == 2) {
         post("v1/goods/item/get", {
           item_id: item.itemId,
         }).then((res) => {
