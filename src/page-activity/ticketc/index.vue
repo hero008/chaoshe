@@ -36,7 +36,7 @@
             <view class="box">
                 
                 <view :style="{
-                    color:message.paramsMap.time
+                    color:(message &&  message.paramsMap &&  message.paramsMap.time) || '#fff'
                 }" class="time"
                     >{{ message.startTime }} - {{ message.endTime }}</view
                 >
@@ -60,12 +60,12 @@
                 <view class="title">
                     <view class="l"> </view>
                     <view  :style="{
-                    color:message.paramsMap.text
+                    color:(message && message.paramsMap && message.paramsMap.text) || '#fff'
                 }" class="title">注意事项 </view>
                     <view class="r"> </view>
                 </view>
                 <view :style="{
-                    color:message.paramsMap.text
+                    color:(message && message.paramsMap && message.paramsMap.text) || '#fff'
                 }" class="text"
                     >1.公司有权根据实际情况对活动规则进行必要的调整或解<br />释，以确保活动的公平、公正和顺利进行。
                     <br />2.用户参与活动时需遵守芒星赏的相关规定和法律法规要
