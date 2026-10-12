@@ -129,7 +129,7 @@
                     <view class="original">￥{{ item.price }}</view>
                 </view>
                    <view class="ltopBox">
-                     <div class="ltop flex_r">
+                     <div class="ltop">
                  
                     <view class="tag2 welfare" v-show="item.isWelfare"></view>
                        <view class="tag2" v-show="item.isNew"></view>
