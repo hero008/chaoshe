@@ -1,6 +1,6 @@
 <template>
   <view class="rankContent">
-    <x-navbar :whiteBack="true" tcolor="#fff" tit="邀请夺赏榜" />
+    <x-navbar :whiteBack="true" tcolor="#fff" tit="芒星榜" />
     <div class="balance_con">
       <div class="topContent">
         <view v-if="topThree.length">

@@ -332,7 +332,7 @@ export const getSourceXcoinPoint= (type)=>{
   }else if(type == 'CostAwardLogType_RedemptionCode'){
      return '兑换码'
   }else if(type == 'CostAwardLogType_Admin'){
-     return '管理员手动修改'
+     return '系统'
   }else if(type == 'CostAwardLogType_Lord'){
     return '领主收益'
   }
