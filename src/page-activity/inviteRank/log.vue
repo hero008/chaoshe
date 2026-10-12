@@ -291,7 +291,7 @@ export default {
         },
 
         getOpraType(type) {
-            return getApp().globalData.RechargeTypeMean[type];
+            return getApp().globalData.RechargeTypeMean[type]  || "其他"
         },
         onClickPopUp() {
             (this.pageda = {
