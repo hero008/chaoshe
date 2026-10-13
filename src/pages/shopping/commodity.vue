@@ -759,7 +759,7 @@ export default {
             });
           }
         } else {
-          uni.$u.toast("商品购买成功！可前往我的订单中查看");
+          uni.$u.toast("商品购买成功！可前往星仓中查看");
           this.showBuyGoodsModal = false;
           this.onGet();
           this.getMessage()
