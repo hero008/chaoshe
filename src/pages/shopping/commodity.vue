@@ -1180,7 +1180,7 @@ export default {
 
   .confirmOrder {
     width: 750rpx;
-    height: 1388rpx;
+    height: 1250rpx;
     background: #f5f6f8;
     border-radius: 32rpx 32rpx 32rpx 32rpx;
     padding-top: 48rpx;
