@@ -126,7 +126,7 @@
         <div class="close" @click="showBuyGoodsModal = false"></div>
 
         <div class="contentInfo">
-          <div @click="toList" class="address">
+          <!-- <div @click="toList" class="address">
             <div class="info">
               <img src="@/static/addressIcon.png" alt="" />
               <div>
@@ -147,7 +147,7 @@
               </div>
             </div>
             <u-icon color="#B3B3B3" name="arrow-right"></u-icon>
-          </div>
+          </div> -->
           <div class="goodsInfo">
             <div class="goods">
               <img :src="img" alt="" />
@@ -190,7 +190,7 @@
               </div>
             </div>
 
-            <div class="mark">
+            <!-- <div class="mark">
               <div class="subTitle">订单备注</div>
               <div class="markInfo">
                 <div @click="downShow = true" class="rightInfo">
@@ -202,7 +202,7 @@
                   <u-icon color="#B3B3B3" name="arrow-right"></u-icon>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="totalPrice">
               <span>总计：</span>
               <span class="amount">￥{{ amount }}</span>
@@ -569,15 +569,15 @@ export default {
     that = this;
   },
   onShow() {
-    const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")) : '';
-    this.address_id = data;
+    // const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")) : '';
+    // this.address_id = data;
 
-    this.loadAddrList();
+    // this.loadAddrList();
     this.getMessage();
 
-      if(this.surePayMessage){
-          this.$refs.surePayModal.open()
-        }
+      // if(this.surePayMessage){
+      //     this.$refs.surePayModal.open()
+      //   }
   },
   methods: {
     surePaySuccess(val){
@@ -590,7 +590,7 @@ export default {
             if(!res.code){
               if(res.status == 4){
                 uni.showToast({
-                  title:'商品购买成功！可前往我的订单中查看',
+                  title:'商品购买成功！可前往星仓查看',
                   icon:'none'
                 })
               }else{
@@ -749,10 +749,10 @@ export default {
       }
     },
     async onClickDraw() {
-        if(!this.selectAddr.name){
-             uni.$u.toast("请先添加收货地址~");
-        return;
-        }
+        // if(!this.selectAddr.name){
+        //      uni.$u.toast("请先添加收货地址~");
+        // return;
+        // }
       if (this.stock == 0) {
         uni.$u.toast("库存不足~");
         return;
@@ -769,8 +769,8 @@ export default {
         that.paytypeList.includes(1) || that.paytypeList.includes(2) ? 1 : 0;
       let data = {
         config_id: that.configId,
-        address_id: that.selectAddr.id, // 收货地址ID
-        remark: that.text == "无备注" ? "" : that.text, // 备注
+        address_id:'', // 收货地址ID
+        remark: "", // 备注
         nums: that.number,
         balance_type: "COIN",
       };
