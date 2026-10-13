@@ -769,7 +769,7 @@ export default {
         that.paytypeList.includes(1) || that.paytypeList.includes(2) ? 1 : 0;
       let data = {
         config_id: that.configId,
-        address_id:'', // 收货地址ID
+        address_id:0, // 收货地址ID
         remark: "", // 备注
         nums: that.number,
         balance_type: "COIN",
