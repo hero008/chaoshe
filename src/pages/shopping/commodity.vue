@@ -125,7 +125,7 @@
         <div class="close" @click="showBuyGoodsModal = false"></div>
 
         <div class="contentInfo">
-          <div @click="toList" class="address">
+          <!-- <div @click="toList" class="address">
             <div class="info">
               <img src="@/static/addressIcon.png" alt="" />
               <div>
@@ -146,7 +146,7 @@
               </div>
             </div>
             <u-icon color="#B3B3B3" name="arrow-right"></u-icon>
-          </div>
+          </div> -->
           <div class="goodsInfo">
             <div class="goods">
               <img :src="img" alt="" />
@@ -189,7 +189,7 @@
               </div>
             </div>
 
-            <div class="mark">
+            <!-- <div class="mark">
               <div class="subTitle">订单备注</div>
               <div class="markInfo">
                 <div @click="downShow = true" class="rightInfo">
@@ -201,7 +201,7 @@
                   <u-icon color="#B3B3B3" name="arrow-right"></u-icon>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="totalPrice">
               <span>总计：</span>
               <span class="amount">￥{{ amount }}</span>
@@ -542,10 +542,10 @@ export default {
     that = this;
   },
   onShow() {
-    const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")) : '';
-    this.address_id = data;
-    console.log(this.address_id,'324234234')
-    this.loadAddrList();
+    // const data =uni.getStorageSync("returnData")? JSON.parse(uni.getStorageSync("returnData")) : '';
+    // this.address_id = data;
+    // console.log(this.address_id,'324234234')
+    // this.loadAddrList();
     this.getMessage();
   },
   methods: {
@@ -689,10 +689,10 @@ export default {
       }
     },
     async onClickDraw() {
-        if(!this.selectAddr.name){
-             uni.$u.toast("请先添加收货地址~");
-        return;
-        }
+        // if(!this.selectAddr.name){
+        //      uni.$u.toast("请先添加收货地址~");
+        // return;
+        // }
       if (this.stock == 0) {
         uni.$u.toast("库存不足~");
         return;
@@ -707,8 +707,8 @@ export default {
         that.paytypeList.includes(1) || that.paytypeList.includes(3) ? 1 : 0;
       let data = {
         config_id: that.configId,
-        address_id: that.selectAddr.id, // 收货地址ID
-        remark: that.text == "无备注" ? "" : that.text, // 备注
+        address_id: '', // 收货地址ID
+        remark: "", // 备注
         nums: that.number,
         balance_type: "COIN",
       };
@@ -748,7 +748,7 @@ export default {
               sign: res.res.createPaymentReply.sign,
               timestamp: Number(res.res.createPaymentReply.timestamp),
               success: (eq) => {
-                uni.$u.toast("商品购买成功！可前往我的订单中查看");
+                uni.$u.toast("商品购买成功！可前往星仓查看");
                 this.showBuyGoodsModal = false;
                 this.onGet();
                   this.getMessage()
@@ -1108,7 +1108,7 @@ export default {
 
   .confirmOrder {
     width: 750rpx;
-    height: 1388rpx;
+    height: 1250rpx;
     background: #f5f6f8;
     border-radius: 32rpx 32rpx 32rpx 32rpx;
     padding-top: 48rpx;
