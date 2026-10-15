@@ -449,7 +449,15 @@ export default {
     onLoad(query) {
         this.gachaId = query.id || "";
         this.initGame();
-
+        if(this.ios){
+           MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
+            if(res.code != 0){
+                if(this.surePayMessage && this.surePayMessage.payId){
+                     this.surePaySuccess(0);
+                }
+            }
+           }) 
+        }
         // const isAuto = uni.getStorageSync('isAuto')
         // if(isAuto){
         //    setTimeout(()=>{
@@ -833,11 +841,11 @@ export default {
                   payId:res.res.createPaymentReply.payId
               }
 
-              if(this.ios){
-                 setTimeout(() => {
-                     this.$refs.surePayModal.open()
-                 }, 2000);
-              }
+            //   if(this.ios){
+            //      setTimeout(() => {
+            //          this.$refs.surePayModal.open()
+            //      }, 2000);
+            //   }
             //   setTimeout(() => {
             //               this.$refs.surePayModal.open()
             //      }, 2000);

@@ -234,6 +234,15 @@ export default {
                 this.remark = sl.remark;
             }
         }
+        if(this.ios){
+           MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
+            if(res.code != 0){
+                if(this.surePayMessage && this.surePayMessage.payId){
+                     this.surePaySuccess(0);
+                }
+            }
+           }) 
+        }
     },
     onShow() {
         this.loadAddrList();
@@ -352,11 +361,11 @@ export default {
                     payId:res.res.createPaymentReply.payId
                  }
 
-                 if(this.ios){
-                   setTimeout(() => {
-                          this.$refs.surePayModal.open()
-                   }, 2000);
-                 }
+                //  if(this.ios){
+                //    setTimeout(() => {
+                //           this.$refs.surePayModal.open()
+                //    }, 2000);
+                //  }
 
                 }else{
                 uni.$u.toast("赏品发货成功！");

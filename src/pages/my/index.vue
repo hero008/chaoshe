@@ -78,7 +78,7 @@
                     </div>
                     <div class="m_num1">
                          <div  style="font-size: 24rpx; display: flex;align-items: center;justify-content: flex-end;">
-                              <div class="deposite"  @click="userInfo.id ? goto('/page-a/balance/topUp') : null">星币充值</div>
+                              <div class="deposite"  @click="userInfo.id ? goto('/page-a/balance/topUp') : null">星币储值</div>
                             </div>
                         {{ userInfo.xCoin || "0.00" }}
                     
@@ -499,9 +499,11 @@ export default {
             .m_num {
                 font-weight: bold;
                 font-size: 48rpx;
+             
                 >div{
-                   height: 38px;
-                line-height: 38px;
+                  height: 60rpx;
+                 line-height: 60rpx;
+                
                 }
                 // line-height: 52rpx;
               
@@ -875,15 +877,15 @@ export default {
 }
 .deposite{
     // margin-right: 15rpx;
-    width: 100px;
-    height: 38px;
-    line-height: 38px;
+    width: 160rpx;
+    height: 60rpx;
+    line-height: 60rpx;
     background:#fff;
-    border-radius: 21px;
+    border-radius: 35rpx;
     text-align: center;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 32rpx;
     color: #000000;
-    letter-spacing: 1px;
+    margin-bottom: 10rpx;
 }
 </style>

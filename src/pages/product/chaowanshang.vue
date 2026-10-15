@@ -512,6 +512,16 @@ export default {
     onLoad(da) {
         if (da.gacha_id || da.id) this.gachaId = da.gacha_id || da.id;
         else this.theme_id = da.theme_id
+
+        if(this.ios){
+           MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
+            if(res.code != 0){
+                if(this.surePayMessage && this.surePayMessage.payId){
+                     this.surePaySuccess(0);
+                }
+            }
+           }) 
+        }
    
     },
     onShow() {
@@ -867,11 +877,11 @@ export default {
                     showAnim:showAnim
                 }
 
-                if(this.ios){
-                     setTimeout(() => {
-                          this.$refs.surePayModal.open()
-                     }, 2000);
-                }
+                // if(this.ios){
+                //      setTimeout(() => {
+                //           this.$refs.surePayModal.open()
+                //      }, 2000);
+                // }
                     // setTimeout(() => {
                     //       this.$refs.surePayModal.open()
                     // }, 2000);

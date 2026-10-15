@@ -260,6 +260,15 @@ export default {
     },
     onLoad(da) {
         this.gold = this.userInfo.gold;
+        if(this.isIos){
+           MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
+            if(res.code != 0){
+                if(this.surePayMessage && this.surePayMessage.payId){
+                        this.surePaySuccess(0);
+                }
+            }
+           }) 
+        }
     },
     onShow() {
         this.getBalance();
@@ -333,7 +342,8 @@ export default {
         //     if (this.closeAutonym) this.onClickWithdrawal();
         // },
 
-        // 获取余额
+        // 获取余额device_type:this.isIos?'ios':'android' 
+
         getBalance() {
             post("v1/pay/saving/config", { type: 'XCoin',device_type:this.isIos?'ios':'android' }).then((res) => {
                 if (!res.code) {
@@ -387,16 +397,18 @@ export default {
             let res = await callPayment("v1/pay/payment/create", data, type);
           
             if (!res.code) {
+                console.log(res.res);
           
                  if(res.res){
                     this.surePayMessage = {
                         payId:res.res.payId
                     }
-                     if(this.isIos){
-                        setTimeout(() => {
-                            this.$refs.surePayModal.open()
-                        }, 2000);
-                     }
+
+                    //  if(this.isIos){
+                    //     setTimeout(() => {
+                    //         this.$refs.surePayModal.open()
+                    //     }, 2000);
+                    //  }
                      jumpPayUrl(res.res.payUrl,{gachaName:'buyXCoin',gachaId:0,type:0,payId:res.res.payId})
                  }
                 // if(window.mgtv){
@@ -492,7 +504,7 @@ export default {
 
 .balance_con {
     position: absolute;
-    height: calc(100vh - 150rpx);
+    height: calc(100vh - 160rpx);
     // padding-top: 150rpx;
     bottom: 0;
     left: 0;
@@ -693,7 +705,7 @@ export default {
             }
         }
         .cr {
-            color: rgba(255, 106, 22, 1);
+            color: #01c2d0;;
         }
         .text {
             width: 646rpx;

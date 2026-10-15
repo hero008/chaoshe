@@ -565,6 +565,15 @@ export default {
     this.exchangeText = this.type == 1 ? "星光积分" : "星币";
 
     this.onGet();
+     if(this.ios){
+           MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
+            if(res.code != 0){
+                if(this.surePayMessage && this.surePayMessage.payId){
+                     this.surePaySuccess(0);
+                }
+            }
+           }) 
+        }
   },
   created() {
     that = this;
@@ -809,11 +818,11 @@ export default {
            this.surePayMessage = {
             payId:res.res.createPaymentReply.payId
            }
-           if(this.ios){
-             setTimeout(() => {
-                  this.$refs.surePayModal.open()
-             }, 2000);
-           }
+          //  if(this.ios){
+          //    setTimeout(() => {
+          //         this.$refs.surePayModal.open()
+          //    }, 2000);
+          //  }
            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type,payId:res.res.createPaymentReply.payId})
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {
