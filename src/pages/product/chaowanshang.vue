@@ -512,27 +512,13 @@ export default {
     onLoad(da) {
         if (da.gacha_id || da.id) this.gachaId = da.gacha_id || da.id;
         else this.theme_id = da.theme_id
-       document.addEventListener('visibilitychange', () => {
-
-        console.log("水电费快结束了打卡机发啦手机打")
-        if (document.visibilityState === 'visible') {
-            console.log('页面回到前台，可以恢复轮询/动画');
-        } else if (document.visibilityState === 'hidden') {
-            console.log('页面进入后台，暂停轮询/视频');
-        }
-        MgtvApi.callhandler('payResultCallBack',{},(res)=>{
-            console.log(res)
-        })
-});
-
+   
     },
     onShow() {
 
-
-        console.log('onshow','进来了进来了',this.surePayMessage.payId)
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
-        if(this.surePayMessage && this.surePayMessage.payId){
+        if(!this.ios && this.surePayMessage && this.surePayMessage.payId){
             this.surePaySuccess(0);
         }
     },
@@ -879,6 +865,12 @@ export default {
                 this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId,
                     showAnim:showAnim
+                }
+
+                if(this.ios){
+                     setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                     }, 2000);
                 }
                     // setTimeout(() => {
                     //       this.$refs.surePayModal.open()

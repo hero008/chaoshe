@@ -392,7 +392,7 @@ export default {
     },
 
     onShow(){
-        if(this.surePayMessage){
+        if(!this.ios && this.surePayMessage){
            this.surePaySuccess(0)
         }
        
@@ -831,6 +831,12 @@ export default {
                 if(res.res && res.res.createPaymentReply){
                this.surePayMessage = {
                   payId:res.res.createPaymentReply.payId
+              }
+
+              if(this.ios){
+                 setTimeout(() => {
+                     this.$refs.surePayModal.open()
+                 }, 2000);
               }
             //   setTimeout(() => {
             //               this.$refs.surePayModal.open()

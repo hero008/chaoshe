@@ -424,7 +424,7 @@ let that;
 import xBtn from "@/components/modules/x-btn";
 import { post } from "@/utils/api.js";
 import remark from "./remark.vue";
-import { timesAmount,isProd, jumpPayUrl,originUrl } from "../../utils/mgtv.js";
+import { timesAmount,isProd, jumpPayUrl,originUrl,isIos } from "../../utils/mgtv.js";
 import { mapState, mapActions } from "vuex";
 import { callPayment } from "@/utils/pay.js";
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
@@ -526,7 +526,8 @@ export default {
       myPrice: 0,
       exchangeConfirmModal: false,
       paySearchMessage:'',
-      surePayMessage:''
+      surePayMessage:'',
+       ios:isIos(),
     };
   },
   watch: {
@@ -575,7 +576,7 @@ export default {
     // this.loadAddrList();
     this.getMessage();
 
-      if(this.surePayMessage){
+      if(!this.ios && this.surePayMessage){
           this.surePaySuccess(0)
         }
   },
@@ -808,10 +809,11 @@ export default {
            this.surePayMessage = {
             payId:res.res.createPaymentReply.payId
            }
-
-            // setTimeout(() => {
-            //               this.$refs.surePayModal.open()
-            //  }, 2000);
+           if(this.ios){
+             setTimeout(() => {
+                  this.$refs.surePayModal.open()
+             }, 2000);
+           }
            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type,payId:res.res.createPaymentReply.payId})
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {

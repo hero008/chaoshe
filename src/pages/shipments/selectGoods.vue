@@ -187,7 +187,7 @@ import xBtn from "@/components/modules/x-btn";
 import selectGoods from "@/components/selectGoods/index";
 import { mapMutations, mapState } from "vuex";
 import { callPayment } from "@/utils/pay.js";
-import { groupByItemName } from "../../utils/mgtv";
+import { groupByItemName,isIos } from "../../utils/mgtv";
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
 
 export default {
@@ -199,7 +199,9 @@ export default {
             selectAddr: {}, //选择的地址
             selectId: undefined,
             typeId: 0,
-            surePayMessage:""
+            surePayMessage:"",
+            ios:isIos(),
+
         };
     },
     components: {
@@ -236,7 +238,7 @@ export default {
     onShow() {
         this.loadAddrList();
 
-        if(this.surePayMessage){
+        if(!this.ios && this.surePayMessage){
             this.surePaySuccess(0)
         }
         // if(this.surePayMessage){
@@ -350,9 +352,12 @@ export default {
                     payId:res.res.createPaymentReply.payId
                  }
 
-                //    setTimeout(() => {
-                //           this.$refs.surePayModal.open()
-                //  }, 2000);
+                 if(this.ios){
+                   setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                   }, 2000);
+                 }
+
                 }else{
                 uni.$u.toast("赏品发货成功！");
                 setTimeout(() => {

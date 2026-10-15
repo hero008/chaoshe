@@ -453,7 +453,7 @@ export default {
         this.oldRandomNum = this.$gl("selectRandomNumber");
         this.RandomNum = this.oldRandomNum || 1;
         
-        if(this.surePayMessage && this.surePayMessage.payId){
+        if(!this.ios && this.surePayMessage && this.surePayMessage.payId){
            this.surePaySuccess(0)
         }
         // if(!this.ios){
@@ -657,6 +657,12 @@ export default {
                   this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId,
                     showAnim:showAnim
+                }
+
+                if(this.ios){
+                    setTimeout(() => {
+                          this.$refs.surePayModal.open()
+                    }, 2000);
                 }
               
                     // setTimeout(() => {

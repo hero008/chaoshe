@@ -278,7 +278,7 @@ import bgc4 from '@/static/bgc4.png'
 import scheduleTips from "@/pages/product/modules/scheduleTips.vue";
 import { MGTV_Channel } from "@/utils/mgtv";
 import result from '@/pages/product/modules/resultDetail'
-import {awardsSort,shareUrl} from '@/utils/mgtv.js'
+import {awardsSort,shareUrl,isIos} from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
 
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
@@ -346,7 +346,8 @@ export default {
             LuckyVisible: false,
             scheduleNum: null,
             previewType:1,
-              surePayMessage:''
+            surePayMessage:'',
+             ios:isIos(),
         };
     },
     components: {
@@ -406,7 +407,7 @@ export default {
         //    if(this.surePayMessage){
         //     this.$refs.surePayModal.open()
         // }
-        if(this.surePayMessage && this.surePayMessage.payId){
+        if(!this.ios && this.surePayMessage && this.surePayMessage.payId){
            this.surePaySuccess(0)
         }
     },
@@ -579,6 +580,11 @@ export default {
                 this.surePayMessage={
                      payId:res.res.createPaymentReply.payId,
                      showAnim:showAnim
+                }
+                if(this.ios){
+                     setTimeout(() => {
+                              this.$refs.surePayModal.open()
+                     }, 2000);
                 }
                 //  setTimeout(() => {
                 //           this.$refs.surePayModal.open()
