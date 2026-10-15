@@ -1,9 +1,9 @@
 <template>
     <view class="balance">
-        <x-navbar tit="充值" />
+        <x-navbar tit="充值星币" />
         <div class="balance_con">
-            <div class="top_cord">
-                <div class="tit flex_r flex_ac flex_jb">
+            <!-- <div class="top_cord"> -->
+                <!-- <div class="tit flex_r flex_ac flex_jb">
                     <view
                         class="t_msg1 flex_r flex_ac"
                         @click="
@@ -16,21 +16,24 @@
                     <view class="t_msg flex_r flex_ac" @click="goRechargeRecord"
                         ><view>交易记录</view> <view class="ico"></view
                     ></view>
-                </div>
-                <div class="B_num flex_r flex_ac">
-                    <!-- <img
-                        src="https://img.shinemang.com/gachaStatic/static/img/pay/gold.png"
-                        class="m_ico"
-                    /> -->
+                </div> -->
+                <!-- <div class="B_num flex_r flex_ac">
+                  
                     <div class="m_num">{{ gold || "0.00" }}</div>
-                </div>
-                <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view>
+                </div> -->
+                <!-- <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view> -->
                 <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
-            </div>
+            <!-- </div> -->
             <div class="bill_log">
+                 <div style="font-size: 38rpx;margin-bottom: 20rpx;" class="tit flex_r flex_ac">
+                    <span>我的星币:{{ userInfo.xCoin }}</span
+                    >
+                    <!-- <span class="tit1">(余额可支持提现退款)</span> -->
+                </div>
                 <div class="tit flex_r flex_ac">
                     <span>请选择充值金额:</span
-                    ><span class="tit1">(余额可支持提现退款)</span>
+                    >
+                    <!-- <span class="tit1">(余额可支持提现退款)</span> -->
                 </div>
                 <div   v-if="topUpList.length > 0" class="box">
                     <view
@@ -49,13 +52,13 @@
                        
                 </div>
                 <view class="text"
-                    >1、充值的<span class="co">芒星赏金币</span>可用于<span
+                    >1、充值的<span class="co">芒星赏星币</span>可用于<span
                         class="co"
                         >购买芒星赏平台在售盲盒商品</span
-                    >，1芒星赏金币等于{{isIos?'0.75':'1'}}元钱;<br />
-                    2、充值的芒星赏金币不会过期，支付后的<span class="co"
-                        >剩余芒星赏金币支持提现退款</span
-                    >，但不可转赠他人;<br />
+                    >
+                    2、充值的芒星赏星币不会过期，支付后的<span class="co"
+                        ></span
+                    >，不可转赠他人;<br />
                     3、未成年人消费需事先取得家人或法定监护人的陪同及监管下进行消费;<br />
                     4、充值前请您仔细阅读<span class="co"
                         >《购买协议&隐私条款》</span
@@ -91,16 +94,17 @@
                     >
                 </div>
             </div>
-            <!-- <div class="pays">
+            <div class="pays">
                 <div class="pay_item flex_r flex_jb flex_ac">
                     <div class="pay_name flex_r flex_ac">
                         <img
                             :src="`https://img.shinemang.com/gachaStatic/static/img/pay/${payItem.img}.png`"
                             class="pay_ico"
                         />{{ payItem.msg
-                        }}<view class="t_msg flex_r flex_ac" @click="getSelect"
+                        }}
+                        <!-- <view class="t_msg flex_r flex_ac" @click="getSelect"
                             >更多支付 <view class="ico"></view
-                        ></view>
+                        ></view> -->
                     </div>
                     <div class="reduce_pay">
                         <div
@@ -109,7 +113,7 @@
                         ></div>
                     </div>
                 </div>
-            </div> -->
+            </div>  
             <view class="all flex_r flex_jb flex_ac">
                 <view class="allNum"
                     >合计：<span class="num">{{ topUp.payAmount }}</span></view
@@ -160,6 +164,7 @@
             ref="autonym"
             :visible="showAutonym"
         /> -->
+          <x-pay @success="confirmOrder" ref="xPay" mtype="12" :probabilityShow=[]  />
         <xTipsVue
             @tipsVue="onTipsVue"
             :visible="tipsShow"
@@ -169,7 +174,11 @@
             ]"
             next="支付"
         />
+        
+    <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
+
     </view>
+    
 </template>
 <script>
 import xNavbar from "@/components/modules/x-navbar";
@@ -180,7 +189,10 @@ import { callPayment } from "@/utils/pay.js";
 import popUpVue from "./popUp.vue";
 // import autonym from "@/components/autonym/index.vue";
 import xTipsVue from "../../components/modules/x-tips.vue";
-import { isIos } from "../../utils/mgtv.js";
+import { isIos,jumpPayUrl } from "../../utils/mgtv.js";
+import xPay from "@/components/x-pay/index";
+import surePayModal from "../../components/surePayModal/surePayModal.vue";
+
 export default {
     data() {
         return {
@@ -234,6 +246,7 @@ export default {
             tipsShow: false,
             refund: { refundAmountLimit: "0", refundResidueCnt: 0 }, //单日退款次数上限
             isModalVisible: false,
+            surePayMessage:''
         };
     },
     components: {
@@ -242,12 +255,17 @@ export default {
         popUpVue,
         // autonym,
         xTipsVue,
+        xPay,
+        surePayModal
     },
     onLoad(da) {
         this.gold = this.userInfo.gold;
     },
     onShow() {
         this.getBalance();
+        if(!this.isIos && this.surePayMessage && this.surePayMessage.payId){
+            this.surePaySuccess(0)
+        }
     },
     computed: {
         ...mapState(["userInfo"]),
@@ -271,6 +289,39 @@ export default {
         },
     },
     methods: {
+        surePaySuccess(val){
+           post('v1/pay/payment/status',{
+             pay_id:this.surePayMessage.payId
+           }).then((res)=>{
+            this.surePayMessage=''
+            //  this.onGet();
+          
+            //  this.getMessage()
+
+            if(!res.code){
+              if(res.status == 4){
+                uni.showToast({
+                  title:'购买成功！',
+                  icon:'none'
+                })
+             this.asyncUpBalance()
+             this.asyncUpdateInfo();
+              }else{
+                if(val){
+                   uni.showToast({
+                  title:'暂未查到支付信息,请稍后再试',
+                  icon:'none'
+                })
+                }
+                 
+              }
+            }else{
+              if(val){
+                uni.$u.toast(res.message);
+              }
+            }
+           })
+     },
         ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
         // 关闭身份认证
         // async onClickAutonym() {
@@ -284,7 +335,7 @@ export default {
 
         // 获取余额
         getBalance() {
-            post("v1/pay/saving/config", { type: 2,device_type:this.isIos?'ios':'android' }).then((res) => {
+            post("v1/pay/saving/config", { type: 'XCoin',device_type:this.isIos?'ios':'android' }).then((res) => {
                 if (!res.code) {
                     res.config.forEach((element) => {
                         if (!element.amount.includes("."))
@@ -294,7 +345,6 @@ export default {
                     if (Object.keys(this.topUp).length == 0) {
                         this.topUp = res.config[0];
                     }
-                    console.log(this.topUpList,'就算了菲利克斯动静分离')
                     this.refund = res;
                 }
             });
@@ -327,32 +377,44 @@ export default {
             let that = this;
             let type = that.payItem.type;
             let data = {
-                platform_id: 6,
+                platform_id: 7,
                 amount: money,
                 device_id: "",
-                source_type: 12,
+                source_type: 'SourceType_Saving_XCoin',
                 source_id: that.topUp.id,
                 device_type: this.isIos?'ios':'android'
             };
             let res = await callPayment("v1/pay/payment/create", data, type);
-            let orderInfo = res.orderInfo;
+          
             if (!res.code) {
-                if(window.mgtv){
-                           mgtv.requestPaymentGameItem({
-                             signData:res.res.signData,
-                             sign:res.res.sign,
-                             timestamp:Number(res.res.timestamp),
-                             success:(res)=>{
-                                  console.log("success:" + JSON.stringify(res));
-                                    uni.$u.toast("充值金币成功！");
-                                    that.asyncUpBalance();
-                             },
-                             fail:(err)=>{
-                                console.log(err)
-                             }
+          
+                 if(res.res){
+                    this.surePayMessage = {
+                        payId:res.res.payId
+                    }
+                     if(this.isIos){
+                        setTimeout(() => {
+                            this.$refs.surePayModal.open()
+                        }, 2000);
+                     }
+                     jumpPayUrl(res.res.payUrl,{gachaName:'buyXCoin',gachaId:0,type:0,payId:res.res.payId})
+                 }
+                // if(window.mgtv){
+                //            mgtv.requestPaymentGameItem({
+                //              signData:res.res.signData,
+                //              sign:res.res.sign,
+                //              timestamp:Number(res.res.timestamp),
+                //              success:(res)=>{
+                //                   console.log("success:" + JSON.stringify(res));
+                //                     uni.$u.toast("充值星币成功！");
+                //                     that.asyncUpBalance();
+                //              },
+                //              fail:(err)=>{
+                //                 console.log(err)
+                //              }
 
-                         })
-                }
+                //          })
+                // }
                 // uni.requestPayment({
                 //     provider: type == 1 ? "alipay" : "wxpay",
                 //     // #ifndef MP-WEIXIN
@@ -435,7 +497,7 @@ export default {
     bottom: 0;
     left: 0;
     overflow-y: auto;
-    padding-bottom: 200rpx;
+    padding-bottom: 240rpx;
     z-index: 5;
 
     .top_cord {
@@ -608,7 +670,7 @@ export default {
 
 .foot-btn {
     width: 100%;
-    height:220rpx;
+    height:320rpx;
     background: #fff;
     position: fixed;
     bottom: 0rpx;
@@ -622,11 +684,11 @@ export default {
         .select {
             width: 32rpx;
             height: 32rpx;
-            background-image: url("https://img.shinemang.com/gachaStatic/static/img/home/icon16.png");
+            background: url("https://img.shinemang.com/gachaStatic/notSelect.png");
             background-size: 100% 100%;
             margin-right: 8rpx;
             &.active {
-                background-image: url("https://img.shinemang.com/gachaStatic/static/img/pay/ico3.png") !important;
+                background: url("https://img.shinemang.com/gachaStatic/select.png");
                 background-size: 100% 100%;
             }
         }

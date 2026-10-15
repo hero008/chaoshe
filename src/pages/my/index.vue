@@ -77,8 +77,12 @@
                         {{ point || "0.00" }}
                     </div>
                     <div class="m_num1">
-                         <div style="font-size: 24rpx;">星币</div>
-                        {{ userInfo.xCoin || "0.00" }}</div>
+                         <div  style="font-size: 24rpx; display: flex;align-items: center;justify-content: flex-end;">
+                              <div class="deposite"  @click="userInfo.id ? goto('/page-a/balance/topUp') : null">星币充值</div>
+                            </div>
+                        {{ userInfo.xCoin || "0.00" }}
+                    
+                    </div>
                 </div>
                 <!-- <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view> -->
                 <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
@@ -484,7 +488,7 @@ export default {
         }
 
         .B_num {
-            margin: 50rpx 0 8rpx;
+            margin: 40rpx 0 8rpx;
 
             .m_ico {
                 width: 48rpx;
@@ -495,6 +499,12 @@ export default {
             .m_num {
                 font-weight: bold;
                 font-size: 48rpx;
+                >div{
+                   height: 38px;
+                line-height: 38px;
+                }
+                // line-height: 52rpx;
+              
               
                 // &::after {
                 //     content: "星光积分";
@@ -862,5 +872,18 @@ export default {
     line-height: 24rpx;
     text-align: center;
     padding: 60rpx 0 20rpx;
+}
+.deposite{
+    // margin-right: 15rpx;
+    width: 100px;
+    height: 38px;
+    line-height: 38px;
+    background:#fff;
+    border-radius: 21px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    color: #000000;
+    letter-spacing: 1px;
 }
 </style>
