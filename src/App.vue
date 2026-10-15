@@ -332,6 +332,7 @@ parserLoad.load('https://img.shinemang.com/gachaStatic/svga/bz.svga',(res)=>{
     },
     computed: { ...mapState(["popupWebSocket","userInfo"]) },
     onShow: function () {
+        console.log('dsjfsldkjflkd')
         //  this.SystemInfo.uniPlatform == "app" &&
         if (
             !this.popupWebSocket &&

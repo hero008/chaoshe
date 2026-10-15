@@ -235,6 +235,10 @@ export default {
     },
     onShow() {
         this.loadAddrList();
+
+        if(this.surePayMessage){
+            this.surePaySuccess(0)
+        }
         // if(this.surePayMessage){
         //     this.$refs.surePayModal.open()
         // }
@@ -346,9 +350,9 @@ export default {
                     payId:res.res.createPaymentReply.payId
                  }
 
-                   setTimeout(() => {
-                          this.$refs.surePayModal.open()
-                 }, 2000);
+                //    setTimeout(() => {
+                //           this.$refs.surePayModal.open()
+                //  }, 2000);
                 }else{
                 uni.$u.toast("赏品发货成功！");
                 setTimeout(() => {

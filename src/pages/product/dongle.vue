@@ -452,6 +452,10 @@ export default {
         this.loadDetail();
         this.oldRandomNum = this.$gl("selectRandomNumber");
         this.RandomNum = this.oldRandomNum || 1;
+        
+        if(this.surePayMessage && this.surePayMessage.payId){
+           this.surePaySuccess(0)
+        }
         // if(!this.ios){
         //    if(this.surePayMessage){
         //     this.$refs.surePayModal.open()
@@ -655,9 +659,9 @@ export default {
                     showAnim:showAnim
                 }
               
-                    setTimeout(() => {
-                          this.$refs.surePayModal.open()
-                    }, 2000);
+                    // setTimeout(() => {
+                    //       this.$refs.surePayModal.open()
+                    // }, 2000);
     
                 // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }

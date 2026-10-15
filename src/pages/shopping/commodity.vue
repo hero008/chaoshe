@@ -575,9 +575,9 @@ export default {
     // this.loadAddrList();
     this.getMessage();
 
-      // if(this.surePayMessage){
-      //     this.$refs.surePayModal.open()
-      //   }
+      if(this.surePayMessage){
+          this.surePaySuccess(0)
+        }
   },
   methods: {
     surePaySuccess(val){
@@ -809,9 +809,9 @@ export default {
             payId:res.res.createPaymentReply.payId
            }
 
-            setTimeout(() => {
-                          this.$refs.surePayModal.open()
-             }, 2000);
+            // setTimeout(() => {
+            //               this.$refs.surePayModal.open()
+            //  }, 2000);
            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type,payId:res.res.createPaymentReply.payId})
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {

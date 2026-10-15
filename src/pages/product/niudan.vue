@@ -406,6 +406,9 @@ export default {
         //    if(this.surePayMessage){
         //     this.$refs.surePayModal.open()
         // }
+        if(this.surePayMessage && this.surePayMessage.payId){
+           this.surePaySuccess(0)
+        }
     },
     created() {
         this.saveFile();
@@ -577,9 +580,9 @@ export default {
                      payId:res.res.createPaymentReply.payId,
                      showAnim:showAnim
                 }
-                 setTimeout(() => {
-                          this.$refs.surePayModal.open()
-                 }, 2000);
+                //  setTimeout(() => {
+                //           this.$refs.surePayModal.open()
+                //  }, 2000);
                 // this.onClickPrize(res.res.createPaymentReply.payId, showAnim);
             }
         },

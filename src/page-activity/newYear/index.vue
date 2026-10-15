@@ -4,9 +4,9 @@
             <view class="topBack">
                 <img :src="imageUrlMap.btn_close" @click.stop="gateBack" class="Back_ico" />
                 <!-- #ifndef MP-WEIXIN -->
-                <view class="share" :style="{
+                <!-- <view class="share" :style="{
                     backgroundImage: `url(${imageUrlMap.btn_share})`,
-                }" @click="onShare" />
+                }" @click="onShare" /> -->
                 <!-- #endif  -->
             </view>
             <view class="gz" :style="{ backgroundImage: `url(${imageUrlMap.record})` }"

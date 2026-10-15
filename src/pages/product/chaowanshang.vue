@@ -399,7 +399,7 @@ import ball from "@/page-activity/ball/ball.vue";
 import xPay from "@/components/x-pay/index.vue";
 import duoyou from "@/pages/product/modules/duoyou.vue";
 import xPrize from "@/components/modules/x-prize";
-import { formateGachaLevelName,shareUrl,isIos,ensureLuckyAfterSp } from "../../utils/mgtv";
+import { formateGachaLevelName,shareUrl,isIos,ensureLuckyAfterSp, MGTV_Channel } from "../../utils/mgtv";
 import bgc1 from '@/static/bg1.png'
 import bgc2 from '@/static/bg2.png'
 import DanmakuSimple from '@/components/danmu/danmu'
@@ -512,12 +512,29 @@ export default {
     onLoad(da) {
         if (da.gacha_id || da.id) this.gachaId = da.gacha_id || da.id;
         else this.theme_id = da.theme_id
-        
+       document.addEventListener('visibilitychange', () => {
+
+        console.log("水电费快结束了打卡机发啦手机打")
+        if (document.visibilityState === 'visible') {
+            console.log('页面回到前台，可以恢复轮询/动画');
+        } else if (document.visibilityState === 'hidden') {
+            console.log('页面进入后台，暂停轮询/视频');
+        }
+        MgtvApi.callhandler('payResultCallBack',{},(res)=>{
+            console.log(res)
+        })
+});
 
     },
     onShow() {
+
+
+        console.log('onshow','进来了进来了',this.surePayMessage.payId)
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
+        if(this.surePayMessage && this.surePayMessage.payId){
+            this.surePaySuccess(0);
+        }
     },
     methods: {
         surePaySuccess(val){
@@ -863,9 +880,9 @@ export default {
                     payId:res.res.createPaymentReply.payId,
                     showAnim:showAnim
                 }
-                    setTimeout(() => {
-                          this.$refs.surePayModal.open()
-                    }, 2000);
+                    // setTimeout(() => {
+                    //       this.$refs.surePayModal.open()
+                    // }, 2000);
                 // this.onClickPrize(res.res.createPaymentReply.payId, true);
             }
         },
