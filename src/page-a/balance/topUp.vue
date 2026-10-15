@@ -1,6 +1,6 @@
 <template>
     <view class="balance">
-        <x-navbar tit="充值星币" />
+        <x-navbar tit="储值星币" />
         <div class="balance_con">
             <!-- <div class="top_cord"> -->
                 <!-- <div class="tit flex_r flex_ac flex_jb">
@@ -11,7 +11,7 @@
                                 val: 'ServiceAgreement',
                             })
                         "
-                        >当前金币<view class="ico"></view
+                        >当前星币<view class="ico"></view
                     ></view>
                     <view class="t_msg flex_r flex_ac" @click="goRechargeRecord"
                         ><view>交易记录</view> <view class="ico"></view
@@ -21,7 +21,7 @@
                   
                     <div class="m_num">{{ gold || "0.00" }}</div>
                 </div> -->
-                <!-- <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view> -->
+                <!-- <view class="nums">1星币={{isIos?'0.75':'1'}}元RMB</view> -->
                 <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
             <!-- </div> -->
             <div class="bill_log">
@@ -31,7 +31,7 @@
                     <!-- <span class="tit1">(余额可支持提现退款)</span> -->
                 </div>
                 <div class="tit flex_r flex_ac">
-                    <span>请选择充值金额:</span
+                    <span>请选择储值金额:</span
                     >
                     <!-- <span class="tit1">(余额可支持提现退款)</span> -->
                 </div>
@@ -52,17 +52,17 @@
                        
                 </div>
                 <view class="text"
-                    >1、充值的<span class="co">芒星赏星币</span>可用于<span
+                    >1、储值的<span class="co">芒星赏星币</span>可用于<span
                         class="co"
                         >购买芒星赏平台在售盲盒商品</span
                     >
-                    2、充值的芒星赏星币不会过期，支付后的<span class="co"
+                    2、储值的芒星赏星币不会过期，支付后的<span class="co"
                         ></span
                     >，不可转赠他人;<br />
                     3、未成年人消费需事先取得家人或法定监护人的陪同及监管下进行消费;<br />
-                    4、充值前请您仔细阅读<span class="co"
+                    4、储值前请您仔细阅读<span class="co"
                         >《购买协议&隐私条款》</span
-                    >，成功充值即代表您对本协议无异议</view
+                    >，成功储值即代表您对本协议无异议</view
                 >
             </div>
         </div>
@@ -74,7 +74,7 @@
                     :class="{ active: showAnimation }"
                 ></div>
                 <div class="text">
-                    本人已满18周岁且具备完全行为能力，充值即代表同意<span
+                    本人已满18周岁且具备完全行为能力，储值即代表同意<span
                         class="cr"
                         @click="
                             goto('/pages/common/rulepop', {
@@ -198,8 +198,8 @@ export default {
         return {
             isIos:isIos(),
             gold: 0,
-            accesstype: 1, // 1退款 0充值
-            valueDeposit: undefined, // 充值金额
+            accesstype: 1, // 1退款 0储值
+            valueDeposit: undefined, // 储值金额
             withdrawId: "",
             forbid: true,
             topUpList: [],
@@ -310,7 +310,7 @@ export default {
             if(!res.code){
               if(res.status == 4){
                 uni.showToast({
-                  title:'购买成功！',
+                  title:'储值成功！',
                   icon:'none'
                 })
              this.asyncUpBalance()
@@ -359,7 +359,7 @@ export default {
                 }
             });
         },
-        // 充值
+        // 储值
         onClickDeposit() {
             this.accesstype = 0;
         },
@@ -375,9 +375,9 @@ export default {
             }
             if (this.gold) {
                 this.$refs.popup.open(this.refund);
-            } else uni.$u.toast("金币不足！");
+            } else uni.$u.toast("星币不足！");
         },
-        // 确认充值
+        // 确认储值
         async onpayDeposit() {
             if (!this.showAnimation) {
                 this.tipsShow = true;
@@ -418,7 +418,7 @@ export default {
                 //              timestamp:Number(res.res.timestamp),
                 //              success:(res)=>{
                 //                   console.log("success:" + JSON.stringify(res));
-                //                     uni.$u.toast("充值星币成功！");
+                //                     uni.$u.toast("储值星币成功！");
                 //                     that.asyncUpBalance();
                 //              },
                 //              fail:(err)=>{
@@ -437,7 +437,7 @@ export default {
                 //     // #endif
                 //     success: async function (res) {
                 //         console.log("success:" + JSON.stringify(res));
-                //         uni.$u.toast("充值金币成功！");
+                //         uni.$u.toast("储值星币成功！");
                 //         that.asyncUpBalance();
                 //         // that.gold = that.floatingPoint(that.gold, "+", money);
                 //     },
