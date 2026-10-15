@@ -13,7 +13,7 @@
                     class="ico_img"
                     src="https://img.shinemang.com/gachaStatic/static/img/transaction/close2.png"
                 ></image>
-                <view class="t_title" >当前金币</view>
+                <view class="t_title" >当前星币</view>
                 <view class="gold flex_r flex_ac">
                     <img
                         class="icon"
@@ -21,7 +21,7 @@
                     />
                     <view class="num">{{ userInfo.gold }}</view>
                 </view>
-                <view class="t_txt">1枚金币=1元RMB</view>
+                <view class="t_txt">1枚星币=1元RMB</view>
             </div>
             <view class="gold_box">
                 <view class="iphone w flex_r flex_ac">
@@ -29,14 +29,14 @@
                     <view>{{ userInfo.phone }}</view>
                 </view>
                 <view class="number w flex_r flex_ac">
-                    <view class="text">退款金币：</view>
+                    <view class="text">退款星币：</view>
                     <input
                         class="inp"
                         min="0.01"
                         type="digit"
                         inputmode="decimal"
                         step="0.01"
-                        placeholder="请输入退款金币"
+                        placeholder="请输入退款星币"
                         :max="userInfo.gold"
                         v-model="valueMoney"
                         @input="getValueMoney"
@@ -84,7 +84,7 @@ export default {
             valueMoney: undefined, // 退款金额
             yard: undefined, //验证码
             second: 0, //倒计时
-            phoneData: "", //金币退款号码
+            phoneData: "", //星币退款号码
             refund: {},
             visible:false
         };
@@ -123,7 +123,7 @@ export default {
         },
         getVerCode() {
             if (this.valueMoney < 0.01 || !this.valueMoney) {
-                uni.$u.toast("请输入退款金币金额");
+                uni.$u.toast("请输入退款星币金额");
                 return;
             }
             if (
@@ -169,7 +169,7 @@ export default {
         },
         onRefund() {
             if (this.valueMoney < 0.01) {
-                uni.$u.toast("请输入退款金币金额");
+                uni.$u.toast("请输入退款星币金额");
                 return;
             }
             if (!this.yard || this.yard.length !== 6) {

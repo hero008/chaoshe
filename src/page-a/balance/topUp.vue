@@ -11,7 +11,7 @@
                                 val: 'ServiceAgreement',
                             })
                         "
-                        >当前金币<view class="ico"></view
+                        >当前星币<view class="ico"></view
                     ></view>
                     <view class="t_msg flex_r flex_ac" @click="goRechargeRecord"
                         ><view>交易记录</view> <view class="ico"></view
@@ -21,7 +21,7 @@
                   
                     <div class="m_num">{{ gold || "0.00" }}</div>
                 </div> -->
-                <!-- <view class="nums">1金币={{isIos?'0.75':'1'}}元RMB</view> -->
+                <!-- <view class="nums">1星币={{isIos?'0.75':'1'}}元RMB</view> -->
                 <!-- <div class="btns" @click="onClickWithdrawal">申请退款</div> -->
             <!-- </div> -->
             <div class="bill_log">
@@ -175,7 +175,6 @@
             next="支付"
         />
         
-    <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
 
     </view>
     
@@ -191,7 +190,6 @@ import popUpVue from "./popUp.vue";
 import xTipsVue from "../../components/modules/x-tips.vue";
 import { isIos,jumpPayUrl } from "../../utils/mgtv.js";
 import xPay from "@/components/x-pay/index";
-import surePayModal from "../../components/surePayModal/surePayModal.vue";
 
 export default {
     data() {
@@ -219,11 +217,11 @@ export default {
                 // #ifndef MP-WEIXIN
 
                 {
-                    name: "支付宝",
+                    name: "芒果支付",
                     type: 1,
-                    img: "Ali",
+                    img: "xjzf",
                     show: true,
-                    msg: "支付宝支付",
+                    msg: "芒果支付",
                 },
                 // {
                 //     name: "微信支付",
@@ -235,11 +233,11 @@ export default {
                 // #endif
             ],
             payItem: {
-                name: "支付宝",
+                name: "芒果支付",
                 type: 1,
-                img: "Ali",
+                img: "xjzf",
                 show: true,
-                msg: "支付宝支付",
+                msg: "芒果支付",
             },
             showAutonym: false,
             closeAutonym: false,
@@ -256,16 +254,13 @@ export default {
         // autonym,
         xTipsVue,
         xPay,
-        surePayModal
     },
     onLoad(da) {
         this.gold = this.userInfo.gold;
     },
     onShow() {
         this.getBalance();
-        if(!this.isIos && this.surePayMessage && this.surePayMessage.payId){
-            this.surePaySuccess(0)
-        }
+        
     },
     computed: {
         ...mapState(["userInfo"]),
@@ -289,39 +284,7 @@ export default {
         },
     },
     methods: {
-        surePaySuccess(val){
-           post('v1/pay/payment/status',{
-             pay_id:this.surePayMessage.payId
-           }).then((res)=>{
-            this.surePayMessage=''
-            //  this.onGet();
-          
-            //  this.getMessage()
-
-            if(!res.code){
-              if(res.status == 4){
-                uni.showToast({
-                  title:'购买成功！',
-                  icon:'none'
-                })
-             this.asyncUpBalance()
-             this.asyncUpdateInfo();
-              }else{
-                if(val){
-                   uni.showToast({
-                  title:'暂未查到支付信息,请稍后再试',
-                  icon:'none'
-                })
-                }
-                 
-              }
-            }else{
-              if(val){
-                uni.$u.toast(res.message);
-              }
-            }
-           })
-     },
+    
         ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
         // 关闭身份认证
         // async onClickAutonym() {
@@ -365,7 +328,7 @@ export default {
             }
             if (this.gold) {
                 this.$refs.popup.open(this.refund);
-            } else uni.$u.toast("金币不足！");
+            } else uni.$u.toast("星币不足！");
         },
         // 确认充值
         async onpayDeposit() {
@@ -377,7 +340,7 @@ export default {
             let that = this;
             let type = that.payItem.type;
             let data = {
-                platform_id: 7,
+                platform_id: 6,
                 amount: money,
                 device_id: "",
                 source_type: 'SourceType_Saving_XCoin',
@@ -387,34 +350,23 @@ export default {
             let res = await callPayment("v1/pay/payment/create", data, type);
           
             if (!res.code) {
-          
-                 if(res.res){
-                    this.surePayMessage = {
-                        payId:res.res.payId
-                    }
-                     if(this.isIos){
-                        setTimeout(() => {
-                            this.$refs.surePayModal.open()
-                        }, 2000);
-                     }
-                     jumpPayUrl(res.res.payUrl,{gachaName:'buyXCoin',gachaId:0,type:0,payId:res.res.payId})
-                 }
-                // if(window.mgtv){
-                //            mgtv.requestPaymentGameItem({
-                //              signData:res.res.signData,
-                //              sign:res.res.sign,
-                //              timestamp:Number(res.res.timestamp),
-                //              success:(res)=>{
-                //                   console.log("success:" + JSON.stringify(res));
-                //                     uni.$u.toast("充值星币成功！");
-                //                     that.asyncUpBalance();
-                //              },
-                //              fail:(err)=>{
-                //                 console.log(err)
-                //              }
+         
+                if(window.mgtv){
+                           mgtv.requestPaymentGameItem({
+                             signData:res.signData,
+                             sign:res.res.sign,
+                             timestamp:Number(res.timestamp),
+                             success:(res)=>{
+                                    uni.$u.toast("储值星币成功！");
+                                    that.asyncUpBalance();
+                                    that.asyncUpdateInfo()
+                             },
+                             fail:(err)=>{
+                                console.log(err)
+                             }
 
-                //          })
-                // }
+                         })
+                }
                 // uni.requestPayment({
                 //     provider: type == 1 ? "alipay" : "wxpay",
                 //     // #ifndef MP-WEIXIN
@@ -425,7 +377,7 @@ export default {
                 //     // #endif
                 //     success: async function (res) {
                 //         console.log("success:" + JSON.stringify(res));
-                //         uni.$u.toast("充值金币成功！");
+                //         uni.$u.toast("充值星币成功！");
                 //         that.asyncUpBalance();
                 //         // that.gold = that.floatingPoint(that.gold, "+", money);
                 //     },

@@ -877,15 +877,15 @@ export default {
 }
 .deposite{
     // margin-right: 15rpx;
-    width: 100px;
-    height: 38px;
-    line-height: 38px;
+    width: 160rpx;
+    height: 60rpx;
+    line-height: 60rpx;
     background:#fff;
-    border-radius: 21px;
+    border-radius: 35rpx;
     text-align: center;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 32rpx;
     color: #000000;
-    letter-spacing: 1px;
+    margin-bottom: 10rpx;
 }
 </style>
