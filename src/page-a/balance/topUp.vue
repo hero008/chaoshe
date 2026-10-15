@@ -52,13 +52,11 @@
                        
                 </div>
                 <view class="text"
-                    >1、充值的<span class="co">芒星赏星币</span>可用于<span
+                    >1、充值的<span class="co">星币</span>可用于<span
                         class="co"
                         >购买芒星赏平台在售盲盒商品</span
-                    >
-                    2、充值的芒星赏星币不会过期，支付后的<span class="co"
-                        ></span
-                    >，不可转赠他人;<br />
+                    >;<br />
+                    2、充值的<span class="co">星币</span>不会过期，不可转赠他人,不支持退款<br />
                     3、未成年人消费需事先取得家人或法定监护人的陪同及监管下进行消费;<br />
                     4、充值前请您仔细阅读<span class="co"
                         >《购买协议&隐私条款》</span
@@ -350,14 +348,13 @@ export default {
             let res = await callPayment("v1/pay/payment/create", data, type);
           
             if (!res.code) {
-         
                 if(window.mgtv){
                            mgtv.requestPaymentGameItem({
-                             signData:res.signData,
+                             signData:res.res.signData,
                              sign:res.res.sign,
-                             timestamp:Number(res.timestamp),
+                             timestamp:Number(res.res.timestamp),
                              success:(res)=>{
-                                    uni.$u.toast("储值星币成功！");
+                                    uni.$u.toast("充值星币成功！");
                                     that.asyncUpBalance();
                                     that.asyncUpdateInfo()
                              },
@@ -444,7 +441,7 @@ export default {
 
 .balance_con {
     position: absolute;
-    height: calc(100vh - 150rpx);
+    height: calc(100vh - 170rpx);
     // padding-top: 150rpx;
     bottom: 0;
     left: 0;
