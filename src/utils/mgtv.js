@@ -3,9 +3,9 @@ import { goto } from "./fun";
 import store from "../store";
 import BigNumber from "bignumber.js";
 
-export const isProd = process.env.NODE_ENV !== "production"
+export const isProd = process.env.NODE_ENV == "production"
 //  'https://mxs.mgworld.cn'
-export const originUrl= !isProd? 'https://airmart-m.mgtv.com':"http://192.168.8.75:8080"
+export const originUrl= !isProd? 'https://airmart-m.mgtv.com':"http://192.168.8.75:8888"
 
 export const  shareUrl = originUrl+'?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
