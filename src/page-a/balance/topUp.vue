@@ -167,7 +167,7 @@
             @tipsVue="onTipsVue"
             :visible="tipsShow"
             :deal="[
-                { text: 'ServiceAgreement', name: '购买协议' },
+                { text: 'SavingGold', name: '购买协议' },
                 { text: 'PrivacyClause', name: '隐私条款' },
             ]"
             next="支付"
