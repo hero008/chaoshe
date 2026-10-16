@@ -78,7 +78,7 @@
                     </div>
                     <div class="m_num1">
                          <div  style="font-size: 24rpx; display: flex;align-items: center;justify-content: flex-end;">
-                              <div class="deposite"  @click="userInfo.id ? goto('/page-a/balance/topUp') : null">星币储值</div>
+                              <div class="deposite"  @click="userInfo.id ? goto('/page-a/balance/topUp') : null">星币充值</div>
                             </div>
                         {{ userInfo.xCoin || "0.00" }}
                     

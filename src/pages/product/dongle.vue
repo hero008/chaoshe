@@ -449,11 +449,11 @@ export default {
         this.boxIndex = da.index;
         if(this.ios){
            MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
-            if(res.code != 0){
+            // if(res.code != 0){
                 if(this.surePayMessage && this.surePayMessage.payId){
                      this.surePaySuccess(0);
                 }
-            }
+            // }
            }) 
         }
     },

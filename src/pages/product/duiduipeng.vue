@@ -451,11 +451,11 @@ export default {
         this.initGame();
         if(this.ios){
            MgtvApi.registerhandler('payResultCallBack',{},(res)=>{
-            if(res.code != 0){
+            // if(res.code != 0){
                 if(this.surePayMessage && this.surePayMessage.payId){
                      this.surePaySuccess(0);
                 }
-            }
+            // }
            }) 
         }
         // const isAuto = uni.getStorageSync('isAuto')
