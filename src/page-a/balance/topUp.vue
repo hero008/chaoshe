@@ -76,7 +76,7 @@
                         class="cr"
                         @click="
                             goto('/pages/common/rulepop', {
-                                val: 'ServiceAgreement',
+                                val: 'SavingGold',
                             })
                         "
                         >《购买协议》</span
@@ -100,9 +100,9 @@
                             class="pay_ico"
                         />{{ payItem.msg
                         }}
-                        <!-- <view class="t_msg flex_r flex_ac" @click="getSelect"
+                        <view class="t_msg flex_r flex_ac" @click="getSelect"
                             >更多支付 <view class="ico"></view
-                        ></view> -->
+                        ></view>
                     </div>
                     <div class="reduce_pay">
                         <div
@@ -223,13 +223,13 @@ export default {
                     show: true,
                     msg: "支付宝支付",
                 },
-                // {
-                //     name: "微信支付",
-                //     type: 2,
-                //     img: "WeChat",
-                //     show: false,
-                //     msg: "微信支付",
-                // },
+                {
+                    name: "微信支付",
+                    type: 2,
+                    img: "WeChat",
+                    show: false,
+                    msg: "微信支付",
+                },
                 // #endif
             ],
             payItem: {
@@ -270,7 +270,7 @@ export default {
     },
     onShow() {
         this.getBalance();
-        if(!this.isIos && this.surePayMessage && this.surePayMessage.payId){
+        if(this.surePayMessage && this.surePayMessage.payId){
             this.surePaySuccess(0)
         }
     },
@@ -300,7 +300,9 @@ export default {
            post('v1/pay/payment/status',{
              pay_id:this.surePayMessage.payId
            }).then((res)=>{
-            this.surePayMessage=''
+            if(this.surePayMessage && this.surePayMessage.payType == 'alipay'){
+               this.surePayMessage=''
+            }
             //  this.onGet();
           
             //  this.getMessage()
@@ -311,6 +313,7 @@ export default {
                   title:'充值成功！',
                   icon:'none'
                 })
+              this.surePayMessage=''
              this.asyncUpBalance()
              this.asyncUpdateInfo();
               }else{
@@ -385,21 +388,22 @@ export default {
             let that = this;
             let type = that.payItem.type;
             let data = {
-                platform_id: 7,
+                platform_id: that.payItem.type == 1 ? 7: 8,
                 amount: money,
                 device_id: "",
                 source_type: 'SourceType_Saving_XCoin',
                 source_id: that.topUp.id,
                 device_type: this.isIos?'ios':'android'
             };
-            let res = await callPayment("v1/pay/payment/create", data, type);
+            let res = await callPayment("v1/pay/payment/create", data, 1);
           
             if (!res.code) {
                 console.log(res.res);
           
                  if(res.res){
                     this.surePayMessage = {
-                        payId:res.res.payId
+                        payId:res.res.payId,
+                        payType: that.payItem.type == 1 ?'alipay':"wechat"
                     }
 
                     //  if(this.isIos){
@@ -407,7 +411,7 @@ export default {
                     //         this.$refs.surePayModal.open()
                     //     }, 2000);
                     //  }
-                     jumpPayUrl(res.res.payUrl,{gachaName:'buyXCoin',gachaId:0,type:0,payId:res.res.payId})
+                     jumpPayUrl(res.res.payUrl,that.payItem.type == 1 ?'alipay':"wechat")
                  }
                 // if(window.mgtv){
                 //            mgtv.requestPaymentGameItem({

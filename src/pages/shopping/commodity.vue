@@ -482,14 +482,14 @@ export default {
                 msg: "支付宝支付",
                 consume: 0,
               },
-              //  {
-              //   name: "微信支付",
-              //   type: 2,
-              //   img: "WeChat",
-              //   show: true,
-              //   msg: "微信支付",
-              //   consume: 0,
-              // },
+               {
+                name: "微信支付",
+                type: 2,
+                img: "WeChat",
+                show: true,
+                msg: "微信支付",
+                consume: 0,
+              },
             ]
           : [
              {
@@ -500,14 +500,14 @@ export default {
                 msg: "支付宝支付",
                 consume: 0,
               },
-              //  {
-              //   name: "微信支付",
-              //   type: 2,
-              //   img: "WeChat",
-              //   show: true,
-              //   msg: "微信支付",
-              //   consume: 0,
-              // },
+               {
+                name: "微信支付",
+                type: 2,
+                img: "WeChat",
+                show: true,
+                msg: "微信支付",
+                consume: 0,
+              },
             ],
 
       paytypeList: [1], // 0潮币 1支付宝 2微信 3微信小程序
@@ -585,7 +585,7 @@ export default {
     // this.loadAddrList();
     this.getMessage();
 
-      if(!this.ios && this.surePayMessage){
+      if(this.surePayMessage){
           this.surePaySuccess(0)
         }
   },
@@ -594,11 +594,14 @@ export default {
            post('v1/pay/payment/status',{
              pay_id:this.surePayMessage.payId
            }).then((res)=>{
-            this.surePayMessage=''
+            if(this.surePayMessage && this.surePayMessage.payType == 'alipay'){
+              this.surePayMessage=''
+            }
              this.onGet();
              this.getMessage()
             if(!res.code){
               if(res.status == 4){
+                this.surePayMessage=''
                 uni.showToast({
                   title:'商品购买成功！可前往星仓查看',
                   icon:'none'
@@ -810,20 +813,21 @@ export default {
         };
       }
 
-      let res = await callPayment("v1/activity/cost-award/buy", data, type);
+      let res = await callPayment("v1/activity/cost-award/buy", data, 1);
       let orderInfo = res.orderInfo;
       if (!res.code) {
         if (res.res && res.res.createPaymentReply) {
            this.showBuyGoodsModal = false;
            this.surePayMessage = {
-            payId:res.res.createPaymentReply.payId
+            payId:res.res.createPaymentReply.payId,
+            payType:that.paytypeList.includes(1)?'alipay':'wechat'
            }
           //  if(this.ios){
           //    setTimeout(() => {
           //         this.$refs.surePayModal.open()
           //    }, 2000);
           //  }
-           jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:'shop',gachaId:this.objId,type:this.type,payId:res.res.createPaymentReply.payId})
+           jumpPayUrl(res.res.createPaymentReply.payUrl,that.paytypeList.includes(1)?'alipay':'wechat')
           //  window.location.href=  res.res.createPaymentReply.payUrl
           // if (window.mgtv) {
           //   mgtv.requestPaymentGameItem({

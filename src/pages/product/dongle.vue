@@ -462,7 +462,7 @@ export default {
         this.oldRandomNum = this.$gl("selectRandomNumber");
         this.RandomNum = this.oldRandomNum || 1;
         
-        if(!this.ios && this.surePayMessage && this.surePayMessage.payId){
+        if(this.surePayMessage && this.surePayMessage.payId){
            this.surePaySuccess(0)
         }
         // if(!this.ios){
@@ -659,13 +659,14 @@ export default {
             
         },
 
-        onClickDraw(res, showAnim, type) {
+        onClickDraw(res, showAnim, type,payType) {
             if (type == 0) {
                 this.handleDrawResult(res, showAnim); // 直接出结果,查询结果
             } else {
                   this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId,
-                    showAnim:showAnim
+                    showAnim:showAnim,
+                    payType:payType
                 }
 
                 // if(this.ios){
@@ -683,9 +684,12 @@ export default {
         },
 
         onClickPrize(payId, showAnim,val) {
-            this.surePayMessage=''
+            if(this.surePayMessage.payType == 'alipay'){
+               this.surePayMessage=''
+            }
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
+                     this.surePayMessage=''
                     this.handleDrawResult(res, showAnim);
                 } else {
                     if(val){

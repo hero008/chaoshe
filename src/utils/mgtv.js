@@ -136,7 +136,7 @@ export function isVideo(url) {
 }
 
 
-export const jumpPayUrl = (link,data)=>{
+export const jumpPayUrl = (link,type = 'alipay')=>{
    if(!isMTVapp()){
     // if(data){ 
     //    if(link.includes('alipay')){
@@ -171,8 +171,9 @@ export const jumpPayUrl = (link,data)=>{
   }
 
   const ios = isIos();
- 
-  if(link.includes('alipay')){
+
+  if(type == 'alipay'){
+      if(link.includes('alipay')){
        if(ios){
     window.location.href = link;
   }else{
@@ -187,11 +188,15 @@ export const jumpPayUrl = (link,data)=>{
          url:originUrl + '#/pages/common/pay',
     });
   }
+  }else{
+    // originUrl+'?isWechat=1'
+     uni.setStorageSync('jumpUrl',link+'&redirect_url='+encodeURIComponent('imgotv://'))
+    //  return;
+     MgtvApi.jumpPage({
+         url: originUrl+'#/pages/common/pay',
+    });
+  }
 
-
-    
-    
-  
 }
 export const  jumpUrl =(link,data='')=>{
   if(!isMTVapp()){

@@ -528,7 +528,7 @@ export default {
 
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
-        if(!this.ios && this.surePayMessage && this.surePayMessage.payId){
+        if(this.surePayMessage && this.surePayMessage.payId){
             this.surePaySuccess(0);
         }
     },
@@ -852,7 +852,7 @@ export default {
             }
         },
         //中奖
-        onClickDraw(res, showAnim, type) {
+        onClickDraw(res, showAnim, type,payType) {
             if (type == 0) {
                 if (!Array.isArray(res.awards)) return
 
@@ -874,7 +874,8 @@ export default {
             } else {
                 this.surePayMessage = {
                     payId:res.res.createPaymentReply.payId,
-                    showAnim:showAnim
+                    showAnim:showAnim,
+                    payType:payType
                 }
 
                 // if(this.ios){
@@ -890,9 +891,13 @@ export default {
         },
         onClickPrize(payId, showAnim,val) {
             const that = this;
-            this.surePayMessage = ''
+             if(this.surePayMessage && this.surePayMessage.payType == 'alipay'){
+                 this.surePayMessage = ''
+             }
+            
             post("v1/gacha/open/result", { pay_id: payId }).then((res) => {
                 if (!res.code) {
+                     this.surePayMessage = ''
                     if (!Array.isArray(res.awards)){
                          return
                     }

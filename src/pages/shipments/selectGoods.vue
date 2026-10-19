@@ -247,7 +247,7 @@ export default {
     onShow() {
         this.loadAddrList();
 
-        if(!this.ios && this.surePayMessage){
+        if(this.surePayMessage){
             this.surePaySuccess(0)
         }
         // if(this.surePayMessage){
@@ -259,9 +259,12 @@ export default {
            post('v1/pay/payment/status',{
              pay_id:this.surePayMessage.payId
            }).then((res)=>{
-            this.surePayMessage=''
+            if(this.surePayMessage.payType == 'alipay'){
+                this.surePayMessage = ''
+            }
             if(!res.code){
               if(res.status == 4){
+                 this.surePayMessage=''
                 uni.showToast({
                   title:'发货成功',
                   icon:'none'
@@ -354,11 +357,12 @@ export default {
                 }
             }
         },
-        confirmOrder(res) {
+        confirmOrder(res,showAnim,type,payType) {
             if (!res.code) {
                 if(res.res && res.res.createPaymentReply && res.res.createPaymentReply.payId){
                  this.surePayMessage={
-                    payId:res.res.createPaymentReply.payId
+                    payId:res.res.createPaymentReply.payId,
+                    payType:payType
                  }
 
                 //  if(this.ios){

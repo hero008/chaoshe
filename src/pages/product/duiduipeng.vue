@@ -392,7 +392,7 @@ export default {
     },
 
     onShow(){
-        if(!this.ios && this.surePayMessage){
+        if(this.surePayMessage){
            this.surePaySuccess(0)
         }
        
@@ -500,8 +500,11 @@ export default {
             }
         },
        surePaySuccess(val){
+      
 
-        this.surePayMessage=''
+        if(this.surePayMessage.payType == 'alipay'){
+               this.surePayMessage=''
+         }
            this.initGame(val);
             // this.onClickPrize(this.payMessage.payId,true,val);
         },
@@ -625,6 +628,7 @@ export default {
                 box_index: 1
             }).then((res) => {
                 if (!res.code) {
+                   
                     this.initialData = res;//初始数据
                     const fateMatch = res.gachaFateMatch || {};
                     this.stateType = fateMatch.state;               // 0=未支付 1=已支付 2=已结束
@@ -646,6 +650,9 @@ export default {
                     this.recordId = fateMatch.recordId
                     this.lordActivity=res.lordActivity
                     this.remainingCount = res.gachaFateMatch.count
+                    if(this.remainingCount > 0){
+                         this.surePayMessage = ''
+                    }
                     if(val){
                         if(this.remainingCount == 0){
                                uni.showToast({
@@ -833,12 +840,13 @@ export default {
         },
         // #endif
         //支付成功回调
-        onClickDraw(res, showAnim, type) {
+        onClickDraw(res, showAnim, type,payType) {
             
             if(type != 0){
                 if(res.res && res.res.createPaymentReply){
                this.surePayMessage = {
-                  payId:res.res.createPaymentReply.payId
+                  payId:res.res.createPaymentReply.payId,
+                  payType:payType
               }
 
             //   if(this.ios){

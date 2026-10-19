@@ -433,17 +433,17 @@ export default {
           consume: 0,
           payType: 0,
         },
-        //   {
-        //     name: "微信支付",
-        //     type: 2,
-        //     img: "WeChat",
-        //     show: true,
-        //     msg: "微信支付",
-        //     consume: 0,
-        //   // number: this.$gl("userInfo").coin,
-        //     number: 0,
-        //     payType: 1,
-        // },  // 是否金币和潮币支付
+          {
+            name: "微信支付",
+            type: 2,
+            img: "WeChat",
+            show: true,
+            msg: "微信支付",
+            consume: 0,
+          // number: this.$gl("userInfo").coin,
+            number: 0,
+            payType: 1,
+        },  // 是否金币和潮币支付
       
         // {
         //     name: "金币余额",
@@ -1033,7 +1033,7 @@ export default {
 
           
         if(!res.code){
-            that.$emit("success", res, that.showAnimation, click_type);
+            that.$emit("success", res, that.showAnimation, click_type,this.paytypeList.includes(1)?'alipay':'wechat');
            that.close();
            let gachaName = '';
            if(this.mtype == 2){
@@ -1047,7 +1047,7 @@ export default {
            }else if(this.mtype == 12){
             gachaName = 'fh'
            }
-            jumpPayUrl(res.res.createPaymentReply.payUrl,{gachaName:gachaName,gachaId:this.source_id,payId:res.res.createPaymentReply.payId})
+            jumpPayUrl(res.res.createPaymentReply.payUrl,this.paytypeList.includes(1)?'alipay':'wechat')
          
         }else{
           uni.showToast({

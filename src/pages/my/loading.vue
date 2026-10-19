@@ -1,15 +1,20 @@
 <template>
   <view class="my">
-    <u-loading-page
-      :loading="true"
-      fontSize="15"
-      iconSize="36"
-      loadingMode="semicircle"
-      loadingColor="#9064FF"
-      color="#9064FF"
-      loadingText="登录中..."
-      bgColor="rgba(0,0,0,0)"
-    />
+      <!-- <block v-if="!isWechat"> -->
+      <u-loading-page
+            :loading="true"
+            fontSize="15"
+            iconSize="36"
+            loadingMode="semicircle"
+            loadingColor="#9064FF"
+            color="#9064FF"
+            loadingText="登录中..."
+            bgColor="rgba(0,0,0,0)"
+          
+          />
+    <!-- </block> -->
+   
+    <!-- <view @click="toMgTV" v-else class="openMgTV">打开芒果TV APP</view> -->
     <u-modal @confirm="confirm" :show="show" :title="title" :content='content'></u-modal>
       <view @click="toLogin" v-if="needLogin" class="loginBtn">
         登录
@@ -30,7 +35,8 @@ export default {
       title:'提示',
       content:'登录失败,请重试,体验更多内容吧',
        needLogin:false,
-       ios:isIos()
+       ios:isIos(),
+       isWechat:false
     };
   },
   created() {
@@ -49,12 +55,21 @@ export default {
   },
   // computed: { ...mapState(["isMTVLogin"]) },
   methods: {
+      toMgTV(){
+       window.location.href = 'imgotv://'
+    },
      ...mapActions(["asyncUpdateInfo", "asyncUpBalance"]),
     toLogin() {
       if (!isMTVapp()) {
         if(isProd){
-         let url = shareUrl;
-         let params = getLocalParams()
+          //  if(window.location.href.includes('isWechat')){
+          //   console.log('时间段付了款计算逻辑发撒老大进啦')
+          //    this.isWechat = true;
+          //    console.log(this.isWechat);
+          //    window.location.href = 'imgotv://'
+          // }else{
+           let url = shareUrl;
+           let params = getLocalParams()
             let gachaName = params.gachaName
             let gachaId =  params.gachaId
              let channel =params.channel;
@@ -71,6 +86,8 @@ export default {
            window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
           `imgotv://webview?url=${encodeURIComponent(url)}`,
         )}`;
+          // }
+         
         }else{
           this.webLogin()
         }
@@ -228,6 +245,24 @@ export default {
 .loginBtn{
   position: absolute;
   bottom: 80px;
+  width: 686rpx;
+  height: 80rpx;
+  background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
+  border-radius: 40rpx 40rpx 40rpx 40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  color:#1A1A1A;
+  font-size: 32rpx;
+  font-weight: blod;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+}
+.openMgTV{
+  position: absolute;
+  bottom:160px;
   width: 686rpx;
   height: 80rpx;
   background: linear-gradient( 90deg, #31E597 0%, #40E0EA 100%);
