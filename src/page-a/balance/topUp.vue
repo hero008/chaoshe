@@ -76,7 +76,7 @@
                         class="cr"
                         @click="
                             goto('/pages/common/rulepop', {
-                                val: 'ServiceAgreement',
+                                val: 'SavingGold',
                             })
                         "
                         >《购买协议》</span
