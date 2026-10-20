@@ -1,21 +1,25 @@
 <template>
     <view class="chaowanshang">
-        <view class="topBack">
+        <view :style="{
+            top: MBInfo().top + 'px' ,
+            height:'40px',
+            alignItems:'center'
+        }"  class="topBack">
             <img src="https://img.shinemang.com/gachaStatic/static/img/niudan/ndj_back.png" @click.stop="gateBack"
                 class="Back_ico" />
-            <text class="title" v-if="!Object.keys(types).length">{{ message.name }}</text>
+            <text style="color: #fff;" class="title" v-if="!Object.keys(types).length">{{ message.name }}</text>
             <!--  #ifndef MP-WEIXIN -->
-            <view class="share" @click="onShare" v-if="!Object.keys(types).length"></view>
+            <!-- <view class="share" @click="onShare" v-if="!Object.keys(types).length"></view> -->
             <!-- #endif -->
         </view>
         <view class="ocean" :style="{ backgroundImage: `url(${imageUrlMap.bg})` }">
             <view class="particulars">
-                <view v-if="stock !== -1 && !Object.keys(types).length" class="banner-limited"
-                    :style="{ backgroundImage: `url(${imageUrlMap.ticketNum})` }">限时领取总数：{{ stock }}张</view>
+                <!-- <view v-if="stock !== -1 && !Object.keys(types).length" class="banner-limited"
+                    :style="{ backgroundImage: `url(${imageUrlMap.ticketNum})` }">限时领取总数：{{ stock }}张</view> -->
                 <img class="rule" :src="imageUrlMap.rule"
-                    @click="goto('/pages/common/rulepop', { val: Object.keys(types).length ? 'ChaoyouRules' : 'CostGiftCouponSummaryDiscount' })" />
+                    @click="goto('/pages/common/rulepop', { val: Object.keys(types).length ? 'ChaoyouRules' : 'CostGiftCouponSummary' })" />
                 <view class="center">
-                    <view class="time cn" v-if="Object.keys(message).length" :style="{ color: colorList.time }"> {{message.startTime }} - {{ message.endTime }}</view>
+                    <view class="time" v-if="Object.keys(message).length" :style="{ color: colorList.time }"> {{message.startTime }} - {{ message.endTime }}</view>
                     <view class="number-box cn" :style="{ color: colorList.centre }" v-if="!Object.keys(types).length">
                         <view class="nums_left">{{ typeName }}可领:{{ cnt }} </view>
                         <view class="nums_right">已领取: {{ receivedCnt }}张</view>
@@ -46,26 +50,26 @@
                     <view v-else>
                         <view class="progress-view flex_js cn" :style="{
                             background: colorList.bg,
-                            border: `4rpx solid ${colorList.border}`,
+                            border: `2rpx solid ${colorList.border}`,
                         }">
                             <view style="height: 100%">
                                 <view class="progress"
                                     :style="{ width: currentAmount * (502 / amountLimit) + 'rpx', background: gradientBg }">
                                 </view>
                             </view>
-                            <view class="progress-text" :style="{ color: colorList.text }">{{ currentAmount }}/{{
+                            <view class="progress-text" :style="{ color: '#000'}">{{ currentAmount }}/{{
                                 amountLimit }}</view>
                         </view>
                         <!-- <img class="get cn" :src="cnt > 0 ? imageUrlMap.button_open : imageUrlMap.button_close"
                             @click="getChK" /> -->
-                        <img class="get cn" :src="state == 0 ? imageUrlMap.button_open : imageUrlMap.button_close"
+                        <img class="get" :src="state == 0 ? imageUrlMap.button_open : imageUrlMap.button_close"
                             @click="getInquire" />
                     </view>
                     <view v-if="Object.keys(types).length" class="numss_right nums_right">已领取: {{ receivedCnt }}张
                     </view>
                 </view>
                 <view class="attention" :style="{
-                    color: colorList.attention,
+                    color: colorList.text,
                     background: colorList.attentionBg,
                 }">
                     <view class="titleBox">
@@ -74,7 +78,10 @@
                         <view class="l" :style="border1"> </view>
                     </view>
                     <view class="text">
-                        1.公司有权根据实际情况对活动规则进行必要的调整或解释，以确保活动的公平、公正和顺利进行。<br />2.用户参与活动时需遵守芒星赏APP的相关规定和法律法规要求，不得采用任何不正当手段参与活动或获取奖励。例大小号互绑/家人号互绑/机刷用户互绑、佣金邀新等违规方法邀新，将无法获得奖励。对于违规行为，芒星赏文化传播公司有权取消用户的参与资格及已获得的奖励。
+                      1.公司有权根据实际情况对活动规则进行必要的调整或解<br />释，以确保活动的公平、公正和顺利进行。
+                    <br />2.用户参与活动时需遵守芒星赏的相关规定和法律法规要
+                    <br />求，不得采用任何不正当手段参与活动或获取奖励。对于违<br />规行为，芒星赏有权取消用户的参与资格及已获
+                    <br />得的奖励。
                     </view>
                 </view>
             </view>
@@ -164,7 +171,7 @@ export default {
             return str;
         },
         gradientBg() {
-            return `linear-gradient(90deg, ${this.colorList.bg1} 0%, ${this.colorList.bg2} 50%,${this.colorList.bg3} 100%) `;
+            return `linear-gradient(90deg, ${this.colorList.bg1} 0%, ${this.colorList.bg2} 100%) `;
         },
     },
     onLoad(da) {
@@ -333,13 +340,14 @@ export default {
 .chaowanshang {
     height: 100vh;
     overflow-y: auto;
+      background:#0d4799 ;
 }
 
 
 .ocean {
     width: 100%;
     background-size: 100% 100%;
-    height: 1744rpx;
+    height: 1624rpx;
 }
 
 .Back_ico {
@@ -416,18 +424,17 @@ export default {
 
     .center {
         width: 100%;
-        height: 868rpx;
+        height: 836rpx;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 420rpx;
+        bottom: 360rpx;
+        font-size: 28rpx;
 
         .time {
-            width: 100%;
+             text-align: center;
             font-size: 28rpx;
-            text-align: center;
-            position: absolute;
-            top: 74rpx;
+            color: #fff;
         }
 
         .number-box {
@@ -443,6 +450,7 @@ export default {
                 font-weight: 800;
                 font-size: 28rpx;
                 line-height: 33rpx;
+
             }
 
 
@@ -450,11 +458,13 @@ export default {
 
         .get {
             display: block;
-            margin: 46rpx auto 0;
+               transform:translateX(-50%) scale(1.5);
+            // margin: 46rpx auto 0;
             width: 366rpx;
             height: 132rpx;
             position: absolute;
             bottom: 0rpx;
+            left: 50%;
         }
 
         .progress-view {
@@ -465,7 +475,7 @@ export default {
             overflow: hidden;
             position: absolute;
             bottom: 178rpx;
-
+         
 
             .progress {
                 max-width: 502rpx;
@@ -475,8 +485,11 @@ export default {
 
             .progress-text {
                 font-weight: bold;
-                font-size: 24rpx;
+                font-size: 20rpx;
                 position: absolute;
+                display: flex;
+                align-items: center;
+                line-height: 26rpx;
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
@@ -670,15 +683,15 @@ export default {
 
 
     .attention {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+         position: absolute;
         width: 686rpx;
-        height: 350rpx;
-        bottom: 0rpx;
-        border-radius: 16rpx;
+        height: 304rpx;
+        left: 32rpx;
+        bottom: 32rpx;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 16rpx 16rpx 16rpx 16rpx;
         padding: 24rpx;
-        margin-bottom: 20rpx;
+        overflow-y: auto;
 
         .titleBox {
             display: flex;
