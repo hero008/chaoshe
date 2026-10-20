@@ -56,7 +56,8 @@
                     
                 </view>
                 <view class="gahcaAmount">
-                      距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text>
+                     <view>距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text></view>
+                     <view v-if="hasBZAwards">距上次出<text class="bz">宝藏</text>已过<text class="num">x{{ bzNum }}</text></view>
                     <!-- <image  mode="scaleToFill" src="https://img.shinemang.com/gachaStatic/chaoyou/icon.png" />
                     <text>已抽{{ residual }}发</text> -->
                 </view>
@@ -439,6 +440,7 @@ export default {
             couponId: 0,
             coverImage: "",
             spNum: 0,
+            bzNum:0,
             showDiscounts: false,
             showBtn: false,
             ballLeft: "",
@@ -477,7 +479,8 @@ export default {
    
             lordActivity:0,
             surePayMessage:'',
-            ios:isIos()
+            ios:isIos(),
+            hasBZAwards:false
             
 
 
@@ -599,9 +602,11 @@ export default {
 
                         if(gachaAwards.filter((item)=>item.levelIndex == 52).length){
                         this.recordLevelName = '宝箱'
+                        this.hasBZAwards = true
                         }else{
                         
                             this.recordLevelName = 'SP'
+                             this.hasBZAwards = false
                         }
                 
                     this.gachainfo = { ...gacha, ...gachaBox };
@@ -793,6 +798,11 @@ export default {
                             if (da[ix].records.length) {
                                 this.spNum = this.residual - da[ix].records[0].no;
                             } else this.spNum = 0;
+                        }
+                        if(ix == 52){
+                            if (da[ix].records.length) {
+                                this.bzNum = this.residual - da[ix].records[0].no;
+                            } else this.bzNum = 0;
                         }
                     }
                     let ins = this.sortList,
@@ -1305,19 +1315,24 @@ export default {
 
     .gahcaAmount{
         width: 482rpx;
-height: 56rpx;
+// height: 56rpx;
 background: rgba(63,94,131,0.1);
 border-radius: 8rpx 8rpx 8rpx 8rpx;
 border: 2rpx solid #FFFFFF;
 margin: auto;
-display: flex;
-align-items: center;
-justify-content: center;
+padding: 8rpx 0;
+
+// display: flex;
+// align-items: center;
+// justify-content: center;
 color: #3F5E83;
 font-size: 24rpx;
 margin-top: -140rpx;
 margin-bottom: 200rpx;
-line-height: 56rpx;
+>view{
+    text-align: center;
+}
+// line-height: 56rpx;
 .cs{
     font-family: "倍数欧气值";
     font-size: 14px;
@@ -1327,6 +1342,17 @@ line-height: 56rpx;
     font-style: normal;
     text-transform: none;
     color:#FF93C7;
+}
+.bz{
+    font-family: "倍数欧气值";
+    font-size: 14px;
+     background: -webkit-linear-gradient(26.15616568971575deg, #6E8AFF 0%, #FF98FB 26%, #F7FF9B 73%, #9DFFE4 100%);
+        background:linear-gradient(26.15616568971575deg, #6E8AFF 0%, #FF98FB 26%, #F7FF9B 73%, #9DFFE4 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+           text-stroke:  0.5px #000000;
+    -webkit-text-stroke: 0.5px #000000;
 }
 image{
     width: 48rpx;
