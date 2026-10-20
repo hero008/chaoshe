@@ -82,8 +82,9 @@
                 <view v-if="previewType == 1" style="padding-left: 24rpx;" class="box">
                     <view class="tab">
                       
-                      <text class="amount">初始商品总数共：{{ (eggTwister.gachaBox &&
-                            eggTwister.gachaBox.totalAwards)}}抽</text>
+                      <text class="amount">剩余总数/初始商品总数共：({{ (eggTwister.gachaBox &&
+                            eggTwister.gachaBox.leftAwards)}}/{{eggTwister.gachaBox &&
+                            eggTwister.gachaBox.totalAwards}})抽</text>
                     </view>
                    <scroll-view scroll-y class="p-list" @scroll="onScroll">
                     <view class="flex-container">
@@ -552,7 +553,9 @@ export default {
                     res.awards[0].requestId = res.requestId
                 }
                 this.Winning = res.awards;
-                this.$refs.capsuleToys.eggPlay(1); // 执行摇球动画3s
+                if(!showAnim){
+                    this.$refs.capsuleToys.eggPlay(1); // 执行摇球动画3s
+                }
                 this.onClickPay(showAnim);
                 return;
             } else {
@@ -656,7 +659,10 @@ export default {
             // 开启动画时，spList仅包含大赏，非大赏暂存于otherPrizes供后续使用
 
             // 3. 触发摇球动画（固定3秒）
-            this.$refs.capsuleToys.eggPlay(1);
+            if(!showAnim){
+                this.$refs.capsuleToys.eggPlay(1);
+            }
+           
 
             // 4. 异步加载详情与统计（不阻塞后续）
             this.loadDetail();
@@ -675,14 +681,14 @@ export default {
             // 5. 提前设置标记（2.2秒后）
             setTimeout(() => {
                 this.inAdvance = true;
-            }, PRE_ADVANCE_DELAY);
+            }, !showAnim ? PRE_ADVANCE_DELAY: 0);
 
             // return;
 
             // 6. 等待动画结束（3秒后执行音效与界面跳转）
             setTimeout(() => {
                 this.handlePostAnimation(showAnim, winningList, otherPrizes);
-            }, ANIMATION_DURATION);
+            },!showAnim? ANIMATION_DURATION:0);
         },
 
         /**
