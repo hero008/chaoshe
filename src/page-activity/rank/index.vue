@@ -1,6 +1,6 @@
 <template>
   <view class="rankContent">
-    <x-navbar :whiteBack="true" tcolor="#fff" tit="星光夺赏榜" />
+    <x-navbar :whiteBack="true" tcolor="#fff" :tit="message && message.name" />
     <div class="balance_con">
       <div class="topContent">
         <view v-if="topThree.length">
@@ -49,7 +49,7 @@
           >
         </div>
         <div @click="toRankRewards" class="reward">奖品列表</div>
-        <div style="top: 289rpx;" @click="toRankRewardsLog" class="reward">积分记录</div>
+        <!-- <div style="top: 289rpx;" @click="toRankRewardsLog" class="reward">积分记录</div> -->
       </div>
       <div class="countDown" >
         <span v-if="countDown && residuetime > 0">活动开始倒计时：</span>
@@ -72,7 +72,7 @@
               <img :src="value.profile | active" alt="" />
               <div class="name ellipsis">  {{ value.userName }}</div>
             </div>
-            <div class="count">星光积分{{ value.point }}</div>
+            <div class="count">积分{{ value.point }}</div>
           </div>
          
         </div>
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="count">星光积分{{ myrank.point }}</div>
+      <div class="count">积分{{ myrank.point }}</div>
     </div>
   </view>
 </template>
@@ -121,7 +121,8 @@ export default {
       gapNext: "",
       topThree: [],
        rank: [],
-       countDown:false
+       countDown:false,
+       message:""
     };
   },
   components: {
@@ -200,6 +201,11 @@ export default {
       return finalRankList;
     },
     async loadDetail() {
+       let a = await activityLIst({ key: ["CostRank"] });
+        if(a){
+          this.message = a.activities[0];
+
+        }
       //   let a = await activityLIst({ key: ["CostRank"] });
       //    this.imageUrlMap = a.activities[0].imageUrlMap;
       //         this.colorList = a.activities[0].paramsMap;
@@ -453,7 +459,7 @@ export default {
     .rule {
       position: absolute;
       right: 0;
-      top:140rpx;
+      top:180rpx;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -478,7 +484,7 @@ export default {
       display: flex;
       position: absolute;
       right: 0;
-      top: 212rpx;
+      top: 252rpx;
       border-radius: 24rpx 0 0 24rpx;
 
       align-items: center;
