@@ -3,7 +3,7 @@
          <div :style="{ height: MBInfo().height + 'px' }" class="navbar_x flex_r flex_jb flex_ac">
             <view class="top_Back" @click.stop="gateBack">
                 <text class="icof Back_ico">&#xe72c;</text>
-                <text class="txt">星光积分记录</text>
+                <text class="txt">积分记录</text>
             </view>
         </div>
         <div class="balance_con" :style="{ height: conHeight }">
@@ -36,7 +36,7 @@
             </view> -->
             <div class="bill_log">
                 <div class="tit flex_r flex_ac flex_jb">
-                    <span>共{{ sumPoint }}星光积分</span>
+                    <span>共{{ sumPoint }}积分</span>
                 </div>
                 <div class="box">
                     <scroll-view
@@ -45,30 +45,8 @@
                         @scrolltolower="onReachScollBottom"
                         :lower-threshold="400"
                     >
-                    <block  v-if="active == 1">
-                          <div
-                        
-                            class="li_item flex_r flex_jb"
-                            v-for="(item, index) in transactionList"
-                            :key="index"
-                        >
-                            <view class="itb flex_c flex_jb">
-                                <view class="itb2">邀请</view>
-                                <view class="itb1">{{ item.createdAt }}</view>
-                            </view>
-
-                            <view class="itb3"
-                                >{{ item.point > 0 ? "+" : ""
-                                }}{{ item.point }} 星光积分</view
-                            >
-                            <!-- <view class="itb">{{item.state == 2?'已成功':'待处理'}}</view> -->
-                        </div>
-                           <u-empty v-if="transactionList.length < 1" text="暂无记录"
-                            icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
-                    </block>
-
-                    <block v-else>
-                             <div
+                 
+                         <div
                             class="li_item"
                             style="height: auto;"
                             v-for="(item, index) in transactionList"
@@ -81,7 +59,7 @@
 
                             <view class="itb3"
                                 >{{ item.point > 0 ? "+" : ""
-                                }}{{ item.point }} 星光积分</view
+                                }}{{ item.point }} 积分</view
                             >
                             </view>
 
@@ -119,7 +97,7 @@
                         </div>
                              <u-empty v-if="transactionList.length < 1" text="暂无记录"
                             icon="https://img.shinemang.com/gachaStatic/static/img/home/empty.png" :marginTop="50" />
-                    </block>
+                 
                       
                    
                     </scroll-view>
@@ -234,7 +212,7 @@ export default {
             // if(this.active == 0){
                 post("v1/activity/cost-rank/user-point-log/list", {
                     ...this.pageda,
-                    source_type:this.active == 0 ? 100 :400
+                    // source_type:this.active == 0 ? 100 :400
 
                 }).then((res) => {
                     console.log(res);

@@ -10,17 +10,17 @@
           <img src="../../static/new/rightIcon.png" alt="" />
         </div>
         <div class="topRewards">
-          <div @click="ondetail(towAwards.itemList[0].id)" v-if="towAwards" class="topTwo">
+          <div @click="ondetail(towAwards.itemList[0].id)" v-if="towAwards && towAwards.itemList[0]" class="topTwo">
             <img :src="towAwards.thumb" alt="" />
             <div class="name ellipsis">{{ towAwards.itemList[0].name }}</div>
             <div class="rank">TOP2</div>
           </div>
-          <div   @click="ondetail(oneAwards.itemList[0].id)" v-if="oneAwards"  class="topOne">
+          <div    @click="ondetail(oneAwards.itemList[0].id)" v-if="oneAwards && oneAwards.itemList[0] "  class="topOne">
              <img :src="oneAwards.thumb" alt="" />
             <div class="name ellipsis">{{ oneAwards.itemList[0].name }}</div>
             <div class="rank">TOP1</div>
           </div>
-          <div @click="ondetail(threeAwards.itemList[0].id)"  v-if="threeAwards"  class="topThree">
+          <div @click="ondetail(threeAwards.itemList[0].id)"  v-if="threeAwards && threeAwards.itemList[0]"  class="topThree">
             <img :src="threeAwards.thumb" alt="" />
             <div class="name ellipsis">{{ threeAwards.itemList[0].name }}</div>
             <div class="rank">TOP3</div>
