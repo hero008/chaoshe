@@ -202,10 +202,10 @@ export default {
     },
     async loadDetail() {
        let a = await activityLIst({ key: ["CostRank"] });
-        if(a){
-          this.message = a.activities[0];
+      
+          this.message = (a && a.activities) ? a.activities[0]: '';
 
-        }
+       
       //   let a = await activityLIst({ key: ["CostRank"] });
       //    this.imageUrlMap = a.activities[0].imageUrlMap;
       //         this.colorList = a.activities[0].paramsMap;
