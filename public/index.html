@@ -6,23 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="shortcut icon" type="image/png" href="https://lego.mgtv.com/tpl/favicon.ico"/>  
-      <!-- <script type="text/javascript" src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+       <script type="text/javascript" src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
     <script type="text/javascript">
     new window.VConsole();
-    </script>  -->
+    </script>  
     <script>
-       (function () {
-         function isHarmonyApp() {
-           return /harmony/i.test(window.navigator.userAgent) ||  /ImgoTV-hphone/i.test(window.navigator.userAgent);
-          }
-        let isHoneny = isHarmonyApp()
-        const script = document.createElement('script');
-        var src = isHoneny
-              ? 'https://club.mgtv.com/act/jssdk/mgtv-js-sdk-third-0.0.1.js'
-              : 'https://app.mgtv.com/js/mgtv-js-sdk-2021.js';
-            // 注意 <\/script> 必须转义
-        document.write('<script src="' + src + '"><\/script>');
-       })()
+      //  (function () {
+      //    function isHarmonyApp() {
+      //      return /harmony/i.test(window.navigator.userAgent) ||  /ImgoTV-hphone/i.test(window.navigator.userAgent);
+      //     }
+      //   let isHoneny = isHarmonyApp()
+      //   const script = document.createElement('script');
+      //   var src = isHoneny
+      //         ? 'https://club.mgtv.com/act/jssdk/mgtv-js-sdk-third-0.0.1.js'
+      //         : 'https://app.mgtv.com/js/mgtv-js-sdk-2021.js';
+      //       // 注意 <\/script> 必须转义
+      //   document.write('<script src="' + src + '"><\/script>');
+      //  })()
 </script>
     <script>
     var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))

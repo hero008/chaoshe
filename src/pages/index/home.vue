@@ -393,9 +393,10 @@ export default {
 destinationUrl: `https://img.shinemang.com/install/index.html`,
 });
       }else{
-        let schema = "imgotv://webview?url="+encodeURIComponent(shareUrl)
+        let url = 'http://192.168.8.75:8080'
+        let schema = "sakushorts://webview?url="+encodeURIComponent(url)
 
-MgtvApi.callhandler("createShortCut", {
+sakuSdk.createShortCut( {
               id: "mgtv:minigamecenter_shortcut", //写死
               label: "芒星赏", // 游戏名称
               schema, // 游戏链接

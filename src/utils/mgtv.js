@@ -9,7 +9,7 @@ export const originUrl= isProd? 'https://airmart-m.mgtv.com':"http://192.168.8.7
 
 export const  shareUrl = originUrl+'?isFullScreen=1&isHideNavBar=1'
 export const isMTVapp = () => {
-  return /imgo/i.test(window.navigator.userAgent);
+  return /saku/i.test(window.navigator.userAgent);
 };
 export const getDecievedModel = () => {
   if (MgtvApi.isIpad) {
@@ -229,24 +229,33 @@ if (isVideo(link)) {
 
 export const mgTvIsLogin = () => {
    return new Promise((resolve, reject) => {
-        MgtvApi.getUserInfo((user_info) => {
-            if (user_info && user_info.length !== 0) {
-                const userInfo = JSON.parse(user_info);
-                if (userInfo.ticket && userInfo.uuid) {
-                   uni.setStorageSync('ticket',userInfo.ticket)
-                   const localUUid = uni.getStorageSync('uuid')
-                   if(localUUid && localUUid == userInfo.uuid){
-                     resolve(true)
-                   }else{
-                    resolve(false)
-                   }
-                } else {
-                    resolve(false)
-                }
-                } else {
-                resolve(false)
-                }
-        });
+          window.sakuSdk.getUserInfo().then((res)=>{
+          
+            if(res.data.isLogin){
+              resolve(true)
+            }else{
+              resolve(false)
+            }
+          })
+
+        // MgtvApi.getUserInfo((user_info) => {
+        //     if (user_info && user_info.length !== 0) {
+        //         const userInfo = JSON.parse(user_info);
+        //         if (userInfo.ticket && userInfo.uuid) {
+        //            uni.setStorageSync('ticket',userInfo.ticket)
+        //            const localUUid = uni.getStorageSync('uuid')
+        //            if(localUUid && localUUid == userInfo.uuid){
+        //              resolve(true)
+        //            }else{
+        //             resolve(false)
+        //            }
+        //         } else {
+        //             resolve(false)
+        //         }
+        //         } else {
+        //         resolve(false)
+        //         }
+        // });
     })
 
 }
@@ -477,7 +486,7 @@ export const getLocalParams=()=>{
 }
 
 export const closeMGTVWebview = ()=>{
-  window.MgtvApi.closeWebView()
+  window.sakuSdk.closeWebView()
 }
 export const  ensureLuckyAfterSp = (list) =>{
   const spIndex = list.findIndex(item => item.levelName === 'SP');

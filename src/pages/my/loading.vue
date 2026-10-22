@@ -95,57 +95,70 @@ export default {
       }
 
       if (isMTVapp()) {
-        MgtvApi.getUserInfo((user_info) => {
-          if (user_info && user_info.length !== 0) {
-            const userInfo = JSON.parse(user_info);
-            if (userInfo.ticket && userInfo.uuid) {
-               uni.setStorageSync('ticket',userInfo.ticket)
-                this.needLogin = false;
-              let channel = uni.getStorageSync("channel");
-              post("v1/user/login", {
-                phone_num:userInfo.mobile || '',
-                type: 8,
-                code: userInfo.ticket,
-                login_platform:  this.ios ? 2 : 1,
-                device_id: this.SystemInfo.deviceId,
-                invite_code: this.inviteCode,
-                channel_id: channel ? channel : "Channel_H5",
-                uuid: userInfo.uuid,
-                nickname: userInfo.nickname,
-                avatar_url: userInfo.avatar.l,
-              }).then((res) => {
-                if (res.code) {
-                  uni.$u.toast(res.message);
-                  this.show = true;
-                  // that.backtrack();
-                } else {
-                  uni.setStorageSync("isNew", res.isNew);
-                  uni.setStorageSync("aToken", res.accessToken);
-                  uni.setStorageSync("rToken", res.refreshToken);
-                  uni.setStorageSync("uuid", res.uuid);
-                  that.$store.commit("updateInfo", res);
-                   that.asyncUpdateInfo()
-                  that.backtrack();
-                }
-              });
-            } else {
-              //登錄
-              this.needLogin = true
-              MgtvApi.login((res) => {
-                // window.location.reload();
-                this.toLogin()
-              },(err)=>{
-              });
-            }
-          } else {
-             this.needLogin = true
-            //登錄
-            MgtvApi.login(() => {
-              // window.location.reload();
-               this.toLogin()
-            });
+         window.sakuSdk.getUserInfo().then((res)=>{
+          alert(JSON.stringify(res))
+          if(res.data.isLogin){
+             uni.setStorageSync("aToken", res.token);
+             this.backtrack()
+          }else{
+            window.sakuSdk.openLogin().then((res)=>{
+              if(res?.data?.success){
+                  this.toLogin()
+              }
+            })
           }
-        });
+         })
+        // window.sakuSdk.getUserInfo((user_info) => {
+        //   if (user_info && user_info.length !== 0) {
+        //     const userInfo = JSON.parse(user_info);
+        //     if (userInfo.ticket && userInfo.uuid) {
+        //        uni.setStorageSync('ticket',userInfo.ticket)
+        //         this.needLogin = false;
+        //       let channel = uni.getStorageSync("channel");
+        //       post("v1/user/login", {
+        //         phone_num:userInfo.mobile || '',
+        //         type: 8,
+        //         code: userInfo.ticket,
+        //         login_platform:  this.ios ? 2 : 1,
+        //         device_id: this.SystemInfo.deviceId,
+        //         invite_code: this.inviteCode,
+        //         channel_id: channel ? channel : "Channel_H5",
+        //         uuid: userInfo.uuid,
+        //         nickname: userInfo.nickname,
+        //         avatar_url: userInfo.avatar.l,
+        //       }).then((res) => {
+        //         if (res.code) {
+        //           uni.$u.toast(res.message);
+        //           this.show = true;
+        //           // that.backtrack();
+        //         } else {
+        //           uni.setStorageSync("isNew", res.isNew);
+        //           uni.setStorageSync("aToken", res.accessToken);
+        //           uni.setStorageSync("rToken", res.refreshToken);
+        //           uni.setStorageSync("uuid", res.uuid);
+        //           that.$store.commit("updateInfo", res);
+        //            that.asyncUpdateInfo()
+        //           that.backtrack();
+        //         }
+        //       });
+        //     } else {
+        //       //登錄
+        //       this.needLogin = true
+        //       MgtvApi.login((res) => {
+        //         // window.location.reload();
+        //         this.toLogin()
+        //       },(err)=>{
+        //       });
+        //     }
+        //   } else {
+        //      this.needLogin = true
+        //     //登錄
+        //     MgtvApi.login(() => {
+        //       // window.location.reload();
+        //        this.toLogin()
+        //     });
+        //   }
+        // });
       }
       
     },

@@ -153,41 +153,7 @@ export default {
     }
 
     const params = new URLSearchParams(window.location.search);
-    const isFullScreen = params && params.get("isFullScreen");
-    if (isFullScreen) {
-        if(!isMTVapp()){
-         uni.setStorageSync('safeTop', 0);
-        }
-    window.MgtvApi.callhandler('getScreenCutoutInfo', {}, function(data){
-        const resp = typeof data === 'string' ? JSON.parse(data) : data;
-        if (resp.code == 200 && resp.data) { //响应正常
-          const t = JSON.parse(resp.data)
-          const dpr = window.devicePixelRatio || 1
-          //将机器像素换算为CSS的像素
-          t.safeTop = t.safeTop / dpr
-          t.safeBottom = t.safeBottom / dpr
-          t.safeLeft = t.safeLeft / dpr
-          t.safeBottom = t.safeBottom / dpr
-          uni.setStorageSync('safeTop', t.safeTop);
-          //  /** 是否有刘海，挖孔，1：有，0：无 */
-          //    hasNotch;
-          // /** 屏的安全区域与左侧的间隔 */
-          //   safeLeft;
-          // /** 屏的安全区域与顶部的间隔 */
-          //   safeTop;
-          // /** 屏的安全区域与右侧的间隔 */
-          //   safeRight;
-          // /** 屏的安全区域与底部的间隔 */
-          //  safeBottom;
-        }else{
-          uni.setStorageSync('safeTop', 40);
-        }
-      })
-      uni.setStorageSync('hideHeader', 0);
-    }else{
-    //   uni.setStorageSync('safeTop', 0);
-    //   uni.setStorageSync('hideHeader', 1);
-    }
+
    
     //  if(isMTVapp()){
             // const params = new URLSearchParams(window.location.search);
@@ -218,72 +184,72 @@ export default {
        
     //  }
 
-     if(!isMTVapp()){
-        if(isProd){
-                //分享用  // 如果是回调 
-               var url = ''
-                if(window.location.hash.length > 15){
-                    url = window.location.href;
-                }else{
-                    url = shareUrl;
-                    let params = getLocalParams();
-                    let gachaName = params.gachaName;
-                    let gachaId =  params.gachaId;
-                    let channel = params.channel;
-                    let inviteCode = params.inviteCode;
-                    if(inviteCode){
-                    url= url+'&inviteCode='+inviteCode
-                    }
-                    if(channel){
-                    url= url+'&channel='+channel
-                    }
-                    if(gachaName && gachaId){
-                    url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
-                    uni.removeStorageSync('gachaName')
-                    uni.removeStorageSync('gachaId')
-                    }
-                }
-            window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
-            `imgotv://webview?url=${encodeURIComponent(url)}`,
-            )}`;
-            return;
+    //  if(!isMTVapp()){
+    //     if(isProd){
+    //             //分享用  // 如果是回调 
+    //            var url = ''
+    //             if(window.location.hash.length > 15){
+    //                 url = window.location.href;
+    //             }else{
+    //                 url = shareUrl;
+    //                 let params = getLocalParams();
+    //                 let gachaName = params.gachaName;
+    //                 let gachaId =  params.gachaId;
+    //                 let channel = params.channel;
+    //                 let inviteCode = params.inviteCode;
+    //                 if(inviteCode){
+    //                 url= url+'&inviteCode='+inviteCode
+    //                 }
+    //                 if(channel){
+    //                 url= url+'&channel='+channel
+    //                 }
+    //                 if(gachaName && gachaId){
+    //                 url= url+'&gachaName='+gachaName+'&gachaId='+gachaId
+    //                 uni.removeStorageSync('gachaName')
+    //                 uni.removeStorageSync('gachaId')
+    //                 }
+    //             }
+    //         window.location.href = `https://club.mgtv.com/act/download/index.html?schema=${encodeURIComponent(
+    //         `imgotv://webview?url=${encodeURIComponent(url)}`,
+    //         )}`;
+    //         return;
           
 
-        }
+    //     }
 
-     }else{
-        if(!honery){
-            if(window.location.href.includes('common/pay')){
-            }else{
-                  let params = getLocalParams();
-          post('v1/system/middle-page/jump/target',{
-            source:isIos()?'MiddlePageSource_IOS':'MiddlePageSource_Android',
-            channel:params.channel
-        }).then((res)=>{
-               if(res.target == 'JumpTarget_MP'){
-                   let params = getLocalParams();
-                    let gachaName = params.gachaName;
-                    let gachaId =  params.gachaId;
-                    let channel = params.channel || "Channel_Official";
-                    let inviteCode = params.inviteCode;
-                     let mpParams = ''
-                     mpParams+='channel='+channel
-                     if(inviteCode){
-                        mpParams+='&inviteCode='+inviteCode
-                     }
-                     if(gachaName && gachaId){
-                        mpParams+='&gachaName='+gachaName + '&gachaId='+gachaId
-                        uni.removeStorageSync('gachaName')
-                        uni.removeStorageSync('gachaId')
-                     }
-                     setTimeout(()=>{ window.MgtvApi.closeWebView()},1000)
-                     window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
-               }
-        })
-            }
+    //  }else{
+    //     if(!honery){
+    //         if(window.location.href.includes('common/pay')){
+    //         }else{
+    //               let params = getLocalParams();
+    //       post('v1/system/middle-page/jump/target',{
+    //         source:isIos()?'MiddlePageSource_IOS':'MiddlePageSource_Android',
+    //         channel:params.channel
+    //     }).then((res)=>{
+    //            if(res.target == 'JumpTarget_MP'){
+    //                let params = getLocalParams();
+    //                 let gachaName = params.gachaName;
+    //                 let gachaId =  params.gachaId;
+    //                 let channel = params.channel || "Channel_Official";
+    //                 let inviteCode = params.inviteCode;
+    //                  let mpParams = ''
+    //                  mpParams+='channel='+channel
+    //                  if(inviteCode){
+    //                     mpParams+='&inviteCode='+inviteCode
+    //                  }
+    //                  if(gachaName && gachaId){
+    //                     mpParams+='&gachaName='+gachaName + '&gachaId='+gachaId
+    //                     uni.removeStorageSync('gachaName')
+    //                     uni.removeStorageSync('gachaId')
+    //                  }
+    //                  setTimeout(()=>{ window.MgtvApi.closeWebView()},1000)
+    //                  window.location.href = 'imgotv://miniapp?appid=mgkgw1fkyk9fw95nw&path='+(encodeURIComponent(mpParams))
+    //            }
+    //     })
+    //         }
         
-       }
-     }
+    //    }
+    //  }
     
      uni.setStorageSync("currentChange", 0);
     

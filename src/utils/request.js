@@ -43,20 +43,20 @@ uni.addInterceptor('request', {
         if ([401].includes(args.statusCode) && throttle401) {
             throttle401 = false
           
-            let rt = uni.getStorageSync("rToken");
-            if (rt) {
-                post("v1/user/refresh_token", { refresh_token: rt }).then(res => {
-                    if (!res.code) {
-                        setCache("userInfo", res, 60 * 60 * 24 * 7)
-                        uni.setStorageSync("aToken", res.accessToken)
-                        uni.setStorageSync("rToken", res.refreshToken)
-                        goto("/pages/my/loading")
-                    }
-                    else logout()
-                })
-            }
-            else logout();
-          
+            // let rt = uni.getStorageSync("rToken");
+            // if (rt) {
+            //     post("v1/user/refresh_token", { refresh_token: rt }).then(res => {
+            //         if (!res.code) {
+            //             setCache("userInfo", res, 60 * 60 * 24 * 7)
+            //             uni.setStorageSync("aToken", res.accessToken)
+            //             uni.setStorageSync("rToken", res.refreshToken)
+            //             goto("/pages/my/loading")
+            //         }
+            //         else logout()
+            //     })
+            // }
+            // else logout();
+           logout()
             // // #ifdef MP-WEIXIN
             // logout();
             // // #endif

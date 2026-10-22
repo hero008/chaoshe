@@ -60,7 +60,7 @@ let ISmp = () => {
 let getMBInfo = () => {
       if(isMTVapp()){
         return {
-            top: uni.getStorageSync("safeTop"),
+            top:40,
             height:40,
             width:0
         }
