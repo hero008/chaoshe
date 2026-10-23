@@ -55,8 +55,12 @@
                     </view>
                     
                 </view>
-                <view class="gahcaAmount">
-                     <view>距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text></view>
+                <view :style="{
+                    height: hasBZAwards || hasSPAwards ? 'auto':'30rpx',
+                    background:hasSPAwards || hasSPAwards ? 'rgba(63, 94, 131, 0.1)':'transparent',
+                    border:hasBZAwards || hasSPAwards ? '1px solid #FFFFFF':'none'
+                }" class="gahcaAmount">
+                     <view v-if="hasSPAwards">距上次出<text class="cs">传说</text>已过<text class="num">x{{ spNum }}</text></view>
                      <view v-if="hasBZAwards">距上次出<text class="bz">宝藏</text>已过<text class="num">x{{ bzNum }}</text></view>
                     <!-- <image  mode="scaleToFill" src="https://img.shinemang.com/gachaStatic/chaoyou/icon.png" />
                     <text>已抽{{ residual }}发</text> -->
@@ -476,7 +480,9 @@ export default {
             newRecordList:'',
    
             lordActivity:0,
-            hasBZAwards:false
+           
+            hasBZAwards:false,
+            hasSPAwards:false
             
 
 
@@ -572,20 +578,22 @@ export default {
                     this.boxId = gachaBox.boxIndex;
                     this.coverImage = gacha.coverImage;
                     this.AllRewardsInfo = gachaAwards;
-
+                         if(gachaAwards.filter((item)=>item.levelIndex == 28).length){
+                            this.hasSPAwards = true
+                         }
+                          if(gachaAwards.filter((item)=>item.levelIndex == 52).length){
+                            this.hasBZAwards = true
+                         }
                         if(gachaAwards.filter((item)=>item.levelIndex == 52).length){
                             this.recordLevelName = '宝箱'
-                            this.hasBZAwards = true
                         }else if(gachaAwards.filter((item)=>item.levelIndex == 28).length){
                             this.recordLevelName = 'SP'
-                            this.hasBZAwards = false
                         }else {
                             if(gachaAwards.filter((item)=>item.levelName == 'Lucky').length){
                                  this.recordLevelName = 'Lucky'
                             }else{
                                  this.recordLevelName = gachaAwards[0].levelName
                             }
-                            this.hasBZAwards = false
                         }
                 
                     this.gachainfo = { ...gacha, ...gachaBox };
