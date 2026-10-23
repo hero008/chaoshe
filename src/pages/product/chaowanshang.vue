@@ -601,12 +601,18 @@ export default {
                     this.AllRewardsInfo = gachaAwards;
 
                         if(gachaAwards.filter((item)=>item.levelIndex == 52).length){
-                        this.recordLevelName = '宝箱'
-                        this.hasBZAwards = true
-                        }else{
-                        
+                            this.recordLevelName = '宝箱'
+                            this.hasBZAwards = true
+                        }else if(gachaAwards.filter((item)=>item.levelIndex == 28).length){
                             this.recordLevelName = 'SP'
-                             this.hasBZAwards = false
+                            this.hasBZAwards = false
+                        }else {
+                            if(gachaAwards.filter((item)=>item.levelName == 'Lucky').length){
+                                 this.recordLevelName = 'Lucky'
+                            }else{
+                                 this.recordLevelName = gachaAwards[0].levelName
+                            }
+                            this.hasBZAwards = false
                         }
                 
                     this.gachainfo = { ...gacha, ...gachaBox };
