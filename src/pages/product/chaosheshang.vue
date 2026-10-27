@@ -280,6 +280,7 @@
         <dynamic-effect ref="animation" />
         <discounts :visible="showDiscounts" @onDiscounts="onDiscounts" :themeName="AReward.gacha.themeName"   :message="AReward.openMessage" />
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
+        
     </div>
 </template>
 <script>

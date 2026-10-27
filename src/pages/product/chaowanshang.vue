@@ -390,6 +390,16 @@
         <bzModal ref="bzModal" ></bzModal>
 
       <gachaDetails ref="gachaDetails" />
+      <u-popup :safeAreaInsetBottom="false"  round="20" :closeOnClickOverlay="false" :show="showTipsPoupon" mode="center" @close="showTipsPoupon=false" >
+        <view class="confirmSureModal">
+            <!-- <view class="title">确认支付</view> -->
+               <view class="tips">{{ showTipsGachaText }}</view>
+               <view class="actionBtns">
+                    <view @click="mustGo" class="btn confirm">立即前往</view>
+                    <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后在看看</view>
+               </view>
+        </view>
+	 </u-popup>
     </view>
 </template>
 <script>
@@ -410,6 +420,7 @@ import DanmakuSimple from '@/components/danmu/danmu'
 import {awardsSort} from '@/utils/mgtv.js'
 import feudalLord from "@/components/feudalLord/index.vue";
 import bzModal from "@/components/bzModal/bzModal.vue";
+import { goto } from "../../utils/fun";
 
 export default {
     data() {
@@ -482,7 +493,12 @@ export default {
             lordActivity:0,
            
             hasBZAwards:false,
-            hasSPAwards:false
+            hasSPAwards:false,
+
+            showTipsPoupon:false,
+            showTipsGachaId:'',
+            showTipsGachaType:0,
+            showTipsGachaText:''
             
 
 
@@ -523,6 +539,24 @@ export default {
         this.loadDetail();
     },
     methods: {
+        mustGo(){
+            if(this.showTipsGachaId){
+          
+                if(this.showTipsGachaType == 2){ // 扭蛋
+                   goto('/pages/product/niudan',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 3){ // 无限赏
+                      goto('/pages/product/chaowanshang',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 4){ //4 炸弹桑
+                     goto('/pages/product/dongle',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 7){ // 对对碰
+                    goto('/pages/product/duiduipeng',{id:this.showTipsGachaId})
+                }else {
+                  uni.reLaunch({ url: "/pages/index/index" });
+                }
+            }else{
+                 uni.reLaunch({ url: "/pages/index/index" });
+            }
+        },
         openLordPopup() {
             this.$refs.feudalLord.open(this.gachaId)
             return
@@ -598,6 +632,13 @@ export default {
                 
                     this.gachainfo = { ...gacha, ...gachaBox };
                     this.gachaId = res.gacha.id;
+
+                    this.showTipsPoupon = res.gacha.popupEnabled;
+                    this.showTipsGachaId = res.gacha.jumpGachaId
+                    this.showTipsGachaType = res.gacha.jumpGachaType
+                    this.showTipsGachaText = res.gacha.popupContent
+
+
                     // this.theme_id = res.gacha.themeId;
                     this.mantissa = this.decimalPart(this.price)
                        this.lordActivity=res.lordActivity
