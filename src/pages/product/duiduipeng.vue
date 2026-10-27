@@ -276,6 +276,16 @@
 
         <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
         <bzModal ref="bzModal" ></bzModal>
+               <u-popup :safeAreaInsetBottom="false"  round="20" :closeOnClickOverlay="false" :show="showTipsPoupon" mode="center" @close="showTipsPoupon=false" >
+        <view class="confirmSureModal">
+            <!-- <view class="title">确认支付</view> -->
+               <view style="margin-top: 0;" class="tips">{{ showTipsGachaText }}</view>
+               <view class="actionBtns">
+                    <view @click="mustGo" class="btn confirm">立即前往</view>
+                    <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后在看看</view>
+               </view>
+        </view>
+	 </u-popup>
     </view>
 </template>
 
@@ -294,6 +304,7 @@ import {isPositiveInteger,shareUrl } from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
 import { isIos } from "../../utils/mgtv.js";
 import bzModal from "@/components/bzModal/bzModal.vue";
+import { goto } from "../../utils/fun";
 
 export default {
     data() {
@@ -381,7 +392,12 @@ export default {
 
             surePayMessage:'',
             ios:isIos(),
-            bzcRewards:[]
+            bzcRewards:[],
+
+             showTipsPoupon:false,
+            showTipsGachaId:'',
+            showTipsGachaType:0,
+            showTipsGachaText:''
         };
     },
     components: {
@@ -471,6 +487,7 @@ export default {
         // }
     },
     created() {
+        
         this.preloadPeng();
         this.preloadPitchOn();
         this.initMatchAudio();
@@ -489,6 +506,24 @@ export default {
         }
     },
     methods: {
+         mustGo(){
+            this.showTipsPoupon = false
+            if(this.showTipsGachaId){
+                if(this.showTipsGachaType == 2){ // 扭蛋
+                   goto('/pages/product/niudan',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 3){ // 无限赏
+                      goto('/pages/product/chaowanshang',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 4){ //4 炸弹桑
+                     goto('/pages/product/dongle',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 7){ // 对对碰
+                    goto('/pages/product/duiduipeng',{id:this.showTipsGachaId})
+                }else {
+                  uni.reLaunch({ url: "/pages/index/index" });
+                }
+            }else{
+                 uni.reLaunch({ url: "/pages/index/index" });
+            }
+        },
          showRewardsDetail(item){
           if(item.levelIndex == 52){
               uni.showToast({
@@ -628,7 +663,12 @@ export default {
                 box_index: 1
             }).then((res) => {
                 if (!res.code) {
-                   
+                     if(!this.showTipsGachaId){
+                       this.showTipsPoupon = res.gacha.popupEnabled;
+                       this.showTipsGachaId = res.gacha.jumpGachaId
+                      this.showTipsGachaType = res.gacha.jumpGachaType
+                      this.showTipsGachaText = res.gacha.popupContent 
+                    }
                     this.initialData = res;//初始数据
                     const fateMatch = res.gachaFateMatch || {};
                     this.stateType = fateMatch.state;               // 0=未支付 1=已支付 2=已结束

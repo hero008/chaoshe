@@ -253,7 +253,16 @@
 
          <gachaDetails ref="gachaDetails" />
         <surePayModal @surePaySuccess="surePaySuccess" ref="surePayModal"></surePayModal>
-
+       <u-popup :safeAreaInsetBottom="false"  round="20" :closeOnClickOverlay="false" :show="showTipsPoupon" mode="center" @close="showTipsPoupon=false" >
+        <view class="confirmSureModal">
+            <!-- <view class="title">确认支付</view> -->
+               <view style="margin-top: 0;" class="tips">{{ showTipsGachaText }}</view>
+               <view class="actionBtns">
+                    <view @click="mustGo" class="btn confirm">立即前往</view>
+                    <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后在看看</view>
+               </view>
+        </view>
+	 </u-popup>
         <!-- 抽赏动效 -->
         <!-- <dynamic-effect ref="animation" @childData="handleChildData" /> -->
         <!-- <xPrize ref="refPrize" :prize="prize" /> -->
@@ -281,6 +290,7 @@ import { MGTV_Channel } from "@/utils/mgtv";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort,shareUrl,isIos} from '@/utils/mgtv.js'
 import surePayModal from "../../components/surePayModal/surePayModal.vue";
+import { goto } from "../../utils/fun";
 
 const ANIMATION_DURATION = 3000;    // 摇球动画时长（ms）
 const PRE_ADVANCE_DELAY = 2200;      // 预加载延迟
@@ -349,6 +359,11 @@ export default {
             previewType:1,
             surePayMessage:'',
              ios:isIos(),
+
+              showTipsPoupon:false,
+            showTipsGachaId:'',
+            showTipsGachaType:0,
+            showTipsGachaText:''
         };
     },
     components: {
@@ -426,6 +441,24 @@ export default {
         this.saveFile();
     },
     methods: {
+         mustGo(){
+            this.showTipsPoupon = false
+            if(this.showTipsGachaId){
+                if(this.showTipsGachaType == 2){ // 扭蛋
+                   goto('/pages/product/niudan',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 3){ // 无限赏
+                      goto('/pages/product/chaowanshang',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 4){ //4 炸弹桑
+                     goto('/pages/product/dongle',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 7){ // 对对碰
+                    goto('/pages/product/duiduipeng',{id:this.showTipsGachaId})
+                }else {
+                  uni.reLaunch({ url: "/pages/index/index" });
+                }
+            }else{
+                 uni.reLaunch({ url: "/pages/index/index" });
+            }
+        },
          surePaySuccess(val){
             this.onClickPrize(this.surePayMessage.payId,this.surePayMessage.showAnim,val);
         },
@@ -515,6 +548,12 @@ export default {
                             item.probability = Math.floor((item.totalNums / gachaBox.totalAwards) * 100000) / 1000
                         }
                     })
+                      if(!this.showTipsGachaId){
+                       this.showTipsPoupon = res.gacha.popupEnabled;
+                       this.showTipsGachaId = res.gacha.jumpGachaId
+                      this.showTipsGachaType = res.gacha.jumpGachaType
+                      this.showTipsGachaText = res.gacha.popupContent 
+                    }
                     this.eggTwister = res;
                     this.goodsList = gachaAwards.length > 16 ? gachaAwards.slice(0, 16) : gachaAwards;
                     this.showBtn = this.canShowGachaButton(res);
