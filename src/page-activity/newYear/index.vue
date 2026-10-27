@@ -85,10 +85,10 @@
                         </view>
                     </view>
                 </view>
-                <view class="page" :style="{ backgroundImage: `url(${imageUrlMap.page})` }"></view>
+                <!-- <view class="page" :style="{ backgroundImage: `url(${imageUrlMap.page})` }"></view> -->
                 <view class="everyday">
                     <view class="header" :style="{
-                        backgroundImage: `url(${imageUrlMap.title_tow})`,
+                        // backgroundImage: `url(${imageUrlMap.title_tow})`,
                         color: colorList.time,
                     }">活动时间:{{ configList.startTime }}-{{
                         configList.endTime
@@ -98,7 +98,7 @@
                         background: colorList.bg,
                         border: `2rpx solid ${colorList.bg}`,
                     }">
-                        <view class="days">已{{ signType }}签到<span class="text"
+                        <view class="days">已{{ signType }}签到<span class="text" 
                                 :style="{ color: colorList.signInNum }">{{ stateObj.extraContinuousDays }}</span>天<span
                                 class="hint" :style="{ color: colorList.hint }">（{{
                                     signType
@@ -330,6 +330,7 @@ export default {
                 bg: this.imageUrlMap.pop_up,
                 btn: this.imageUrlMap.heeler,
             };
+
         },
 
         footBtn(value) {
@@ -352,6 +353,9 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+page{
+    background: #fff5ec;
+}
 .new_year_box {
     height: 100vh;
     overflow-y: auto;
@@ -457,8 +461,9 @@ export default {
 
 .particulars {
     width: 100%;
-    margin-top: 500rpx;
+    margin-top: 880rpx;
     position: relative;
+
 
     .everyday {
         width: 702rpx;
@@ -481,6 +486,7 @@ export default {
             position: absolute;
             top: 152rpx;
             border-radius: 32rpx;
+            width: 100%;
             padding: 24rpx 32rpx;
 
             .days {
@@ -601,8 +607,8 @@ export default {
 
             .foot {
                 margin: 32rpx auto 16rpx;
-                width: 380rpx;
-                height: 80rpx;
+                width: 391rpx;
+                height: 100rpx;
                 background-size: 100% 100%;
             }
 
