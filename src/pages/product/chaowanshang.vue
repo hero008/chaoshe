@@ -393,7 +393,7 @@
       <u-popup :safeAreaInsetBottom="false"  round="20" :closeOnClickOverlay="false" :show="showTipsPoupon" mode="center" @close="showTipsPoupon=false" >
         <view class="confirmSureModal">
             <!-- <view class="title">确认支付</view> -->
-               <view class="tips">{{ showTipsGachaText }}</view>
+               <view style="margin-top: 0;" class="tips">{{ showTipsGachaText }}</view>
                <view class="actionBtns">
                     <view @click="mustGo" class="btn confirm">立即前往</view>
                     <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后在看看</view>
@@ -534,14 +534,16 @@ export default {
         else this.theme_id = da.theme_id
 
     },
+   
     onShow() {
         this.ballLeft = uni.getSystemInfoSync().screenWidth + "px";
         this.loadDetail();
     },
+    
     methods: {
         mustGo(){
+            this.showTipsPoupon = false
             if(this.showTipsGachaId){
-          
                 if(this.showTipsGachaType == 2){ // 扭蛋
                    goto('/pages/product/niudan',{id:this.showTipsGachaId})
                 }else if(this.showTipsGachaType == 3){ // 无限赏
@@ -632,11 +634,13 @@ export default {
                 
                     this.gachainfo = { ...gacha, ...gachaBox };
                     this.gachaId = res.gacha.id;
-
-                    this.showTipsPoupon = res.gacha.popupEnabled;
-                    this.showTipsGachaId = res.gacha.jumpGachaId
-                    this.showTipsGachaType = res.gacha.jumpGachaType
-                    this.showTipsGachaText = res.gacha.popupContent
+                    if(!this.showTipsGachaId){
+                       this.showTipsPoupon = res.gacha.popupEnabled;
+                       this.showTipsGachaId = res.gacha.jumpGachaId
+                      this.showTipsGachaType = res.gacha.jumpGachaType
+                      this.showTipsGachaText = res.gacha.popupContent 
+                    }
+                    
 
 
                     // this.theme_id = res.gacha.themeId;
