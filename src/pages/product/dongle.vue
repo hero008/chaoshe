@@ -321,8 +321,17 @@
         <xPrize ref="refPrize" :prize="prize" @showPrize="onVisible" />
         <scheduleTips :LuckyVisible="LuckyVisible" :scheduleNum="scheduleNum" @onTips="LuckyVisible = false" />
         <share v-if="shareTo" @closeSharePoupon="shareTo = false" @shareTo="shareToWechat"></share>
-        <result ref="result" @onResult="onClickResult"></result>
-      
+           <result ref="result" @onResult="onClickResult"></result>
+               <u-popup :safeAreaInsetBottom="false"  round="20" :closeOnClickOverlay="false" :show="showTipsPoupon" mode="center" @close="showTipsPoupon=false" >
+        <view class="confirmSureModal">
+            <!-- <view class="title">确认支付</view> -->
+               <view style="margin-top: 0;" class="tips">{{ showTipsGachaText }}</view>
+               <view class="actionBtns">
+                    <view @click="mustGo" class="btn confirm">立即前往</view>
+                    <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后在看看</view>
+               </view>
+        </view>
+	 </u-popup>
     </view>
 </template>
 <script>
@@ -341,6 +350,9 @@ import share from "./modules/share.vue";
 import result from '@/pages/product/modules/resultDetail'
 import {awardsSort} from '@/utils/mgtv.js'
 import bzModal from "@/components/bzModal/bzModal.vue";
+import { goto } from "../../utils/fun";
+
+
 export default {
     data() {
         return {
@@ -415,6 +427,11 @@ export default {
             activityOpen: false,
             LuckyVisible: false,
             scheduleNum: null,
+
+              showTipsPoupon:false,
+            showTipsGachaId:'',
+            showTipsGachaType:0,
+            showTipsGachaText:''
         };
     },
     components: {
@@ -448,6 +465,25 @@ export default {
         this.saveFile();
     },
     methods: {
+         mustGo(){
+            this.showTipsPoupon = false
+            if(this.showTipsGachaId){
+                if(this.showTipsGachaType == 2){ // 扭蛋
+                   goto('/pages/product/niudan',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 3){ // 无限赏
+                      goto('/pages/product/chaowanshang',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 4){ //4 炸弹桑
+                     goto('/pages/product/dongle',{id:this.showTipsGachaId})
+                }else if(this.showTipsGachaType == 7){ // 对对碰
+                    goto('/pages/product/duiduipeng',{id:this.showTipsGachaId})
+                }else {
+                  uni.reLaunch({ url: "/pages/index/index" });
+                }
+            }else{
+                 uni.reLaunch({ url: "/pages/index/index" });
+            }
+        },
+        
         resetData(){
 this.shareTo=false
             this.selectGrid=[] // 选中的格子
@@ -506,6 +542,12 @@ this.shareTo=false
                         item.probability = Math.floor((item.totalNums / res.gachaBox.totalAwards) * 100000) / 1000
                     }
                 })
+                if(!this.showTipsGachaId){
+                       this.showTipsPoupon = res.gacha.popupEnabled;
+                       this.showTipsGachaId = res.gacha.jumpGachaId
+                      this.showTipsGachaType = res.gacha.jumpGachaType
+                      this.showTipsGachaText = res.gacha.popupContent 
+                    }
                 this.AReward = res;
                 this.showBtn = this.canShowGachaButton(res);
                 this.gachaBombRecord = res.gachaBombRecord == null ? { cellIndex: [], bombCellIndex: [], bombRewardCellIndex: [] } : res.gachaBombRecord;
