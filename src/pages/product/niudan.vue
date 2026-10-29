@@ -258,7 +258,7 @@
                <view style="margin-top: 0;" class="tips">{{ showTipsGachaText }}</view>
                <view class="actionBtns">
                     <view @click="mustGo" class="btn confirm">立即前往</view>
-                    <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后在看看</view>
+                    <view style="margin-right: 0;margin-left: 24rpx;" class="btn cancel" @click="showTipsPoupon=false">稍后看看</view>
                </view>
         </view>
 	 </u-popup>
