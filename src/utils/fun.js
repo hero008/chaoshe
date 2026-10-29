@@ -63,9 +63,10 @@ let getMBInfo = () => {
     if(ios){
        return mgtv.getMenuButtonBoundingClientRect()
     }else{
-      const top = mgtv.getMenuButtonBoundingClientRect().top;
-      const statusBarHeight =(mgtv.getWindowInfo().statusBarHeight)/(mgtv.getWindowInfo().pixelRatio);
-      return { top: top + statusBarHeight, height: 30, width: 0 }
+       return mgtv.getMenuButtonBoundingClientRect()
+    //   const top = mgtv.getMenuButtonBoundingClientRect().top;
+    //   const statusBarHeight =(mgtv.getWindowInfo().statusBarHeight)/(mgtv.getWindowInfo().pixelRatio);
+    //   return { top: top + statusBarHeight, height: 30, width: 0 }
     }
    }else{
     return { top: 40, height: 32, width: 0 }
